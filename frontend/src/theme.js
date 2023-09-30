@@ -2,7 +2,7 @@ import { createTheme } from "@mui/material";
 
 export const theme = createTheme({
   palette: {
-    // add colors
+    // add colors here
   },
   typography: {
     // add fonts maybe
