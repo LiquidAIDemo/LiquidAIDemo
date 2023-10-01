@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 const Demo = () => {
   const navigate = useNavigate();
 
-  // placeholder demon pääsivulle
-  return (
+  // replace return statement with demo page contents
+    return (
     <Box sx={{
       display: 'flex',
       flexDirection: 'column',

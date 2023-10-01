@@ -2,10 +2,10 @@ import { createTheme } from "@mui/material";
 
 export const theme = createTheme({
   palette: {
-    // värejä tähän
+    // add colors here
   },
   typography: {
-    // tähän ehkä joku kivempi fontti
+    // add fonts maybe
     fontFamily: 'sans-serif'
   },
 });
