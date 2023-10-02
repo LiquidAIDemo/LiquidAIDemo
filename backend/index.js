@@ -4,8 +4,7 @@ const app = express()
 
 app.use(cors())
 
-app.get('/', (request, response) => {
-  console.log("hello world")  
+app.get('/', (request, response) => {  
   response.send('<h1>hello world</h1>')
 })
 
