@@ -1,7 +1,11 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { resolve, dirname } from "node:path";
+import { fileURLToPath } from 'url';
+import path from 'path';
+import { resolve } from "node:path";
 import vitePluginSvgr from 'vite-plugin-svgr';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // https://vitejs.dev/config/
 export default defineConfig({
