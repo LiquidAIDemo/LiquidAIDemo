@@ -2,7 +2,7 @@ import { Card, CardContent, CardActions, Typography } from '@mui/material';
 import { Button } from '@mui/material'; 
 
 const EnergyComponent = (props) => {
-  const { name } = props;
+  const { name, type } = props;
   return (
     <Card sx={{
       maxWidth: '500px',
@@ -13,7 +13,7 @@ const EnergyComponent = (props) => {
       <Typography variant='body1' margin='1vh'>{name}</Typography>
       <CardContent>
         <Typography variant='body2'>
-          Energy consumption:
+          Energy {type}
           {/*or some other basic info about the component 
           passed to the component as props*/}
         </Typography>
