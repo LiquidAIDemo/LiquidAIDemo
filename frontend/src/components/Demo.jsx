@@ -1,8 +1,7 @@
 import { Box, Button, Grid } from '@mui/material';
 import { useNavigate } from "react-router-dom";
-
-import SolarPowerIcon from '@mui/icons-material/SolarPower';
 import EnergyComponent from './EnergyComponent';
+import SolarPowerIcon from '@mui/icons-material/SolarPower';
 import HeatPumpIcon from '@mui/icons-material/HeatPump';
 import ElectricCarIcon from '@mui/icons-material/ElectricCar';
 
