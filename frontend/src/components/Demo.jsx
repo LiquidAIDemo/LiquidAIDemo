@@ -1,10 +1,6 @@
 import { Box, Button, Grid } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 import EnergyComponent from './EnergyComponent';
-import SolarPowerIcon from '@mui/icons-material/SolarPower';
-import HeatPumpIcon from '@mui/icons-material/HeatPump';
-import ElectricCarIcon from '@mui/icons-material/ElectricCar';
-
 
 const Demo = () => {
   const navigate = useNavigate();
@@ -29,13 +25,13 @@ const Demo = () => {
         <Grid container spacing={2}>
           {/* container grid for the energy components */}
           <Grid item xs={12} md={6}>
-            <EnergyComponent name="Solar panel" icon={<SolarPowerIcon />}/>
+            <EnergyComponent name="Solar panel"/>
           </Grid>
           <Grid item xs={12} md={6}>
-            <EnergyComponent name="Heat pump" icon={<HeatPumpIcon />} />
+            <EnergyComponent name="Heat pump"/>
           </Grid>
           <Grid item xs={12} md={6}>
-            <EnergyComponent name="Electric car" icon={<ElectricCarIcon />} />
+            <EnergyComponent name="Electric car"/>
           </Grid>
         </Grid>
         </Box>

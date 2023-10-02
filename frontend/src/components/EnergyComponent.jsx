@@ -2,7 +2,7 @@ import { Card, CardContent, CardActions, Typography } from '@mui/material';
 import { Button } from '@mui/material'; 
 
 const EnergyComponent = (props) => {
-  const { name, icon } = props;
+  const { name } = props;
   return (
     <Card sx={{
       maxWidth: '500px',
@@ -10,7 +10,6 @@ const EnergyComponent = (props) => {
       minHeight: '20%',
       padding: '2vh',
       margin: '1vh'}}>
-      {icon} 
       <Typography variant='body1' margin='1vh'>{name}</Typography>
       <CardContent>
         <Typography variant='body2'>
