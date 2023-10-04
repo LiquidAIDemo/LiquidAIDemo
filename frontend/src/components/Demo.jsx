@@ -1,6 +1,7 @@
 import { Box, Button, Grid } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 import EnergyComponent from './EnergyComponent';
+import Clock from './Clock';
 
 const Demo = () => {
   const navigate = useNavigate();
@@ -50,6 +51,7 @@ const Demo = () => {
               bgcolor = "#cfe8fc" 
               height="40vh" >
             Time
+            <Clock />
             </Box>
           </Grid>
 
