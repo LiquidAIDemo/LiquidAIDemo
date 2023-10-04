@@ -21,7 +21,6 @@ const Welcome = () => {
               height: "100%",
               position: "relative",
             }}
-            onClick={drop}
           >
             <Box
               sx={{
@@ -41,7 +40,7 @@ const Welcome = () => {
               <Typography variant="h3" sx={{ margin: 2, color: "white" }}>
                 Welcome to Liquid AI Demo!
               </Typography>
-              <Typography variant="h4" sx={{ margin: 2, color: "white" }}>
+              <Typography variant="h5" sx={{ margin: 2, color: "white" }}>
                 Experience the power of liquid software with intelligent energy
                 optimization.
               </Typography>
