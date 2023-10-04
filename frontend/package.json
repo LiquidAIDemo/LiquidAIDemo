@@ -10,7 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@mui/icons-material": "^5.14.11"
+    "@mui/icons-material": "^5.14.11",
+    "react-water-wave": "^2.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
