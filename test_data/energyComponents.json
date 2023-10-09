@@ -1,210 +1,385 @@
 {
-    "components": [
-      {
-        "name": "Heat Pump",
-        "production_per_hour": [],
-        "consumption_per_hour": [
-          {
-            "time": "00-01",
-            "value": "0.3"
-          },
-          {
-            "time": "01-02",
-            "value": "0.3"
-          },
-          {
-            "time": "02-03",
-            "value": "0.3"
-          },
-          {
-            "time": "03-04",
-            "value": "0.3"
-          },
-          {
-            "time": "04-05",
-            "value": "0.4"
-          },
-          {
-            "time": "05-06",
-            "value": "0.4"
-          },
-          {
-            "time": "06-07",
-            "value": "0.4"
-          },
-          {
-            "time": "07-08",
-            "value": "0.4"
-          },
-          {
-            "time": "08-09",
-            "value": "0.4"
-          },
-          {
-            "time": "09-10",
-            "value": "0.4"
-          },
-          {
-            "time": "10-11",
-            "value": "0.3"
-          },
-          {
-            "time": "11-12",
-            "value": "0.3"
-          },
-          {
-            "time": "12-13",
-            "value": "0.3"
-          },
-          {
-            "time": "13-14",
-            "value": "0.3"
-          },
-          {
-            "time": "14-15",
-            "value": "0.3"
-          },
-          {
-            "time": "15-16",
-            "value": "0.3"
-          },
-          {
-            "time": "16-17",
-            "value": "0.3"
-          },
-          {
-            "time": "17-18",
-            "value": "0.3"
-          },
-          {
-            "time": "18-19",
-            "value": "0.3"
-          },
-          {
-            "time": "19-20",
-            "value": "0.3"
-          },
-          {
-            "time": "20-21",
-            "value": "0.3"
-          },
-          {
-            "time": "21-22",
-            "value": "0.3"
-          },
-          {
-            "time": "22-23",
-            "value": "0.3"
-          },
-          {
-            "time": "23-24",
-            "value": "0.3"
-          }
-        ]
-      },
-      {
-        "name": "Electric Car Charger",
-        "power_rating": "22 kW",
-        "production_per_hour": [],
-        "consumption_per_hour": [
-          {
-            "time": "00-01",
-            "value": "0.0"
-          },
-          {
-            "time": "01-02",
-            "value": "0.0"
-          },
-          {
-            "time": "02-03",
-            "value": "0.0"
-          },
-          {
-            "time": "03-04",
-            "value": "0.0"
-          },
-          {
-            "time": "04-05",
-            "value": "0.0"
-          },
-          {
-            "time": "05-06",
-            "value": "0.0"
-          },
-          {
-            "time": "06-07",
-            "value": "22.0"
-          },
-          {
-            "time": "07-08",
-            "value": "8.0"
-          },
-          {
-            "time": "08-09",
-            "value": "0.0"
-          },
-          {
-            "time": "09-10",
-            "value": "0.0"
-          },
-          {
-            "time": "10-11",
-            "value": "0.0"
-          },
-          {
-            "time": "11-12",
-            "value": "0.0"
-          },
-          {
-            "time": "12-13",
-            "value": "0.0"
-          },
-          {
-            "time": "13-14",
-            "value": "0.0"
-          },
-          {
-            "time": "14-15",
-            "value": "0.0"
-          },
-          {
-            "time": "15-16",
-            "value": "0.0"
-          },
-          {
-            "time": "16-17",
-            "value": "4.0"
-          },
-          {
-            "time": "17-18",
-            "value": "0.0"
-          },
-          {
-            "time": "18-19",
-            "value": "0.0"
-          },
-          {
-            "time": "19-20",
-            "value": "1.0"
-          },
-          {
-            "time": "20-21",
-            "value": "0.0"
-          },
-          {
-            "time": "21-22",
-            "value": "0.0"
-          },
-          {
-            "time": "22-23",
-            "value": "0.0"
-          },
-          {
-            "time": "23-24",
-            "value": "0.0"
-          }
-        ]
-      }
-    ]
-  }
+  "components": [
+    {
+      "name": "Heat Pump",
+      "production_per_hour_kwh": [],
+      "consumption_per_hour_kwh": [
+        {
+          "startDate": "2023-10-08T00:00:00Z",
+          "endDate": "2023-10-08T01:00:00Z",
+          "value": 0.3
+        },
+        {
+          "startDate": "2023-10-08T01:00:00Z",
+          "endDate": "2023-10-08T02:00:00Z",
+          "value": 0.3
+        },
+        {
+          "startDate": "2023-10-08T02:00:00Z",
+          "endDate": "2023-10-08T03:00:00Z",
+          "value": 0.3
+        },
+        {
+          "startDate": "2023-10-08T03:00:00Z",
+          "endDate": "2023-10-08T04:00:00Z",
+          "value": 0.3
+        },
+        {
+          "startDate": "2023-10-08T04:00:00Z",
+          "endDate": "2023-10-08T05:00:00Z",
+          "value": 0.4
+        },
+        {
+          "startDate": "2023-10-08T05:00:00Z",
+          "endDate": "2023-10-08T06:00:00Z",
+          "value": 0.4
+        },
+        {
+          "startDate": "2023-10-08T06:00:00Z",
+          "endDate": "2023-10-08T07:00:00Z",
+          "value": 0.4
+        },
+        {
+          "startDate": "2023-10-08T07:00:00Z",
+          "endDate": "2023-10-08T08:00:00Z",
+          "value": 0.4
+        },
+        {
+          "startDate": "2023-10-08T08:00:00Z",
+          "endDate": "2023-10-08T09:00:00Z",
+          "value": 0.4
+        },
+        {
+          "startDate": "2023-10-08T09:00:00Z",
+          "endDate": "2023-10-08T10:00:00Z",
+          "value": 0.4
+        },
+        {
+          "startDate": "2023-10-08T10:00:00Z",
+          "endDate": "2023-10-08T11:00:00Z",
+          "value": 0.3
+        },
+        {
+          "startDate": "2023-10-08T11:00:00Z",
+          "endDate": "2023-10-08T12:00:00Z",
+          "value": 0.3
+        },
+        {
+          "startDate": "2023-10-08T12:00:00Z",
+          "endDate": "2023-10-08T13:00:00Z",
+          "value": 0.3
+        },
+        {
+          "startDate": "2023-10-08T13:00:00Z",
+          "endDate": "2023-10-08T14:00:00Z",
+          "value": 0.3
+        },
+        {
+          "startDate": "2023-10-08T14:00:00Z",
+          "endDate": "2023-10-08T15:00:00Z",
+          "value": 0.3
+        },
+        {
+          "startDate": "2023-10-08T15:00:00Z",
+          "endDate": "2023-10-08T16:00:00Z",
+          "value": 0.3
+        },
+        {
+          "startDate": "2023-10-08T16:00:00Z",
+          "endDate": "2023-10-08T17:00:00Z",
+          "value": 0.3
+        },
+        {
+          "startDate": "2023-10-08T17:00:00Z",
+          "endDate": "2023-10-08T18:00:00Z",
+          "value": 0.3
+        },
+        {
+          "startDate": "2023-10-08T18:00:00Z",
+          "endDate": "2023-10-08T19:00:00Z",
+          "value": 0.3
+        },
+        {
+          "startDate": "2023-10-08T19:00:00Z",
+          "endDate": "2023-10-08T20:00:00Z",
+          "value": 0.3
+        },
+        {
+          "startDate": "2023-10-08T20:00:00Z",
+          "endDate": "2023-10-08T21:00:00Z",
+          "value": 0.3
+        },
+        {
+          "startDate": "2023-10-08T21:00:00Z",
+          "endDate": "2023-10-08T22:00:00Z",
+          "value": 0.3
+        },
+        {
+          "startDate": "2023-10-08T22:00:00Z",
+          "endDate": "2023-10-08T23:00:00Z",
+          "value": 0.3
+        },
+        {
+          "startDate": "2023-10-08T23:00:00Z",
+          "endDate": "2023-10-09T00:00:00Z",
+          "value": 0.3
+        }
+      ]
+    },
+    {
+      "name": "Electric Car Charger",
+      "power_rating": "22 kW",
+      "production_per_hour_kwh": [],
+      "consumption_per_hour_kwh": [
+        {
+          "startDate": "2023-10-08T00:00:00Z",
+          "endDate": "2023-10-08T01:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T01:00:00Z",
+          "endDate": "2023-10-08T02:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T02:00:00Z",
+          "endDate": "2023-10-08T03:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T03:00:00Z",
+          "endDate": "2023-10-08T04:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T04:00:00Z",
+          "endDate": "2023-10-08T05:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T05:00:00Z",
+          "endDate": "2023-10-08T06:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T06:00:00Z",
+          "endDate": "2023-10-08T07:00:00Z",
+          "value": 22.0
+        },
+        {
+          "startDate": "2023-10-08T07:00:00Z",
+          "endDate": "2023-10-08T08:00:00Z",
+          "value": 8.0
+        },
+        {
+          "startDate": "2023-10-08T08:00:00Z",
+          "endDate": "2023-10-08T09:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T09:00:00Z",
+          "endDate": "2023-10-08T10:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T10:00:00Z",
+          "endDate": "2023-10-08T11:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T11:00:00Z",
+          "endDate": "2023-10-08T12:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T12:00:00Z",
+          "endDate": "2023-10-08T13:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T13:00:00Z",
+          "endDate": "2023-10-08T14:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T14:00:00Z",
+          "endDate": "2023-10-08T15:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T15:00:00Z",
+          "endDate": "2023-10-08T16:00:00Z",
+          "value": 4.0
+        },
+        {
+          "startDate": "2023-10-08T16:00:00Z",
+          "endDate": "2023-10-08T17:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T17:00:00Z",
+          "endDate": "2023-10-08T18:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T18:00:00Z",
+          "endDate": "2023-10-08T19:00:00Z",
+          "value": 1.0
+        },
+        {
+          "startDate": "2023-10-08T19:00:00Z",
+          "endDate": "2023-10-08T20:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T20:00:00Z",
+          "endDate": "2023-10-08T21:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T21:00:00Z",
+          "endDate": "2023-10-08T22:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T22:00:00Z",
+          "endDate": "2023-10-08T23:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T23:00:00Z",
+          "endDate": "2023-10-09T00:00:00Z",
+          "value": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Solar Panel",
+      "production_per_hour_kwh": [
+        {
+          "startDate": "2023-10-08T00:00:00Z",
+          "endDate": "2023-10-08T01:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T01:00:00Z",
+          "endDate": "2023-10-08T02:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T02:00:00Z",
+          "endDate": "2023-10-08T03:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T03:00:00Z",
+          "endDate": "2023-10-08T04:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T04:00:00Z",
+          "endDate": "2023-10-08T05:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T05:00:00Z",
+          "endDate": "2023-10-08T06:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T06:00:00Z",
+          "endDate": "2023-10-08T07:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T07:00:00Z",
+          "endDate": "2023-10-08T08:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T08:00:00Z",
+          "endDate": "2023-10-08T09:00:00Z",
+          "value": 0.05
+        },
+        {
+          "startDate": "2023-10-08T09:00:00Z",
+          "endDate": "2023-10-08T10:00:00Z",
+          "value": 0.15
+        },
+        {
+          "startDate": "2023-10-08T10:00:00Z",
+          "endDate": "2023-10-08T11:00:00Z",
+          "value": 0.2
+        },
+        {
+          "startDate": "2023-10-08T11:00:00Z",
+          "endDate": "2023-10-08T12:00:00Z",
+          "value": 0.15
+        },
+        {
+          "startDate": "2023-10-08T12:00:00Z",
+          "endDate": "2023-10-08T13:00:00Z",
+          "value": 0.1
+        },
+        {
+          "startDate": "2023-10-08T13:00:00Z",
+          "endDate": "2023-10-08T14:00:00Z",
+          "value": 0.1
+        },
+        {
+          "startDate": "2023-10-08T14:00:00Z",
+          "endDate": "2023-10-08T15:00:00Z",
+          "value": 0.05
+        },
+        {
+          "startDate": "2023-10-08T15:00:00Z",
+          "endDate": "2023-10-08T16:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T16:00:00Z",
+          "endDate": "2023-10-08T17:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T17:00:00Z",
+          "endDate": "2023-10-08T18:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T18:00:00Z",
+          "endDate": "2023-10-08T19:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T19:00:00Z",
+          "endDate": "2023-10-08T20:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T20:00:00Z",
+          "endDate": "2023-10-08T21:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T21:00:00Z",
+          "endDate": "2023-10-08T22:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T22:00:00Z",
+          "endDate": "2023-10-08T23:00:00Z",
+          "value": 0.0
+        },
+        {
+          "startDate": "2023-10-08T23:00:00Z",
+          "endDate": "2023-10-09T00:00:00Z",
+          "value": 0.0
+        }
+      ],
+      "consumption_per_hour_kwh": []
+    }    
+  ]
+}
+
   
