@@ -5,7 +5,14 @@ function Clock() {
   //Time starts at 0
   const [time, setTime] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-
+  
+  let now = new Date();
+  let hh = now.getHours();
+  let mm = now.getMinutes();
+  let ss = now.getSeconds();
+  
+  const realtime = hh + ":" + mm + ":" + ss;
+  
   //Time runs from 0 to 24 continually
   useEffect(() => {
     let intervalId;
@@ -34,6 +41,8 @@ function Clock() {
           {isPaused ? 'Continue' : 'Pause'}
         </Button>
         </p>
+        
+      <p>Real time: {realtime}</p>
     </div>
   );
 }
