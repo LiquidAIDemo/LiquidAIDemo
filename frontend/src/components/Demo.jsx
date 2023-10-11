@@ -26,13 +26,16 @@ const Demo = () => {
         <Grid container spacing={2}>
           {/* container grid for the energy components */}
           <Grid item xs={12} md={6}>
-            <EnergyComponent name="Solar panel" type="producer"/>
+            <EnergyComponent id="1" name="Solar panel" type="producer"
+            description="Solar panels turn sunlight into energy"/>
           </Grid>
           <Grid item xs={12} md={6}>
-            <EnergyComponent name="Heat pump" type="consumer"/>
+            <EnergyComponent id="2" name="Heat pump" type="consumer"
+            description="Heat pump is used to adjust the temperature inside the house"/>
           </Grid>
           <Grid item xs={12} md={6}>
-            <EnergyComponent name="Electric car" type="consumer"/>
+            <EnergyComponent id="3" name="Electric car" type="consumer"
+            description="Electric car is recharged at the charging station"/>
           </Grid>
         </Grid>
         </Box>

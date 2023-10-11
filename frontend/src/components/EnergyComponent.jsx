@@ -1,8 +1,16 @@
 import { Card, CardContent, CardActions, Typography } from '@mui/material';
 import { Button } from '@mui/material'; 
+import { useNavigate } from 'react-router-dom';
 
 const EnergyComponent = (props) => {
-  const { name, type } = props;
+  const { id, name, type, description } = props;
+  const navigate = useNavigate();
+  const component = {
+    id: id,
+    name: name,
+    type: type,
+    description: description
+  }
   return (
     <Card sx={{
       maxWidth: '500px',
@@ -20,7 +28,16 @@ const EnergyComponent = (props) => {
       </CardContent>
       <CardActions>
         {/*this will open a bigger view of the energy component with more info*/}
-        <Button size='small'>Show more</Button>
+        <Button 
+          size='small'
+          onClick={() => navigate(`/component/${id}`, 
+              {
+                state: {component: component},
+                replace: true
+              }
+            )}>
+            Show more
+        </Button>
       </CardActions>
     </Card>
   )
