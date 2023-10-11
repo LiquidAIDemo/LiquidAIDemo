@@ -11,14 +11,15 @@ test("renders content", () => {
     expect(screen.getByText('Pause')).toBeInTheDocument()
 })
 
-test("demo time runs correctly", async () => {
-    // TOIMII JOSKUS
+test("demo time runs correctly", () => {
+    jest.useFakeTimers()
     render(<Clock />)
-    await act(async () => {
-        await new Promise((resolve) => setTimeout(resolve, 3000))   
+    act(() => {
+        jest.advanceTimersByTime(3000)
     })
     const demoTimeElement = screen.getByText(/Demo time:/)
-    expect(demoTimeElement).toHaveTextContent(/Demo time: 2:00/)   
+    expect(demoTimeElement).toHaveTextContent(/Demo time: 3:00/)
+    jest.useRealTimers()   
 })
 
 test("pause button pauses demo time", () => {
