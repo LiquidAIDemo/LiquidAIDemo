@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react'
 import EnergyComponent from '../components/EnergyComponent'
 import { MemoryRouter } from 'react-router-dom'
 
-test("renders name, type and 'Show more' button", () => {
+test("renders content correctly", () => {
   const eComponent = {
       id: 1,
       name: 'Test name',
@@ -17,10 +17,10 @@ test("renders name, type and 'Show more' button", () => {
       <EnergyComponent {...eComponent} />
     </MemoryRouter>
   )
-
+  
   expect(screen.getByText('Test name')).toBeInTheDocument()
   expect(screen.getByText('Energy Test type')).toBeInTheDocument()
   expect(screen.getByText('Show more')).toBeInTheDocument()
-  
+  expect(screen.queryByText('Test description')).not.toBeInTheDocument()
 })
 
