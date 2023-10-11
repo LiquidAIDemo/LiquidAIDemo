@@ -16,6 +16,7 @@ function Clock() {
   const [isPaused, setIsPaused] = useState(false);
   // Default speed 1 sec
   const [speed, setSpeed] = useState(1000);
+  const [start, setStart] = useState(100);
   
   const realdate =  day + "." + month + "." + year;
   const realtime = hh + ":" + mm + ":" + ss;
@@ -28,11 +29,15 @@ function Clock() {
     if (!isPaused) {
       intervalId = setInterval(() => {
         setTime((hh) => (hh + 1) % 24);
-        }, speed);
+        if (time === 23) {
+          const nextDay = date + 1;
+          setDate(nextDay);
+        }
+      }, speed);
     }
 
     return () => clearInterval(intervalId);
-  }, [isPaused, speed]);
+  }, [isPaused, speed, time]);
 
   const togglePause = () => {
     setIsPaused((isPaused) => !isPaused)
@@ -44,9 +49,10 @@ function Clock() {
 
   const handleStartingChange = (event) => {
     let selectedValue = event.target.value;
-    if (selectedValue === 1) {
+    setStart(selectedValue);
+    if (selectedValue === 100) {
       setDate(day);
-    } else if (selectedValue === 2) {
+    } else if (selectedValue === 200) {
       setDate(day - 1);
     }
     setTime(hh);
@@ -78,12 +84,12 @@ function Clock() {
         <FormControl>
           <Select
             
-            value={time}
+            value={start}
             onChange={handleStartingChange}
             sx={{width: '140px', height: '30px'}}
           >
-            <MenuItem value={1}>Next 24h</MenuItem>
-            <MenuItem value={2}>Last 24h</MenuItem>
+            <MenuItem value={100}>Next 24h</MenuItem>
+            <MenuItem value={200}>Last 24h</MenuItem>
           </Select>
         </FormControl>
       </Box>
