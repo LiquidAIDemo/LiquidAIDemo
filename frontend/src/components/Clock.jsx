@@ -8,11 +8,23 @@ function Clock() {
   // Default speed 1 sec
   const [speed, setSpeed] = useState(1000);
 
+  // Support for real-time clock
   let now = new Date();
   let hh = now.getHours();
   let mm = now.getMinutes();
   let ss = now.getSeconds();
-  
+
+  // Units below 10 must have zero added to front
+  if (hh < 10) {
+    hh = "0" + hh;
+  }
+  if (mm < 10) {
+    mm = "0" + mm;
+  }
+  if (ss < 10) {
+    ss = "0" + ss;
+  }
+
   const realtime = hh + ":" + mm + ":" + ss;
   
   // Time runs from 0 to 24 continually,
