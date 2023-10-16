@@ -26,8 +26,6 @@ function Clock() {
   const [speed, setSpeed] = useState(1000);
   const [start, setStart] = useState("next");
 
-  // Support for real-time clock
-  let now = new Date();
 
   let hh = now.getHours();
   let mm = now.getMinutes();
