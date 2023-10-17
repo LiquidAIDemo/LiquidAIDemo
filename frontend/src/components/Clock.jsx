@@ -132,7 +132,7 @@ function Clock() {
             defaultValue={1}
             value={speed}
             onChange={handleSpeedChange}
-            sx={{ width: '140px', height: '30px' }}
+            sx={{width: '140px', height: '30px'}}
           >
             <MenuItem value={1000}>1 sec / hour</MenuItem>
             <MenuItem value={2000}>2 secs / hour</MenuItem>
@@ -149,10 +149,10 @@ function Clock() {
           <Select
             value={start}
             onChange={handleStartingChange}
-            sx={{ width: '140px', height: '30px' }}
+            sx={{width: '140px', height: '30px'}}
           >
-            <MenuItem value="next">Next 24h</MenuItem>
-            <MenuItem value="last">Last 24h</MenuItem>
+            <MenuItem value={"next"}>Next 24h</MenuItem>
+            <MenuItem value={"last"}>Last 24h</MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -169,7 +169,7 @@ function Clock() {
         </Button>
         {demoPassedHours < 24 ? (
           <Button
-            sx={{ height: '30px', marginLeft: '10px' }}
+            sx={{height: '30px', marginLeft: '10px'}}
             variant="outlined"
             onClick={togglePause}
           >
