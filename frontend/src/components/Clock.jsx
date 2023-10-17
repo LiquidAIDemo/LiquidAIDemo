@@ -161,17 +161,17 @@ function Clock() {
         <b>Demo: </b> {demoHour}:00, {getDayName(demoTime)} {demoDate}.{demoMonth} &#x1F4C5;
         <br/>
         <Button
-          sx={{ height: '30px' }}
-          variant="contained"
-          onClick={() => handleResetClick(start)}
+        sx={{ height: '30px' }}
+        variant="contained"
+        onClick={() => handleResetClick(start)}
         >
           Reset
         </Button>
         {demoPassedHours < 24 ? (
           <Button
-            sx={{height: '30px'}}
-            style={{ marginLeft: '10px '}}
-            variant="outlined" onClick={togglePause}
+          sx={{height: '30px'}}
+          style={{ marginLeft: '10px '}}
+          variant="outlined" onClick={togglePause}
           >
             {isPaused ? 'Continue' : 'Pause'}
           </Button>
