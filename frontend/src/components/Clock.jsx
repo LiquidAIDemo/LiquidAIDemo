@@ -169,9 +169,9 @@ function Clock() {
         </Button>
         {demoPassedHours < 24 ? (
           <Button
-            sx={{height: '30px', marginLeft: '10px'}}
-            variant="outlined"
-            onClick={togglePause}
+            sx={{height: '30px'}}
+            style={{ marginLeft: '10px '}}
+            variant="outlined" onClick={togglePause}
           >
             {isPaused ? 'Continue' : 'Pause'}
           </Button>
