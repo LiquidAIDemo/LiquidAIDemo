@@ -52,7 +52,8 @@ const Demo = () => {
             <Box 
               style={{padding: '2vh'}} 
               bgcolor = "#cfe8fc" 
-              height="40vh" >
+              height="40vh"
+              overflow="hidden" >
             Time
             <Clock />
             </Box>
