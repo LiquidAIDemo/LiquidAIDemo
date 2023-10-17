@@ -24,7 +24,7 @@ test("demo time runs correctly", () => {
     })
     const demoTimeElement = screen.getByText(/Demo:/).parentElement
     const currentHrs = now.getHours()
-    expect(demoTimeElement).toHaveTextContent(`Demo: ${currentHrs+3}:00`)
+    expect(demoTimeElement).toHaveTextContent(`Demo: ${(currentHrs + 3) % 24}:00`)
     jest.useRealTimers()   
 })
 

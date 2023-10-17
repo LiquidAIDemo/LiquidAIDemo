@@ -20,8 +20,7 @@ test("renders content", () => {
 })
 
 test('"stop" button navigates to welcome page', () => {
-    let navigate
-  
+
     render(
       <MemoryRouter initialEntries={['/demo']}>
         <Routes>
@@ -30,7 +29,6 @@ test('"stop" button navigates to welcome page', () => {
         </Routes>
       </MemoryRouter>
     )
-    navigate = screen.getByText('Stop').navigate
   
     const stopButtonElement = screen.getByText('Stop')
     fireEvent.click(stopButtonElement)

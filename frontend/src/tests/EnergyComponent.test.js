@@ -5,13 +5,14 @@ import EnergyComponent from '../components/EnergyComponent'
 import EnergyComponentPage from '../components/EnergyComponentPage'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 
+const eComponent = {
+  id: 1,
+  name: 'Test name',
+  type: 'Test type',
+  description: 'Test description'
+}
+
 test("renders content correctly", () => {
-  const eComponent = {
-      id: 1,
-      name: 'Test name',
-      type: 'Test type',
-      description: 'Test description'
-  }
   
   render(
     <MemoryRouter>
@@ -27,12 +28,6 @@ test("renders content correctly", () => {
 
 test('"Show more" button navigates to component page', () => {
 
-  const eComponent = {
-    id: 1,
-    name: 'Test name',
-    type: 'Test type',
-    description: 'Test description'
-  }
   const componentPagePath = `/component/${eComponent.id}`
   
   render(
@@ -46,7 +41,6 @@ test('"Show more" button navigates to component page', () => {
 
   const showMoreButtonElement = screen.getByText('Show more')
   fireEvent.click(showMoreButtonElement)
-  const componentPageElement = screen.getByText(eComponent.description)
-  expect(componentPageElement).toBeInTheDocument()
+  expect(screen.getByText(eComponent.description)).toBeInTheDocument()
 })
 
