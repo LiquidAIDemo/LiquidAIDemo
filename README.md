@@ -29,5 +29,11 @@ Open your browser on localhost:5173 (or if your terminal says it opened in anoth
 ### Running frontend and backend separately
 
 Frontend and backend can also be run separately. Depending on which one you want to run, navigate to the frontend or backend folder and run the following commands:
-- npm install (this should be done every time after pulling new code from the repository, if you do not use the npm start command)
+- npm install (this should be done every time after pulling new code from the repository, unless you use npm start command which does it for you)
 - npm run dev
+
+### Running unit tests for frontend
+
+Navigate to the frontend folder and run the following commands:
+- npm install
+- npm test
