@@ -124,13 +124,10 @@ function Clock() {
 
   // Select speed menu, demo time, pause button and real time
   return (
-    <div>
-
-      
-        <p>
+    <Box>
+      <Box style={{padding: '1vh'}}>
         Select speed:
-        <null style={{ marginRight: '10px '}}/>
-        <FormControl>
+        <FormControl style={{ marginLeft: '10px '}}>
           <Select
             defaultValue={1}
             value={speed}
@@ -144,14 +141,12 @@ function Clock() {
             <MenuItem value={5000}>5 secs / hour</MenuItem>
           </Select>
         </FormControl>
-      
-      <br/>
-      <p/>
-        Select time range: 
-        <null style={{ marginRight: '10px '}}/>
-        <FormControl>
+      </Box>
+
+      <Box style={{padding: '1vh'}}>
+        Select time range:
+        <FormControl style={{ marginLeft: '10px '}}>
           <Select
-            
             value={start}
             onChange={handleStartingChange}
             sx={{width: '140px', height: '30px'}}
@@ -160,38 +155,36 @@ function Clock() {
             <MenuItem value={"last"}>Last 24h</MenuItem>
           </Select>
         </FormControl>
-      
-      </p>
+      </Box>
 
-      <p>
-      <b>Demo: </b>  {demoHour}:00, {getDayName(demoTime)}  {demoDate}.{demoMonth} &#x1F4C5;
-      <br/>
+      <Box style={{padding: '1vh'}}>
+        <b>Demo: </b> {demoHour}:00, {getDayName(demoTime)} {demoDate}.{demoMonth} &#x1F4C5;
+        <br/>
 
-      <Button 
-        sx={{ height: '30px'}}
-        variant="contained" 
-        onClick={() => handleResetClick(start)}
-      >
-        {'Reset'}
-      </Button>
+        <Button
+          sx={{ height: '30px' }}
+          variant="contained"
+          onClick={() => handleResetClick(start)}
+        >
+          {'Reset'}
+        </Button>
+        {
+          demoPassedHours < 24 ? (
+            <Button
+              sx={{height: '30px'}}
+              style={{ marginLeft: '10px '}}
+              variant="outlined" onClick={togglePause}
+            >
+              {isPaused ? 'Continue' : 'Pause'}
+            </Button>
+          ) : null
+        }
+      </Box>
 
-      {
-        demoPassedHours < 24 ? (
-          <Button 
-          sx={{ height: '30px'}}
-          style={{ marginLeft: '10px '}}
-          variant="outlined" onClick={togglePause}
-          >
-            {isPaused ? 'Continue' : 'Pause'}
-          </Button>
-        ) : null
-      }
-        
-      </p>
-
-      <b>Current : </b>  {realtime}, {getDayName(now)}  {now.getDate()}.{now.getMonth()+1} &#x1F4C5;
-
-    </div>
+      <Box style={{padding: '1vh'}}>
+        <b>Current: </b> {realtime}, {getDayName(now)} {now.getDate()}.{now.getMonth() + 1} &#x1F4C5;
+      </Box>
+    </Box>
   );
 }
 
