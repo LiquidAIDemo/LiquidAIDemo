@@ -1,4 +1,4 @@
-import fetchLatestPriceData from "./src/electricityPrice.js";
+import fetchLatestPriceData from "./src/fetchElectricityPrice.js";
 
 (async () => {
   try {
