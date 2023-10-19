@@ -1,10 +1,62 @@
 import { Grid, Box, Button, Typography } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
+//import fs from 'fs'
+
+//import { components } from "../test_data/electricityPrices.json" assert {type: 'json' };;
 
 const EnergyComponentPage = () => { 
   const navigate = useNavigate();
   const location = useLocation();
   const component = location.state.component;
+  
+  let priceFileName = '../test_data/electricityPrices.json';
+  let namedata = "WIP";
+  
+  //const componentFile = require('../test_data/electricityPrices.json');
+    
+  // Some functionality for displaying test data here:
+  let usagedata;
+  let fetchedData;
+  
+  /*var myLog = new File("../test_data/electricityPrices.json");
+  if(myLog.exists()) {
+    namedata = "Tiedosto on";
+  } else {
+    namedata = "Tiedosto ei ole"; 
+  }*/
+  
+  /*function fetchHelper() {
+  fetch('../test_data/electricityPrices.json')
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => namedata = data); 
+  }*/
+  
+  // Some functionality for displaying test data here:
+  fetch(priceFileName)
+    .then((response) => response.text())
+    .then((json) => document.getElementById("pconsume").innerHTML = Object.keys(json)[0]);
+    
+  
+  /*fs.readFile('../test_data/electricityPrices.json', function (error, content) {
+    fetchedData = JSON.parse(content);  
+  });*/
+  
+  //namedata = usagedata;
+  
+  /*pumpdata = console.table([{
+    "name" : usagedata.result[0].name,
+  }]);*/
+  
+  //const componentFile = require('../test_data/electricityPrices.json');
+  
+  //namedata = typeof componentFiles;
+  
+  
+  //const fetchedFile = fetch('../test_data/electricityPrices.json');
+  //const fetchedData = response.json();
+  
   return (
     <Grid 
       container
@@ -85,7 +137,8 @@ const EnergyComponentPage = () => {
                 <Typography 
                     variant="body2"
                     sx={{margin: 2}}
-                    >insert values from test data here
+                    >insert values from test data here: 
+                    <p id="pconsume">FAILURE TO LOAD DATA</p>
                   </Typography>
                   <Typography 
                     variant="body2"
