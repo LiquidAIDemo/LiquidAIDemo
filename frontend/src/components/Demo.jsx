@@ -1,7 +1,8 @@
 import { Box, Button, Grid } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 import EnergyComponent from './EnergyComponent';
-import Clock from './Clock';
+import DemoClock from './DemoClock';
+import RealtimeClock from './RealtimeClock';
 
 const Demo = () => {
   const navigate = useNavigate();
@@ -55,7 +56,10 @@ const Demo = () => {
               height="40vh"
               overflow="hidden" >
             Time
-            <Clock />
+              <Box>
+                <DemoClock />
+                <RealtimeClock />
+              </Box>
             </Box>
           </Grid>
 
