@@ -34,6 +34,7 @@ Frontend and backend can also be run separately. Depending on which one you want
 
 ### Running unit tests for frontend
 
-Navigate to the frontend folder and run the following commands:
-- npm install
+On your command line terminal, in the root directory of the project, run the following command:
 - npm test
+
+This command executes: cd frontend, npm install & npm test with options --verbose and --coverage --collectCoverageFrom='src/**/*.{jsx,js}'. This will run the unit tests and print the coverage.
