@@ -128,3 +128,8 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Backend data
+backend/data/*
+# But keep folder
+!backend/data/.gitkeep
