@@ -1,15 +1,32 @@
 import { useState, useEffect } from 'react';
 import { Button, FormControl, MenuItem, Select, Box } from '@mui/material';
 
+
+let demoTime = new Date();
+let demoPassedHours = 0;
+
+
+function getDayName(date) {
+  var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  var dayName = days[date.getDay()];
+  return dayName;
+}
+
 function Clock() {
-  // Time starts at 0
-  const [time, setTime] = useState(0);
+  let now = new Date();
+  
+  const [demoHour, setTime] = useState(now.getHours());
+  const [demoDate, setDate] = useState(now.getDate());
+  const [demoMonth, setMonth] = useState(now.getMonth() + 1);
+  const [demoYear, setYear] = useState(now.getFullYear());
+
   const [isPaused, setIsPaused] = useState(false);
+
   // Default speed 1 sec
   const [speed, setSpeed] = useState(1000);
+  const [start, setStart] = useState("next");
 
-  // Support for real-time clock
-  let now = new Date();
+
   let hh = now.getHours();
   let mm = now.getMinutes();
   let ss = now.getSeconds();
@@ -24,22 +41,45 @@ function Clock() {
   if (ss < 10) {
     ss = "0" + ss;
   }
-
-  const realtime = hh + ":" + mm + ":" + ss;
   
-  // Time runs from 0 to 24 continually,
-  // speed depend on selected time value
+  const realdate =  now.getDate() + "." + (now.getMonth() + 1) + "." + now.getFullYear();
+  const realtime = hh + ":" + mm + ":" + ss;
+
+
+  // Time runs from demo start fro 24 hours
+  // speed depends on selected time value
   useEffect(() => {
     let intervalId;
 
     if (!isPaused) {
+    
       intervalId = setInterval(() => {
-        setTime((time) => (time + 1) % 24);
-        }, speed);
+        if (demoPassedHours < 24) {
+          // add one hour to demotime object
+          demoTime.setHours(demoTime.getHours() + 1);
+          setDemoTime();
+          demoPassedHours = demoPassedHours + 1;
+        } 
+        
+        else {
+          // stop the interval when demoPassedHours reaches 24
+          togglePause();
+        }
+      }, speed);
     }
 
     return () => clearInterval(intervalId);
-  }, [isPaused, speed]);
+
+  }, [isPaused, speed, demoHour, demoDate]);
+
+
+  const setDemoTime = () => {
+    setTime(demoTime.getHours())
+    setDate(demoTime.getDate())
+    setMonth(demoTime.getMonth()+1)
+    setYear(demoTime.getFullYear())
+  }
+
 
   const togglePause = () => {
     setIsPaused((isPaused) => !isPaused)
@@ -49,12 +89,45 @@ function Clock() {
     setSpeed(event.target.value);
   };
 
+  const handleResetClick = (selectedValue) => {
+    // Create a new event object with the selected value
+    const event = {
+      target: { value: selectedValue },
+    };
+  
+    // Call handleStartingChange with the new event object
+    handleStartingChange(event);
+  };
+
+  const handleStartingChange = (event) => {
+    let selectedValue = event.target.value;
+    setStart(selectedValue);
+
+    if (selectedValue === "next") {
+      demoTime = now
+      demoTime.setMinutes(0)
+      demoPassedHours = 0
+      setIsPaused(false)
+    } 
+    
+    else if (selectedValue === "last") {
+      demoTime = now
+      demoTime.setDate(now.getDate() - 1)
+      demoTime.setMinutes(0)
+      demoPassedHours = 0
+      setIsPaused(false)
+    }
+
+    setDemoTime();
+
+  }
+
   // Select speed menu, demo time, pause button and real time
   return (
-    <div>
-      <Box display="flex" alignItems="center">
-        <p style={{ marginRight: '10px '}}>Select speed: </p>
-        <FormControl>
+    <Box>
+      <Box style={{padding: '1vh'}}>
+        Select speed:
+        <FormControl style={{ marginLeft: '10px '}}>
           <Select
             defaultValue={1}
             value={speed}
@@ -70,16 +143,48 @@ function Clock() {
         </FormControl>
       </Box>
 
-      <p>Demo time: {time}:00 <Button
-        variant="text"
-        onClick={togglePause}
+      <Box style={{padding: '1vh'}}>
+        Select time range:
+        <FormControl style={{ marginLeft: '10px '}}>
+          <Select
+            value={start}
+            onChange={handleStartingChange}
+            sx={{width: '140px', height: '30px'}}
+          >
+            <MenuItem value={"next"}>Next 24h</MenuItem>
+            <MenuItem value={"last"}>Last 24h</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+
+      <Box style={{padding: '1vh'}}>
+        <b>Demo: </b> {demoHour}:00, {getDayName(demoTime)} {demoDate}.{demoMonth} &#x1F4C5;
+        <br/>
+
+        <Button
+          sx={{ height: '30px' }}
+          variant="contained"
+          onClick={() => handleResetClick(start)}
         >
-          {isPaused ? 'Continue' : 'Pause'}
+          {'Reset'}
         </Button>
-        </p>
-        
-      <p>Real time: {realtime}</p>
-    </div>
+        {
+          demoPassedHours < 24 ? (
+            <Button
+              sx={{height: '30px'}}
+              style={{ marginLeft: '10px '}}
+              variant="outlined" onClick={togglePause}
+            >
+              {isPaused ? 'Continue' : 'Pause'}
+            </Button>
+          ) : null
+        }
+      </Box>
+
+      <Box style={{padding: '1vh'}}>
+        <b>Current: </b> {realtime}, {getDayName(now)} {now.getDate()}.{now.getMonth() + 1} &#x1F4C5;
+      </Box>
+    </Box>
   );
 }
 
