@@ -1,7 +1,8 @@
 import { Grid, Box, Button, Typography } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
-//import fs from 'fs'
+import data from '../../../test_data/electricityPrices.json'
 
+//import fs from 'fs'
 //import { components } from "../test_data/electricityPrices.json" assert {type: 'json' };;
 
 const EnergyComponentPage = () => { 
@@ -9,53 +10,22 @@ const EnergyComponentPage = () => {
   const location = useLocation();
   const component = location.state.component;
   
-  let priceFileName = '../test_data/electricityPrices.json';
+  let priceFileName = '../../../test_data/electricityPrices.json';
   let namedata = "WIP";
   
   //const componentFile = require('../test_data/electricityPrices.json');
     
-  // Some functionality for displaying test data here:
+  // Some functionality for displaying data here:
   let usagedata;
-  let fetchedData;
+  let fetchedData = "Not read";
   
-  /*var myLog = new File("../test_data/electricityPrices.json");
-  if(myLog.exists()) {
-    namedata = "Tiedosto on";
-  } else {
-    namedata = "Tiedosto ei ole"; 
-  }*/
-  
-  /*function fetchHelper() {
-  fetch('../test_data/electricityPrices.json')
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => namedata = data); 
-  }*/
-  
-  // Some functionality for displaying test data here:
   fetch(priceFileName)
     .then((response) => response.text())
-    .then((json) => document.getElementById("pconsume").innerHTML = Object.keys(json)[0]);
+    .then((json) => fetchedData = Object.keys(json)[0]);
     
-  
-  /*fs.readFile('../test_data/electricityPrices.json', function (error, content) {
-    fetchedData = JSON.parse(content);  
-  });*/
-  
-  //namedata = usagedata;
-  
-  /*pumpdata = console.table([{
-    "name" : usagedata.result[0].name,
-  }]);*/
-  
-  //const componentFile = require('../test_data/electricityPrices.json');
-  
-  //namedata = typeof componentFiles;
+  document.getElementById("pconsume").innerHTML = data.prices;
   
   
-  //const fetchedFile = fetch('../test_data/electricityPrices.json');
-  //const fetchedData = response.json();
   
   return (
     <Grid 
