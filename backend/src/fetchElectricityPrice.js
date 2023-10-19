@@ -3,116 +3,103 @@ import fs from "fs/promises";
 
 const LATEST_PRICES_ENDPOINT =
   "https://api.porssisahko.net/v1/latest-prices.json";
-const PRICES_FILE = "./data/prices.json";
 
 async function fetchLatestPriceData() {
   const response = await fetch(LATEST_PRICES_ENDPOINT);
   return response.json();
 }
 
-function getPriceForDate(date, prices) {
+// Checks if price exists for a certain date
+function checkIfPriceExists(date, prices) {
   const matchingPriceEntry = prices.find(
     (price) =>
       new Date(price.startDate) <= date && new Date(price.endDate) > date
   );
 
   if (!matchingPriceEntry) {
-    throw "Price for the requested date is missing";
+    throw "Price for the requested date " + date + " is missing";
   }
-
   return matchingPriceEntry.price;
 }
 
-function forecastElectricityPrice(yesterday, tomorrow, price_values) {
-  let i = yesterday;
-  i.setMinutes(0, 0, 0);
-  let updatedPriceValues = [...price_values]; // Create a copy of the original array
-
-  while (i <= tomorrow) {
-    try {
-      let price = getPriceForDate(i, updatedPriceValues);
-    } catch (fetchError) {
-      updatedPriceValues.push({
-        price: 5,
-        startDate: new Date(i),
-        endDate: new Date(i - 3600000),
-      });
-    }
-    i.setHours(i.getHours() + 1);
-  }
-  return updatedPriceValues;
+function sortPricesByDate(prices) {
+  // Sort the array by the startDate property
+  prices.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+  return prices;
 }
 
-(async () => {
+// Sets fixed price of 5 snt / kwh to the dates that are missing price
+function forecastElectricityPrice(yesterday, tomorrow, price_values) {
+  let start = new Date(yesterday);
+  start.setMinutes(0, 0, 0);
+  let end = new Date(tomorrow);
+  end.setHours(end.getHours() + 2);
+  let updatedPriceValues = [...price_values];
+
+  while (start <= end) {
+    try {
+      checkIfPriceExists(start, updatedPriceValues);
+    } catch (fetchError) {
+      let missingStartDate = new Date(start);
+      let missingEndDate = new Date(start);
+      missingEndDate.setHours(missingEndDate.getHours() + 1);
+      updatedPriceValues.push(
+        JSON.parse(
+          JSON.stringify({
+            price: 5.0,
+            startDate: missingStartDate,
+            endDate: missingEndDate,
+          })
+        )
+      );
+    }
+    start.setHours(start.getHours() + 1);
+  }
+
+  let sortedPriceValues = sortPricesByDate(updatedPriceValues);
+
+  return sortedPriceValues;
+}
+
+async function checkAndFetchData(priceFileName) {
+  // We need to fetch data for a 48 h time period.
+  // 24 h to past (yesterday) and 24 h to future (tomorrow) from current time (today)
+  const today = new Date();
+  const yesterday = new Date(today - 3600000 * 24);
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
   try {
-    const today = new Date();
-    const yesterday = new Date(today - 3600000 * 24);
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
+    // Fetch the prices from api
+    const { prices } = await fetchLatestPriceData();
+
+    // Forecast rest of the needed prices
+    const updatedPrices = forecastElectricityPrice(yesterday, tomorrow, prices);
+
+    // Write prices to price-file
+    await fs.writeFile(priceFileName, JSON.stringify(updatedPrices, null, 2));
 
     let priceToday, priceYesterday, priceTomorrow;
 
+    // Check that needed dates were added
     try {
-      // Check if price data for todays has already been fetched
-      if (
-        await fs
-          .access(PRICES_FILE)
-          .then(() => true)
-          .catch(() => false)
-      ) {
-        const data = await fs.readFile(PRICES_FILE, "utf-8");
-        const prices = JSON.parse(data);
-        priceToday = getPriceForDate(today, prices);
+      priceToday = checkIfPriceExists(today, updatedPrices);
+      priceYesterday = checkIfPriceExists(yesterday, updatedPrices);
+      priceTomorrow = checkIfPriceExists(tomorrow, updatedPrices);
+    } catch (e) {
+      if (priceToday == undefined) {
+        console.error("Missing data for today: ", e);
       }
-    } catch (fetchError) {}
-
-    try {
-      // Check if price data for yesterday has already been fetched
-      if (
-        await fs
-          .access(PRICES_FILE)
-          .then(() => true)
-          .catch(() => false)
-      ) {
-        const data = await fs.readFile(PRICES_FILE, "utf-8");
-        const prices = JSON.parse(data);
-        priceYesterday = getPriceForDate(yesterday, prices);
+      if (priceYesterday == undefined) {
+        console.error("Missing data for yesterday: ", e);
       }
-    } catch (fetchError) {}
-
-    try {
-      // Check if price data for tomorrow has already been fetched
-      if (
-        await fs
-          .access(PRICES_FILE)
-          .then(() => true)
-          .catch(() => false)
-      ) {
-        const data = await fs.readFile(PRICES_FILE, "utf-8");
-        const prices = JSON.parse(data);
-        priceTomorrow = getPriceForDate(tomorrow, prices);
+      if (priceTomorrow == undefined) {
+        console.error("Missing data for tomorrow: ", e);
       }
-    } catch (fetchError) {}
-
-    if (!priceToday || !priceYesterday || !priceTomorrow) {
-      // Fetch new price information from api
-      const { prices } = await fetchLatestPriceData();
-      priceToday = getPriceForDate(today, prices);
-      priceYesterday = getPriceForDate(yesterday, prices);
-
-      // Save the data to prices.json
-      await fs.writeFile(PRICES_FILE, JSON.stringify(prices, null, 2));
-    }
-    if (!priceToday || !priceYesterday || !priceTomorrow) {
-      const data = await fs.readFile(PRICES_FILE, "utf-8");
-      const prices = JSON.parse(data);
-      let updatedPrices = forecastElectricityPrice(yesterday, tomorrow, prices);
-      // Save the data to prices.json
-      await fs.writeFile(PRICES_FILE, JSON.stringify(updatedPrices, null, 2));
     }
   } catch (e) {
-    console.error(`Failed to fetch the price: ${e}`);
+    console.error("Failed to fetch the price: ", e);
   }
-})();
+}
 
-export default fetchLatestPriceData;
+export default checkAndFetchData;

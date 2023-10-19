@@ -1,17 +1,20 @@
 import express from "express";
 import fs from "fs/promises";
-import fetchLatestPriceData from "./src/fetchElectricityPrice.js";
+import checkAndFetchData from "./src/fetchElectricityPrice.js";
+import convertJsonToFinnishTime from "./src/convertToFinnishTime.js";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const PRICES_FILE = "data/prices.json";
+const PRICES_FILE = "./data/prices.json";
 
-// Define a function to fetch and save the latest price data
+// Fetch the price data and convert to Finnish Time
 async function updatePriceData() {
   try {
-    const { prices } = await fetchLatestPriceData();
-    await fs.writeFile(PRICES_FILE, JSON.stringify(prices, null, 2));
+    await checkAndFetchData(PRICES_FILE);
+
+    await convertJsonToFinnishTime(PRICES_FILE);
+
     console.log("Price data updated.");
   } catch (e) {
     console.error(`Failed to fetch the latest price data: ${e}`);
@@ -26,9 +29,6 @@ app.get("/", async (req, res) => {
     const data = await fs.readFile(PRICES_FILE, "utf-8");
     const prices = JSON.parse(data);
 
-    // Sort the prices array by the 'startDate' property in ascending order
-    prices.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
-
     res.json(prices);
   } catch (err) {
     res.status(500).send("Error reading price data.");
@@ -39,5 +39,5 @@ app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
 
-// Update data every hour
-setInterval(updatePriceData, 60 * 60 * 1000);
+// Update data every 59 minutes
+setInterval(updatePriceData, 59 * 60 * 1000);

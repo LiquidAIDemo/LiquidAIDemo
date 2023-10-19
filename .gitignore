@@ -129,5 +129,7 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# Price data
-backend/data/
+# Backend data
+backend/data/*
+# But keep folder
+!backend/data/.gitkeep
