@@ -37,4 +37,3 @@ Frontend and backend can also be run separately. Depending on which one you want
 Navigate to the frontend folder and run the following commands:
 - npm install
 - npm test
-
