@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Button, FormControl, MenuItem, Select, Box } from '@mui/material';
 
-
 let demoTime = new Date();
 let demoPassedHours = 0;
-
 
 function getDayName(date) {
   var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -12,7 +10,7 @@ function getDayName(date) {
   return dayName;
 }
 
-function Clock() {
+function DemoClock() {
   let now = new Date();
   
   const [demoHour, setTime] = useState(now.getHours());
@@ -25,26 +23,6 @@ function Clock() {
   // Default speed 1 sec
   const [speed, setSpeed] = useState(1000);
   const [start, setStart] = useState("next");
-
-
-  let hh = now.getHours();
-  let mm = now.getMinutes();
-  let ss = now.getSeconds();
-
-  // Units below 10 must have zero added to front
-  if (hh < 10) {
-    hh = "0" + hh;
-  }
-  if (mm < 10) {
-    mm = "0" + mm;
-  }
-  if (ss < 10) {
-    ss = "0" + ss;
-  }
-  
-  const realdate =  now.getDate() + "." + (now.getMonth() + 1) + "." + now.getFullYear();
-  const realtime = hh + ":" + mm + ":" + ss;
-
 
   // Time runs from demo start fro 24 hours
   // speed depends on selected time value
@@ -158,7 +136,7 @@ function Clock() {
       </Box>
 
       <Box style={{padding: '1vh'}}>
-        <b>Demo: </b> {demoHour}:00, {getDayName(demoTime)} {demoDate}.{demoMonth} &#x1F4C5;
+        <b>Demo: </b> {demoHour}:00, {getDayName(demoTime)} {demoDate}.{demoMonth}. &#x1F4C5;
         <br/>
 
         <Button
@@ -180,12 +158,8 @@ function Clock() {
           ) : null
         }
       </Box>
-
-      <Box style={{padding: '1vh'}}>
-        <b>Current: </b> {realtime}, {getDayName(now)} {now.getDate()}.{now.getMonth() + 1} &#x1F4C5;
-      </Box>
     </Box>
   );
 }
 
-export default Clock;
+export default DemoClock;
