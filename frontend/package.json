@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@mui/icons-material": "^5.14.11",
+    "axios": "^1.5.1",
     "concurrently": "^8.2.1",
     "react-water-wave": "^2.0.1"
   },
