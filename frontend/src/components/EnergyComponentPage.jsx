@@ -1,32 +1,10 @@
 import { Grid, Box, Button, Typography } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
-import data from '../../../test_data/electricityPrices.json'
-
-//import fs from 'fs'
-//import { components } from "../test_data/electricityPrices.json" assert {type: 'json' };;
 
 const EnergyComponentPage = () => { 
   const navigate = useNavigate();
   const location = useLocation();
   const component = location.state.component;
-  
-  let priceFileName = '../../../test_data/electricityPrices.json';
-  let namedata = "WIP";
-  
-  //const componentFile = require('../test_data/electricityPrices.json');
-    
-  // Some functionality for displaying data here:
-  let usagedata;
-  let fetchedData = "Not read";
-  
-  fetch(priceFileName)
-    .then((response) => response.text())
-    .then((json) => fetchedData = Object.keys(json)[0]);
-    
-  document.getElementById("pconsume").innerHTML = data.prices;
-  
-  
-  
   return (
     <Grid 
       container
