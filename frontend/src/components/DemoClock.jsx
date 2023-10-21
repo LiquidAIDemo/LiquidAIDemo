@@ -49,7 +49,7 @@ function DemoClock({onDemoTimeChange}) {
 
     return () => clearInterval(intervalId);
 
-  }, [isPaused, speed, demoHour, demoDate, onDemoTimeChange]);
+  }, [isPaused, speed, demoHour, demoDate]);
 
 
   const setDemoTime = () => {
