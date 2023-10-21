@@ -1,10 +1,28 @@
 import { Grid, Box, Button, Typography } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
+import dataB from '../../../test_data/energyComponents.json'
+
+async function fetchHelper() {
+  let usageFileName = '../../../test_data/energyComponents.json';
+  //let usageData = "Data not read";
+  
+  /*fetch(usageFileName)
+	  .then((response) => response.json())
+	  .then((json) => usageData = json);*/
+    
+  const resp = await fetch(usageFileName);
+  const usageData = await resp.json();
+	  
+	document.getElementById("pconsume").innerHTML = usageData;
+}
 
 const EnergyComponentPage = () => { 
   const navigate = useNavigate();
   const location = useLocation();
   const component = location.state.component;
+  
+	fetchHelper();
+  
   return (
     <Grid 
       container
