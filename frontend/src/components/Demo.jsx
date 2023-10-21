@@ -1,6 +1,6 @@
 import { Box, Button, Grid } from '@mui/material';
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import EnergyComponent from './EnergyComponent';
 import DemoClock from './DemoClock';
 import RealtimeClock from './RealtimeClock';
@@ -80,7 +80,6 @@ const Demo = () => {
               height="40vh">  
             Savings
               <ElectricityPrice demoTime={demoTime}/>
-              {console.log(demoTime)}
             </Box>
           </Grid>
 
