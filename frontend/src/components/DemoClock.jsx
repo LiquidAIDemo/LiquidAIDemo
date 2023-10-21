@@ -36,7 +36,7 @@ function DemoClock({onDemoTimeChange}) {
           // add one hour to demotime object
           demoTime.setHours(demoTime.getHours() + 1);
           setDemoTime();
-          onDemoTimeChange(demoTime)
+          onDemoTimeChange(demoTime);
           demoPassedHours = demoPassedHours + 1;
         } 
         
@@ -98,6 +98,7 @@ function DemoClock({onDemoTimeChange}) {
     }
 
     setDemoTime();
+    onDemoTimeChange(demoTime);
 
   }
 
