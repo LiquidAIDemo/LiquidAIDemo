@@ -33,7 +33,7 @@ const ElectricityPrice = ({ demoTime }) => {
   }
 
   return (
-    <Box>Current price is {currentPrice.toFixed(2)} snt / kWh</Box>
+    <Box>Current price is {currentPrice.toFixed(2)} cents / kWh</Box>
   )
 }
 
