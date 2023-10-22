@@ -1,17 +1,20 @@
 import { Grid, Box, Button, Typography } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
-import dataB from '../../../test_data/energyComponents.json'
+import importedUsageData from '../../../test_data/energyComponents.json'
+
+const usageFileName = '../../../test_data/energyComponents.json';
 
 async function fetchHelper() {
-  let usageFileName = '../../../test_data/energyComponents.json';
+  
   //let usageData = "Data not read";
   
   /*fetch(usageFileName)
 	  .then((response) => response.json())
 	  .then((json) => usageData = json);*/
-    
+  
+  let usageData = "Waiting for data";
   const resp = await fetch(usageFileName);
-  const usageData = await resp.json();
+  usageData = await resp.json();
 	  
 	document.getElementById("pconsume").innerHTML = usageData;
 }
@@ -21,7 +24,22 @@ const EnergyComponentPage = () => {
   const location = useLocation();
   const component = location.state.component;
   
-	fetchHelper();
+  let usageData;
+	//fetchHelper();
+
+  fetch(usageFileName)
+    .then(res => res.text())
+    .then(json => {
+      document.getElementById("pconsume").innerHTML = json["components"][0]["name"];
+  })
+
+  fetch(usageFileName)
+	  .then((response) => response.text())
+	  .then((json) => usageData = Object.keys(json)[0]);
+
+
+  document.getElementById("pconsume").innerHTML = importedUsageData.components[0].name;
+  //var fs = require('fs');
   
   return (
     <Grid 
@@ -104,7 +122,7 @@ const EnergyComponentPage = () => {
                     variant="body2"
                     sx={{margin: 2}}
                     >insert values from test data here: 
-                    <p id="pconsume">FAILURE TO LOAD DATA</p>
+                    <p id="pconsume">Data not loaded</p>
                   </Typography>
                   <Typography 
                     variant="body2"
