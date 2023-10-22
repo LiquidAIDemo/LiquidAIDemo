@@ -4,30 +4,30 @@ import importedUsageData from '../../../test_data/energyComponents.json'
 
 const usageFileName = '../../../test_data/energyComponents.json';
 
-async function fetchHelper() {
+/*async function fetchHelper() {
   
   //let usageData = "Data not read";
   
-  /*fetch(usageFileName)
+  fetch(usageFileName)
 	  .then((response) => response.json())
-	  .then((json) => usageData = json);*/
+	  .then((json) => usageData = json);
   
   let usageData = "Waiting for data";
   const resp = await fetch(usageFileName);
   usageData = await resp.json();
 	  
 	document.getElementById("pconsume").innerHTML = usageData;
-}
+}*/
 
 const EnergyComponentPage = () => { 
   const navigate = useNavigate();
   const location = useLocation();
   const component = location.state.component;
   
-  let usageData;
+  //let usageData;
 	//fetchHelper();
 
-  fetch(usageFileName)
+  /*fetch(usageFileName)
     .then(res => res.text())
     .then(json => {
       document.getElementById("pconsume").innerHTML = json["components"][0]["name"];
@@ -35,9 +35,10 @@ const EnergyComponentPage = () => {
 
   fetch(usageFileName)
 	  .then((response) => response.text())
-	  .then((json) => usageData = Object.keys(json)[0]);
+	  .then((json) => usageData = Object.keys(json)[0]);*/
 
-
+  // This will display data, but only before being reloaded
+  // Remove the next line, refresh the page, and then re-add this line to see it in action
   document.getElementById("pconsume").innerHTML = importedUsageData.components[0].name;
   //var fs = require('fs');
   
