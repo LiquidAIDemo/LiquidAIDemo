@@ -30,7 +30,7 @@ export default function NestedList() {
         <List component="div" >
             <Grid container spacing={2}>
                 <Grid item xs={6}>
-                <ListItem>
+                    <ListItem>
                         <FormControlLabel control={<Checkbox defaultChecked />} label="Car 1" />
                     </ListItem>
                     <ListItem>
