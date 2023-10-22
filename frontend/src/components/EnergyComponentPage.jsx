@@ -4,44 +4,30 @@ import importedUsageData from '../../../test_data/energyComponents.json'
 
 const usageFileName = '../../../test_data/energyComponents.json';
 
-/*async function fetchHelper() {
-  
-  //let usageData = "Data not read";
-  
-  fetch(usageFileName)
-	  .then((response) => response.json())
-	  .then((json) => usageData = json);
-  
-  let usageData = "Waiting for data";
-  const resp = await fetch(usageFileName);
-  usageData = await resp.json();
-	  
-	document.getElementById("pconsume").innerHTML = usageData;
-}*/
+async function displayData(what, where) {
+  document.getElementById(where).innerHTML = what;
+}
+
+function readConsumptions(d) {
+  d = importedUsageData.components[0].consumption_per_hour_kwh;
+  let r = [];
+  for (var i = 0; i < 24; i++) {
+    r.push("From " + d[i].startDate + " to " + d[i].endDate + ", value is " + d[i].value + ".\n");
+  }
+  return r;
+}
 
 const EnergyComponentPage = () => { 
   const navigate = useNavigate();
   const location = useLocation();
   const component = location.state.component;
+
+  // Data unloads on refresh, for some reason. Save the file to get it to display again
+  displayData(importedUsageData.components[0].consumption_per_hour_kwh.length, "pconsume");
   
-  //let usageData;
-	//fetchHelper();
-
-  /*fetch(usageFileName)
-    .then(res => res.text())
-    .then(json => {
-      document.getElementById("pconsume").innerHTML = json["components"][0]["name"];
-  })
-
-  fetch(usageFileName)
-	  .then((response) => response.text())
-	  .then((json) => usageData = Object.keys(json)[0]);*/
-
-  // This will display data, but only before being reloaded
-  // Remove the next line, refresh the page, and then re-add this line to see it in action
-  document.getElementById("pconsume").innerHTML = importedUsageData.components[0].name;
-  //var fs = require('fs');
+  displayData(readConsumptions(), "pconsume");
   
+
   return (
     <Grid 
       container
