@@ -10,7 +10,7 @@ function getDayName(date) {
   return dayName;
 }
 
-function DemoClock() {
+function DemoClock({onDemoTimeChange}) {
   let now = new Date();
   
   const [demoHour, setTime] = useState(now.getHours());
@@ -36,6 +36,7 @@ function DemoClock() {
           // add one hour to demotime object
           demoTime.setHours(demoTime.getHours() + 1);
           setDemoTime();
+          onDemoTimeChange(demoTime);
           demoPassedHours = demoPassedHours + 1;
         } 
         
@@ -97,6 +98,7 @@ function DemoClock() {
     }
 
     setDemoTime();
+    onDemoTimeChange(demoTime);
 
   }
 

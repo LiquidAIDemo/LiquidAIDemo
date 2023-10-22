@@ -1,11 +1,19 @@
 import { Box, Button, Grid } from '@mui/material';
 import { useNavigate } from "react-router-dom";
+import { useState } from "react"
 import EnergyComponent from './EnergyComponent';
 import DemoClock from './DemoClock';
 import RealtimeClock from './RealtimeClock';
+import ElectricityPrice from './ElectricityPrice'
 
 const Demo = () => {
   const navigate = useNavigate();
+  const [demoTime, setDemoTime] = useState(new Date());
+
+  const handleDemoTimeChange = (time) => {
+    const newDemoTime = new Date(time);
+    setDemoTime(newDemoTime);
+  };
 
   return (
     //Created container grid
@@ -57,7 +65,7 @@ const Demo = () => {
               overflow="hidden" >
             Time
               <Box>
-                <DemoClock />
+                <DemoClock onDemoTimeChange={handleDemoTimeChange}/>
                 <RealtimeClock />
               </Box>
             </Box>
@@ -71,6 +79,7 @@ const Demo = () => {
               bgcolor = "#cfe8fc" 
               height="40vh">  
             Savings
+              <ElectricityPrice demoTime={demoTime}/>
             </Box>
           </Grid>
 
