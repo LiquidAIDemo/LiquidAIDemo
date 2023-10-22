@@ -2,9 +2,8 @@ import React from 'react'
 import '@testing-library/jest-dom'
 import { render, screen, act, fireEvent, waitFor } from '@testing-library/react'
 import {within} from '@testing-library/dom'
-import userEvent from '@testing-library/user-event'
 import DemoClock from '../components/DemoClock'
-import { FormControl, MenuItem, Select } from '@mui/material';
+import { MenuItem, Select } from '@mui/material';
 
 const now = new Date()
 
