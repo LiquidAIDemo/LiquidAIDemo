@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Button, FormControl, MenuItem, Select, Box } from '@mui/material';
 
-
 let demoTime = new Date();
 let demoPassedHours = 0;
-
 
 function getDayName(date) {
   var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -12,7 +10,7 @@ function getDayName(date) {
   return dayName;
 }
 
-function Clock() {
+function DemoClock({onDemoTimeChange}) {
   let now = new Date();
   
   const [demoHour, setTime] = useState(now.getHours());
@@ -26,26 +24,6 @@ function Clock() {
   const [speed, setSpeed] = useState(1000);
   const [start, setStart] = useState("next");
 
-
-  let hh = now.getHours();
-  let mm = now.getMinutes();
-  let ss = now.getSeconds();
-
-  // Units below 10 must have zero added to front
-  if (hh < 10) {
-    hh = "0" + hh;
-  }
-  if (mm < 10) {
-    mm = "0" + mm;
-  }
-  if (ss < 10) {
-    ss = "0" + ss;
-  }
-  
-  const realdate =  now.getDate() + "." + (now.getMonth() + 1) + "." + now.getFullYear();
-  const realtime = hh + ":" + mm + ":" + ss;
-
-
   // Time runs from demo start fro 24 hours
   // speed depends on selected time value
   useEffect(() => {
@@ -58,6 +36,7 @@ function Clock() {
           // add one hour to demotime object
           demoTime.setHours(demoTime.getHours() + 1);
           setDemoTime();
+          onDemoTimeChange(demoTime);
           demoPassedHours = demoPassedHours + 1;
         } 
         
@@ -119,18 +98,16 @@ function Clock() {
     }
 
     setDemoTime();
+    onDemoTimeChange(demoTime);
 
   }
 
   // Select speed menu, demo time, pause button and real time
   return (
-    <div>
-
-      
-        <p>
+    <Box>
+      <Box style={{padding: '1vh'}}>
         Select speed:
-        <null style={{ marginRight: '10px '}}/>
-        <FormControl>
+        <FormControl style={{ marginLeft: '10px '}}>
           <Select
             defaultValue={1}
             value={speed}
@@ -144,14 +121,12 @@ function Clock() {
             <MenuItem value={5000}>5 secs / hour</MenuItem>
           </Select>
         </FormControl>
-      
-      <br/>
-      <p/>
-        Select time range: 
-        <null style={{ marginRight: '10px '}}/>
-        <FormControl>
+      </Box>
+
+      <Box style={{padding: '1vh'}}>
+        Select time range:
+        <FormControl style={{ marginLeft: '10px '}}>
           <Select
-            
             value={start}
             onChange={handleStartingChange}
             sx={{width: '140px', height: '30px'}}
@@ -160,39 +135,33 @@ function Clock() {
             <MenuItem value={"last"}>Last 24h</MenuItem>
           </Select>
         </FormControl>
-      
-      </p>
+      </Box>
 
-      <p>
-      <b>Demo: </b>  {demoHour}:00, {getDayName(demoTime)}  {demoDate}.{demoMonth} &#x1F4C5;
-      <br/>
+      <Box style={{padding: '1vh'}}>
+        <b>Demo: </b> {demoHour}:00, {getDayName(demoTime)} {demoDate}.{demoMonth}. &#x1F4C5;
+        <br/>
 
-      <Button 
-        sx={{ height: '30px'}}
-        variant="contained" 
-        onClick={() => handleResetClick(start)}
-      >
-        {'Reset'}
-      </Button>
-
-      {
-        demoPassedHours < 24 ? (
-          <Button 
-          sx={{ height: '30px'}}
-          style={{ marginLeft: '10px '}}
-          variant="outlined" onClick={togglePause}
-          >
-            {isPaused ? 'Continue' : 'Pause'}
-          </Button>
-        ) : null
-      }
-        
-      </p>
-
-      <b>Current : </b>  {realtime}, {getDayName(now)}  {now.getDate()}.{now.getMonth()+1} &#x1F4C5;
-
-    </div>
+        <Button
+          sx={{ height: '30px' }}
+          variant="contained"
+          onClick={() => handleResetClick(start)}
+        >
+          {'Restart'}
+        </Button>
+        {
+          demoPassedHours < 24 ? (
+            <Button
+              sx={{height: '30px'}}
+              style={{ marginLeft: '10px '}}
+              variant="outlined" onClick={togglePause}
+            >
+              {isPaused ? 'Continue' : 'Pause'}
+            </Button>
+          ) : null
+        }
+      </Box>
+    </Box>
   );
 }
 
-export default Clock;
+export default DemoClock;

@@ -1,14 +1,43 @@
-const express = require('express')
-const cors = require("cors")
-const app = express()
+import express from "express";
+import fs from "fs/promises";
+import checkAndFetchData from "./src/fetchElectricityPrice.js";
+import convertJsonToFinnishTime from "./src/convertToFinnishTime.js";
 
-app.use(cors())
+const app = express();
+const PORT = process.env.PORT || 3001;
 
-app.get('/', (request, response) => {  
-  response.send('<h1>hello world</h1>')
-})
+const PRICES_FILE = "./data/prices.json";
 
-const PORT = 3001
+// Fetch the price data and convert to Finnish Time
+async function updatePriceData() {
+  try {
+    await checkAndFetchData(PRICES_FILE);
+
+    await convertJsonToFinnishTime(PRICES_FILE);
+
+    console.log("Price data updated.");
+  } catch (e) {
+    console.error(`Failed to fetch the latest price data: ${e}`);
+  }
+}
+
+// Fetch and update price data when the server starts
+updatePriceData();
+
+app.get("/", async (req, res) => {
+  try {
+    const data = await fs.readFile(PRICES_FILE, "utf-8");
+    const prices = JSON.parse(data);
+
+    res.json(prices);
+  } catch (err) {
+    res.status(500).send("Error reading price data.");
+  }
+});
+
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-})
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
+
+// Update data every 59 minutes
+setInterval(updatePriceData, 59 * 60 * 1000);

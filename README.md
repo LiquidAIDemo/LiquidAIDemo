@@ -17,18 +17,24 @@ After adding an SSH key, or if you already have one, you can clone the project t
 
 ### Starting the application
 
-On your command line terminal (where you cloned the project), navigate to the frontend folder:
-- cd frontend
-
-Then, run the command:
+On your command line terminal, in the root directory of the project, run the following command:
 - npm start
 
-This command executes all of the following: npm install, npm run dev, cd backend & npm run dev. It installs all the necessary dependencies locally and then starts the frontend and backend at the same time. On the console output you can see in which ports they are running (on default, frontend runs in port 5173 and backend in 3001). The number in square brackets in the beginning of each line of the console output tells if it's refering to frontend or backend: lines with 0 refer to frontend and 1 to backend.
+This command executes all of the following: cd frontend, npm install, npm run dev, cd backend & npm run dev. It navigates to the frontend folder and runs the npm start script that's specified in the package.json file there. It starts the frontend and backend at the same time and installs all the necessary dependencies to both of these folders. 
+
+On the console output you can see in which ports the frontend and backend are running (on default, frontend runs in port 5173 and backend in 3001). The number in square brackets in the beginning of each line of the console output tells if it's refering to frontend or backend: lines with 0 refer to frontend and 1 to backend.
 
 Open your browser on localhost:5173 (or if your terminal says it opened in another port, use that one) and you should be able to use the current version of the demo.
 
 ### Running frontend and backend separately
 
 Frontend and backend can also be run separately. Depending on which one you want to run, navigate to the frontend or backend folder and run the following commands:
-- npm install (this should be done every time after pulling new code from the repository, unless you use npm start command which does it for you)
+- npm install (this should be done every time after pulling new code from the repository, if you do not use the npm start command)
 - npm run dev
+
+### Running unit tests for frontend
+
+On your command line terminal, in the root directory of the project, run the following command:
+- npm test
+
+This command executes: cd frontend, npm install & npm test with options --verbose and --coverage --collectCoverageFrom='src/**/*.{jsx,js}'. This will run the unit tests and print the coverage.

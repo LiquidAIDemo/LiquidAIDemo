@@ -1,32 +1,35 @@
 import { Grid, Box, Button, Typography } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
-import importedUsageData from '../../../test_data/energyComponents.json'
+import energyComponents from "../../../test_data/energyComponents.json";
+import { BarChart } from '@mui/x-charts/BarChart';
 
-const usageFileName = '../../../test_data/energyComponents.json';
-
-async function displayData(what, where) {
-  document.getElementById(where).innerHTML = what;
-}
-
-function readConsumptions(d) {
-  d = importedUsageData.components[0].consumption_per_hour_kwh;
-  let r = [];
-  for (var i = 0; i < 24; i++) {
-    r.push("From " + d[i].startDate + " to " + d[i].endDate + ", value is " + d[i].value + ".\n");
-  }
-  return r;
-}
 
 const EnergyComponentPage = () => { 
+  
   const navigate = useNavigate();
   const location = useLocation();
   const component = location.state.component;
+  const componentData = energyComponents.components.filter(c => c.id === component.id)[0];
+  var productionData = [];
+  var consumptionData = [];
+  var totalProduction = 0;
+  var totalConsumption = 0;
 
-  // Data unloads on refresh, for some reason. Save the file to get it to display again
-  displayData(importedUsageData.components[0].consumption_per_hour_kwh.length, "pconsume");
-  
-  displayData(readConsumptions(), "pconsume");
-  
+  if (component.type === "consumer") {
+    consumptionData = componentData.consumption_per_hour_kwh
+    consumptionData.forEach(h => {
+      const startHour = new Date(h.startDate).getHours()
+      h.hour = startHour + ':00-' + (parseInt(startHour) + 1) + ':00'
+    });
+    totalConsumption = consumptionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
+  } else if (component.type === "producer") {
+    productionData = componentData.production_per_hour_kwh
+    productionData.forEach(h => {
+      const startHour = new Date(h.startDate).getHours()
+      h.hour = startHour + ':00-' + (parseInt(startHour) + 1) + ':00'
+    })
+    totalProduction = productionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
+  }
 
   return (
     <Grid 
@@ -74,23 +77,21 @@ const EnergyComponentPage = () => {
                   <Typography 
                     variant="body2"
                     sx={{margin: 2}}
-                    >Energy producing times:
+                    >Energy produced in the last 24 hours:
                   </Typography>
                   <Typography 
                     variant="body2"
                     sx={{margin: 2}}
-                    >insert values from test data here
+                    >Total production {totalProduction} kwh
                   </Typography>
-                  <Typography 
-                    variant="body2"
-                    sx={{margin: 2}}
-                    >Energy produced:
-                  </Typography>
-                  <Typography 
-                    variant="body2"
-                    sx={{margin: 2}}
-                    >insert values from test data here
-                  </Typography>
+                  <BarChart
+                    dataset={productionData}
+                    yAxis={[{label: 'kwh'}]}
+                    xAxis={[{scaleType: 'band', dataKey: 'hour', tickLabelInterval: () => false, label: 'time (h)'}]}
+                    series={[{dataKey: 'value', label: 'production (kwh)'}]}
+                    width={350}
+                    height={300}
+                  />
                   </>
                 }
                 {component.type === "consumer" && 
@@ -101,26 +102,23 @@ const EnergyComponentPage = () => {
                     >Energy consuming component
                   </Typography>
                   <Typography 
-                  variant="body2"
-                  sx={{margin: 2}}
-                  >Energy consuming times:
-                </Typography>
-                <Typography 
                     variant="body2"
                     sx={{margin: 2}}
-                    >insert values from test data here: 
-                    <p id="pconsume">Data not loaded</p>
+                    >Energy consumed in the last 24 hours:
                   </Typography>
                   <Typography 
                     variant="body2"
                     sx={{margin: 2}}
-                    >Energy consumed:
+                    >Total consumption {totalConsumption} kwh
                   </Typography>
-                  <Typography 
-                    variant="body2"
-                    sx={{margin: 2}}
-                    >insert values from test data here
-                  </Typography>
+                  <BarChart
+                    dataset={consumptionData}
+                    yAxis={[{label: 'kwh'}]}
+                    xAxis={[{scaleType: 'band', dataKey: 'hour', tickLabelInterval: () => false, label: 'time (h)'}]}
+                    series={[{dataKey: 'value', label: 'consumption (kwh)'}]}
+                    width={350}
+                    height={300}
+                  />
                 </>
               }
             </Box>

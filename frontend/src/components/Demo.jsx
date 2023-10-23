@@ -1,10 +1,20 @@
 import { Box, Button, Grid } from '@mui/material';
 import { useNavigate } from "react-router-dom";
+import { useState } from "react"
 import EnergyComponent from './EnergyComponent';
-import Clock from './Clock';
+import DemoClock from './DemoClock';
+import RealtimeClock from './RealtimeClock';
+import ElectricityPrice from './ElectricityPrice'
+import ComponentMenu from './ComponentMenu'
 
 const Demo = () => {
   const navigate = useNavigate();
+  const [demoTime, setDemoTime] = useState(new Date());
+
+  const handleDemoTimeChange = (time) => {
+    const newDemoTime = new Date(time);
+    setDemoTime(newDemoTime);
+  };
 
   return (
     //Created container grid
@@ -42,19 +52,30 @@ const Demo = () => {
       </Grid>
 
       {/*Created container to span 1/3 columns */}
-      <Grid item xs={1}>
+      <Grid item xs={1} style={{position: 'relative'}}>
         {/*Created container grid to have containers on top of another */}
         <Grid container spacing={4} columns={1}>
-
+          <Grid item xs={1} height="10vh">
+            {/*Component menu width is not working perfectly*/}
+            <Box >
+              <ComponentMenu/>
+            </Box>
+            
+          </Grid>
           {/*Created container 2, where the current time and selected time range is shown
-          Time text will be replaced*/}
+          Time text will be replaced*/}     
+              
           <Grid item xs={1} minWidth='350px'>
             <Box 
               style={{padding: '2vh'}} 
               bgcolor = "#cfe8fc" 
-              height="40vh" >
+              height="35vh"
+              overflow="hidden" >
             Time
-            <Clock />
+              <Box>
+                <DemoClock onDemoTimeChange={handleDemoTimeChange}/>
+                <RealtimeClock />
+              </Box>
             </Box>
           </Grid>
 
@@ -64,8 +85,9 @@ const Demo = () => {
             <Box
               style={{padding: '2vh'}} 
               bgcolor = "#cfe8fc" 
-              height="40vh">  
+              height="35vh">  
             Savings
+              <ElectricityPrice demoTime={demoTime}/>
             </Box>
           </Grid>
 
@@ -77,7 +99,6 @@ const Demo = () => {
             onClick={() => navigate("/")}>
           Stop
           </Button>
-          <Button> Restart </Button>
           </Grid>
 
         </Grid>
