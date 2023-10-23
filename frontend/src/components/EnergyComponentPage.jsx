@@ -18,7 +18,6 @@ const EnergyComponentPage = () => {
   if (component.type === "consumer") {
     consumptionData = componentData.consumption_per_hour_kwh
     consumptionData.forEach(h => {
-      h.index = consumptionData.indexOf(h)
       const startHour = new Date(h.startDate).getHours()
       h.hour = startHour + ':00-' + (parseInt(startHour) + 1) + ':00'
     });
@@ -26,7 +25,6 @@ const EnergyComponentPage = () => {
   } else if (component.type === "producer") {
     productionData = componentData.production_per_hour_kwh
     productionData.forEach(h => {
-      h.index = productionData.indexOf(h) 
       const startHour = new Date(h.startDate).getHours()
       h.hour = startHour + ':00-' + (parseInt(startHour) + 1) + ':00'
     })
