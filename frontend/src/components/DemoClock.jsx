@@ -146,7 +146,7 @@ function DemoClock({onDemoTimeChange}) {
           variant="contained"
           onClick={() => handleResetClick(start)}
         >
-          {'Reset'}
+          {'Restart'}
         </Button>
         {
           demoPassedHours < 24 ? (
