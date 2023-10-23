@@ -1,10 +1,38 @@
 import { Grid, Box, Button, Typography } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
+import energyComponents from "../../../test_data/energyComponents.json";
+import { BarChart } from '@mui/x-charts/BarChart';
+
 
 const EnergyComponentPage = () => { 
+  
   const navigate = useNavigate();
   const location = useLocation();
   const component = location.state.component;
+  const componentData = energyComponents.components.filter(c => c.id === component.id)[0];
+  var productionData = [];
+  var consumptionData = [];
+  var totalProduction = 0;
+  var totalConsumption = 0;
+
+  if (component.type === "consumer") {
+    consumptionData = componentData.consumption_per_hour_kwh
+    consumptionData.forEach(h => {
+      h.index = consumptionData.indexOf(h)
+      const startHour = new Date(h.startDate).getHours()
+      h.hour = startHour + ':00-' + (parseInt(startHour) + 1) + ':00'
+    });
+    totalConsumption = consumptionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
+  } else if (component.type === "producer") {
+    productionData = componentData.production_per_hour_kwh
+    productionData.forEach(h => {
+      h.index = productionData.indexOf(h) 
+      const startHour = new Date(h.startDate).getHours()
+      h.hour = startHour + ':00-' + (parseInt(startHour) + 1) + ':00'
+    })
+    totalProduction = productionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
+  }
+
   return (
     <Grid 
       container
@@ -52,22 +80,25 @@ const EnergyComponentPage = () => {
                     variant="body2"
                     sx={{margin: 2}}
                     >Energy producing times:
+                  </Typography> 
+                  
+                  <Typography 
+                    variant="body2"
+                    sx={{margin: 2}}
+                    >Energy produced in the last 24 hours:
                   </Typography>
                   <Typography 
                     variant="body2"
                     sx={{margin: 2}}
-                    >insert values from test data here
+                    >Total production {totalProduction} kwh
                   </Typography>
-                  <Typography 
-                    variant="body2"
-                    sx={{margin: 2}}
-                    >Energy produced:
-                  </Typography>
-                  <Typography 
-                    variant="body2"
-                    sx={{margin: 2}}
-                    >insert values from test data here
-                  </Typography>
+                  <BarChart
+                    dataset={productionData}
+                    xAxis={[{ scaleType: 'band', dataKey: 'hour'}]}
+                    series={[{dataKey: 'value', label: 'production (kwh)'}]}
+                    width={350}
+                    height={300}
+                  />
                   </>
                 }
                 {component.type === "consumer" && 
@@ -78,25 +109,22 @@ const EnergyComponentPage = () => {
                     >Energy consuming component
                   </Typography>
                   <Typography 
-                  variant="body2"
-                  sx={{margin: 2}}
-                  >Energy consuming times:
-                </Typography>
-                <Typography 
                     variant="body2"
                     sx={{margin: 2}}
-                    >insert values from test data here
+                    >Energy consumed in the last 24 hours:
                   </Typography>
                   <Typography 
                     variant="body2"
                     sx={{margin: 2}}
-                    >Energy consumed:
+                    >Total consumption {totalConsumption} kwh
                   </Typography>
-                  <Typography 
-                    variant="body2"
-                    sx={{margin: 2}}
-                    >insert values from test data here
-                  </Typography>
+                  <BarChart
+                    dataset={consumptionData}
+                    xAxis={[{ scaleType: 'band', dataKey: 'hour' }]}
+                    series={[{dataKey: 'value', label: 'consumption (kwh)'}]}
+                    width={350}
+                    height={300}
+                  />
                 </>
               }
             </Box>
