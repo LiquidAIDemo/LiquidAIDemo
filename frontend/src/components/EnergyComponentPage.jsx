@@ -77,12 +77,6 @@ const EnergyComponentPage = () => {
                   <Typography 
                     variant="body2"
                     sx={{margin: 2}}
-                    >Energy producing times:
-                  </Typography> 
-                  
-                  <Typography 
-                    variant="body2"
-                    sx={{margin: 2}}
                     >Energy produced in the last 24 hours:
                   </Typography>
                   <Typography 
