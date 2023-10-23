@@ -2,7 +2,6 @@ import { Card, CardContent, CardActions, Typography } from '@mui/material';
 import { Button } from '@mui/material'; 
 import { useNavigate } from 'react-router-dom';
 import energyComponents from "../../../test_data/energyComponents.json";
-import { useEffect, useState } from 'react';
 
 const EnergyComponent = (props) => {
   const { id, name, type, description, demoTime } = props;
@@ -20,7 +19,7 @@ const EnergyComponent = (props) => {
   var totalProduction = 0;
   var totalConsumption = 0;
 
-  const demoHours = demoTime.getHours()
+  const demoHour = demoTime.getHours()
 
   if (component.type === "consumer") {
     consumptionData = componentData.consumption_per_hour_kwh
@@ -49,8 +48,8 @@ const EnergyComponent = (props) => {
         <>
           <Typography variant='body2'>
             Consumer<br/>
-            Energy consumed between {demoHours}:00-{parseInt(demoHours)+1}:00<br/>
-            {consumptionData.filter(h => h.startHour === demoHours).map(h => h.value)[0]} kwh <br/>
+            Energy consumed between {demoHour}:00-{parseInt(demoHour)+1}:00<br/>
+            {consumptionData.filter(h => h.startHour === demoHour).map(h => h.value)[0]} kwh <br/>
             Total consumption during the demo {totalConsumption} kwh
           </Typography>
         </> } 
@@ -58,8 +57,8 @@ const EnergyComponent = (props) => {
         <>
           <Typography variant='body2'>
             Producer<br/>
-            Energy produced between {demoHours}:00-{parseInt(demoHours)+1}:00<br/>
-            {productionData.filter(h => h.startHour === demoHours).map(h => h.value)[0]} kwh <br/>
+            Energy produced between {demoHour}:00-{parseInt(demoHour)+1}:00<br/>
+            {productionData.filter(h => h.startHour === demoHour).map(h => h.value)[0]} kwh <br/>
             Total production during the demo {totalProduction} kwh
           </Typography>
         </> }
