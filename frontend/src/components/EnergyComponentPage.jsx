@@ -92,7 +92,8 @@ const EnergyComponentPage = () => {
                   </Typography>
                   <BarChart
                     dataset={productionData}
-                    xAxis={[{ scaleType: 'band', dataKey: 'hour'}]}
+                    yAxis={[{label: 'kwh'}]}
+                    xAxis={[{scaleType: 'band', dataKey: 'hour', tickLabelInterval: () => false, label: 'time (h)'}]}
                     series={[{dataKey: 'value', label: 'production (kwh)'}]}
                     width={350}
                     height={300}
@@ -118,8 +119,9 @@ const EnergyComponentPage = () => {
                   </Typography>
                   <BarChart
                     dataset={consumptionData}
-                    xAxis={[{ scaleType: 'band', dataKey: 'hour' }]}
-                    series={[{dataKey: 'value', label: 'consumption (kwh)'}]}
+                    yAxis={[{label: 'kwh'}]}
+                    xAxis={[{scaleType: 'band', dataKey: 'hour', tickLabelInterval: () => false, label: 'time (h)'}]}
+                    series={[{dataKey: 'value', label: 'production (kwh)'}]}
                     width={350}
                     height={300}
                   />
