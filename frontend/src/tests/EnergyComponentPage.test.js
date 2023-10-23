@@ -1,9 +1,13 @@
 import React from 'react'
 import '@testing-library/jest-dom'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, act } from '@testing-library/react'
 import EnergyComponentPage from '../components/EnergyComponentPage'
 import Demo from '../components/Demo'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
+import axios from 'axios'
+import MockAdapter from 'axios-mock-adapter'
+
+const axiosMock = new MockAdapter(axios)
 
 const eComponent = {
   id: 1,
@@ -36,17 +40,22 @@ test("renders content correctly", () => {
   expect(screen.getByText('Back to demo')).toBeInTheDocument()
 })
 
-test("'back to demo' button returns to demo", () => {
-  render(
-    <MemoryRouter initialEntries={[componentPagePath]}>
-      <Routes>
-        <Route path={componentPagePath} element={<EnergyComponentPage />} />
-        <Route path='/demo' element={<Demo />} />
-      </Routes>
-    </MemoryRouter>
-  )
+test("'back to demo' button returns to demo", async () => {
+  axiosMock.onGet('/api').reply(200, { price: 0 })
+  await act(async () => {
+    render(
+      <MemoryRouter initialEntries={[componentPagePath]}>
+        <Routes>
+          <Route path={componentPagePath} element={<EnergyComponentPage />} />
+          <Route path='/demo' element={<Demo />} />
+        </Routes>
+      </MemoryRouter>
+    )
+  })
 
   const backToDemoButtonElement = screen.getByText('Back to demo')
-  fireEvent.click(backToDemoButtonElement)
+  await act(async () => {
+    fireEvent.click(backToDemoButtonElement)
+  })
   expect(screen.getByText("Main view")).toBeInTheDocument()
 })
