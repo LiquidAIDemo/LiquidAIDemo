@@ -115,7 +115,7 @@ const EnergyComponentPage = () => {
                     dataset={consumptionData}
                     yAxis={[{label: 'kwh'}]}
                     xAxis={[{scaleType: 'band', dataKey: 'hour', tickLabelInterval: () => false, label: 'time (h)'}]}
-                    series={[{dataKey: 'value', label: 'production (kwh)'}]}
+                    series={[{dataKey: 'value', label: 'consumption (kwh)'}]}
                     width={350}
                     height={300}
                   />
