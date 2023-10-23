@@ -32,20 +32,23 @@ const Demo = () => {
           style={{padding: '2vh'}}
           bgcolor = "#cfe8fc" 
           height="96vh">
-        Main view
+        Liquid AI demo
         <Grid container spacing={2}>
           {/* container grid for the energy components */}
           <Grid item xs={12} md={6}>
             <EnergyComponent id="1" name="Solar panel" type="producer"
-            description="Solar panels turn sunlight into energy"/>
+            description="Solar panels turn sunlight into energy"
+            demoTime={demoTime} />
           </Grid>
           <Grid item xs={12} md={6}>
             <EnergyComponent id="2" name="Heat pump" type="consumer"
-            description="Heat pump is used to adjust the temperature inside the house"/>
+            description="Heat pump is used to adjust the temperature inside the house"
+            demoTime={demoTime} />
           </Grid>
           <Grid item xs={12} md={6}>
             <EnergyComponent id="3" name="Electric car" type="consumer"
-            description="Electric car is recharged at the charging station"/>
+            description="Electric car is recharged at the charging station"
+            demoTime={demoTime} />
           </Grid>
         </Grid>
         </Box>
