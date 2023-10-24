@@ -30,3 +30,23 @@ jobs:
       - name: Build Project
         run: npm run build
       
+  simple-backend-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+    
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Change directory to backend
+        run: cd backend
+      
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Check style
+        run: npm run lint
+      
