@@ -7,6 +7,7 @@ import RealtimeClock from './RealtimeClock';
 import ElectricityPrice from './ElectricityPrice'
 import ComponentMenu from './ComponentMenu'
 import backgroundImage from "./../assets/background.png";
+import houseImage from "./../assets/house.png";
 
 const Demo = () => {
   const navigate = useNavigate();
@@ -60,6 +61,18 @@ const Demo = () => {
             justifyContent: 'space-between',
           }}
         >
+          <img
+            src={houseImage}
+            alt='House'
+            className='house-image'
+            style={{
+              position: 'absolute',
+              top: '-20%',
+              left: 0,
+              width: '100%',
+              height: '100%',
+            }}
+          />
           {/*Liquid AI demo
           <Grid container spacing={2}>
             {/* container grid for the energy components */}
