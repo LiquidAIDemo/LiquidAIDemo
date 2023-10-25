@@ -1,6 +1,7 @@
 import React from 'react'
 import '@testing-library/jest-dom'
-import { render, screen, fireEvent, act } from '@testing-library/react'
+import { render, screen, act } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import EnergyComponentPage from '../components/EnergyComponentPage'
 import Demo from '../components/Demo'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
@@ -55,7 +56,7 @@ test("'back to demo' button returns to demo", async () => {
 
   const backToDemoButtonElement = screen.getByText('Back to demo')
   await act(async () => {
-    fireEvent.click(backToDemoButtonElement)
+    await userEvent.click(backToDemoButtonElement)
   })
-  expect(screen.getByText("Main view")).toBeInTheDocument()
+  expect(screen.getByText("Liquid AI demo")).toBeInTheDocument()
 })

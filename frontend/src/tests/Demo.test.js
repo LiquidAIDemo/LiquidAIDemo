@@ -1,6 +1,7 @@
 import React from 'react'
 import '@testing-library/jest-dom'
-import { render, screen, fireEvent, act } from '@testing-library/react'
+import { render, screen, act } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import Demo from '../components/Demo'
 import Welcome from '../components/Welcome'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
@@ -19,13 +20,13 @@ test("renders content", async () => {
     )
   })
   
-  expect(screen.getByText('Main view')).toBeInTheDocument()
+  expect(screen.getByText('Liquid AI demo')).toBeInTheDocument()
   expect(screen.getByText('Time')).toBeInTheDocument()
   expect(screen.getByText('Savings')).toBeInTheDocument()
   expect(screen.getByText('Stop')).toBeInTheDocument()
 })
 
-test('"stop" button navigates to welcome page', () => {
+test('"stop" button navigates to welcome page', async () => {
   axiosMock.onGet('/api').reply(200, { price: 0 })
   render(
     <MemoryRouter initialEntries={['/demo']}>
@@ -36,8 +37,9 @@ test('"stop" button navigates to welcome page', () => {
     </MemoryRouter>
   )
   
+  const user = userEvent.setup({delay: null})
   const stopButtonElement = screen.getByText('Stop')
-  fireEvent.click(stopButtonElement)
+  await user.click(stopButtonElement)
   const welcomePageElement = screen.getByText("Welcome to Liquid AI Demo!")
   expect(welcomePageElement).toBeInTheDocument()
 })
