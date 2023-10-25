@@ -6,6 +6,7 @@ import DemoClock from './DemoClock';
 import RealtimeClock from './RealtimeClock';
 import ElectricityPrice from './ElectricityPrice'
 import ComponentMenu from './ComponentMenu'
+import backgroundImage from "./../assets/background.png";
 
 const Demo = () => {
   const navigate = useNavigate();
@@ -22,37 +23,77 @@ const Demo = () => {
     container
     spacing={4}
     columns={3}
-    style={{ padding: '2vh' }}
-    
+    style={{ padding: '4vh' }} 
     >
-      {/*Created container to span 2/3 columns. This is where the demo is.
-        Replace "main view" text with the demos view. The color can be removed*/}
-      <Grid item xs={12} sm={2} minWidth='350px'>
-        <Box 
-          style={{padding: '2vh'}}
-          bgcolor = "#cfe8fc" 
-          height="96vh">
-        Liquid AI demo
-        <Grid container spacing={2}>
-          {/* container grid for the energy components */}
-          <Grid item xs={12} md={6}>
-            <EnergyComponent id="1" name="Solar panel" type="producer"
-            description="Solar panels turn sunlight into energy"
-            demoTime={demoTime} />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <EnergyComponent id="2" name="Heat pump" type="consumer"
-            description="Heat pump is used to adjust the temperature inside the house"
-            demoTime={demoTime} />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <EnergyComponent id="3" name="Electric car" type="consumer"
-            description="Electric car is recharged at the charging station"
-            demoTime={demoTime} />
-          </Grid>
-        </Grid>
-        </Box>
-      </Grid>
+    <Grid item xs={12} sm={2} minWidth='350px'>
+      <div
+        style={{
+          position: 'relative',
+          paddingBottom: '83%', 
+          width: '100%',
+          height: 0,
+        }}
+      >
+        <img
+          src={backgroundImage}
+          alt='Home yard'
+          className='background-image'
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover', // Ensure the image covers the container
+          }}
+        />
+        <div
+          className='overlay-content'
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+          }}
+        >
+          {/*Liquid AI demo
+          <Grid container spacing={2}>
+            {/* container grid for the energy components */}
+            {/*<Grid item xs={12} md={6}>
+              <EnergyComponent
+                id="1"
+                name="Solar panel"
+                type="producer"
+                description="Solar panels turn sunlight into energy"
+                demoTime={demoTime}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <EnergyComponent
+                id="2"
+                name="Heat pump"
+                type="consumer"
+                description="Heat pump is used to adjust the temperature inside the house"
+                demoTime={demoTime}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <EnergyComponent
+                id="3"
+                name="Electric car"
+                type="consumer"
+                description="Electric car is recharged at the charging station"
+                demoTime={demoTime}
+              />
+            </Grid>
+        </Grid>*/}
+        </div>
+      </div>
+    </Grid>
 
       {/*Created container to span 1/3 columns */}
       <Grid item xs={1} style={{position: 'relative'}}>
