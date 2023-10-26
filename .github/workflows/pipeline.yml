@@ -29,6 +29,9 @@ jobs:
       
       - name: Build Project
         run: npm run build
+
+      - name: Run tests
+        run: npm run ci-test
       
   simple-backend-pipeline:
     runs-on: ubuntu-latest
