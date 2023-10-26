@@ -1,4 +1,4 @@
-name: Deployment pipeline
+name: CI pipeline
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  simple-frontend-pipeline:
+  frontend-ci:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,7 +33,7 @@ jobs:
       - name: Run tests
         run: npm run ci-test
       
-  simple-backend-pipeline:
+  backend-ci:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
