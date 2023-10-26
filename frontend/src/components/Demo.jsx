@@ -44,8 +44,8 @@ const Demo = () => {
             top: 0,
             left: 0,
             width: '100%',
-            height: '100%',
-            objectFit: 'cover', // Ensure the image covers the container
+            height: '92%',
+            objectFit: 'cover',
           }}
         />
         <div
@@ -67,10 +67,10 @@ const Demo = () => {
             className='house-image'
             style={{
               position: 'absolute',
-              top: '-20%',
-              left: 0,
-              width: '100%',
-              height: '100%',
+              top: '2%',
+              left: '6%',
+              width: '90%',
+              height: '55%',
             }}
           />
           {/*Liquid AI demo
