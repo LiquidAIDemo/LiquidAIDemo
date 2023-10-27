@@ -14,7 +14,7 @@ const Welcome = () => {
         dropRadius={20}
         resolution={500}
       >
-        {({ drop }) => (
+        {() => (
           <div
             style={{
               width: "100%",
