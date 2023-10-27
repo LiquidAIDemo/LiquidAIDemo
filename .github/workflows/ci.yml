@@ -17,21 +17,18 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-
-      - name: Change directory to frontend
-        run: cd frontend
       
       - name: Install Dependencies
-        run: npm install
+        run: npm install:frontend
 
       - name: Check style
-        run: npm run eslint
+        run: npm run lint:frontend
       
       - name: Build Project
-        run: npm run build
+        run: npm run build:frontend
 
       - name: Run tests
-        run: npm run ci-test
+        run: npm run ci-test:frontend
       
   backend-ci:
     runs-on: ubuntu-latest
@@ -43,13 +40,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-
-      - name: Change directory to backend
-        run: cd backend
       
       - name: Install Dependencies
-        run: npm install
+        run: npm install:backend
 
       - name: Check style
-        run: npm run eslint
+        run: npm run lint:backend
       
