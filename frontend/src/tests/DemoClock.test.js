@@ -1,7 +1,6 @@
-import React from 'react'
 import '@testing-library/jest-dom'
-import { render, screen, act, fireEvent, waitFor } from '@testing-library/react'
-import {within} from '@testing-library/dom'
+import { render, screen, act, fireEvent } from '@testing-library/react'
+import { within } from '@testing-library/dom'
 import DemoClock from '../components/DemoClock'
 import { MenuItem, Select } from '@mui/material';
 

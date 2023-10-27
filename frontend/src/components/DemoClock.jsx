@@ -16,7 +16,7 @@ function DemoClock({onDemoTimeChange}) {
   const [demoHour, setTime] = useState(now.getHours());
   const [demoDate, setDate] = useState(now.getDate());
   const [demoMonth, setMonth] = useState(now.getMonth() + 1);
-  const [demoYear, setYear] = useState(now.getFullYear());
+  // const [demoYear, setYear] = useState(now.getFullYear());
 
   const [isPaused, setIsPaused] = useState(false);
 
@@ -49,14 +49,14 @@ function DemoClock({onDemoTimeChange}) {
 
     return () => clearInterval(intervalId);
 
-  }, [isPaused, speed, demoHour, demoDate]);
+  }, [isPaused, speed, demoHour, demoDate, onDemoTimeChange]);
 
 
   const setDemoTime = () => {
     setTime(demoTime.getHours())
     setDate(demoTime.getDate())
     setMonth(demoTime.getMonth()+1)
-    setYear(demoTime.getFullYear())
+    // setYear(demoTime.getFullYear())
   }
 
 

@@ -19,7 +19,7 @@ const ElectricityPrice = ({ demoTime }) => {
 
   useEffect(() => {
     findAndSetCurrentPrice(prices, demoTime)
-  }, [demoTime]);
+  }, [prices, demoTime]);
 
   const findAndSetCurrentPrice = (prices, demoTime) => {
     const demoTimeCopy = new Date(demoTime)
