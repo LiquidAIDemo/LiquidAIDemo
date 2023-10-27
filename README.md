@@ -38,3 +38,4 @@ On your command line terminal, in the root directory of the project, run the fol
 - npm test
 
 This command executes: cd frontend, npm install & npm test with options --verbose and --coverage --collectCoverageFrom='src/**/*.{jsx,js}'. This will run the unit tests and print the coverage.
+
