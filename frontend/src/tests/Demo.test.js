@@ -10,7 +10,7 @@ import MockAdapter from 'axios-mock-adapter'
 const axiosMock = new MockAdapter(axios)
 
 test("renders content", async () => {
-  axiosMock.onGet('/api').reply(200, { price: 0 })
+  axiosMock.onGet('/api').reply(200, [{ price: 0 }])
   await act( async () => {
     render(
       <MemoryRouter>
@@ -26,7 +26,7 @@ test("renders content", async () => {
 })
 
 test('"stop" button navigates to welcome page', async () => {
-  axiosMock.onGet('/api').reply(200, { price: 0 })
+  axiosMock.onGet('/api').reply(200, [{ price: 0 }])
   render(
     <MemoryRouter initialEntries={['/demo']}>
       <Routes>

@@ -10,7 +10,7 @@ import MockAdapter from 'axios-mock-adapter'
 const axiosMock = new MockAdapter(axios)
 
 test("'Start demo' button works correctly", async () => {
-  axiosMock.onGet('/api').reply(200, { price: 0 })
+  axiosMock.onGet('/api').reply(200, [{ price: 0 }])
   render(
     <MemoryRouter initialEntries={['/']}>
       <Routes>

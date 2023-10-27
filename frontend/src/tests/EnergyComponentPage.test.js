@@ -41,7 +41,7 @@ test("renders content correctly", () => {
 })
 
 test("'back to demo' button returns to demo", async () => {
-  axiosMock.onGet('/api').reply(200, { price: 0 })
+  axiosMock.onGet('/api').reply(200, [{ price: 0 }])
   await act(async () => {
     render(
       <MemoryRouter initialEntries={[componentPagePath]}>
