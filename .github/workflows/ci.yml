@@ -22,9 +22,7 @@ jobs:
           node-version: 18
       
       - name: Install Dependencies
-        run: |
-          cd frontend
-          npm install
+        run: npm install
 
       - name: Check style
         run: npm run lint
@@ -50,10 +48,8 @@ jobs:
           node-version: 18
       
       - name: Install Dependencies
-        run: |
-          cd backend
-          npm install
-
+        run: npm install
+        
       - name: Check style
         run: npm run lint
       
