@@ -9,6 +9,9 @@ on:
 jobs:
   frontend-ci:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -19,19 +22,24 @@ jobs:
           node-version: 18
       
       - name: Install Dependencies
-        run: npm run install:frontend
+        run: |
+          cd frontend
+          npm install
 
       - name: Check style
-        run: npm run lint:frontend
+        run: npm run lint
       
       - name: Build Project
-        run: npm run build:frontend
+        run: npm run build
 
       - name: Run tests
-        run: npm run ci-test:frontend
+        run: npm run ci-test
       
   backend-ci:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -42,8 +50,10 @@ jobs:
           node-version: 18
       
       - name: Install Dependencies
-        run: npm run install:backend
+        run: |
+          cd backend
+          npm install
 
       - name: Check style
-        run: npm run lint:backend
+        run: npm run lint
       
