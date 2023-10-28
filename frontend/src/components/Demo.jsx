@@ -8,6 +8,16 @@ import ElectricityPrice from './ElectricityPrice'
 import ComponentMenu from './ComponentMenu'
 import backgroundImage from "./../assets/background.png";
 import houseImage from "./../assets/house.png";
+import airHeatPumpImage from "./../assets/air_heat_pump.png";
+import freezerImage from "./../assets/freezer.png";
+import heaterImage from "./../assets/heater.png";
+import hotWaterHeaterImage from "./../assets/hot_water_heater.png";
+import jacuzziImage from "./../assets/jacuzzi.png";
+import stoveImage from "./../assets/stove.png";
+import washingMachineImage from "./../assets/washing_machine.png";
+import solarPanelImage from "./../assets/solar_panel.png";
+import carImage from "./../assets/car.png";
+import electricBoardImage from "./../assets/electric_board.png";
 
 const Demo = () => {
   const navigate = useNavigate();
@@ -23,10 +33,11 @@ const Demo = () => {
     <Grid
     container
     spacing={4}
-    columns={3}
-    style={{ padding: '4vh' }} 
+    columns={5}
+    style={{ padding: '2vh' }} 
     >
-    <Grid item xs={12} sm={2} minWidth='350px'>
+    <Grid item xs={12} sm={3} minWidth='350px'>
+    <Box height="96vh">
       <div
         style={{
           position: 'relative',
@@ -73,6 +84,180 @@ const Demo = () => {
               height: '55%',
             }}
           />
+          <div>
+          <img
+            src={airHeatPumpImage}
+            alt='heatPump'
+            className='air-heat-pump'
+            style={{
+              position: 'absolute',
+              top: '34%',
+              left: '38%',
+              width: '2%',
+              height: '8%',
+            }}
+          />
+          <img
+            src={freezerImage}
+            alt='freezer'
+            className='freezer-image'
+            style={{
+              position: 'absolute',
+              top: '8%',
+              left: '62%',
+              width: '10%',
+              height: '13%',
+            }}
+          />
+          <img
+            src={heaterImage}
+            alt='heater'
+            className='heater-image'
+            style={{
+              position: 'absolute',
+              top: '6%',
+              left: '20%',
+              width: '7%',
+              height: '9%',
+            }}
+          />
+          <img
+            src={hotWaterHeaterImage}
+            alt='hotWaterHeater'
+            className='hot-water-heater-image'
+            style={{
+              position: 'absolute',
+              top: '20%',
+              left: '19%',
+              width: '8%',
+              height: '10%',
+            }}
+          />
+          <img
+            src={jacuzziImage}
+            alt='jacuzzi'
+            className='jacuzzi-image'
+            style={{
+              position: 'absolute',
+              top: '2%',
+              left: '6%',
+              width: '13%',
+              height: '15%',
+            }}
+          />
+          <img
+            src={stoveImage}
+            alt='stove'
+            className='stove-image'
+            style={{
+              position: 'absolute',
+              top: '2%',
+              left: '77%',
+              width: '4%',
+              height: '4%',
+            }}
+          />
+          <img
+            src={washingMachineImage}
+            alt='washingMachine'
+            className='washing-machine-image'
+            style={{
+              position: 'absolute',
+              top: '20%',
+              left: '27%',
+              width: '9%',
+              height: '10%',
+            }}
+          />
+          <img
+            src={electricBoardImage}
+            alt='electricBoard'
+            className='electric-board-image'
+            style={{
+              position: 'absolute',
+              top: '44%',
+              left: '88.6%',
+              width: '10%',
+              height: '12%',
+            }}
+          />
+          </div>
+          <img
+            src={solarPanelImage}
+            alt='solarPanel'
+            className='solar-panel-image-1'
+            style={{
+              position: 'absolute',
+              top: '66%',
+              left: '7%',
+              width: '10%',
+              height: '10%'
+            }}
+          />
+          <img
+            src={solarPanelImage}
+            alt='solarPanel'
+            className='solar-panel-image-2'
+            style={{
+              position: 'absolute',
+              top: '66%',
+              left: '19%',
+              width: '10%',
+              height: '10%',
+            }}
+          />
+          <img
+            src={solarPanelImage}
+            alt='solarPanel'
+            className='solar-panel-image-3'
+            style={{
+              position: 'absolute',
+              top: '78%',
+              left: '7%',
+              width: '10%',
+              height: '10%',
+            }}
+          />
+          <img
+            src={solarPanelImage}
+            alt='solarPanel'
+            className='solar-panel-image-4'
+            style={{
+              position: 'absolute',
+              top: '78%',
+              left: '19%',
+              width: '10%',
+              height: '10%'
+            }}
+          />
+          <img
+            src={carImage}
+            alt='car'
+            className='car-image-1'
+            style={{
+              position: 'absolute',
+              top: '55%',
+              left: '62%',
+              width: '28%',
+              height: '35%'
+            }}
+          />
+          <img
+            src={carImage}
+            alt='car'
+            className='car-image-2'
+            style={{
+              position: 'absolute',
+              top: '55%',
+              left: '75%',
+              width: '28%',
+              height: '35%'
+            }}
+          />
+          </div>
+          </div>
+      </Box>
+    </Grid>
           {/*Liquid AI demo
           <Grid container spacing={2}>
             {/* container grid for the energy components */}
@@ -104,12 +289,10 @@ const Demo = () => {
               />
             </Grid>
         </Grid>*/}
-        </div>
-      </div>
-    </Grid>
+        
 
       {/*Created container to span 1/3 columns */}
-      <Grid item xs={1} style={{position: 'relative'}}>
+      <Grid item xs={2} style={{position: 'relative'}}>
         {/*Created container grid to have containers on top of another */}
         <Grid container spacing={4} columns={1}>
           <Grid item xs={1} height="10vh">
