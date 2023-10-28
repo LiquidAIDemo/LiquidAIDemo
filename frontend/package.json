@@ -9,7 +9,8 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test": "npm install && jest --verbose --coverage --collectCoverageFrom='src/**/*.{jsx,js}'"
+    "test": "npm install && jest --verbose --coverage --collectCoverageFrom='src/**/*.{jsx,js}'",
+    "ci-test": "jest"
   },
   "dependencies": {
     "@mui/icons-material": "^5.14.11",
