@@ -57,5 +57,5 @@ test("'back to demo' button returns to demo", async () => {
   await act(async () => {
     await userEvent.click(backToDemoButtonElement)
   })
-  expect(screen.getByText("Liquid AI demo")).toBeInTheDocument()
+  expect(screen.getByText("Components")).toBeInTheDocument()
 })

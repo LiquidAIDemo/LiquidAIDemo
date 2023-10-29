@@ -22,5 +22,5 @@ test("'Start demo' button works correctly", async () => {
   
   const startButtonElement = screen.getByText('Start demo')
   await userEvent.click(startButtonElement)
-  expect(screen.getByText("Liquid AI demo")).toBeInTheDocument()
+  expect(screen.getByText("Components")).toBeInTheDocument()
 })
