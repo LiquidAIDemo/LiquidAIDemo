@@ -22,22 +22,25 @@ test("renders content", async () => {
   expect(screen.getByText('Components')).toBeInTheDocument()
   expect(screen.getByText('Time')).toBeInTheDocument()
   expect(screen.getByText('Savings')).toBeInTheDocument()
-  expect(screen.getByText('Stop')).toBeInTheDocument()
+  expect(screen.getByText('Back')).toBeInTheDocument()
+  expect(screen.getByText('More information')).toBeInTheDocument()
 })
 
-test('"stop" button navigates to welcome page', async () => {
+test('"back" button navigates to welcome page', async () => {
   axiosMock.onGet('/api').reply(200, [{ price: 0 }])
-  render(
-    <MemoryRouter initialEntries={['/demo']}>
-      <Routes>
-        <Route path="/demo" element={<Demo />} />
-        <Route path="/" element={<Welcome />} />
-      </Routes>
-    </MemoryRouter>
-  )
+  await act( async () => {
+    render(
+      <MemoryRouter initialEntries={['/demo']}>
+        <Routes>
+          <Route path="/demo" element={<Demo />} />
+          <Route path="/" element={<Welcome />} />
+        </Routes>
+      </MemoryRouter>
+    )
+  })
   
   const user = userEvent.setup({delay: null})
-  const stopButtonElement = screen.getByText('Stop')
+  const stopButtonElement = screen.getByText('Back')
   await user.click(stopButtonElement)
   const welcomePageElement = screen.getByText("Welcome to Liquid AI Demo!")
   expect(welcomePageElement).toBeInTheDocument()
