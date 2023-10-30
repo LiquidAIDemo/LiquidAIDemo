@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Popover, Typography } from '@mui/material';
+import { Box, Button, Grid, Popover } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import EnergyComponent from './EnergyComponent';
@@ -30,16 +30,6 @@ const Demo = () => {
   };
 
   const [openInstructions, setOpenInstructions] = useState(false);
-
-  const [componentOpen, setComponentOpen] = useState(false);
-
-  const handleOpen = () => {
-    setComponentOpen(true);
-  }
-
-  const handleClose = () => {
-    setComponentOpen(false);
-  }
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -111,6 +101,7 @@ const Demo = () => {
           />
           <div>
             <img
+              id="2" // id of heat pump in test data
               src={airHeatPumpImage}
               alt='heatPump'
               className='air-heat-pump'
@@ -121,7 +112,19 @@ const Demo = () => {
                 width: '2%',
                 height: '8%',
               }}
-              onClick={handleOpen}
+              onClick={() =>
+                navigate(`/component/2`, 
+                  {
+                    state: {component: {
+                      id: "2", 
+                      name: "Heat pump",
+                      type: "consumer",
+                      description: "Heat pump is used to adjust the temperature inside the house",
+                      demoTime: {demoTime}
+                    }},
+                    replace: true
+                  }
+                )}
               onMouseEnter={handleHoverOn}
               onMouseLeave={handleHoverAway}
               />
@@ -139,27 +142,16 @@ const Demo = () => {
                 }}
                 onClose={handleHoverAway}
                 disableRestoreFocus
-              >
-                <Typography 
-                  sx={{margin: 1 }}>
-                  <strong>Heat pump</strong><br/>
-                  Click the component for more info
-                </Typography>
-              </Popover>
-              {componentOpen &&
-                <Box style={{position: 'absolute', zIndex: 1}}>
-                  <EnergyComponent 
+              >                
+                <EnergyComponent 
                   id="2"
                   name="Heat pump"
                   type="consumer"
                   description="Heat pump is used to adjust the temperature inside the house"
                   demoTime={demoTime}
-                  handleClose={handleClose}
                   />
-                </Box>
-              }
-              
-                
+              </Popover>
+      
           <img
             src={freezerImage}
             alt='freezer'
