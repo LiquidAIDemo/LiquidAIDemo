@@ -1,11 +1,8 @@
-import { Card, CardContent, CardActions, Typography } from '@mui/material';
-import { Button } from '@mui/material'; 
-import { useNavigate } from 'react-router-dom';
+import { Card, CardContent, Typography } from '@mui/material';
 import energyComponents from "../../../test_data/energyComponents.json";
 
 const EnergyComponent = (props) => {
   const { id, name, type, description, demoTime } = props;
-  const navigate = useNavigate();
   const component = {
     id: id,
     name: name,
@@ -40,14 +37,15 @@ const EnergyComponent = (props) => {
       maxWidth: '500px',
       minWidth: '250px',
       minHeight: '20%',
-      padding: '2vh',
-      margin: '1vh'}}>
-      <Typography variant='body1' margin='1vh'>{name}</Typography>
-      <CardContent>
+      padding: '0.5vh'
+      }}>
+      <CardContent sx={{margin: 0}}>
         {type === "consumer" &&
         <>
-          <Typography variant='body2'>
-            Consumer<br/>
+          <Typography variant='body2' sx={{marginBottom: 1}}>
+            <strong>{name}</strong> (Energy consumer)<br/>
+          </Typography>  
+          <Typography variant='body2' sx={{marginBottom: 1}}>
             Energy consumed between {demoHour}:00-{parseInt(demoHour)+1}:00<br/>
             {consumptionData.filter(h => h.startHour === demoHour).map(h => h.value)[0]} kwh <br/>
             Total consumption during the demo {totalConsumption} kwh
@@ -55,27 +53,19 @@ const EnergyComponent = (props) => {
         </> } 
         {type === "producer" &&
         <>
-          <Typography variant='body2'>
-            Producer<br/>
+          <Typography variant='body2' sx={{marginBottom: 1}}>
+            <strong>{name}</strong> (Energy producer)<br/>
+          </Typography>  
+          <Typography variant='body2' sx={{marginBottom: 1}}>
             Energy produced between {demoHour}:00-{parseInt(demoHour)+1}:00<br/>
             {productionData.filter(h => h.startHour === demoHour).map(h => h.value)[0]} kwh <br/>
             Total production during the demo {totalProduction} kwh
           </Typography>
         </> }
+        <Typography variant='body2'>
+          Click the component for more info
+        </Typography>
       </CardContent>
-      <CardActions>
-
-        <Button 
-          size='small'
-          onClick={() => navigate(`/component/${id}`, 
-              {
-                state: {component: component},
-                replace: true
-              }
-            )}>
-            Show more
-        </Button>
-      </CardActions>
     </Card>
   )
 }
