@@ -42,7 +42,7 @@ test('"back" button navigates to welcome page', async () => {
   const user = userEvent.setup({delay: null})
   const stopButtonElement = screen.getByText('Back')
   await user.click(stopButtonElement)
-  const welcomePageElement = screen.getByText("Welcome to Liquid AI Demo!")
+  const welcomePageElement = screen.getByText("Welcome to Liquid AI demonstrator!")
   expect(welcomePageElement).toBeInTheDocument()
 })
 
