@@ -10,7 +10,7 @@ import MockAdapter from 'axios-mock-adapter'
 const axiosMock = new MockAdapter(axios)
 
 const eComponent = {
-  id: 1,
+  id: '1',
   name: 'Test name',
   type: 'Test type',
   description: 'Test description'
