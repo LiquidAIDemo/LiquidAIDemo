@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import energyComponents from "../../../test_data/energyComponents.json";
 
 const EnergyComponent = (props) => {
-  const { id, name, type, description, demoTime } = props;
+  const { id, name, type, description, demoTime, handleClose } = props;
   const navigate = useNavigate();
   const component = {
     id: id,
@@ -63,17 +63,25 @@ const EnergyComponent = (props) => {
           </Typography>
         </> }
       </CardContent>
-      <CardActions>
-
+      <CardActions sx={{display: 'flex', justifyContent: 'left'}}>
         <Button 
+          variant='contained'
           size='small'
+          sx={{marginX: 2}}
           onClick={() => navigate(`/component/${id}`, 
-              {
-                state: {component: component},
-                replace: true
-              }
-            )}>
-            Show more
+            {
+              state: {component: component},
+              replace: true
+            }
+          )}>
+          Show more
+        </Button>
+        <Button 
+          variant='contained'
+          size='small'
+          sx={{marginX: 2}}
+          onClick={handleClose}>
+          Close
         </Button>
       </CardActions>
     </Card>
