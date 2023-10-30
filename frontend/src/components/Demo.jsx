@@ -1,4 +1,4 @@
-import { Box, Button, Grid } from '@mui/material';
+import { Box, Button, Grid, Popover, Typography } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import EnergyComponent from './EnergyComponent';
@@ -40,6 +40,18 @@ const Demo = () => {
   const handleClose = () => {
     setComponentOpen(false);
   }
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleHoverOn = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleHoverAway = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
 
   return (
     //Created container grid
@@ -109,22 +121,45 @@ const Demo = () => {
                 width: '2%',
                 height: '8%',
               }}
-              onMouseEnter={handleOpen}
+              onClick={handleOpen}
+              onMouseEnter={handleHoverOn}
+              onMouseLeave={handleHoverAway}
               />
+              <Popover
+                sx={{pointerEvents: 'none'}}
+                open={open}
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                onClose={handleHoverAway}
+                disableRestoreFocus
+              >
+                <Typography 
+                  sx={{margin: 1 }}>
+                  <strong>Heat pump</strong><br/>
+                  Click the component for more info
+                </Typography>
+              </Popover>
               {componentOpen &&
-              <Box style={{position: 'absolute', zIndex: 1}}>
-                <EnergyComponent 
-                id="2"
-                name="Heat pump"
-                type="consumer"
-                description="Heat pump is used to adjust the temperature inside the house"
-                demoTime={demoTime}
-                handleClose={handleClose}
-              />
-              </Box>
+                <Box style={{position: 'absolute', zIndex: 1}}>
+                  <EnergyComponent 
+                  id="2"
+                  name="Heat pump"
+                  type="consumer"
+                  description="Heat pump is used to adjust the temperature inside the house"
+                  demoTime={demoTime}
+                  handleClose={handleClose}
+                  />
+                </Box>
               }
+              
                 
-          
           <img
             src={freezerImage}
             alt='freezer'
