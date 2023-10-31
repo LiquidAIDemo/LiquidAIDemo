@@ -2,7 +2,7 @@
   "components": [
     {
       "name": "Heat Pump",
-      "id": "2",
+      "id": "heat-pump",
       "production_per_hour_kwh": [],
       "consumption_per_hour_kwh": [
         {
@@ -129,7 +129,7 @@
     },
     {
       "name": "Electric Car Charger",
-      "id": "3",
+      "id": "electric-car-1",
       "power_rating": "22 kW",
       "production_per_hour_kwh": [],
       "consumption_per_hour_kwh": [
@@ -257,7 +257,7 @@
     },
     {
       "name": "Solar Panel",
-      "id": "1",
+      "id": "solar-panel-1",
       "production_per_hour_kwh": [
         {
           "startDate": "2023-10-08T00:00:00Z",
