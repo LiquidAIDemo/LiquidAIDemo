@@ -1,14 +1,12 @@
-import { Box, Button, Grid, Popover } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 import { useNavigate } from "react-router-dom";
-import { useState } from "react"
-import EnergyComponent from './EnergyComponent';
+import { useState } from "react";
 import DemoClock from './DemoClock';
 import RealtimeClock from './RealtimeClock';
 import ElectricityPrice from './ElectricityPrice'
-import ComponentMenu from './ComponentMenu'
+import ComponentMenu from './ComponentMenu';
 import backgroundImage from "./../assets/background.png";
 import houseImage from "./../assets/house.png";
-import airHeatPumpImage from "./../assets/air_heat_pump.png";
 import freezerImage from "./../assets/freezer.png";
 import heaterImage from "./../assets/heater.png";
 import hotWaterHeaterImage from "./../assets/hot_water_heater.png";
