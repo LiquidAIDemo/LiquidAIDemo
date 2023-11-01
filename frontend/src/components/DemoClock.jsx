@@ -14,6 +14,7 @@ function DemoClock({onDemoTimeChange}) {
   let now = new Date();
   
   const [demoHour, setTime] = useState(now.getHours());
+  const [demoMinute, setMinutes] = useState(now.getMinutes());
   const [demoDate, setDate] = useState(now.getDate());
   const [demoMonth, setMonth] = useState(now.getMonth() + 1);
   // const [demoYear, setYear] = useState(now.getFullYear());
@@ -54,6 +55,7 @@ function DemoClock({onDemoTimeChange}) {
 
   const setDemoTime = () => {
     setTime(demoTime.getHours())
+    setMinutes(demoTime.getMinutes())
     setDate(demoTime.getDate())
     setMonth(demoTime.getMonth()+1)
     // setYear(demoTime.getFullYear())
@@ -103,6 +105,8 @@ function DemoClock({onDemoTimeChange}) {
   }
 
   // Select speed menu, demo time, pause button and real time
+  // TEHTY: "DoD: Demokellon nopeusvalinnat ovat muotoa 10 min / s - 60 min / s kymmenen minuutin portailla."
+  // "Demokello esittää myös minuutit."
   return (
     <Box>
       <Box style={{padding: '1vh'}}>
@@ -114,11 +118,12 @@ function DemoClock({onDemoTimeChange}) {
             onChange={handleSpeedChange}
             sx={{width: '140px', height: '30px'}}
           >
-            <MenuItem value={1000}>1 sec / hour</MenuItem>
-            <MenuItem value={2000}>2 secs / hour</MenuItem>
-            <MenuItem value={3000}>3 secs / hour</MenuItem>
-            <MenuItem value={4000}>4 secs / hour</MenuItem>
-            <MenuItem value={5000}>5 secs / hour</MenuItem>
+            <MenuItem value={1000}>10 min / sec</MenuItem>
+            <MenuItem value={2000}>20 min / sec</MenuItem>
+            <MenuItem value={3000}>30 min / sec</MenuItem>
+            <MenuItem value={4000}>40 min / sec</MenuItem>
+            <MenuItem value={5000}>50 min / sec</MenuItem>
+            <MenuItem value={6000}>60 min / sec</MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -138,7 +143,7 @@ function DemoClock({onDemoTimeChange}) {
       </Box>
 
       <Box style={{padding: '1vh'}}>
-        <b>Demo: </b> {demoHour}:00, {getDayName(demoTime)} {demoDate}.{demoMonth}. &#x1F4C5;
+        <b>Demo: </b> {demoHour}:{demoMinute}, {getDayName(demoTime)} {demoDate}.{demoMonth}. &#x1F4C5;
         <br/>
 
         <Button
