@@ -10,9 +10,9 @@ import MockAdapter from 'axios-mock-adapter'
 const axiosMock = new MockAdapter(axios)
 
 const eComponent = {
-  id: '1',
-  name: 'Test name',
-  type: 'Test type',
+  id: 'heat-pump',
+  name: 'Heat Pump',
+  type: 'consumer',
   description: 'Test description'
 }
 
@@ -35,8 +35,8 @@ test("renders content correctly", () => {
     </MemoryRouter>
   )
   
-  expect(screen.getByText('Test name')).toBeInTheDocument()
-  expect(screen.getByText('Test description')).toBeInTheDocument()
+  expect(screen.getByText(`${eComponent.name}`)).toBeInTheDocument()
+  expect(screen.getByText(`${eComponent.description}`)).toBeInTheDocument()
   expect(screen.getByText('Back to demo')).toBeInTheDocument()
 })
 
