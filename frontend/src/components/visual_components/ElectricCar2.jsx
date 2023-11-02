@@ -1,23 +1,21 @@
-import airHeatPumpImage from "../../assets/air_heat_pump.png";
+import carImage from "../../assets/car.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
 import { Popover } from '@mui/material';
 
-const HeatPump = ({demoTime}) => {
+const ElectricCar2 = ({demoTime}) => {
 
   const component = {
-    id: "heat-pump", 
-    name: "Heat pump",
+    id: "electric-car-2", 
+    name: "Electric car 2",
     type: "consumer",
-    description: "Heat pump is used to adjust the temperature inside the house.",
+    description: "Electric car is charged at the charging station.",
     demoTime: {demoTime}
   }
 
-  const [anchorEl, setAnchorEl] = useState(null);
-
   const navigate = useNavigate();
-
+  
   const handleClick = () =>
     navigate(`/component/${component.id}`, 
       {
@@ -25,6 +23,8 @@ const HeatPump = ({demoTime}) => {
         replace: true
       }
   )
+  
+  const [anchorEl, setAnchorEl] = useState(null);
   
   const handleHoverOn = (event) => {
     setAnchorEl(event.currentTarget);
@@ -36,23 +36,23 @@ const HeatPump = ({demoTime}) => {
 
   const open = Boolean(anchorEl);
 
-  return (
+  return(
     <div>
       <img
-      id="heat-pump"
-      src={airHeatPumpImage}
-      alt='heatPump'
-      className='air-heat-pump'
-      style={{
-        position: 'absolute',
-        top: '34%',
-        left: '38%',
-        width: '2%',
-        height: '8%',
-      }}
-      onClick={handleClick}
-      onMouseEnter={handleHoverOn}
-      onMouseLeave={handleHoverAway}
+        id="electric-car-2"
+        src={carImage}
+        alt='car'
+        className='car-image-2'
+        style={{
+          position: 'absolute',
+          top: '55%',
+          left: '75%',
+          width: '28%',
+          height: '35%'
+        }}
+        onClick={handleClick}
+        onMouseEnter={handleHoverOn}
+        onMouseLeave={handleHoverAway}
       />
       <Popover
         sx={{pointerEvents: 'none'}}
@@ -68,7 +68,7 @@ const HeatPump = ({demoTime}) => {
         }}
         onClose={handleHoverAway}
         disableRestoreFocus
-      >     
+      >                
         <EnergyComponent 
           id={component.id}
           name={component.name}
@@ -76,10 +76,9 @@ const HeatPump = ({demoTime}) => {
           description={component.description}
           demoTime={demoTime}
           />
-      </Popover>  
-    </div>    
+      </Popover>
+    </div>
   )
-
 }
 
-export default HeatPump;
+export default ElectricCar2;

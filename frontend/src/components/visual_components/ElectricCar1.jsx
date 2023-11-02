@@ -10,7 +10,7 @@ const ElectricCar1 = ({demoTime}) => {
     id: "electric-car-1", 
     name: "Electric car 1",
     type: "consumer",
-    description: "Electric car is charged at the charging station",
+    description: "Electric car is charged at the charging station.",
     demoTime: {demoTime}
   }
 

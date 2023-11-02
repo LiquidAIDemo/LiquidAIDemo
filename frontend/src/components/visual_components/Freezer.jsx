@@ -1,21 +1,23 @@
-import solarPanelImage from "../../assets/solar_panel.png";
+import freezerImage from "../../assets/freezer.png";
+import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
 import { Popover } from '@mui/material';
 
-const SolarPanel1 = ({demoTime}) => {
+const Freezer = ({demoTime}) => {
 
   const component = {
-    id: "solar-panel-1", 
-    name: "Solar panel 1",
-    type: "producer",
-    description: "Solar panels turn sunlight into energy.",
+    id: "freezer", 
+    name: "Freezer",
+    type: "consumer",
+    description: "Food stays cold in the freezer.",
     demoTime: {demoTime}
   }
 
+  const [anchorEl, setAnchorEl] = useState(null);
+
   const navigate = useNavigate();
-  
+
   const handleClick = () =>
     navigate(`/component/${component.id}`, 
       {
@@ -23,8 +25,6 @@ const SolarPanel1 = ({demoTime}) => {
         replace: true
       }
   )
-  
-  const [anchorEl, setAnchorEl] = useState(null);
   
   const handleHoverOn = (event) => {
     setAnchorEl(event.currentTarget);
@@ -39,16 +39,16 @@ const SolarPanel1 = ({demoTime}) => {
   return (
     <div>
       <img
-        id="solar-panel-1"
-        src={solarPanelImage}
-        alt='solarPanel'
-        className='solar-panel-image-1'
+        id="freezer"
+        src={freezerImage}
+        alt='freezer'
+        className='freezer-image'
         style={{
           position: 'absolute',
-          top: '66%',
-          left: '7%',
+          top: '8%',
+          left: '62%',
           width: '10%',
-          height: '10%'
+          height: '13%',
         }}
         onClick={handleClick}
         onMouseEnter={handleHoverOn}
@@ -66,7 +66,7 @@ const SolarPanel1 = ({demoTime}) => {
             vertical: 'top',
             horizontal: 'left',
           }}
-          onClose={handleHoverOn}
+          onClose={handleHoverAway}
           disableRestoreFocus
         >     
           <EnergyComponent 
@@ -78,8 +78,7 @@ const SolarPanel1 = ({demoTime}) => {
             />
         </Popover>  
     </div>
-
   )
 }
 
-export default SolarPanel1;
+export default Freezer;
