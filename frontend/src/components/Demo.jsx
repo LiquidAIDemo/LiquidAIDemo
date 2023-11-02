@@ -1,14 +1,12 @@
-import { Box, Button, Grid, Popover } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 import { useNavigate } from "react-router-dom";
-import { useState } from "react"
-import EnergyComponent from './EnergyComponent';
+import { useState } from "react";
 import DemoClock from './DemoClock';
 import RealtimeClock from './RealtimeClock';
 import ElectricityPrice from './ElectricityPrice'
-import ComponentMenu from './ComponentMenu'
+import ComponentMenu from './ComponentMenu';
 import backgroundImage from "./../assets/background.png";
 import houseImage from "./../assets/house.png";
-import airHeatPumpImage from "./../assets/air_heat_pump.png";
 import freezerImage from "./../assets/freezer.png";
 import heaterImage from "./../assets/heater.png";
 import hotWaterHeaterImage from "./../assets/hot_water_heater.png";
@@ -19,6 +17,9 @@ import solarPanelImage from "./../assets/solar_panel.png";
 import carImage from "./../assets/car.png";
 import electricBoardImage from "./../assets/electric_board.png";
 import Instructions from './Instructions';
+import HeatPump from './visual_components/HeatPump';
+import SolarPanel1 from './visual_components/SolarPanel1';
+import ElectricCar1 from './visual_components/ElectricCar1';
 
 const Demo = () => {
   const navigate = useNavigate();
@@ -30,18 +31,6 @@ const Demo = () => {
   };
 
   const [openInstructions, setOpenInstructions] = useState(false);
-
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleHoverOn = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleHoverAway = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
 
   return (
     //Created container grid
@@ -100,59 +89,11 @@ const Demo = () => {
             }}
           />
           <div>
-            <img
-              id="2" // id of heat pump in test data
-              src={airHeatPumpImage}
-              alt='heatPump'
-              className='air-heat-pump'
-              style={{
-                position: 'absolute',
-                top: '34%',
-                left: '38%',
-                width: '2%',
-                height: '8%',
-              }}
-              onClick={() =>
-                navigate(`/component/2`, 
-                  {
-                    state: {component: {
-                      id: "2", 
-                      name: "Heat pump",
-                      type: "consumer",
-                      description: "Heat pump is used to adjust the temperature inside the house",
-                      demoTime: {demoTime}
-                    }},
-                    replace: true
-                  }
-                )}
-              onMouseEnter={handleHoverOn}
-              onMouseLeave={handleHoverAway}
-              />
-              <Popover
-                sx={{pointerEvents: 'none'}}
-                open={open}
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                onClose={handleHoverAway}
-                disableRestoreFocus
-              >                
-                <EnergyComponent 
-                  id="2"
-                  name="Heat pump"
-                  type="consumer"
-                  description="Heat pump is used to adjust the temperature inside the house"
-                  demoTime={demoTime}
-                  />
-              </Popover>
-      
+
+          <HeatPump demoTime={demoTime}/>
+
           <img
+            id="freezer"
             src={freezerImage}
             alt='freezer'
             className='freezer-image'
@@ -165,6 +106,7 @@ const Demo = () => {
             }}
           />
           <img
+            id="heater"
             src={heaterImage}
             alt='heater'
             className='heater-image'
@@ -177,6 +119,7 @@ const Demo = () => {
             }}
           />
           <img
+            id="hot-water-heater"
             src={hotWaterHeaterImage}
             alt='hotWaterHeater'
             className='hot-water-heater-image'
@@ -189,6 +132,7 @@ const Demo = () => {
             }}
           />
           <img
+            id="jacuzzi"
             src={jacuzziImage}
             alt='jacuzzi'
             className='jacuzzi-image'
@@ -201,6 +145,7 @@ const Demo = () => {
             }}
           />
           <img
+            id="stove"
             src={stoveImage}
             alt='stove'
             className='stove-image'
@@ -213,6 +158,7 @@ const Demo = () => {
             }}
           />
           <img
+            id="washing-machine"
             src={washingMachineImage}
             alt='washingMachine'
             className='washing-machine-image'
@@ -225,6 +171,7 @@ const Demo = () => {
             }}
           />
           <img
+            id="electric-board"
             src={electricBoardImage}
             alt='electricBoard'
             className='electric-board-image'
@@ -237,19 +184,11 @@ const Demo = () => {
             }}
           />
           </div>
+
+          <SolarPanel1 demoTime={demoTime} />
+
           <img
-            src={solarPanelImage}
-            alt='solarPanel'
-            className='solar-panel-image-1'
-            style={{
-              position: 'absolute',
-              top: '66%',
-              left: '7%',
-              width: '10%',
-              height: '10%'
-            }}
-          />
-          <img
+            id="solar-panel-2"
             src={solarPanelImage}
             alt='solarPanel'
             className='solar-panel-image-2'
@@ -262,6 +201,7 @@ const Demo = () => {
             }}
           />
           <img
+            id="solar-panel-3"
             src={solarPanelImage}
             alt='solarPanel'
             className='solar-panel-image-3'
@@ -274,6 +214,7 @@ const Demo = () => {
             }}
           />
           <img
+            id="solar-panel-4"
             src={solarPanelImage}
             alt='solarPanel'
             className='solar-panel-image-4'
@@ -285,19 +226,11 @@ const Demo = () => {
               height: '10%'
             }}
           />
+
+          <ElectricCar1 demoTime={demoTime} />
+          
           <img
-            src={carImage}
-            alt='car'
-            className='car-image-1'
-            style={{
-              position: 'absolute',
-              top: '55%',
-              left: '62%',
-              width: '28%',
-              height: '35%'
-            }}
-          />
-          <img
+            id="electric-car-2"
             src={carImage}
             alt='car'
             className='car-image-2'

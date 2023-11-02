@@ -33,6 +33,7 @@ const EnergyComponent = (props) => {
   }
   
   return (
+    
     <Card sx={{
       maxWidth: '500px',
       minWidth: '250px',
@@ -47,7 +48,7 @@ const EnergyComponent = (props) => {
           </Typography>  
           <Typography variant='body2' sx={{marginBottom: 1}}>
             Energy consumed between {demoHour}:00-{parseInt(demoHour)+1}:00<br/>
-            {consumptionData.filter(h => h.startHour === demoHour).map(h => h.value)[0]} kwh <br/>
+            {consumptionData.filter(h => h.startHour === demoHour).map(h => h.value)[0]} kwh<br/>
             Total consumption during the demo {totalConsumption} kwh
           </Typography>
         </> } 
