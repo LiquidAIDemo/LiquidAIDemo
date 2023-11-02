@@ -36,6 +36,7 @@ function DemoClock({onDemoTimeChange}) {
         if (demoPassedHours < 24) {
           // add one hour to demotime object
           demoTime.setHours(demoTime.getHours() + 1);
+          demoTime.setMinutes(demoTime.getMinutes()+1);
           setDemoTime();
           onDemoTimeChange(demoTime);
           demoPassedHours = demoPassedHours + 1;
@@ -50,7 +51,7 @@ function DemoClock({onDemoTimeChange}) {
 
     return () => clearInterval(intervalId);
 
-  }, [isPaused, speed, demoHour, demoDate, onDemoTimeChange]);
+  }, [isPaused, speed, demoHour, demoMinute, demoDate, onDemoTimeChange]);
 
 
   const setDemoTime = () => {
