@@ -72,7 +72,6 @@ const EnergyComponentPage = () => {
                 <>
                   <Typography 
                     variant="body1"
-                    
                     sx={{margin: 2}}
                     >Energy producing component
                   </Typography> 
@@ -100,7 +99,6 @@ const EnergyComponentPage = () => {
                   <>
                   <Typography 
                     variant="body1"
-                    
                     sx={{margin: 2}}
                     >Energy consuming component
                   </Typography>
