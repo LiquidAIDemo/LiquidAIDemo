@@ -3,7 +3,6 @@ import { Button, FormControl, MenuItem, Select, Box } from '@mui/material';
 
 let demoTime = new Date();
 let demoPassedHours = 0;
-let demoPassedMinutes = 0;
 
 function getDayName(date) {
   var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -15,6 +14,7 @@ function DemoClock({onDemoTimeChange}) {
   let now = new Date();
   
   const [demoHour, setTime] = useState(now.getHours());
+  const [demoMinute, setMinutes] = useState(now.getMinutes());
   const [demoDate, setDate] = useState(now.getDate());
   const [demoMonth, setMonth] = useState(now.getMonth() + 1);
   // const [demoYear, setYear] = useState(now.getFullYear());
@@ -35,18 +35,11 @@ function DemoClock({onDemoTimeChange}) {
       intervalId = setInterval(() => {
         if (demoPassedHours < 24) {
           // add one hour to demotime object
-          if (demoPassedMinutes > 59) {
-            demoTime.setHours(demoTime.getHours() + 1);
-            setDemoTime();
-            onDemoTimeChange(demoTime);
-            demoPassedHours = demoPassedHours + 1;
-          } else {
-            // But only if minutes are high enough
-            demoTime.setMinutes(demoTime.getMinutes() + 1);
-            setDemoTime();
-            onDemoTimeChange(demoTime);
-            demoPassedMinutes = demoPassedMinutes + 1;
-          }
+          demoTime.setHours(demoTime.getHours() + 1);
+          demoTime.setMinutes(demoTime.getMinutes()+1);
+          setDemoTime();
+          onDemoTimeChange(demoTime);
+          demoPassedHours = demoPassedHours + 1;
         } 
         
         else {
@@ -58,11 +51,12 @@ function DemoClock({onDemoTimeChange}) {
 
     return () => clearInterval(intervalId);
 
-  }, [isPaused, speed, demoHour, demoDate, onDemoTimeChange]);
+  }, [isPaused, speed, demoHour, demoMinute, demoDate, onDemoTimeChange]);
 
 
   const setDemoTime = () => {
     setTime(demoTime.getHours())
+    setMinutes(demoTime.getMinutes())
     setDate(demoTime.getDate())
     setMonth(demoTime.getMonth()+1)
     // setYear(demoTime.getFullYear())
@@ -94,9 +88,7 @@ function DemoClock({onDemoTimeChange}) {
     if (selectedValue === "next") {
       demoTime = now
       demoTime.setMinutes(0)
-      
       demoPassedHours = 0
-      demoPassedMinutes = 0
       setIsPaused(false)
     } 
     
@@ -104,9 +96,7 @@ function DemoClock({onDemoTimeChange}) {
       demoTime = now
       demoTime.setDate(now.getDate() - 1)
       demoTime.setMinutes(0)
-
       demoPassedHours = 0
-      demoPassedMinutes = 0
       setIsPaused(false)
     }
 
@@ -116,6 +106,7 @@ function DemoClock({onDemoTimeChange}) {
   }
 
   // Select speed menu, demo time, pause button and real time
+  // "Demokello esittää myös minuutit."
   return (
     <Box>
       <Box style={{padding: '1vh'}}>
@@ -127,11 +118,12 @@ function DemoClock({onDemoTimeChange}) {
             onChange={handleSpeedChange}
             sx={{width: '140px', height: '30px'}}
           >
-            <MenuItem value={1000}>1 sec / hour</MenuItem>
-            <MenuItem value={2000}>2 secs / hour</MenuItem>
-            <MenuItem value={3000}>3 secs / hour</MenuItem>
-            <MenuItem value={4000}>4 secs / hour</MenuItem>
-            <MenuItem value={5000}>5 secs / hour</MenuItem>
+            <MenuItem value={1000}>10 min / sec</MenuItem>
+            <MenuItem value={2000}>20 min / sec</MenuItem>
+            <MenuItem value={3000}>30 min / sec</MenuItem>
+            <MenuItem value={4000}>40 min / sec</MenuItem>
+            <MenuItem value={5000}>50 min / sec</MenuItem>
+            <MenuItem value={6000}>60 min / sec</MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -151,7 +143,7 @@ function DemoClock({onDemoTimeChange}) {
       </Box>
 
       <Box style={{padding: '1vh'}}>
-        <b>Demo: </b> {demoHour}:00, {getDayName(demoTime)} {demoDate}.{demoMonth}. &#x1F4C5;
+        <b>Demo: </b> {demoHour}:{demoMinute}, {getDayName(demoTime)} {demoDate}.{demoMonth}. &#x1F4C5;
         <br/>
 
         <Button
