@@ -45,10 +45,10 @@ const HotWaterHeater = ({demoTime}) => {
         className='hot-water-heater-image'
         style={{
           position: 'absolute',
-          top: '20%',
-          left: '19%',
-          width: '8%',
-          height: '10%',
+          top: '22.4%',
+          left: '21.5%',
+          width: '3.5%',
+          height: '4.5%',
         }}
         onClick={handleClick}
         onMouseEnter={handleHoverOn}

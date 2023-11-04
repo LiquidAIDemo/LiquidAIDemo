@@ -45,10 +45,10 @@ const ElectricCar2 = ({demoTime}) => {
         className='car-image-2'
         style={{
           position: 'absolute',
-          top: '55%',
-          left: '75%',
-          width: '28%',
-          height: '35%'
+          top: '60%',
+          left: '83%',
+          width: '12%',
+          height: '30%'
         }}
         onClick={handleClick}
         onMouseEnter={handleHoverOn}
