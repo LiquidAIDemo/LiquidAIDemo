@@ -1,21 +1,23 @@
-import solarPanelImage from "../../assets/solar_panel.png";
+import hotWaterHeaterImage from "../../assets/hot_water_heater.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
 import { Popover } from '@mui/material';
 
-const SolarPanel1 = ({demoTime}) => {
+const HotWaterHeater = ({demoTime}) => {
 
   const component = {
-    id: "solar-panel-1", 
-    name: "Solar panel 1",
-    type: "producer",
-    description: "Solar panels turn sunlight into energy.",
+    id: "hot-water-heater", 
+    name: "Hot water heater",
+    type: "consumer",
+    description: "Hot water heater stores hot water for the shower.",
     demoTime: {demoTime}
   }
 
+  const [anchorEl, setAnchorEl] = useState(null);
+
   const navigate = useNavigate();
-  
+
   const handleClick = () =>
     navigate(`/component/${component.id}`, 
       {
@@ -23,8 +25,6 @@ const SolarPanel1 = ({demoTime}) => {
         replace: true
       }
   )
-  
-  const [anchorEl, setAnchorEl] = useState(null);
   
   const handleHoverOn = (event) => {
     setAnchorEl(event.currentTarget);
@@ -36,19 +36,19 @@ const SolarPanel1 = ({demoTime}) => {
 
   const open = Boolean(anchorEl);
 
-  return (
+  return(
     <div>
       <img
-        id="solar-panel-1"
-        src={solarPanelImage}
-        alt='solarPanel'
-        className='solar-panel-image-1'
+        id="hot-water-heater"
+        src={hotWaterHeaterImage}
+        alt='hotWaterHeater'
+        className='hot-water-heater-image'
         style={{
           position: 'absolute',
-          top: '66%',
-          left: '7%',
-          width: '10%',
-          height: '10%'
+          top: '20%',
+          left: '19%',
+          width: '8%',
+          height: '10%',
         }}
         onClick={handleClick}
         onMouseEnter={handleHoverOn}
@@ -66,7 +66,7 @@ const SolarPanel1 = ({demoTime}) => {
             vertical: 'top',
             horizontal: 'left',
           }}
-          onClose={handleHoverOn}
+          onClose={handleHoverAway}
           disableRestoreFocus
         >     
           <EnergyComponent 
@@ -78,8 +78,7 @@ const SolarPanel1 = ({demoTime}) => {
             />
         </Popover>  
     </div>
-
   )
 }
 
-export default SolarPanel1;
+export default HotWaterHeater;

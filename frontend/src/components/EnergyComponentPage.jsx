@@ -59,6 +59,7 @@ const EnergyComponentPage = () => {
               height="80vh" >
               <Typography 
                 variant="body1"
+                fontWeight="bold"
                 sx={{margin: 2}}
                 >{component.name}
               </Typography>
@@ -129,7 +130,6 @@ const EnergyComponentPage = () => {
               onClick={() => navigate("/demo")}>
               Back to demo
             </Button>
-            <Button>Restart </Button>
           </Grid>
         </Grid>
       </Grid>
