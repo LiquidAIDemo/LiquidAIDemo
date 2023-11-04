@@ -45,10 +45,10 @@ const Jacuzzi = ({demoTime}) => {
         className='jacuzzi-image'
         style={{
           position: 'absolute',
-          top: '2%',
-          left: '6%',
-          width: '13%',
-          height: '15%',
+          top: '3%',
+          left: '7%',
+          width: '10%',
+          height: '12%',
         }}
         onClick={handleClick}
         onMouseEnter={handleHoverOn}

@@ -45,10 +45,10 @@ const ElectricBoard = ({demoTime}) => {
         className='electric-board-image'
         style={{
           position: 'absolute',
-          top: '44%',
-          left: '88.6%',
-          width: '10%',
-          height: '12%',
+          top: '38%',
+          left: '56.9%',
+          width: '1.5%',
+          height: '5%',
         }}
       onClick={handleClick}
         onMouseEnter={handleHoverOn}

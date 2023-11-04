@@ -45,10 +45,10 @@ const WashingMachine = ({demoTime}) => {
         className='washing-machine-image'
         style={{
           position: 'absolute',
-          top: '20%',
-          left: '27%',
-          width: '9%',
-          height: '10%',
+          top: '22.5%',
+          left: '28.4%',
+          width: '5%',
+          height: '4.5%',
         }}
         onClick={handleClick}
         onMouseEnter={handleHoverOn}

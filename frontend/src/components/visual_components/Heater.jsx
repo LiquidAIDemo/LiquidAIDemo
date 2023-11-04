@@ -45,10 +45,10 @@ const Heater = ({demoTime}) => {
         className='heater-image'
         style={{
           position: 'absolute',
-          top: '6%',
-          left: '20%',
-          width: '7%',
-          height: '9%',
+          top: '7.5%',
+          left: '21.5%',
+          width: '3.5%',
+          height: '4.5%',
         }}
         onClick={handleClick}
         onMouseEnter={handleHoverOn}

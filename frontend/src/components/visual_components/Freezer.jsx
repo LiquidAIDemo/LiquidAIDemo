@@ -45,10 +45,10 @@ const Freezer = ({demoTime}) => {
         className='freezer-image'
         style={{
           position: 'absolute',
-          top: '8%',
-          left: '62%',
-          width: '10%',
-          height: '13%',
+          top: '9.1%',
+          left: '65.2%',
+          width: '4%',
+          height: '10%',
         }}
         onClick={handleClick}
         onMouseEnter={handleHoverOn}
