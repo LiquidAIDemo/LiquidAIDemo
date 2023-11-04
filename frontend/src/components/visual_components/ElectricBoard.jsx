@@ -1,16 +1,16 @@
-import airHeatPumpImage from "../../assets/air_heat_pump.png";
+import electricBoardImage from "../../assets/electric_board.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
 import { Popover } from '@mui/material';
 
-const HeatPump = ({demoTime}) => {
+const ElectricBoard = ({demoTime}) => {
 
   const component = {
-    id: "heat-pump", 
-    name: "Heat pump",
+    id: "heater", 
+    name: "Heater",
     type: "consumer",
-    description: "Heat pump is used to adjust the temperature inside the house.",
+    description: "Heater warms up the sauna.",
     demoTime: {demoTime}
   }
 
@@ -39,20 +39,20 @@ const HeatPump = ({demoTime}) => {
   return (
     <div>
       <img
-      id="heat-pump"
-      src={airHeatPumpImage}
-      alt='heatPump'
-      className='air-heat-pump'
-      style={{
-        position: 'absolute',
-        top: '34%',
-        left: '38%',
-        width: '2%',
-        height: '8%',
-      }}
+        id="electric-board"
+        src={electricBoardImage}
+        alt='electricBoard'
+        className='electric-board-image'
+        style={{
+          position: 'absolute',
+          top: '44%',
+          left: '88.6%',
+          width: '10%',
+          height: '12%',
+        }}
       onClick={handleClick}
-      onMouseEnter={handleHoverOn}
-      onMouseLeave={handleHoverAway}
+        onMouseEnter={handleHoverOn}
+        onMouseLeave={handleHoverAway}
       />
       <Popover
         sx={{pointerEvents: 'none'}}
@@ -68,7 +68,7 @@ const HeatPump = ({demoTime}) => {
         }}
         onClose={handleHoverAway}
         disableRestoreFocus
-      >     
+      >                
         <EnergyComponent 
           id={component.id}
           name={component.name}
@@ -76,10 +76,9 @@ const HeatPump = ({demoTime}) => {
           description={component.description}
           demoTime={demoTime}
           />
-      </Popover>  
-    </div>    
+      </Popover>
+    </div>
   )
-
 }
 
-export default HeatPump;
+export default ElectricBoard;

@@ -4,11 +4,11 @@ import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
 import { Popover } from '@mui/material';
 
-const SolarPanel1 = ({demoTime}) => {
+const SolarPanel2 = ({demoTime}) => {
 
   const component = {
-    id: "solar-panel-1", 
-    name: "Solar panel 1",
+    id: "solar-panel-2", 
+    name: "Solar panel 2",
     type: "producer",
     description: "Solar panels turn sunlight into energy.",
     demoTime: {demoTime}
@@ -39,16 +39,16 @@ const SolarPanel1 = ({demoTime}) => {
   return (
     <div>
       <img
-        id="solar-panel-1"
+        id="solar-panel-2"
         src={solarPanelImage}
         alt='solarPanel'
-        className='solar-panel-image-1'
+        className='solar-panel-image-2'
         style={{
           position: 'absolute',
           top: '66%',
-          left: '7%',
+          left: '19%',
           width: '10%',
-          height: '10%'
+          height: '10%',
         }}
         onClick={handleClick}
         onMouseEnter={handleHoverOn}
@@ -82,4 +82,4 @@ const SolarPanel1 = ({demoTime}) => {
   )
 }
 
-export default SolarPanel1;
+export default SolarPanel2;
