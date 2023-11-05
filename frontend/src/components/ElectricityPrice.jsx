@@ -23,7 +23,6 @@ const Chart = ({ consumptionData }) => {
           { 
             data: consumptionData.map(entry => entry.hour),
             scaleType: 'time',
-            hideTooltip: true,
           }
         ]}
         series={[
@@ -32,7 +31,7 @@ const Chart = ({ consumptionData }) => {
             area: true,
             curve: 'natural',
             showMark: false,
-            label: 'cents'
+            label: 'cents',
           },
         ]}
         sx={{
@@ -84,7 +83,8 @@ const ElectricityPrice = ({ demoTime, demoPassedHrs }) => {
   useEffect(() => {
     if (prices.length > 0 && demoTime && demoPassedHrs >= 0 && consumptionPerHour) {
       resetConsumptionData(demoPassedHrs)
-      const demoTimeCopy = new Date(demoTime.setMinutes(0, 0))
+      const demoTimeCopy = new Date(demoTime)
+      demoTimeCopy.setMinutes(0, 0)
       const total = consumptionPerHour[demoTime.getHours()]
       const formattedDemoTime = demoTimeCopy.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" })
       const priceObj = prices.find(priceObj => priceObj.startDate == formattedDemoTime)
@@ -107,7 +107,7 @@ const ElectricityPrice = ({ demoTime, demoPassedHrs }) => {
   return (
     <Box>
       Current price is {currentPrice.toFixed(2)} cents / kWh <br/>
-      Current consumption is {currentConsumption.toFixed(2)}
+      Current consumption is {currentConsumption.toFixed(2)} kWh
       <Box
         sx={{
           
