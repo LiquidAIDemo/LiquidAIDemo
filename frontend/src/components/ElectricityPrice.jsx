@@ -4,28 +4,81 @@ import { Box } from "@mui/material"
 import { LineChart } from '@mui/x-charts/LineChart'
 import energyComponents from "../../../test_data/energyComponents.json"
 
-const ElectricityPrice = ({ demoTime }) => {
+const Chart = ({ consumptionData }) => {
+  //console.log(consumptionData)
+  if (consumptionData.length > 0 && !consumptionData.some(item => isNaN(item.hour) || isNaN(item.total))) {
+    return (
+      <LineChart
+        xAxis={[
+          { 
+            data: consumptionData.map(entry => entry.hour),
+            scaleType: 'time'
+            //valueFormatter: (date) => date.getFullYear().toString() 
+          }
+        ]}
+        series={[
+          {
+            data: consumptionData.map(entry => entry.total), label: '',
+          },
+        ]}        
+      />
+    )
+  }
+  return null
+}
+
+const ElectricityPrice = ({ demoTime, demoPassedHrs }) => {
   const [prices, setPrices] = useState([])
   const [currentPrice, setCurrentPrice] = useState(0)
   const [currentConsumption, setCurrentConsumption] = useState(0)
   const componentsData = energyComponents.components
-  const [consumptionPerHour, setConsumptioPerHour] = useState({})
+  const [consumptionPerHour, setConsumptionPerHour] = useState({})
+  const [consumptionData, setConsumptionData] = useState([])
 
-  useEffect(() => {   
+  const consumption = {}
+  componentsData.forEach((component) => {
+    //console.log(component.type)
+    if (component.consumption_per_hour_kwh) {
+      //console.log("juu")
+      component.consumption_per_hour_kwh.forEach((cData) => {
+        const time = new Date(cData.startDate)
+        const hour = time.getUTCHours()
+        //console.log(hour)
+        if (consumption[hour]) {
+          consumption[hour] += cData.value
+        } else {
+          consumption[hour] = cData.value
+        }
+      })
+    }
+  })
+  //setConsumptionPerHour(consumption)
+    
+  
+  useEffect(() => {    
     try {
       axios("/api")
       .then(res => {
         setPrices(res.data)
-        calculateTotalConsumptions()
       })
+      console.log("call")
     } catch (e) {
       console.error("Error fetching prices:", e)
     }
   }, [])
 
   useEffect(() => {
+    console.log("call")
     findAndSetCurrentPrice(prices, demoTime)
-    setCurrentTotalConsumption(demoTime)
+    if (demoPassedHrs === 0 && consumptionData) {
+      setConsumptionData([])
+    }
+    const demoTimeCopy = new Date(demoTime.setSeconds(0))
+    const total = consumption[demoTime.getHours()]
+    console.log(total*currentPrice)
+    setCurrentConsumption(total)
+    setConsumptionData(curr => [...curr, { hour: demoTimeCopy, total: total*currentPrice}])
+    //console.log(total, demoPassedHrs, consumptionData)
   }, [prices, demoTime]);
 
   const calculateTotalConsumptions = () => {
@@ -34,22 +87,19 @@ const ElectricityPrice = ({ demoTime }) => {
       //console.log(component.type)
       if (component.consumption_per_hour_kwh) {
         //console.log("juu")
-        component.consumption_per_hour_kwh.forEach((consumptionData) => {
-          const time = new Date(consumptionData.startDate)
+        component.consumption_per_hour_kwh.forEach((cData) => {
+          const time = new Date(cData.startDate)
           const hour = time.getUTCHours()
-          if (hour === 22) {
-            console.log(consumptionData)
-          }
           //console.log(hour)
           if (consumption[hour]) {
-            consumption[hour] += consumptionData.value
+            consumption[hour] += cData.value
           } else {
-            consumption[hour] = consumptionData.value
+            consumption[hour] = cData.value
           }
         })
       }
     })
-    setConsumptioPerHour(consumption)
+    setConsumptionPerHour(consumption)
     //console.log(consumption)
   }
 
@@ -64,16 +114,23 @@ const ElectricityPrice = ({ demoTime }) => {
     }
   }
 
-  const setCurrentTotalConsumption = (demoTime) => {
+  const setCurrentTotalConsumption = () => {
+    if (demoPassedHrs === 0 && consumptionData) {
+      setConsumptionData([])
+    }
     const demoTimeCopy = new Date(demoTime)
-    const total = consumptionPerHour[demoTimeCopy.getHours()]
+    const demoHrs = demoTimeCopy.getHours()
+    const total = consumption[demoHrs]
+    //console.log(consumptionData)
     setCurrentConsumption(total)
-    console.log(total)
+    setConsumptionData(curr => [...curr, { hour: demoHrs, total: (total*currentPrice)/100}])
+    //console.log(total, demoPassedHrs, consumptionData)
   }
 
   return (
     <Box>
-      Current price is {currentPrice.toFixed(2)} cents / kWh
+      Current price is {currentPrice.toFixed(2)} cents / kWh <br/>
+      Current consumption is {currentConsumption.toFixed(2)}
       <Box
         sx={{
           
@@ -83,15 +140,8 @@ const ElectricityPrice = ({ demoTime }) => {
             height: '200px'
           
         }}
-      >
-        <LineChart
-          xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
-          series={[
-            {
-              data: [2, 5.5, 2, 8.5, 1.5, 5],
-            },
-          ]}        
-        />
+      >        
+        <Chart consumptionData={consumptionData} />
       </Box>
     </Box>
   )

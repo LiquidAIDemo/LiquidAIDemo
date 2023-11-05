@@ -10,7 +10,7 @@ function getDayName(date) {
   return dayName;
 }
 
-function DemoClock({onDemoTimeChange}) {
+function DemoClock({onDemoTimeChange, onPassedHrsChange}) {
   let now = new Date();
   
   const [demoHour, setTime] = useState(now.getHours());
@@ -38,8 +38,8 @@ function DemoClock({onDemoTimeChange}) {
           setDemoTime();
           onDemoTimeChange(demoTime);
           demoPassedHours = demoPassedHours + 1;
-        } 
-        
+          onPassedHrsChange(demoPassedHours)
+        }
         else {
           // stop the interval when demoPassedHours reaches 24
           togglePause();
@@ -49,7 +49,7 @@ function DemoClock({onDemoTimeChange}) {
 
     return () => clearInterval(intervalId);
 
-  }, [isPaused, speed, demoHour, demoDate, onDemoTimeChange]);
+  }, [isPaused, speed, demoHour, demoDate, onDemoTimeChange, onPassedHrsChange]);
 
 
   const setDemoTime = () => {
@@ -99,6 +99,7 @@ function DemoClock({onDemoTimeChange}) {
 
     setDemoTime();
     onDemoTimeChange(demoTime);
+    onPassedHrsChange(demoPassedHours);
 
   }
 

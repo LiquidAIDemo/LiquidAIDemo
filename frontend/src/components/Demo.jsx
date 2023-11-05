@@ -26,6 +26,12 @@ import ElectricBoard from './visual_components/ElectricBoard';
 const Demo = () => {
   const navigate = useNavigate();
   const [demoTime, setDemoTime] = useState(new Date());
+  const [demoPassedHrs, setDemoPassedHrs] = useState(0);
+
+  const handlePassedHrsChange = (hours) => {
+    const hoursCopy = hours
+    setDemoPassedHrs(hoursCopy)
+  }
 
   const handleDemoTimeChange = (time) => {
     const newDemoTime = new Date(time);
@@ -135,7 +141,7 @@ const Demo = () => {
               overflow="hidden" >
             Time
               <Box>
-                <DemoClock onDemoTimeChange={handleDemoTimeChange}/>
+                <DemoClock onDemoTimeChange={handleDemoTimeChange} onPassedHrsChange={handlePassedHrsChange}/>
                 <RealtimeClock />
               </Box>
             </Box>
@@ -149,7 +155,7 @@ const Demo = () => {
               bgcolor = "#cfe8fc" 
               height="35vh">  
             Savings
-              <ElectricityPrice demoTime={demoTime}/>
+              <ElectricityPrice demoTime={demoTime} demoPassedHrs={demoPassedHrs}/>
             </Box>
           </Grid>
 
