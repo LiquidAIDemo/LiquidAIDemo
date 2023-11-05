@@ -112,11 +112,8 @@ const EnergyComponentPage = () => {
                   marginRight: 'auto',
                   marginTop: 'auto',
                   marginBottom: 'auto',
-                  //position: 'absolute',
-                  top: '15%',
-                  left: '15%',
-                  width: '30%',
-                  height: 'auto',
+                  width: 'auto',
+                  height: '50%',
                 }}
               />
             </div>
