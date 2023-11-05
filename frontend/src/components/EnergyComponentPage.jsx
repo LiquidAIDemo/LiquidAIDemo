@@ -2,6 +2,7 @@ import { Grid, Box, Button, Typography } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import energyComponents from "../../../test_data/energyComponents.json";
 import { BarChart } from '@mui/x-charts/BarChart';
+import backgroundImage from "../assets/component_page_background.png";
 import electricBoardImage from "../assets/electric_board.png";
 import carImage from "../assets/car.png";
 import freezerImage from "../assets/freezer.png";
@@ -65,28 +66,61 @@ const EnergyComponentPage = () => {
       style={{ padding: '2vh' }}
       > 
       <Grid item xs={12} sm={2} minWidth='350px'>
-        <Box 
-          style={{
-            padding: '2vh', 
-            display: 'flex', 
-            alignItems: 'center',
-            justifyContent: 'center'}}
-          bgcolor = "#cfe8fc" 
-          height="96vh">
-          insert picture of {component.id} here
-          <img
-            id={component.id}
-            src={imageMapping[component.id]}
-            alt={component.id}
-            className={`${component.id}-image`}
+        <Box height="96vh">
+          <div
             style={{
-              position: 'absolute',
-              top: '15%',
-              left: '15%',
-              width: '5%',
-              height: '4%',
+              position: 'relative',
+              paddingBottom: '83%',
+              width: '100%',
+              height: 0,
             }}
-          />
+          >
+            <img
+              src={backgroundImage}
+              alt='Home yard'
+              className='background-image'
+              style={{
+                position:'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '92%',
+                objectFit: 'cover',
+              }}
+            />
+            <div
+              className='overlay-content'
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+              }}
+            >
+              <img
+                id={component.id}
+                src={imageMapping[component.id]}
+                alt={component.id}
+                className={`${component.id}-image`}
+                style={{
+                  display: 'block',
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+                  marginTop: 'auto',
+                  marginBottom: 'auto',
+                  //position: 'absolute',
+                  top: '15%',
+                  left: '15%',
+                  width: '30%',
+                  height: 'auto',
+                }}
+              />
+            </div>
+          </div>
         </Box>
       </Grid>
       <Grid item xs={1}>
