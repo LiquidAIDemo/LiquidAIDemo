@@ -1,24 +1,33 @@
-import { useEffect, useState } from "react"
+import { useEffect, useReducer, useState } from "react"
 import axios from 'axios'
 import { Box } from "@mui/material"
 import { LineChart } from '@mui/x-charts/LineChart'
 import energyComponents from "../../../test_data/energyComponents.json"
 
+const consumptionDataReducer = (state, action) => {
+  switch (action.type) {
+    case 'ADD_CONSUMPTION_DATA':
+      return [...state, action.payload]
+    case 'RESET_CONSUMPTION_DATA':
+      return []
+    default:
+      return state
+  }
+};
+
 const Chart = ({ consumptionData }) => {
-  //console.log(consumptionData)
   if (consumptionData.length > 0 && !consumptionData.some(item => isNaN(item.hour) || isNaN(item.total))) {
     return (
       <LineChart
         xAxis={[
           { 
             data: consumptionData.map(entry => entry.hour),
-            scaleType: 'time'
-            //valueFormatter: (date) => date.getFullYear().toString() 
+            scaleType: 'time' 
           }
         ]}
         series={[
           {
-            data: consumptionData.map(entry => entry.total), label: '',
+            data: consumptionData.map(entry => entry.total),
           },
         ]}        
       />
@@ -33,27 +42,7 @@ const ElectricityPrice = ({ demoTime, demoPassedHrs }) => {
   const [currentConsumption, setCurrentConsumption] = useState(0)
   const componentsData = energyComponents.components
   const [consumptionPerHour, setConsumptionPerHour] = useState({})
-  const [consumptionData, setConsumptionData] = useState([])
-
-  const consumption = {}
-  componentsData.forEach((component) => {
-    //console.log(component.type)
-    if (component.consumption_per_hour_kwh) {
-      //console.log("juu")
-      component.consumption_per_hour_kwh.forEach((cData) => {
-        const time = new Date(cData.startDate)
-        const hour = time.getUTCHours()
-        //console.log(hour)
-        if (consumption[hour]) {
-          consumption[hour] += cData.value
-        } else {
-          consumption[hour] = cData.value
-        }
-      })
-    }
-  })
-  //setConsumptionPerHour(consumption)
-    
+  const [consumptionData, dispatchConsumptionData] = useReducer(consumptionDataReducer, [])    
   
   useEffect(() => {    
     try {
@@ -61,72 +50,47 @@ const ElectricityPrice = ({ demoTime, demoPassedHrs }) => {
       .then(res => {
         setPrices(res.data)
       })
-      console.log("call")
+      const consumption = {}
+      componentsData.forEach((component) => {
+        if (component.consumption_per_hour_kwh) {
+          component.consumption_per_hour_kwh.forEach((cData) => {
+            const time = new Date(cData.startDate)
+            const hour = time.getUTCHours()
+            if (consumption[hour]) {
+              consumption[hour] += cData.value
+            } else {
+              consumption[hour] = cData.value
+            }
+          })
+        }
+      })
+      setConsumptionPerHour(consumption)
     } catch (e) {
       console.error("Error fetching prices:", e)
     }
-  }, [])
+  }, [componentsData])
 
   useEffect(() => {
-    console.log("call")
-    findAndSetCurrentPrice(prices, demoTime)
-    if (demoPassedHrs === 0 && consumptionData) {
-      setConsumptionData([])
-    }
-    const demoTimeCopy = new Date(demoTime.setSeconds(0))
-    const total = consumption[demoTime.getHours()]
-    console.log(total*currentPrice)
-    setCurrentConsumption(total)
-    setConsumptionData(curr => [...curr, { hour: demoTimeCopy, total: total*currentPrice}])
-    //console.log(total, demoPassedHrs, consumptionData)
-  }, [prices, demoTime]);
-
-  const calculateTotalConsumptions = () => {
-    const consumption = {}
-    componentsData.forEach((component) => {
-      //console.log(component.type)
-      if (component.consumption_per_hour_kwh) {
-        //console.log("juu")
-        component.consumption_per_hour_kwh.forEach((cData) => {
-          const time = new Date(cData.startDate)
-          const hour = time.getUTCHours()
-          //console.log(hour)
-          if (consumption[hour]) {
-            consumption[hour] += cData.value
-          } else {
-            consumption[hour] = cData.value
-          }
-        })
-      }
-    })
-    setConsumptionPerHour(consumption)
-    //console.log(consumption)
-  }
-
-  const findAndSetCurrentPrice = (prices, demoTime) => {
-    const demoTimeCopy = new Date(demoTime)
-    demoTimeCopy.setSeconds(0)
-    demoTimeCopy.setMinutes(0)
+    resetConsumptionData(demoPassedHrs)
+    const demoTimeCopy = new Date(demoTime.setMinutes(0, 0))
+    const total = consumptionPerHour[demoTime.getHours()]
     const formattedDemoTime = demoTimeCopy.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" })
     const priceObj = prices.find(priceObj => priceObj.startDate == formattedDemoTime)
+    
     if (priceObj) {
       setCurrentPrice(priceObj.price)
+      setCurrentConsumption(total)
+      dispatchConsumptionData({ type: 'ADD_CONSUMPTION_DATA', payload: { hour: demoTimeCopy, total: total * priceObj.price } })
+    }
+  }, [prices, demoTime, demoPassedHrs, consumptionPerHour]);
+  
+  const resetConsumptionData = (demoPassedHrs) => {
+    console.log("call")
+    if (demoPassedHrs === 0) {
+      dispatchConsumptionData({ type: 'RESET_CONSUMPTION_DATA' })
     }
   }
-
-  const setCurrentTotalConsumption = () => {
-    if (demoPassedHrs === 0 && consumptionData) {
-      setConsumptionData([])
-    }
-    const demoTimeCopy = new Date(demoTime)
-    const demoHrs = demoTimeCopy.getHours()
-    const total = consumption[demoHrs]
-    //console.log(consumptionData)
-    setCurrentConsumption(total)
-    setConsumptionData(curr => [...curr, { hour: demoHrs, total: (total*currentPrice)/100}])
-    //console.log(total, demoPassedHrs, consumptionData)
-  }
-
+  
   return (
     <Box>
       Current price is {currentPrice.toFixed(2)} cents / kWh <br/>
