@@ -43,10 +43,10 @@ const Stove = ({demoTime}) => {
         className='stove-image'
         style={{
           position: 'absolute',
-          top: '2%',
+          top: '2.9%',
           left: '77%',
-          width: '4%',
-          height: '4%',
+          width: '3.4%',
+          height: '3%',
         }}
         onClick={handleClick}
         onMouseEnter={handleHoverOn}

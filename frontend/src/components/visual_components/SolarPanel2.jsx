@@ -45,10 +45,10 @@ const SolarPanel2 = ({demoTime}) => {
         className='solar-panel-image-2'
         style={{
           position: 'absolute',
-          top: '66%',
-          left: '19%',
-          width: '10%',
-          height: '10%',
+          top: '66.5%',
+          left: '19.5%',
+          width: '11%',
+          height: '9%',
         }}
         onClick={handleClick}
         onMouseEnter={handleHoverOn}
