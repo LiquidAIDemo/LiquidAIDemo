@@ -2,7 +2,33 @@ import { Grid, Box, Button, Typography } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import energyComponents from "../../../test_data/energyComponents.json";
 import { BarChart } from '@mui/x-charts/BarChart';
+import electricBoardImage from "../assets/electric_board.png";
+import carImage from "../assets/car.png";
+import freezerImage from "../assets/freezer.png";
+import heaterImage from "../assets/heater.png";
+import airHeatPumpImage from "../assets/air_heat_pump.png";
+import hotWaterHeaterImage from "../assets/hot_water_heater.png";
+import jacuzziImage from "../assets/jacuzzi.png";
+import solarPanelImage from "../assets/solar_panel.png";
+import stoveImage from "../assets/stove.png";
+import washingMachineImage from "../assets/washing_machine.png";
 
+const imageMapping = {
+  'heater': electricBoardImage,
+  'electric-car-1': carImage,
+  'electric-car-2': carImage,
+  'freezer': freezerImage,
+  'heater': heaterImage,
+  'heat-pump': airHeatPumpImage,
+  'hot-water-heater': hotWaterHeaterImage,
+  'jacuzzi': jacuzziImage,
+  'solar-panel-1': solarPanelImage,
+  'solar-panel-2': solarPanelImage,
+  'solar-panel-3': solarPanelImage,
+  'solar-panel-4': solarPanelImage,
+  'stove': stoveImage,
+  'washing-machine': washingMachineImage,
+};
 
 const EnergyComponentPage = () => { 
   
@@ -47,7 +73,20 @@ const EnergyComponentPage = () => {
             justifyContent: 'center'}}
           bgcolor = "#cfe8fc" 
           height="96vh">
-          insert picture of {component.name} here 
+          insert picture of {component.id} here
+          <img
+            id={component.id}
+            src={imageMapping[component.id]}
+            alt={component.id}
+            className={`${component.id}-image`}
+            style={{
+              position: 'absolute',
+              top: '15%',
+              left: '15%',
+              width: '5%',
+              height: '4%',
+            }}
+          />
         </Box>
       </Grid>
       <Grid item xs={1}>
