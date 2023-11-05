@@ -7,6 +7,7 @@ import ElectricityPrice from './ElectricityPrice'
 import ComponentMenu from './ComponentMenu';
 import backgroundImage from "./../assets/background.png";
 import houseImage from "./../assets/house.png";
+import electricBoardImage from "./../assets/electric_board.png";
 import Instructions from './Instructions';
 import HeatPump from './visual_components/HeatPump';
 import SolarPanel1 from './visual_components/SolarPanel1';
@@ -21,7 +22,6 @@ import SolarPanel2 from './visual_components/SolarPanel2';
 import SolarPanel3 from './visual_components/SolarPanel3';
 import SolarPanel4 from './visual_components/SolarPanel4';
 import WashingMachine from './visual_components/WashingMachine';
-import ElectricBoard from './visual_components/ElectricBoard';
 
 const Demo = () => {
   const navigate = useNavigate();
@@ -91,6 +91,18 @@ const Demo = () => {
                 }}
               />
               <div>
+              <img
+                id="electric-board"
+                src={electricBoardImage}
+                alt='electricBoard'
+                className='electric-board-image'
+                style={{
+                  position: 'absolute',
+                  top: '38%',
+                  left: '56.9%',
+                  width: '1.5%',
+                  height: '5%',
+                }}/>
                 {/*Energy components inside the house*/}
                 <HeatPump demoTime={demoTime} />
                 <Freezer demoTime={demoTime} />
@@ -99,7 +111,6 @@ const Demo = () => {
                 <Jacuzzi demoTime={demoTime} />
                 <Stove demoTime={demoTime} />
                 <WashingMachine demoTime={demoTime} />
-                <ElectricBoard demoTime={demoTime} />
               </div>
               {/*Energy components outside the house*/}
               <SolarPanel1 demoTime={demoTime} />

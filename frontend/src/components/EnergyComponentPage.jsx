@@ -3,7 +3,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import energyComponents from "../../../test_data/energyComponents.json";
 import { BarChart } from '@mui/x-charts/BarChart';
 import backgroundImage from "../assets/component_page_background.png";
-import electricBoardImage from "../assets/electric_board.png";
 import carImage from "../assets/car.png";
 import freezerImage from "../assets/freezer.png";
 import heaterImage from "../assets/heater.png";
@@ -15,7 +14,6 @@ import stoveImage from "../assets/stove.png";
 import washingMachineImage from "../assets/washing_machine.png";
 
 const imageMapping = {
-  'heater': electricBoardImage,
   'electric-car-1': carImage,
   'electric-car-2': carImage,
   'freezer': freezerImage,
