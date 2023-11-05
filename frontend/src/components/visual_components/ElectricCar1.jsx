@@ -4,6 +4,7 @@ import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
 import { Popover } from '@mui/material';
 
+
 const ElectricCar1 = ({demoTime}) => {
 
   const component = {

@@ -4,7 +4,6 @@ import { useState } from "react";
 import DemoClock from './DemoClock';
 import RealtimeClock from './RealtimeClock';
 import ElectricityPrice from './ElectricityPrice'
-import ComponentMenu from './ComponentMenu';
 import backgroundImage from "./../assets/background.png";
 import houseImage from "./../assets/house.png";
 import Instructions from './Instructions';
@@ -23,9 +22,37 @@ import SolarPanel4 from './visual_components/SolarPanel4';
 import WashingMachine from './visual_components/WashingMachine';
 import ElectricBoard from './visual_components/ElectricBoard';
 
+import { List, ListItemButton, ListItemText, ListItem, Collapse } from '@mui/material';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
+
 const Demo = () => {
   const navigate = useNavigate();
   const [demoTime, setDemoTime] = useState(new Date());
+
+
+  const [open, setOpen] = useState(false);
+    
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  // values from visual component visibility
+  const [showHeatPump, setShowHeatPump] = useState(true);
+  const [showElectricBoard, setShowElectricBoard] = useState(true);
+  const [showElectricCar1, setShowElectricCar1] = useState(true);
+  const [showElectricCar2, setShowElectricCar2] = useState(true);
+  const [showFreezer, setShowFreezer] = useState(true);
+  const [showHeater, setShowHeater] = useState(true);
+  const [showHotWaterHeater, setShowHotWaterHeater] = useState(true);
+  const [showJacuzzi, setShowJacuzzi] = useState(true);
+  const [showSolarPanel1, setShowSolarPanel1] = useState(true);
+  const [showSolarPanel2, setShowSolarPanel2] = useState(true);
+  const [showSolarPanel3, setShowSolarPanel3] = useState(true);
+  const [showSolarPanel4, setShowSolarPanel4] = useState(true);
+  const [showStove, setShowStove] = useState(true);
+  const [showWashingMachine, setShowWashingMachine] = useState(true);
+
 
   const handleDemoTimeChange = (time) => {
     const newDemoTime = new Date(time);
@@ -92,22 +119,22 @@ const Demo = () => {
               />
               <div>
                 {/*Energy components inside the house*/}
-                <HeatPump demoTime={demoTime} />
-                <Freezer demoTime={demoTime} />
-                <Heater demoTime={demoTime} />
-                <HotWaterHeater demoTime={demoTime} />
-                <Jacuzzi demoTime={demoTime} />
-                <Stove demoTime={demoTime} />
-                <WashingMachine demoTime={demoTime} />
-                <ElectricBoard demoTime={demoTime} />
+                {showHeatPump && <HeatPump demoTime={demoTime} />}
+                {showElectricBoard && <ElectricBoard demoTime={demoTime} />}
+                {showFreezer && <Freezer demoTime={demoTime} />}
+                {showHeater && <Heater demoTime={demoTime} />}
+                {showHotWaterHeater && <HotWaterHeater demoTime={demoTime} />}
+                {showJacuzzi && <Jacuzzi demoTime={demoTime} />}
+                {showStove && <Stove demoTime={demoTime} />}
+                {showWashingMachine && <WashingMachine demoTime={demoTime} />}
               </div>
               {/*Energy components outside the house*/}
-              <SolarPanel1 demoTime={demoTime} />
-              <SolarPanel2 demoTime={demoTime} />
-              <SolarPanel3 demoTime={demoTime} />
-              <SolarPanel4 demoTime={demoTime} />
-              <ElectricCar1 demoTime={demoTime} />
-              <ElectricCar2 demoTime={demoTime} />
+              {showSolarPanel1 && <SolarPanel1 demoTime={demoTime} />}
+              {showSolarPanel2 && <SolarPanel2 demoTime={demoTime} />}
+              {showSolarPanel3 && <SolarPanel3 demoTime={demoTime} />}
+              {showSolarPanel4 && <SolarPanel4 demoTime={demoTime} />}
+              {showElectricCar1 && <ElectricCar1 demoTime={demoTime} />}
+              {showElectricCar2 && <ElectricCar2 demoTime={demoTime} />}
             </div>
           </div>
         </Box>
@@ -120,7 +147,139 @@ const Demo = () => {
           <Grid item xs={1} height="10vh">
             {/*Component menu width is not working perfectly*/}
             <Box >
-              <ComponentMenu/>
+            <List
+              sx={{width: '96%', bgcolor: 'background.paper'}}
+              style={{position: 'absolute', zIndex: 1000}}
+            >
+              <ListItemButton onClick={handleClick} sx={{ width: '100%' }}>
+                <ListItemText primary="Components" />
+                {open ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
+              <Collapse in={open} timeout="auto" unmountOnExit>
+                <List component="div">
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      <ListItem>
+                        <input
+                          type="checkbox"
+                          checked={showHeatPump}
+                          onChange={() => setShowHeatPump(!showHeatPump)}
+                        />
+                        <label>Heat Pump</label>
+                      </ListItem>
+                      <ListItem>
+                        <input
+                          type="checkbox"
+                          checked={showElectricBoard}
+                          onChange={() => setShowElectricBoard(!showElectricBoard)}
+                        />
+                        <label>Electric board</label>
+                      </ListItem>
+                      <ListItem>
+                        <input
+                          type="checkbox"
+                          checked={showFreezer}
+                          onChange={() => setShowFreezer(!showFreezer)}
+                        />
+                        <label>Freezer</label>
+                      </ListItem>
+                      <ListItem>
+                        <input
+                          type="checkbox"
+                          checked={showHeater}
+                          onChange={() => setShowHeater(!showHeater)}
+                        />
+                        <label>Heater</label>
+                      </ListItem>
+                      <ListItem>
+                        <input
+                          type="checkbox"
+                          checked={showHotWaterHeater}
+                          onChange={() => setShowHotWaterHeater(!showHotWaterHeater)}
+                        />
+                        <label>Hot water heater</label>
+                      </ListItem>
+                      <ListItem>
+                        <input
+                          type="checkbox"
+                          checked={showStove}
+                          onChange={() => setShowStove(!showStove)}
+                        />
+                        <label>Stove</label>
+                      </ListItem>
+                      <ListItem>
+                        <input
+                          type="checkbox"
+                          checked={showWashingMachine}
+                          onChange={() => setShowWashingMachine(!showWashingMachine)}
+                        />
+                        <label>Washing machine</label>
+                      </ListItem>
+                      {/* ... other list items ... */}
+                    </Grid>
+                    <Grid item xs={6}>
+                    <ListItem>
+                        <input
+                          type="checkbox"
+                          checked={showElectricCar1}
+                          onChange={() => setShowElectricCar1(!showElectricCar1)}
+                        />
+                        <label>Electric car 1</label>
+                      </ListItem>
+                      <ListItem>
+                        <input
+                          type="checkbox"
+                          checked={showElectricCar2}
+                          onChange={() => setShowElectricCar2(!showElectricCar2)}
+                        />
+                        <label>Electric car 2</label>
+                      </ListItem>
+                      <ListItem>
+                        <input
+                          type="checkbox"
+                          checked={showSolarPanel1}
+                          onChange={() => setShowSolarPanel1(!showSolarPanel1)}
+                        />
+                        <label>Solar panel 1</label>
+                      </ListItem>
+                      <ListItem>
+                        <input
+                          type="checkbox"
+                          checked={showSolarPanel2}
+                          onChange={() => setShowSolarPanel2(!showSolarPanel2)}
+                        />
+                        <label>Solar panel 2</label>
+                      </ListItem>
+                      <ListItem>
+                        <input
+                          type="checkbox"
+                          checked={showSolarPanel3}
+                          onChange={() => setShowSolarPanel3(!showSolarPanel3)}
+                        />
+                        <label>Solar panel 3</label>
+                      </ListItem>
+                      <ListItem>
+                        <input
+                          type="checkbox"
+                          checked={showSolarPanel4}
+                          onChange={() => setShowSolarPanel4(!showSolarPanel4)}
+                        />
+                        <label>Solar panel 4</label>
+                      </ListItem>
+                      <ListItem>
+                        <input
+                          type="checkbox"
+                          checked={showJacuzzi}
+                          onChange={() => setShowJacuzzi(!showJacuzzi)}
+                        />
+                        <label>Jacuzzi</label>
+                      </ListItem>
+                    </Grid>
+                    {/* ... other grid items ... */}
+                  </Grid>
+                </List>
+              </Collapse>
+            </List>
             </Box>
             
           </Grid>
