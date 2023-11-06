@@ -12,8 +12,10 @@ import jacuzziImage from "../assets/jacuzzi.png";
 import solarPanelImage from "../assets/solar_panel.png";
 import stoveImage from "../assets/stove.png";
 import washingMachineImage from "../assets/washing_machine.png";
+import electricBoardImage from "../assets/electric_board.png";
 
 const imageMapping = {
+  'electric-board': electricBoardImage,
   'electric-car-1': carImage,
   'electric-car-2': carImage,
   'freezer': freezerImage,
@@ -35,10 +37,11 @@ const EnergyComponentPage = () => {
   const location = useLocation();
   const component = location.state.component;
   const componentData = energyComponents.components.filter(c => c.id === component.id)[0];
-  var productionData = [];
-  var consumptionData = [];
-  var totalProduction = 0;
-  var totalConsumption = 0;
+  let productionData = [];
+  let consumptionData = [];
+  let totalProduction = 0;
+  let totalConsumption = 0;
+  let ownProduction = 0;
 
   if (component.type === "consumer") {
     consumptionData = componentData.consumption_per_hour_kwh
@@ -49,11 +52,25 @@ const EnergyComponentPage = () => {
     totalConsumption = consumptionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
   } else if (component.type === "producer") {
     productionData = componentData.production_per_hour_kwh
-    productionData.forEach(h => {
-      const startHour = new Date(h.startDate).getHours()
-      h.hour = startHour + ':00-' + (parseInt(startHour) + 1) + ':00'
-    })
-    totalProduction = productionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
+    if (productionData.length > 0) {
+      productionData.forEach(h => {
+        const startHour = new Date(h.startDate).getHours()
+        h.hour = startHour + ':00-' + (parseInt(startHour) + 1) + ':00'
+      })
+      totalProduction = productionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
+    } else if (component.id === "electric-board") {
+      const consumingComponents = energyComponents.components.filter(c => c.consumption_per_hour_kwh.length > 0);
+      consumingComponents.forEach(c => {
+        const componentConsumption = c.consumption_per_hour_kwh.reduce((a, b) => a + b.value, 0);
+        totalConsumption += componentConsumption;
+      })
+      const producingComponents = energyComponents.components.filter(c => c.production_per_hour_kwh.length > 0);
+      producingComponents.forEach(c => {
+        const componentProduction = c.production_per_hour_kwh.reduce((a, b) => a + b.value, 0);
+        ownProduction += componentProduction;
+      })
+      totalProduction = (totalConsumption - ownProduction).toFixed(2);
+    }
   }
 
   return (
@@ -153,14 +170,17 @@ const EnergyComponentPage = () => {
                     sx={{margin: 2}}
                     >Total production {totalProduction} kwh
                   </Typography>
-                  <BarChart
-                    dataset={productionData}
-                    yAxis={[{label: 'kwh'}]}
-                    xAxis={[{scaleType: 'band', dataKey: 'hour', tickLabelInterval: () => false, label: 'time (h)'}]}
-                    series={[{dataKey: 'value', label: 'production (kwh)'}]}
-                    width={350}
-                    height={300}
-                  />
+                  {productionData.length > 0 &&
+                    <BarChart
+                      dataset={productionData}
+                      yAxis={[{label: 'kwh'}]}
+                      xAxis={[{scaleType: 'band', dataKey: 'hour', tickLabelInterval: () => false, label: 'time (h)'}]}
+                      series={[{dataKey: 'value', label: 'production (kwh)'}]}
+                      width={350}
+                      height={300}
+                    />
+                  }
+                  
                   </>
                 }
                 {component.type === "consumer" && 
