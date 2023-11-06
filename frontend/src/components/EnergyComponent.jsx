@@ -26,8 +26,8 @@ const EnergyComponent = (props) => {
     });
     totalConsumption = consumptionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
   } else if (component.type === "producer") {
+    productionData = componentData.production_per_hour_kwh
     if (productionData.length > 0) {
-      productionData = componentData.production_per_hour_kwh
       productionData.forEach(h => {
         h.startHour = new Date(h.startDate).getHours()
       })
