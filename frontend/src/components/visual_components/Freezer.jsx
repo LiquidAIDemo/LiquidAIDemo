@@ -1,4 +1,5 @@
 import freezerImage from "../../assets/freezer.png";
+import energyBorder from "../../assets/freezer_energy.png";
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import EnergyComponent from "../EnergyComponent";
@@ -38,6 +39,19 @@ const Freezer = ({demoTime}) => {
 
   return (
     <div>
+      <img
+        id="freezer-energy"
+        src={energyBorder}
+        alt="energy"
+        className="freezer-energy-border"
+        style={{
+          position: 'absolute',
+          top: '8.5%',
+          left: '65%',
+          width: '4.5%',
+          height: '11%',
+        }}
+      />
       <img
         id="freezer"
         src={freezerImage}

@@ -1,4 +1,5 @@
 import solarPanelImage from "../../assets/solar_panel.png";
+import energyBorder from "../../assets/solar_panel_energy.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
@@ -38,6 +39,19 @@ const SolarPanel3 = ({demoTime}) => {
 
   return (
     <div>
+      <img
+        id="solar-panel-energy"
+        src={energyBorder}
+        alt="energy"
+        className="solar-panel-energy-border"
+        style={{
+          position: 'absolute',
+          top: '78%',
+          left: '6%',
+          width: '12%',
+          height: '10%'
+        }}
+      />
       <img
         id="solar-panel-3"
         src={solarPanelImage}
