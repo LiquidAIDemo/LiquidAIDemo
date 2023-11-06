@@ -1652,6 +1652,12 @@
           "value": 0
         }
       ]
+    },
+    {
+      "name": "Electric board",
+      "id": "electric-board",
+      "production_per_hour_kwh": [],
+      "consumption_per_hour_kwh": []
     }
   ]
 }

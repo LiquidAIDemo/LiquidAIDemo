@@ -7,17 +7,16 @@ import { Popover } from '@mui/material';
 const ElectricBoard = ({demoTime}) => {
 
   const component = {
-    id: "heater", 
-    name: "Heater",
-    type: "consumer",
-    description: "Heater warms up the sauna.",
+    id: "electric-board", 
+    name: "Electric board",
+    type: "producer",
+    description: "Electric board represents electricity coming from outside the house \
+      to balance energy production and consumption.",
     demoTime: {demoTime}
   }
 
-  const [anchorEl, setAnchorEl] = useState(null);
-
   const navigate = useNavigate();
-
+  
   const handleClick = () =>
     navigate(`/component/${component.id}`, 
       {
@@ -25,6 +24,8 @@ const ElectricBoard = ({demoTime}) => {
         replace: true
       }
   )
+  
+  const [anchorEl, setAnchorEl] = useState(null);
   
   const handleHoverOn = (event) => {
     setAnchorEl(event.currentTarget);
@@ -50,34 +51,35 @@ const ElectricBoard = ({demoTime}) => {
           width: '1.5%',
           height: '5%',
         }}
-      onClick={handleClick}
+        onClick={handleClick}
         onMouseEnter={handleHoverOn}
         onMouseLeave={handleHoverAway}
-      />
-      <Popover
-        sx={{pointerEvents: 'none'}}
-        open={open}
-        anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
-        onClose={handleHoverAway}
-        disableRestoreFocus
-      >                
-        <EnergyComponent 
-          id={component.id}
-          name={component.name}
-          type={component.type}
-          description={component.description}
-          demoTime={demoTime}
-          />
-      </Popover>
+        />
+        <Popover
+          sx={{pointerEvents: 'none'}}
+          open={open}
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+          }}
+          onClose={handleHoverOn}
+          disableRestoreFocus
+        >     
+          <EnergyComponent 
+            id={component.id}
+            name={component.name}
+            type={component.type}
+            description={component.description}
+            demoTime={demoTime}
+            />
+        </Popover>  
     </div>
+
   )
 }
 
