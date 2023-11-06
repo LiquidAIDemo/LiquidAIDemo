@@ -1,4 +1,5 @@
 import stoveImage from "../../assets/stove.png";
+import energyBorder from "../../assets/stove_energy.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
@@ -36,6 +37,19 @@ const Stove = ({demoTime}) => {
   const open = Boolean(anchorEl);
   return (
     <div>
+      <img
+        id="stove-energy"
+        src={energyBorder}
+        alt="energy"
+        className="stove-energy-border"
+        style={{
+          position: 'absolute',
+          top: '2.7%',
+          left: '76.7%',
+          width: '4%',
+          height: '3.6%'
+        }}
+      />
       <img
         id="stove"
         src={stoveImage}
