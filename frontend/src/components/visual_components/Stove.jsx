@@ -1,16 +1,15 @@
-import solarPanelImage from "../../assets/solar_panel.png";
+import stoveImage from "../../assets/stove.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
 import { Popover } from '@mui/material';
-
-const SolarPanel1 = ({demoTime}) => {
+const Stove = ({demoTime}) => {
 
   const component = {
-    id: "solar-panel-1", 
-    name: "Solar panel 1",
-    type: "producer",
-    description: "Solar panels turn sunlight into energy.",
+    id: "stove", 
+    name: "Stove",
+    type: "consumer",
+    description: "Delicious meals are cooked on the stove.",
     demoTime: {demoTime}
   }
 
@@ -35,20 +34,19 @@ const SolarPanel1 = ({demoTime}) => {
   };
 
   const open = Boolean(anchorEl);
-
   return (
     <div>
       <img
-        id="solar-panel-1"
-        src={solarPanelImage}
-        alt='solarPanel'
-        className='solar-panel-image-1'
+        id="stove"
+        src={stoveImage}
+        alt='stove'
+        className='stove-image'
         style={{
           position: 'absolute',
-          top: '66.5%',
-          left: '6.5%',
-          width: '11%',
-          height: '9%'
+          top: '2.9%',
+          left: '77%',
+          width: '3.4%',
+          height: '3%',
         }}
         onClick={handleClick}
         onMouseEnter={handleHoverOn}
@@ -66,7 +64,7 @@ const SolarPanel1 = ({demoTime}) => {
             vertical: 'top',
             horizontal: 'left',
           }}
-          onClose={handleHoverOn}
+          onClose={handleHoverAway}
           disableRestoreFocus
         >     
           <EnergyComponent 
@@ -78,8 +76,7 @@ const SolarPanel1 = ({demoTime}) => {
             />
         </Popover>  
     </div>
-
   )
 }
 
-export default SolarPanel1;
+export default Stove;

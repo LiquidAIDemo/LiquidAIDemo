@@ -1,16 +1,17 @@
-import solarPanelImage from "../../assets/solar_panel.png";
+import electricBoardImage from "../../assets/electric_board.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
 import { Popover } from '@mui/material';
 
-const SolarPanel1 = ({demoTime}) => {
+const ElectricBoard = ({demoTime}) => {
 
   const component = {
-    id: "solar-panel-1", 
-    name: "Solar panel 1",
+    id: "electric-board", 
+    name: "Electric board",
     type: "producer",
-    description: "Solar panels turn sunlight into energy.",
+    description: "Electric board represents electricity coming from outside the house \
+      to balance energy production and consumption.",
     demoTime: {demoTime}
   }
 
@@ -39,16 +40,16 @@ const SolarPanel1 = ({demoTime}) => {
   return (
     <div>
       <img
-        id="solar-panel-1"
-        src={solarPanelImage}
-        alt='solarPanel'
-        className='solar-panel-image-1'
+        id="electric-board"
+        src={electricBoardImage}
+        alt='electricBoard'
+        className='electric-board-image'
         style={{
           position: 'absolute',
-          top: '66.5%',
-          left: '6.5%',
-          width: '11%',
-          height: '9%'
+          top: '38%',
+          left: '56.9%',
+          width: '1.5%',
+          height: '5%',
         }}
         onClick={handleClick}
         onMouseEnter={handleHoverOn}
@@ -82,4 +83,4 @@ const SolarPanel1 = ({demoTime}) => {
   )
 }
 
-export default SolarPanel1;
+export default ElectricBoard;

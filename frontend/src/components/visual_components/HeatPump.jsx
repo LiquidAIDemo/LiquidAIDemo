@@ -10,7 +10,7 @@ const HeatPump = ({demoTime}) => {
     id: "heat-pump", 
     name: "Heat pump",
     type: "consumer",
-    description: "Heat pump is used to adjust the temperature inside the house",
+    description: "Heat pump is used to adjust the temperature inside the house.",
     demoTime: {demoTime}
   }
 

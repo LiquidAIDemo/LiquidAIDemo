@@ -4,11 +4,11 @@ import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
 import { Popover } from '@mui/material';
 
-const ElectricCar1 = ({demoTime}) => {
+const ElectricCar2 = ({demoTime}) => {
 
   const component = {
-    id: "electric-car-1", 
-    name: "Electric car 1",
+    id: "electric-car-2", 
+    name: "Electric car 2",
     type: "consumer",
     description: "Electric car is charged at the charging station.",
     demoTime: {demoTime}
@@ -39,14 +39,14 @@ const ElectricCar1 = ({demoTime}) => {
   return(
     <div>
       <img
-        id="electric-car-1"
+        id="electric-car-2"
         src={carImage}
         alt='car'
-        className='car-image-1'
+        className='car-image-2'
         style={{
           position: 'absolute',
           top: '60%',
-          left: '70%',
+          left: '83%',
           width: '12%',
           height: '30%'
         }}
@@ -81,4 +81,4 @@ const ElectricCar1 = ({demoTime}) => {
   )
 }
 
-export default ElectricCar1;
+export default ElectricCar2;
