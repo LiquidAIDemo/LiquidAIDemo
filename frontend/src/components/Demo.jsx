@@ -1,6 +1,6 @@
 import { Box, Button, Grid } from '@mui/material';
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { createRoutesFromChildren, useNavigate } from "react-router-dom";
+import { useState, useEffect, useMemo } from "react";
 import DemoClock from './DemoClock';
 import RealtimeClock from './RealtimeClock';
 import ElectricityPrice from './ElectricityPrice'
@@ -22,6 +22,7 @@ import SolarPanel3 from './visual_components/SolarPanel3';
 import SolarPanel4 from './visual_components/SolarPanel4';
 import WashingMachine from './visual_components/WashingMachine';
 import ElectricBoard from './visual_components/ElectricBoard';
+import energyComponents from "../../../test_data/energyComponents.json";
 
 const Demo = () => {
   const navigate = useNavigate();
@@ -33,6 +34,61 @@ const Demo = () => {
   };
 
   const [openInstructions, setOpenInstructions] = useState(false);
+
+  const componentData = energyComponents.components;
+  const consumingComponents = componentData.filter(c => c.consumption_per_hour_kwh.length > 0);
+  const producingComponents = componentData.filter(c => c.production_per_hour_kwh.length > 0);
+  
+  let totalConsumption = [];
+  let totalProduction = [];
+  let netConsumption = [];
+
+  if (totalConsumption.length === 0) {
+    for (let i=0; i<=23; i++) {
+      totalConsumption.push({hour: i, value: 0});
+    }
+  }
+  
+  if (totalProduction.length === 0) {
+    for (let i=0; i<=23; i++) {
+      totalProduction.push({hour: i, value: 0});
+    }
+  }
+
+  if (netConsumption.length === 0) {
+    for (let i=0; i<=23; i++) {
+      netConsumption.push({hour: i, value: 0});
+    }
+  }
+    
+  useEffect(() => {    
+    
+    consumingComponents.forEach(c => {
+      const data = c.consumption_per_hour_kwh;
+      data.forEach(d => {
+        const hour = new Date(d.startDate).getHours()
+        const consumptionHour = totalConsumption.find(obj => obj.hour === hour);
+        consumptionHour.value += d.value;
+      })    
+    })
+
+    producingComponents.forEach(c => {
+      const data = c.production_per_hour_kwh;
+      data.forEach(d => {
+        const hour = new Date(d.startDate).getHours()
+        const productionHour = totalProduction.find(obj => obj.hour === hour);
+        productionHour.value += d.value;
+      })    
+    })
+    
+    netConsumption.forEach(h => {
+      const hourConsumption = totalConsumption.find(obj => obj.hour === h.hour);
+      const hourProduction = totalProduction.find(obj => obj.hour === h.hour);
+      h.value = hourConsumption.value - hourProduction.value;
+    })
+    
+  },[])
+  
 
   return (
     //Created container grid
@@ -99,7 +155,7 @@ const Demo = () => {
                 <Jacuzzi demoTime={demoTime} />
                 <Stove demoTime={demoTime} />
                 <WashingMachine demoTime={demoTime} />
-                <ElectricBoard demoTime={demoTime} />
+                <ElectricBoard demoTime={demoTime} netConsumption={netConsumption} />
               </div>
               {/*Energy components outside the house*/}
               <SolarPanel1 demoTime={demoTime} />

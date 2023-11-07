@@ -70,6 +70,8 @@ const EnergyComponentPage = () => {
         ownProduction += componentProduction;
       })
       totalProduction = (totalConsumption - ownProduction).toFixed(2);
+      productionData = component.netConsumption.netConsumption;
+      
     }
   }
 
@@ -180,6 +182,7 @@ const EnergyComponentPage = () => {
                       height={300}
                     />
                   }
+                  
                   
                   </>
                 }
