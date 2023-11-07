@@ -1,4 +1,5 @@
 import hotWaterHeaterImage from "../../assets/hot_water_heater.png";
+import energyBorder from "../../assets/hot_water_heater_energy.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
@@ -38,6 +39,19 @@ const HotWaterHeater = ({demoTime}) => {
 
   return(
     <div>
+      <img
+        id="hot-water-heater-energy"
+        src={energyBorder}
+        alt="energy"
+        className="hot-water-heater-energy-border"
+        style={{
+          position: 'absolute',
+          top: '22.1%',
+          left: '21.2%',
+          width: '4.2%',
+          height: '5.2%',
+        }}
+      />
       <img
         id="hot-water-heater"
         src={hotWaterHeaterImage}

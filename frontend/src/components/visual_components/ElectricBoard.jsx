@@ -1,4 +1,5 @@
 import electricBoardImage from "../../assets/electric_board.png";
+import energyBorder from "../../assets/electric_board_energy.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
@@ -40,6 +41,19 @@ const ElectricBoard = ({demoTime, netConsumption}) => {
 
   return (
     <div>
+      <img
+        id="electric-board-energy"
+        src={energyBorder}
+        alt="energy"
+        className="electric-board-energy-border"
+        style={{
+          position: 'absolute',
+          top: '37.5%',
+          left: '56.8%',
+          width: '1.8%',
+          height: '6%',
+        }}
+      />
       <img
         id="electric-board"
         src={electricBoardImage}
