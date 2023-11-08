@@ -9,21 +9,53 @@ const consumptionDataReducer = (state, action) => {
     case 'ADD_CONSUMPTION_DATA':
       return [...state, action.payload]
     case 'RESET_CONSUMPTION_DATA':
-      return []
+      return [action.payload]
     default:
       return state
   }
 };
 
+const Price = ({ price }) => {
+  if (price) {
+    return (
+      <div>
+        Current price is {price.toFixed(2)} cents / kWh
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        Loading current price
+      </div>
+    )
+  }
+}
+
+const Consumption = ({ consumption }) => {
+  if (consumption) {
+    return (
+      <div>
+        Current consumption is {consumption.toFixed(2)} kWh
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        Loading current consumption
+      </div>
+    )
+  }
+}
+
 const Chart = ({ consumptionData }) => {
-  if (consumptionData.length > 0 && !consumptionData.some(item => isNaN(item.hour) || isNaN(item.total))) {
+  if (consumptionData.length > 0 && !consumptionData.every(item => isNaN(item.time) || isNaN(item.total))) {
     return (
       <LineChart
         xAxis={[
           { 
-            data: consumptionData.map(entry => entry.hour),
+            data: consumptionData.map(entry => entry.time),
             scaleType: 'time',
-            min: consumptionData[0].hour,
+            min: consumptionData[0].time,
           }
         ]}
         series={[
@@ -48,12 +80,11 @@ const Chart = ({ consumptionData }) => {
 
 const ElectricityPrice = ({ demoTime, demoPassedHrs }) => {
   const [prices, setPrices] = useState([])
-  const [currentPrice, setCurrentPrice] = useState(0)
-  const [currentConsumption, setCurrentConsumption] = useState(0)
-  const [componentsData] = useState(energyComponents.components)
   const [consumptionPerHour, setConsumptionPerHour] = useState({})
+  let currentPrice = setCurrentPrice(prices, demoTime)
+  let currentConsumption = setCurrentConsumption(consumptionPerHour, demoTime)
   const [consumptionData, dispatchConsumptionData] = useReducer(consumptionDataReducer, [])
-  //const [consumptionDataLoaded, setConsumptionDataLoaded] = useState(false)   
+  const [componentsData] = useState(energyComponents.components) 
   
   useEffect(() => {    
     try {
@@ -80,35 +111,42 @@ const ElectricityPrice = ({ demoTime, demoPassedHrs }) => {
       console.error("Error fetching prices:", e)
     }
   }, [componentsData])
-
+  
   useEffect(() => {
-    if (prices.length > 0 && demoTime && demoPassedHrs >= 0 && consumptionPerHour) {
-      resetConsumptionData(demoPassedHrs)
+    if (demoPassedHrs === 0) {
+      dispatchConsumptionData({ type: 'RESET_CONSUMPTION_DATA', payload: { time: demoTime, total: currentPrice * currentConsumption } })
+    } else {
+      dispatchConsumptionData({ type: 'ADD_CONSUMPTION_DATA', payload: { time: demoTime, total: currentPrice * currentConsumption } })
+    }
+  }, [currentConsumption, currentPrice, demoPassedHrs, demoTime])
+  
+
+  function setCurrentConsumption(consumptionPerHour, demoTime) {
+    if (Object.keys(consumptionPerHour).length === 0) {
+      return null
+    } else {
+      return consumptionPerHour[demoTime.getHours()]
+    }
+  }
+
+  function setCurrentPrice(prices, demoTime) {
+    if (prices.length === 0) {
+      return null
+    } else {
       const demoTimeCopy = new Date(demoTime)
       demoTimeCopy.setMinutes(0, 0)
-      const total = consumptionPerHour[demoTime.getHours()]
       const formattedDemoTime = demoTimeCopy.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" })
       const priceObj = prices.find(priceObj => priceObj.startDate == formattedDemoTime)
-      
       if (priceObj) {
-        setCurrentPrice(priceObj.price)
-        setCurrentConsumption(total)
-        dispatchConsumptionData({ type: 'ADD_CONSUMPTION_DATA', payload: { hour: demoTimeCopy, total: total * priceObj.price } })
-        //setConsumptionDataLoaded(true)
+        return priceObj.price
       }
-    }
-  }, [prices, demoTime, demoPassedHrs, consumptionPerHour]);
-  
-  const resetConsumptionData = (demoPassedHrs) => {
-    if (demoPassedHrs === 0) {
-      dispatchConsumptionData({ type: 'RESET_CONSUMPTION_DATA' })
     }
   }
   
   return (
     <Box>
-      Current price is {currentPrice.toFixed(2)} cents / kWh <br/>
-      Current consumption is {currentConsumption.toFixed(2)} kWh
+      <Price price={currentPrice} />
+      <Consumption consumption={currentConsumption} />
       <Box
         sx={{
           
