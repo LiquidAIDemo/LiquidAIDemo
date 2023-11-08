@@ -15,6 +15,7 @@ function DemoClock({onDemoTimeChange}) {
   let now = new Date();
   
   const [demoHour, setTime] = useState(now.getHours());
+  const [demoMinute, setTimeMinutes] = useState(now.getMinutes());
   const [demoDate, setDate] = useState(now.getDate());
   const [demoMonth, setMonth] = useState(now.getMonth() + 1);
   // const [demoYear, setYear] = useState(now.getFullYear());
@@ -40,6 +41,7 @@ function DemoClock({onDemoTimeChange}) {
             setDemoTime();
             onDemoTimeChange(demoTime);
             demoPassedHours = demoPassedHours + 1;
+            demoPassedMinutes = 0;
           } else {
             // But only if minutes are high enough
             demoTime.setMinutes(demoTime.getMinutes() + 1);
@@ -53,7 +55,7 @@ function DemoClock({onDemoTimeChange}) {
           // stop the interval when demoPassedHours reaches 24
           togglePause();
         }
-      }, speed);
+      }, (speed)); // (6000 - speed) here fixes 60m/s but breaks others
     }
 
     return () => clearInterval(intervalId);
@@ -63,6 +65,7 @@ function DemoClock({onDemoTimeChange}) {
 
   const setDemoTime = () => {
     setTime(demoTime.getHours())
+    setTimeMinutes(demoTime.getMinutes())
     setDate(demoTime.getDate())
     setMonth(demoTime.getMonth()+1)
     // setYear(demoTime.getFullYear())
@@ -127,11 +130,12 @@ function DemoClock({onDemoTimeChange}) {
             onChange={handleSpeedChange}
             sx={{width: '140px', height: '30px'}}
           >
-            <MenuItem value={1000}>1 sec / hour</MenuItem>
-            <MenuItem value={2000}>2 secs / hour</MenuItem>
-            <MenuItem value={3000}>3 secs / hour</MenuItem>
-            <MenuItem value={4000}>4 secs / hour</MenuItem>
-            <MenuItem value={5000}>5 secs / hour</MenuItem>
+            <MenuItem value={1000}>10 min / sec</MenuItem>
+            <MenuItem value={500}>20 min / sec</MenuItem>
+            <MenuItem value={250}>30 min / sec</MenuItem>
+            <MenuItem value={125}>40 min / sec</MenuItem>
+            <MenuItem value={50}>50 min / sec</MenuItem>
+            <MenuItem value={10}>60 min / sec</MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -151,7 +155,7 @@ function DemoClock({onDemoTimeChange}) {
       </Box>
 
       <Box style={{padding: '1vh'}}>
-        <b>Demo: </b> {demoHour}:00, {getDayName(demoTime)} {demoDate}.{demoMonth}. &#x1F4C5;
+        <b>Demo: </b> {demoHour}:{demoMinute}, {getDayName(demoTime)} {demoDate}.{demoMonth}. &#x1F4C5;
         <br/>
 
         <Button
