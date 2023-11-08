@@ -1,6 +1,6 @@
 import { Box, Button, Grid } from '@mui/material';
-import { createRoutesFromChildren, useNavigate } from "react-router-dom";
-import { useState, useEffect, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import DemoClock from './DemoClock';
 import RealtimeClock from './RealtimeClock';
 import ElectricityPrice from './ElectricityPrice'
@@ -61,34 +61,29 @@ const Demo = () => {
     }
   }
     
-  useEffect(() => {    
-    
-    consumingComponents.forEach(c => {
-      const data = c.consumption_per_hour_kwh;
-      data.forEach(d => {
-        const hour = new Date(d.startDate).getHours()
-        const consumptionHour = totalConsumption.find(obj => obj.hour === hour);
-        consumptionHour.value += d.value;
-      })    
-    })
+  consumingComponents.forEach(c => {
+    const data = c.consumption_per_hour_kwh;
+    data.forEach(d => {
+      const hour = new Date(d.startDate).getHours()
+      const consumptionHour = totalConsumption.find(obj => obj.hour === hour);
+      consumptionHour.value += d.value;
+    })    
+  })
 
-    producingComponents.forEach(c => {
-      const data = c.production_per_hour_kwh;
-      data.forEach(d => {
-        const hour = new Date(d.startDate).getHours()
-        const productionHour = totalProduction.find(obj => obj.hour === hour);
-        productionHour.value += d.value;
-      })    
-    })
-    
-    netConsumption.forEach(h => {
-      const hourConsumption = totalConsumption.find(obj => obj.hour === h.hour);
-      const hourProduction = totalProduction.find(obj => obj.hour === h.hour);
-      h.value = hourConsumption.value - hourProduction.value;
-    })
-    
-  },[])
+  producingComponents.forEach(c => {
+    const data = c.production_per_hour_kwh;
+    data.forEach(d => {
+      const hour = new Date(d.startDate).getHours()
+      const productionHour = totalProduction.find(obj => obj.hour === hour);
+      productionHour.value += d.value;
+    })    
+  })
   
+  netConsumption.forEach(h => {
+    const hourConsumption = totalConsumption.find(obj => obj.hour === h.hour);
+    const hourProduction = totalProduction.find(obj => obj.hour === h.hour);
+    h.value = hourConsumption.value - hourProduction.value;
+  })
 
   return (
     //Created container grid
