@@ -89,6 +89,12 @@ const EnergyComponentPage = () => {
         ownProduction += componentProduction;
       })
       totalProduction = (totalConsumption - ownProduction).toFixed(2);
+      productionData = component.netConsumption.netConsumption;
+      if (productionData.length > 0) {
+        productionData.forEach(h => {
+          h.hour = h.startHour + ':00-' + (parseInt(h.startHour) + 1) + ':00'
+        })
+      }
     }
   }
 
@@ -199,6 +205,7 @@ const EnergyComponentPage = () => {
                       height={300}
                     />
                   }
+                  
                   
                   </>
                 }
