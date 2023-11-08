@@ -23,6 +23,7 @@ const Chart = ({ consumptionData }) => {
           { 
             data: consumptionData.map(entry => entry.hour),
             scaleType: 'time',
+            min: consumptionData[0].hour,
           }
         ]}
         series={[
