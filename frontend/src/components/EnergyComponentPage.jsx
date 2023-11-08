@@ -1,4 +1,5 @@
 import { Grid, Box, Button, Typography } from '@mui/material';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useNavigate, useLocation } from 'react-router-dom';
 import energyComponents from "../../../test_data/energyComponents.json";
 import { BarChart } from '@mui/x-charts/BarChart';
@@ -13,6 +14,24 @@ import solarPanelImage from "../assets/solar_panel.png";
 import stoveImage from "../assets/stove.png";
 import washingMachineImage from "../assets/washing_machine.png";
 import electricBoardImage from "../assets/electric_board.png";
+
+const theme = createTheme({
+  palette: {
+    water: {
+      main: '#8BD4E2',
+      light: '#a7dee7',
+      dark: '#0eafc9',
+      contrastText: '#000000',
+    },
+  },
+  typography: {
+    button: {
+      textTransform: 'none',
+      fontWeight: 'bolder',
+    }
+  }
+});
+
 
 const imageMapping = {
   'electric-board': electricBoardImage,
@@ -70,6 +89,12 @@ const EnergyComponentPage = () => {
         ownProduction += componentProduction;
       })
       totalProduction = (totalConsumption - ownProduction).toFixed(2);
+      productionData = component.netConsumption.netConsumption;
+      if (productionData.length > 0) {
+        productionData.forEach(h => {
+          h.hour = h.startHour + ':00-' + (parseInt(h.startHour) + 1) + ':00'
+        })
+      }
     }
   }
 
@@ -181,6 +206,7 @@ const EnergyComponentPage = () => {
                     />
                   }
                   
+                  
                   </>
                 }
                 {component.type === "consumer" && 
@@ -213,11 +239,11 @@ const EnergyComponentPage = () => {
             </Box>
           </Grid>
           <Grid item xs={1} style={{ display:"flex", justifyContent: "center" }}>
-            <Button 
-              variant="contained"
-              onClick={() => navigate("/demo")}>
-              Back to demo
-            </Button>
+            <ThemeProvider theme={theme}>
+              <Button variant="contained" color="water" sx={{ borderRadius: 2}} onClick={() => navigate("/demo")}>
+                back
+              </Button>
+            </ThemeProvider>
           </Grid>
         </Grid>
       </Grid>
