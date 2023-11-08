@@ -57,7 +57,7 @@ const Demo = () => {
 
   if (netConsumption.length === 0) {
     for (let i=0; i<=23; i++) {
-      netConsumption.push({hour: i, value: 0});
+      netConsumption.push({startHour: i, value: 0});
     }
   }
     
@@ -80,9 +80,9 @@ const Demo = () => {
   })
   
   netConsumption.forEach(h => {
-    const hourConsumption = totalConsumption.find(obj => obj.hour === h.hour);
-    const hourProduction = totalProduction.find(obj => obj.hour === h.hour);
-    h.value = hourConsumption.value - hourProduction.value;
+    const hourConsumption = totalConsumption.find(obj => obj.hour === h.startHour);
+    const hourProduction = totalProduction.find(obj => obj.hour === h.startHour);
+    h.value = (hourConsumption.value - hourProduction.value).toFixed(2);
   })
 
   return (

@@ -91,6 +91,7 @@ const ElectricBoard = ({demoTime, netConsumption}) => {
             type={component.type}
             description={component.description}
             demoTime={demoTime}
+            netConsumption={netConsumption}
             />
         </Popover>  
     </div>
