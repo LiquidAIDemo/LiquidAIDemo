@@ -1,4 +1,5 @@
 import { Box, Button, Grid } from '@mui/material';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import DemoClock from './DemoClock';
@@ -23,6 +24,23 @@ import SolarPanel4 from './visual_components/SolarPanel4';
 import WashingMachine from './visual_components/WashingMachine';
 import ElectricBoard from './visual_components/ElectricBoard';
 import energyComponents from "../../../test_data/energyComponents.json";
+
+const theme = createTheme({
+  palette: {
+    water: {
+      main: '#8BD4E2',
+      light: '#a7dee7',
+      dark: '#0eafc9',
+      contrastText: '#000000',
+    },
+  },
+  typography: {
+    button: {
+      textTransform: 'none',
+      fontWeight: 'bolder',
+    }
+  }
+});
 
 const Demo = () => {
   const navigate = useNavigate();
@@ -206,27 +224,25 @@ const Demo = () => {
 
           {/*Created container 4 for buttons and justify its content to the center*/}
           <Grid container style={{display: "flex", justifyContent: "center", alignItems: "center", margin: 10}}>
-            <Grid item xs={1} style={{minWidth: 100, margin: 5}}>
-            <Button 
-              variant="contained"
-              onClick={() => navigate("/")}>
-              Back
-            </Button>
-            </Grid>
-            <Grid item xs={1} style={{minWidth: 200, margin: 5}}>
-            <Button 
-              variant="contained"
-              onClick={() => setOpenInstructions(true)}>
-              More information
-            </Button>
-            </Grid>
+            <ThemeProvider theme={theme}>
+              <Button variant="contained" color="water" 
+                      sx={{ borderRadius: 2, margin: 1 }} 
+                      onClick={() => navigate("/")}
+              >
+                back
+              </Button>
+              <Button variant="contained" 
+                      color="water" 
+                      sx={{ borderRadius: 2, margin: 1 }} 
+                      onClick={() => setOpenInstructions(true)}
+              >
+                information
+              </Button>
+            </ThemeProvider>
             <Instructions openInstructions={openInstructions} setOpenInstructions={setOpenInstructions}/>
           </Grid>
-          
-        </Grid>
-           
-      </Grid>
-      
+        </Grid>         
+      </Grid> 
     </Grid>
   );
 }
