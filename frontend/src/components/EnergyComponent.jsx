@@ -11,10 +11,11 @@ const EnergyComponent = (props) => {
     demoTime: demoTime
   }
   const componentData = energyComponents.components.filter(c => c.id === component.id)[0];
-  var productionData = []
-  var consumptionData = [];
-  var totalProduction = 0;
-  var totalConsumption = 0;
+  let productionData = []
+  let consumptionData = [];
+  let totalProduction = 0;
+  let totalConsumption = 0;
+  let ownProduction = 0;
 
   const demoHour = demoTime.getHours()
 
@@ -25,12 +26,26 @@ const EnergyComponent = (props) => {
     });
     totalConsumption = consumptionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
   } else if (component.type === "producer") {
-    productionData = componentData.production_per_hour_kwh
-    productionData.forEach(h => {
-      h.startHour = new Date(h.startDate).getHours()
-    })
-    totalProduction = productionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
-  }
+    if (productionData.length > 0) {
+      productionData = componentData.production_per_hour_kwh
+      productionData.forEach(h => {
+        h.startHour = new Date(h.startDate).getHours()
+      })
+      totalProduction = productionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
+    } else if (component.id === "electric-board") {
+      const consumingComponents = energyComponents.components.filter(c => c.consumption_per_hour_kwh.length > 0);
+      consumingComponents.forEach(c => {
+        const componentConsumption = c.consumption_per_hour_kwh.reduce((a, b) => a + b.value, 0);
+        totalConsumption += componentConsumption;
+      })
+      const producingComponents = energyComponents.components.filter(c => c.production_per_hour_kwh.length > 0);
+      producingComponents.forEach(c => {
+        const componentProduction = c.production_per_hour_kwh.reduce((a, b) => a + b.value, 0);
+        ownProduction += componentProduction;
+      })
+      totalProduction = (totalConsumption - ownProduction).toFixed(2);
+    }
+  }  
   
   return (
     

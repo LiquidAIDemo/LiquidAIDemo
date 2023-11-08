@@ -1,4 +1,5 @@
 import heaterImage from "../../assets/heater.png";
+import energyBorder from "../../assets/heater_energy.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
@@ -38,6 +39,19 @@ const Heater = ({demoTime}) => {
   
   return(
     <div>
+      <img
+        id="heater-energy"
+        src={energyBorder}
+        alt="energy"
+        className="heater-energy-border"
+        style={{
+          position: 'absolute',
+          top: '7.2%',
+          left: '21.2%',
+          width: '4%',
+          height: '5%',
+        }}
+      />
       <img
         id="heater"
         src={heaterImage}

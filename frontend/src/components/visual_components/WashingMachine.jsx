@@ -1,4 +1,5 @@
 import washingMachineImage from "../../assets/washing_machine.png";
+import energyBorder from "../../assets/washing_machine_energy.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
@@ -38,6 +39,19 @@ const WashingMachine = ({demoTime}) => {
 
   return (
     <div>
+      <img
+        id="washing-machine-energy"
+        src={energyBorder}
+        alt="energy"
+        className="washing-machine-energy-border"
+        style={{
+          position: 'absolute',
+          top: '22%',
+          left: '28%',
+          width: '6%',
+          height: '5.5%'
+        }}
+      />
       <img
         id="washing-machine"
         src={washingMachineImage}

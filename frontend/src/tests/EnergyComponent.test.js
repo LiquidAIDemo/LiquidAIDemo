@@ -6,8 +6,8 @@ import { MemoryRouter } from 'react-router-dom'
 const now = new Date()
 
 const eComponent = {
-  id: '1',
-  name: 'Test name',
+  id: 'heat-pump',
+  name: 'Heat Pump',
   type: 'consumer',
   description: 'Test description',
   demoTime: now
