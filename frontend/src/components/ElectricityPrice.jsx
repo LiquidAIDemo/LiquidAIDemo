@@ -1,8 +1,7 @@
 import { useEffect, useReducer, useState } from "react"
 import axios from 'axios'
-import { Box } from "@mui/material"
+import { Box, Typography } from "@mui/material"
 import { LineChart } from '@mui/x-charts/LineChart'
-import energyComponents from "../../../test_data/energyComponents.json"
 
 const consumptionDataReducer = (state, action) => {
   switch (action.type) {
@@ -18,15 +17,15 @@ const consumptionDataReducer = (state, action) => {
 const Price = ({ price }) => {
   if (price) {
     return (
-      <div>
+      <Typography>
         Current price is {price.toFixed(2)} cents / kWh
-      </div>
+      </Typography>
     )
   } else {
     return (
-      <div>
+      <Typography>
         Loading current price
-      </div>
+      </Typography>
     )
   }
 }
@@ -34,15 +33,15 @@ const Price = ({ price }) => {
 const Consumption = ({ consumption }) => {
   if (consumption) {
     return (
-      <div>
+      <Typography>
         Current consumption is {consumption.toFixed(2)} kWh
-      </div>
+      </Typography>
     )
   } else {
     return (
-      <div>
+      <Typography>
         Loading current consumption
-      </div>
+      </Typography>
     )
   }
 }
@@ -78,39 +77,22 @@ const Chart = ({ consumptionData }) => {
   return null
 }
 
-const ElectricityPrice = ({ demoTime, demoPassedHrs }) => {
+const ElectricityPrice = ({ demoTime, demoPassedHrs, totalConsumption }) => {
   const [prices, setPrices] = useState([])
-  const [consumptionPerHour, setConsumptionPerHour] = useState({})
   let currentPrice = setCurrentPrice(prices, demoTime)
-  let currentConsumption = setCurrentConsumption(consumptionPerHour, demoTime)
+  let currentConsumption = setCurrentConsumption(totalConsumption, demoTime)
   const [consumptionData, dispatchConsumptionData] = useReducer(consumptionDataReducer, [])
-  const [componentsData] = useState(energyComponents.components) 
   
-  useEffect(() => {    
+  useEffect(() => {
     try {
       axios("/api")
       .then(res => {
         setPrices(res.data)
       })
-      const consumption = {}
-      componentsData.forEach((component) => {
-        if (component.consumption_per_hour_kwh) {
-          component.consumption_per_hour_kwh.forEach((cData) => {
-            const time = new Date(cData.startDate)
-            const hour = time.getUTCHours()
-            if (consumption[hour]) {
-              consumption[hour] += cData.value
-            } else {
-              consumption[hour] = cData.value
-            }
-          })
-        }
-      })
-      setConsumptionPerHour(consumption)
     } catch (e) {
       console.error("Error fetching prices:", e)
     }
-  }, [componentsData])
+  }, [])
   
   useEffect(() => {
     if (demoPassedHrs === 0) {
@@ -121,11 +103,11 @@ const ElectricityPrice = ({ demoTime, demoPassedHrs }) => {
   }, [currentConsumption, currentPrice, demoPassedHrs, demoTime])
   
 
-  function setCurrentConsumption(consumptionPerHour, demoTime) {
-    if (Object.keys(consumptionPerHour).length === 0) {
+  function setCurrentConsumption(totalConsumption, demoTime) {
+    if (totalConsumption.length === 0) {
       return null
     } else {
-      return consumptionPerHour[demoTime.getHours()]
+      return totalConsumption.find(obj => obj.hour === demoTime.getHours()).value
     }
   }
 
@@ -144,7 +126,11 @@ const ElectricityPrice = ({ demoTime, demoPassedHrs }) => {
   }
   
   return (
-    <Box>
+    <Box
+      sx={{
+        height: '34vh'
+      }}
+    >
       <Price price={currentPrice} />
       <Consumption consumption={currentConsumption} />
       <Box
@@ -152,8 +138,8 @@ const ElectricityPrice = ({ demoTime, demoPassedHrs }) => {
           
             borderRadius: '20px',
             background: 'white',
-            width: '400px',
-            height: '200px'
+            width: '40vh',
+            height: '23vh'
           
         }}
       >        

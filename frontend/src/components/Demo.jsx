@@ -88,7 +88,7 @@ const Demo = () => {
   consumingComponents.forEach(c => {
     const data = c.consumption_per_hour_kwh;
     data.forEach(d => {
-      const hour = new Date(d.startDate).getHours()
+      const hour = new Date(d.startDate).getUTCHours()
       const consumptionHour = totalConsumption.find(obj => obj.hour === hour);
       consumptionHour.value += d.value;
     })    
@@ -97,7 +97,7 @@ const Demo = () => {
   producingComponents.forEach(c => {
     const data = c.production_per_hour_kwh;
     data.forEach(d => {
-      const hour = new Date(d.startDate).getHours()
+      const hour = new Date(d.startDate).getUTCHours()
       const productionHour = totalProduction.find(obj => obj.hour === hour);
       productionHour.value += d.value;
     })    
@@ -224,7 +224,7 @@ const Demo = () => {
               bgcolor = "#cfe8fc" 
               height="35vh">  
             Savings
-              <ElectricityPrice demoTime={demoTime} demoPassedHrs={demoPassedHrs}/>
+              <ElectricityPrice demoTime={demoTime} demoPassedHrs={demoPassedHrs} totalConsumption={totalConsumption} />
             </Box>
           </Grid>
 
