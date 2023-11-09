@@ -1,18 +1,7 @@
-import { useEffect, useReducer, useState } from "react"
+import { useEffect, useState } from "react"
 import axios from 'axios'
 import { Box, Typography } from "@mui/material"
 import { LineChart } from '@mui/x-charts/LineChart'
-
-const consumptionDataReducer = (state, action) => {
-  switch (action.type) {
-    case 'ADD_CONSUMPTION_DATA':
-      return [...state, action.payload]
-    case 'RESET_CONSUMPTION_DATA':
-      return [action.payload]
-    default:
-      return state
-  }
-};
 
 const Price = ({ price }) => {
   if (price) {
@@ -81,7 +70,7 @@ const ElectricityPrice = ({ demoTime, demoPassedHrs, totalConsumption }) => {
   const [prices, setPrices] = useState([])
   let currentPrice = setCurrentPrice(prices, demoTime)
   let currentConsumption = setCurrentConsumption(totalConsumption, demoTime)
-  const [consumptionData, dispatchConsumptionData] = useReducer(consumptionDataReducer, [])
+  const [consumptionData, setConsumptionData] = useState([])
   
   useEffect(() => {
     try {
@@ -96,9 +85,9 @@ const ElectricityPrice = ({ demoTime, demoPassedHrs, totalConsumption }) => {
   
   useEffect(() => {
     if (demoPassedHrs === 0) {
-      dispatchConsumptionData({ type: 'RESET_CONSUMPTION_DATA', payload: { time: demoTime, total: currentPrice * currentConsumption } })
+      setConsumptionData([{ time: demoTime, total: currentPrice * currentConsumption }])
     } else {
-      dispatchConsumptionData({ type: 'ADD_CONSUMPTION_DATA', payload: { time: demoTime, total: currentPrice * currentConsumption } })
+      setConsumptionData(prev => [...prev, { time: demoTime, total: currentPrice * currentConsumption }])
     }
   }, [currentConsumption, currentPrice, demoPassedHrs, demoTime])
   
