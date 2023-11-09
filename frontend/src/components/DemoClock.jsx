@@ -47,8 +47,8 @@ function DemoClock({onDemoTimeChange}) {
             demoPassedHours = demoPassedHours + 1;
             demoPassedMinutes = 0;
           } else {
-            // Increase minute by one
-            demoTime.setMinutes(demoTime.getMinutes() + 1);
+            // Increase minute by ten
+            demoTime.setMinutes(demoTime.getMinutes() + 10);
             setDemoTime();
             onDemoTimeChange(demoTime);
             
@@ -69,11 +69,36 @@ function DemoClock({onDemoTimeChange}) {
 
 
   const setDemoTime = () => {
-    setTime(demoTime.getHours())
-    setTimeMinutes(demoTime.getMinutes())
+    var chour = demoTime.getHours();
+    var cmin = demoTime.getMinutes();
+  
+    setTimeMinutes(cmin);
+    
+    if (chour < 10) {
+      setTime("0" + chour);
+    } else {
+      setTime(chour);
+    }
+    
+    if (cmin < 10) {
+      setTimeMinutes("0" + cmin);
+    } else {
+      setTimeMinutes(cmin);
+    }
+    
     setDate(demoTime.getDate())
     setMonth(demoTime.getMonth()+1)
     // setYear(demoTime.getFullYear())
+    
+  }
+  
+  const addZeroes = () => {
+    var chour = demoTime.getHours();
+    if (chour < 10) {
+      demoHour = 1;
+    }
+    
+    demominute = 200;
   }
 
 
@@ -94,7 +119,7 @@ function DemoClock({onDemoTimeChange}) {
     // Call handleStartingChange with the new event object
     handleStartingChange(event);
   };
-
+  
   const handleStartingChange = (event) => {
     let selectedValue = event.target.value;
     setStart(selectedValue);
@@ -137,10 +162,8 @@ function DemoClock({onDemoTimeChange}) {
           >
             <MenuItem value={1000}>10 min / sec</MenuItem>
             <MenuItem value={500}>20 min / sec</MenuItem>
-            <MenuItem value={20}>30 min / sec</MenuItem>
-            <MenuItem value={5}>40 min / sec</MenuItem>
-            <MenuItem value={2}>50 min / sec</MenuItem>
-            <MenuItem value={1}>60 min / sec</MenuItem>
+            <MenuItem value={150}>30 min / sec</MenuItem>
+            <MenuItem value={100}>1 hour / sec</MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -161,9 +184,7 @@ function DemoClock({onDemoTimeChange}) {
 
       <Box style={{padding: '1vh'}}>
         <b>Demo: </b> {demoHour}:{demoMinute}, {getDayName(demoTime)} {demoDate}.{demoMonth}. &#x1F4C5;
-        <br/>
-        
-        <b>DEBUG phours, pmin: </b> {demoPassedHours}, {demoPassedMinutes} &#x1F4C5;
+          <br/>
         <br/>
 
         <Button
@@ -187,6 +208,6 @@ function DemoClock({onDemoTimeChange}) {
       </Box>
     </Box>
   );
-}
+} //<b>DEBUG phours, pmin: </b> {demoPassedHours}, {demoPassedMinutes} &#x1F4C5;
 
 export default DemoClock;
