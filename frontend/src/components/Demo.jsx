@@ -47,7 +47,7 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material';
 function useLocalStorageState(key, defaultValue) {
   // Initialize state with value from localStorage or the provided default value
   const [state, setState] = useState(() => {
-    const savedState = localStorage.getItem(key);
+    const savedState = window.sessionStorage.getItem(key);
     if (savedState) {
       return JSON.parse(savedState);
     } else {
@@ -57,12 +57,12 @@ function useLocalStorageState(key, defaultValue) {
 
   const resetState = () => {
     setState(defaultValue);
-    localStorage.setItem(key, JSON.stringify(defaultValue));
+    window.sessionStorage.setItem(key, JSON.stringify(defaultValue));
 };
 
   // Use useEffect to update localStorage when state changes
   useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(state));
+    window.sessionStorage.setItem(key, JSON.stringify(state));
   }, [key, state]);
 
   return [state, setState, resetState];
@@ -70,14 +70,18 @@ function useLocalStorageState(key, defaultValue) {
 
 const Demo = () => {
   const navigate = useNavigate();
-  const [demoTime, setDemoTime] = useState(new Date());
-  const [demoPassedHrs, setDemoPassedHrs] = useState(0);
+  const [demoTime, setDemoTime] = useLocalStorageState('demoTime', new Date());
+  const [demoPassedHrs, setDemoPassedHrs] = useLocalStorageState('demoPassedHours', 0);
 
   const handlePassedHrsChange = (hours) => {
     const hoursCopy = hours
     setDemoPassedHrs(hoursCopy)
   }
 
+  const handleDemoTimeChange = (time) => {
+    const newDemoTime = new Date(time);
+    setDemoTime(newDemoTime);
+  };
 
   const [open, setOpen] = useState(false);
 
@@ -118,12 +122,6 @@ const Demo = () => {
   const [showSolarPanel4, setShowSolarPanel4] = useLocalStorageState('showSolarPanel4', true);
   const [showStove, setShowStove] = useLocalStorageState('showStove', true);
   const [showWashingMachine, setShowWashingMachine] = useLocalStorageState('showWashingMachine', true);
-
-
-  const handleDemoTimeChange = (time) => {
-    const newDemoTime = new Date(time);
-    setDemoTime(newDemoTime);
-  };
 
   const [openInstructions, setOpenInstructions] = useState(false);
 
@@ -432,7 +430,7 @@ const Demo = () => {
               bgcolor = "#cfe8fc" 
               height="35vh">  
             Savings
-              <ElectricityPrice demoTime={demoTime} demoPassedHrs={demoPassedHrs} totalConsumption={totalConsumption} />
+              <ElectricityPrice demoTime={new Date(demoTime)} demoPassedHrs={parseInt(demoPassedHrs)} totalConsumption={totalConsumption} />
             </Box>
           </Grid>
 

@@ -72,7 +72,8 @@ function ElectricityPrice({ demoTime, demoPassedHrs, totalConsumption }) {
   let currentPrice = setCurrentPrice(prices, demoTime)
   let currentConsumption = setCurrentConsumption(totalConsumption, demoTime)
   const [consumptionData, setConsumptionData] = useState([])
-  //console.log(consumptionData, demoPassedHrs, demoTime)
+  console.log("demotime", demoTime)
+  console.log("demo passed", demoPassedHrs)
   useEffect(() => {
     console.log("use effect")
     try {
@@ -91,7 +92,7 @@ function ElectricityPrice({ demoTime, demoPassedHrs, totalConsumption }) {
         total: entry.total
       }))
       console.log(formattedData)
-      setConsumptionData("formatted", formattedData)
+      setConsumptionData(formattedData)
     }
   }, [])
   
