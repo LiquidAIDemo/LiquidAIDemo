@@ -6,6 +6,11 @@ import backgroundImage from "./../assets/water.jpg";
 const Welcome = () => {
   const navigate = useNavigate();
 
+
+    // localStorage.removeItem('showHeatPump');
+    // localStorage.removeItem('showElectricBoard');
+
+
   return (
     <div className="welcome">
       <Typography

@@ -1,6 +1,6 @@
 import { Box, Button, Grid } from '@mui/material';
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DemoClock from './DemoClock';
 import RealtimeClock from './RealtimeClock';
 import ElectricityPrice from './ElectricityPrice'
@@ -25,33 +25,74 @@ import ElectricBoard from './visual_components/ElectricBoard';
 import { List, ListItemButton, ListItemText, ListItem, Collapse } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
+function useLocalStorageState(key, defaultValue) {
+  // Initialize state with value from localStorage or the provided default value
+  const [state, setState] = useState(() => {
+    const savedState = localStorage.getItem(key);
+    if (savedState) {
+      return JSON.parse(savedState);
+    } else {
+      return defaultValue;
+    }
+  });
+
+  const resetState = () => {
+    setState(defaultValue);
+    localStorage.setItem(key, JSON.stringify(defaultValue));
+};
+
+  // Use useEffect to update localStorage when state changes
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(state));
+  }, [key, state]);
+
+  return [state, setState, resetState];
+}
+
 const Demo = () => {
   const navigate = useNavigate();
   const [demoTime, setDemoTime] = useState(new Date());
 
 
   const [open, setOpen] = useState(false);
-    
+
+  const handleReset = () => {
+    // Reset all visibility settings to their original values
+    setShowHeatPump(true);
+    setShowElectricBoard(true);
+    setShowElectricCar1(true);
+    setShowElectricCar2(true);
+    setShowFreezer(true);
+    setShowHeater(true);
+    setShowHotWaterHeater(true);
+    setShowJacuzzi(true);
+    setShowSolarPanel1(true);
+    setShowSolarPanel2(true);
+    setShowSolarPanel3(true);
+    setShowSolarPanel4(true);
+    setShowStove(true);
+    setShowWashingMachine(true);
+};
 
   const handleClick = () => {
     setOpen(!open);
   };
 
   // values from visual component visibility
-  const [showHeatPump, setShowHeatPump] = useState(true);
-  const [showElectricBoard, setShowElectricBoard] = useState(true);
-  const [showElectricCar1, setShowElectricCar1] = useState(true);
-  const [showElectricCar2, setShowElectricCar2] = useState(true);
-  const [showFreezer, setShowFreezer] = useState(true);
-  const [showHeater, setShowHeater] = useState(true);
-  const [showHotWaterHeater, setShowHotWaterHeater] = useState(true);
-  const [showJacuzzi, setShowJacuzzi] = useState(true);
-  const [showSolarPanel1, setShowSolarPanel1] = useState(true);
-  const [showSolarPanel2, setShowSolarPanel2] = useState(true);
-  const [showSolarPanel3, setShowSolarPanel3] = useState(true);
-  const [showSolarPanel4, setShowSolarPanel4] = useState(true);
-  const [showStove, setShowStove] = useState(true);
-  const [showWashingMachine, setShowWashingMachine] = useState(true);
+  const [showHeatPump, setShowHeatPump] = useLocalStorageState('showHeatPump', true);
+  const [showElectricBoard, setShowElectricBoard] = useLocalStorageState('showElectricBoard', true);
+  const [showElectricCar1, setShowElectricCar1] = useLocalStorageState('showElectricCar1', true);
+  const [showElectricCar2, setShowElectricCar2] = useLocalStorageState('showElectricCar2', true);
+  const [showFreezer, setShowFreezer] = useLocalStorageState('showFreezer', true);
+  const [showHeater, setShowHeater] = useLocalStorageState('showHeater', true);
+  const [showHotWaterHeater, setShowHotWaterHeater] = useLocalStorageState('showHotWaterHeater', true);
+  const [showJacuzzi, setShowJacuzzi] = useLocalStorageState('showJacuzzi', true);
+  const [showSolarPanel1, setShowSolarPanel1] = useLocalStorageState('showSolarPanel1', true);
+  const [showSolarPanel2, setShowSolarPanel2] = useLocalStorageState('showSolarPanel2', true);
+  const [showSolarPanel3, setShowSolarPanel3] = useLocalStorageState('showSolarPanel3', true);
+  const [showSolarPanel4, setShowSolarPanel4] = useLocalStorageState('showSolarPanel4', true);
+  const [showStove, setShowStove] = useLocalStorageState('showStove', true);
+  const [showWashingMachine, setShowWashingMachine] = useLocalStorageState('showWashingMachine', true);
 
 
   const handleDemoTimeChange = (time) => {
@@ -164,6 +205,7 @@ const Demo = () => {
                           type="checkbox"
                           checked={showHeatPump}
                           onChange={() => setShowHeatPump(!showHeatPump)}
+                          
                         />
                         <label>Heat Pump</label>
                       </ListItem>
@@ -215,7 +257,7 @@ const Demo = () => {
                         />
                         <label>Washing machine</label>
                       </ListItem>
-                      {/* ... other list items ... */}
+                      
                     </Grid>
                     <Grid item xs={6}>
                     <ListItem>
@@ -274,8 +316,9 @@ const Demo = () => {
                         />
                         <label>Jacuzzi</label>
                       </ListItem>
+                      <Button onClick={handleReset}>Reset to Default</Button>
                     </Grid>
-                    {/* ... other grid items ... */}
+                    
                   </Grid>
                 </List>
               </Collapse>
