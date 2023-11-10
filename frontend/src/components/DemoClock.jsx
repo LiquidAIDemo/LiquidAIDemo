@@ -1,5 +1,23 @@
 import { useState, useEffect } from 'react';
 import { Button, FormControl, MenuItem, Select, Box } from '@mui/material';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    water: {
+      main: '#8BD4E2',
+      light: '#a7dee7',
+      dark: '#0eafc9',
+      contrastText: '#000000',
+    },
+  },
+  typography: {
+    button: {
+      textTransform: 'none',
+      fontWeight: 'bolder',
+    }
+  }
+});
 
 let demoTime = new Date();
 let demoPassedHours = 0;
@@ -141,22 +159,19 @@ function DemoClock({onDemoTimeChange}) {
         <b>Demo: </b> {demoHour}:00, {getDayName(demoTime)} {demoDate}.{demoMonth}. &#x1F4C5;
         <br/>
 
-        <Button
-          sx={{ height: '30px' }}
-          variant="contained"
-          onClick={() => handleResetClick(start)}
-        >
-          {'Restart'}
-        </Button>
+        <ThemeProvider theme={theme}>
+          <Button variant="contained" color="water" sx={{ borderRadius: 2}} onClick={() => handleResetClick(start)}>
+            restart
+          </Button>
+        </ThemeProvider>
         {
           demoPassedHours < 24 ? (
-            <Button
-              sx={{height: '30px'}}
-              style={{ marginLeft: '10px '}}
-              variant="outlined" onClick={togglePause}
-            >
-              {isPaused ? 'Continue' : 'Pause'}
-            </Button>
+            <ThemeProvider theme={theme}>
+              <Button variant="contained" color="water" sx={{ borderRadius: 2}} 
+                      style={{ marginLeft: '10px '}} onClick={togglePause}>
+                {isPaused ? 'continue' : 'pause'}
+              </Button>
+            </ThemeProvider>
           ) : null
         }
       </Box>

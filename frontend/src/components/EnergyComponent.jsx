@@ -2,19 +2,21 @@ import { Card, CardContent, Typography } from '@mui/material';
 import energyComponents from "../../../test_data/energyComponents.json";
 
 const EnergyComponent = (props) => {
-  const { id, name, type, description, demoTime } = props;
+  const { id, name, type, description, demoTime, netConsumption } = props;
   const component = {
     id: id,
     name: name,
     type: type,
     description: description,
-    demoTime: demoTime
+    demoTime: demoTime,
+    netConsumption: netConsumption
   }
   const componentData = energyComponents.components.filter(c => c.id === component.id)[0];
-  var productionData = []
-  var consumptionData = [];
-  var totalProduction = 0;
-  var totalConsumption = 0;
+  let productionData = []
+  let consumptionData = [];
+  let totalProduction = 0;
+  let totalConsumption = 0;
+  let ownProduction = 0;
 
   const demoHour = demoTime.getHours()
 
@@ -26,11 +28,25 @@ const EnergyComponent = (props) => {
     totalConsumption = consumptionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
   } else if (component.type === "producer") {
     productionData = componentData.production_per_hour_kwh
-    productionData.forEach(h => {
-      h.startHour = new Date(h.startDate).getHours()
-    })
-    totalProduction = productionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
-  }
+    if (productionData.length > 0) {
+      productionData.forEach(h => {
+        h.startHour = new Date(h.startDate).getHours()
+      })
+      totalProduction = productionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
+    } else if (component.id === "electric-board") {
+      const consumingComponents = energyComponents.components.filter(c => c.consumption_per_hour_kwh.length > 0);
+      consumingComponents.forEach(c => {
+        const componentConsumption = c.consumption_per_hour_kwh.reduce((a, b) => a + b.value, 0);
+        totalConsumption += componentConsumption;
+      })
+      const producingComponents = energyComponents.components.filter(c => c.production_per_hour_kwh.length > 0);
+      producingComponents.forEach(c => {
+        const componentProduction = c.production_per_hour_kwh.reduce((a, b) => a + b.value, 0);
+        ownProduction += componentProduction;
+      })
+      totalProduction = (totalConsumption - ownProduction).toFixed(2);
+    }
+  }  
   
   return (
     
@@ -52,7 +68,7 @@ const EnergyComponent = (props) => {
             Total consumption during the demo {totalConsumption} kwh
           </Typography>
         </> } 
-        {type === "producer" &&
+        {type === "producer" && component.id !== "electric-board" &&
         <>
           <Typography variant='body2' sx={{marginBottom: 1}}>
             <strong>{name}</strong> (Energy producer)<br/>
@@ -60,6 +76,17 @@ const EnergyComponent = (props) => {
           <Typography variant='body2' sx={{marginBottom: 1}}>
             Energy produced between {demoHour}:00-{parseInt(demoHour)+1}:00<br/>
             {productionData.filter(h => h.startHour === demoHour).map(h => h.value)[0]} kwh <br/>
+            Total production during the demo {totalProduction} kwh
+          </Typography>
+        </> }
+        {component.id === "electric-board" && component.netConsumption !== undefined &&
+          <>
+          <Typography variant='body2' sx={{marginBottom: 1}}>
+            <strong>{name}</strong> (Energy producer)<br/>
+          </Typography>  
+          <Typography variant='body2' sx={{marginBottom: 1}}>
+            Energy produced between {demoHour}:00-{parseInt(demoHour)+1}:00<br/>
+            {component.netConsumption.filter(h => h.startHour === demoHour).map(h => h.value)[0]} kwh <br/>
             Total production during the demo {totalProduction} kwh
           </Typography>
         </> }

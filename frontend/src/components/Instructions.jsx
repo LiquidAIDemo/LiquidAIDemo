@@ -7,6 +7,24 @@ import {
   Button
 
 } from '@mui/material';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    water: {
+      main: '#8BD4E2',
+      light: '#a7dee7',
+      dark: '#0eafc9',
+      contrastText: '#000000',
+    },
+  },
+  typography: {
+    button: {
+      textTransform: 'none',
+      fontWeight: 'bolder',
+    }
+  }
+});
 
 const Instructions = ({openInstructions, setOpenInstructions}) => {
 
@@ -46,10 +64,14 @@ const Instructions = ({openInstructions, setOpenInstructions}) => {
           The price data is fetched from Pörssisähkö API:
         </DialogContentText>
         <DialogContent sx={{display: 'flex', justifyContent: 'left', marginX: 2}}>
-          <a href="https://porssisahko.net">Link to the price API (the site is in Finnish)</a>
+          <a href="https://porssisahko.net" style={{ color: "black" }}>Link to the price API (the site is in Finnish)</a>
         </DialogContent>
         <DialogActions sx={{display: 'flex', justifyContent: 'center', margin: 2}}>
-          <Button variant='contained' onClick={handleCloseInstructions}>Back to demo</Button>
+          <ThemeProvider theme={theme}>
+            <Button variant="contained" color="water" sx={{ borderRadius: 2}} onClick={handleCloseInstructions}>
+              back
+            </Button>
+          </ThemeProvider>
         </DialogActions>
       </Dialog>
   );

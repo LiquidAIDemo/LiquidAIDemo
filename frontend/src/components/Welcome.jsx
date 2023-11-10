@@ -1,7 +1,25 @@
 import { Box, Typography, Button } from "@mui/material";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useNavigate } from "react-router-dom";
 import WaterWave from "react-water-wave";
 import backgroundImage from "./../assets/water.jpg";
+
+const theme = createTheme({
+  palette: {
+    water: {
+      main: '#8BD4E2',
+      light: '#a7dee7',
+      dark: '#0eafc9',
+      contrastText: '#000000',
+    },
+  },
+  typography: {
+    button: {
+      textTransform: 'none',
+      fontWeight: 'bolder',
+    }
+  }
+});
 
 const Welcome = () => {
   const navigate = useNavigate();
@@ -54,21 +72,22 @@ const Welcome = () => {
                 background: "rgba(255, 255, 255, 0.9)",
                 textAlign: "center",
                 zIndex: 2,
+                borderRadius: 2,
               }}
             >
               <Typography variant="h4" sx={{ margin: 2, fontWeight: "bold" }}>
-                Welcome to Liquid AI demonstrator!
+                Welcome to Liquid AI demonstrator
               </Typography>
               <Typography
                 variant="text"
                 sx={{ margin: 2, fontWeight: "bold", fontSize: 18 }}
               >
                 Experience the power of liquid software with intelligent energy
-                optimization.
+                optimization
               </Typography>
               <Typography variant="text" sx={{ margin: 2, fontSize: 18 }}>
                 This demo shows you how energy consumption can be optimized in a
-                single-family house.
+                single-family house
                 <br />
                 <br />
                 You can read more about liquid software{" "}
@@ -78,7 +97,6 @@ const Welcome = () => {
                 >
                   here
                 </a>
-                .
                 <br />
                 <br />
                 This project is licensed under MIT. For more info and
@@ -89,12 +107,13 @@ const Welcome = () => {
                 >
                   Git
                 </a>
-                .
               </Typography>
 
-              <Button variant="contained" onClick={() => navigate("/demo")}>
-                Start demo
-              </Button>
+              <ThemeProvider theme={theme}>
+                <Button variant="contained" color="water" sx={{ borderRadius: 2}} onClick={() => navigate("/demo")}>
+                  start
+                </Button>
+              </ThemeProvider>
 
               <Typography variant="body2" sx={{ margin: 2, color: "black" }}>
                 <a

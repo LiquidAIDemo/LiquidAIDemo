@@ -1,4 +1,5 @@
 import airHeatPumpImage from "../../assets/air_heat_pump.png";
+import energyBorder from "../../assets/air_heat_pump_energy.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
@@ -38,6 +39,19 @@ const HeatPump = ({demoTime}) => {
 
   return (
     <div>
+      <img
+        id="heat-pump-energy"
+        src={energyBorder}
+        alt="energy"
+        className="heat-pump-energy-border"
+        style={{
+          position: 'absolute',
+          top: '33.5%',
+          left: '37.5%',
+          width: '3%',
+          height: '9%',
+        }}
+      />
       <img
       id="heat-pump"
       src={airHeatPumpImage}

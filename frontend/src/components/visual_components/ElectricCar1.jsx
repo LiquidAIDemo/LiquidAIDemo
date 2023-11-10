@@ -1,4 +1,5 @@
 import carImage from "../../assets/car.png";
+import energyBorder from "../../assets/car_energy.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
@@ -39,6 +40,19 @@ const ElectricCar1 = ({demoTime}) => {
 
   return(
     <div>
+      <img
+        id="electric-car-energy"
+        src={energyBorder}
+        alt="energy"
+        className="electric-car-energy-border"
+        style={{
+          position: 'absolute',
+          top: '59%',
+          left: '69.4%',
+          width: '13%',
+          height: '32%',
+        }}
+      />
       <img
         id="electric-car-1"
         src={carImage}

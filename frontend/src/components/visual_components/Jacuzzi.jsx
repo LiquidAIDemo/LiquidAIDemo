@@ -1,4 +1,5 @@
 import jacuzziImage from "../../assets/jacuzzi.png";
+import energyBorder from "../../assets/jacuzzi_energy.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
@@ -37,7 +38,21 @@ const Jacuzzi = ({demoTime}) => {
   const open = Boolean(anchorEl);
 
   return (
+    
     <div>
+      <img
+        id="jacuzzi-energy"
+        src={energyBorder}
+        alt="energy"
+        className="jacuzzi-energy-border"
+        style={{
+          position: 'absolute',
+          top: '2.5%',
+          left: '6.5%',
+          width: '11%',
+          height: '13%',
+        }}
+      />
       <img
         id="jacuzzi"
         src={jacuzziImage}
