@@ -430,7 +430,7 @@ const Demo = () => {
               bgcolor = "#cfe8fc" 
               height="35vh">  
             Savings
-              <ElectricityPrice demoTime={new Date(demoTime)} demoPassedHrs={parseInt(demoPassedHrs)} totalConsumption={totalConsumption} />
+              <ElectricityPrice demoTime={demoTime} demoPassedHrs={parseInt(demoPassedHrs)} totalConsumption={totalConsumption} />
             </Box>
           </Grid>
 

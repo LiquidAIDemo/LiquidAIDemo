@@ -69,8 +69,8 @@ function DemoClock({onDemoTimeChange, onPassedHrsChange}) {
           newDemoTime.setHours(demoTime.getHours() + 1);
           setDemoTime(newDemoTime);
           setDemoPassedHours(newPassedHours);
-          window.sessionStorage.setItem('demoTime', newDemoTime)
-          window.sessionStorage.setItem('demoPassedHours', JSON.stringify(newPassedHours))
+          //window.sessionStorage.setItem('demoTime', newDemoTime)
+          //window.sessionStorage.setItem('demoPassedHours', JSON.stringify(newPassedHours))
           //window.sessionStorage.setItem('isPaused', JSON.stringify(isPaused))
           onDemoTimeChange(newDemoTime);
           onPassedHrsChange(newPassedHours)

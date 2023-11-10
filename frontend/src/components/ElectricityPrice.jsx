@@ -68,12 +68,14 @@ const Chart = ({ consumptionData }) => {
 }
 
 function ElectricityPrice({ demoTime, demoPassedHrs, totalConsumption }) {
-  const [prices, setPrices] = useState([])
-  let currentPrice = setCurrentPrice(prices, demoTime)
-  let currentConsumption = setCurrentConsumption(totalConsumption, demoTime)
-  const [consumptionData, setConsumptionData] = useState([])
   console.log("demotime", demoTime)
   console.log("demo passed", demoPassedHrs)
+  const demoTimeDate = new Date(demoTime)
+  const [prices, setPrices] = useState([])
+  let currentPrice = setCurrentPrice(prices, demoTimeDate)
+  let currentConsumption = setCurrentConsumption(totalConsumption, demoTimeDate)
+  const [consumptionData, setConsumptionData] = useState([])
+
   useEffect(() => {
     console.log("use effect")
     try {
@@ -112,6 +114,7 @@ function ElectricityPrice({ demoTime, demoPassedHrs, totalConsumption }) {
   
 
   function setCurrentConsumption(totalConsumption, demoTime) {
+    console.log("set consumption time", demoTime)
     if (totalConsumption.length === 0) {
       return null
     } else {
