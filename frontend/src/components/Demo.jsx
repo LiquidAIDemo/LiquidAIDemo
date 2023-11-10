@@ -316,7 +316,10 @@ const Demo = () => {
                         />
                         <label>Jacuzzi</label>
                       </ListItem>
-                      <Button onClick={handleReset}>Reset to Default</Button>
+                      <Button style={{ marginLeft: '15px '}}
+                       onClick={handleReset}
+                       variant="outlined">
+                        Reset to Default</Button>
                     </Grid>
                     
                   </Grid>
