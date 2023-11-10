@@ -130,6 +130,7 @@ function DemoClock({onDemoTimeChange}) {
             defaultValue={1}
             value={speed}
             onChange={handleSpeedChange}
+            data-testid='speed'
             sx={{width: '140px', height: '30px'}}
           >
             <MenuItem value={1000}>1 sec / hour</MenuItem>
@@ -147,6 +148,7 @@ function DemoClock({onDemoTimeChange}) {
           <Select
             value={start}
             onChange={handleStartingChange}
+            data-testid='time_range'
             sx={{width: '140px', height: '30px'}}
           >
             <MenuItem value={"next"}>Next 24h</MenuItem>

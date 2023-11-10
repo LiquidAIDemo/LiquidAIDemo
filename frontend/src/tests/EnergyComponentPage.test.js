@@ -37,7 +37,7 @@ test("renders content correctly", () => {
   
   expect(screen.getByText(`${eComponent.name}`)).toBeInTheDocument()
   expect(screen.getByText(`${eComponent.description}`)).toBeInTheDocument()
-  expect(screen.getByText('Back to demo')).toBeInTheDocument()
+  expect(screen.getByText('back')).toBeInTheDocument()
 })
 
 test("'back to demo' button returns to demo", async () => {
@@ -53,7 +53,7 @@ test("'back to demo' button returns to demo", async () => {
     )
   })
 
-  const backToDemoButtonElement = screen.getByText('Back to demo')
+  const backToDemoButtonElement = screen.getByText('back')
   await act(async () => {
     await userEvent.click(backToDemoButtonElement)
   })

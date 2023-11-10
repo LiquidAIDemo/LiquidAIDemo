@@ -14,8 +14,8 @@ test("renders content", () => {
   expect(screen.getByText(/Select speed:/)).toBeInTheDocument()
   expect(screen.getByText(/Select time range:/)).toBeInTheDocument()
   expect(screen.getByText(/Demo:/)).toBeInTheDocument()
-  expect(screen.getByText('Pause')).toBeInTheDocument()
-  expect(screen.getByText('Restart')).toBeInTheDocument()
+  expect(screen.getByText('pause')).toBeInTheDocument()
+  expect(screen.getByText('restart')).toBeInTheDocument()
 })
 
 test("demo time runs correctly", () => {
@@ -33,7 +33,7 @@ test("demo time runs correctly", () => {
 test("pause button pauses demo time", async () => {
   jest.useFakeTimers()
   render(<DemoClock onDemoTimeChange={jest.fn()}/>)
-  const pauseButtonElement = screen.getByText('Pause')
+  const pauseButtonElement = screen.getByText('pause')
   
   await user.click(pauseButtonElement)
   act(() => {
@@ -49,7 +49,7 @@ test("pause button pauses demo time", async () => {
 test("restart button restarts demo time", async () => {
   jest.useFakeTimers()
   render(<DemoClock onDemoTimeChange={jest.fn()}/>)
-  const restartButtonElement = screen.getByText('Restart')
+  const restartButtonElement = screen.getByText('restart')
   
   act(() => {
     jest.advanceTimersByTime(2000)
@@ -63,20 +63,8 @@ test("restart button restarts demo time", async () => {
 })
 
 test("selecting time range works correctly", async () => {
-  const spyOnSelectChange = jest.fn()
   render(
-    <div>
-      <Select
-        value={"next"}
-        onChange={(e) => spyOnSelectChange(e.target.value)}
-        data-testid="time_range"
-        name='time'
-        sx={{width: '140px', height: '30px'}}
-      >
-        <MenuItem value={"next"}>Next 24h</MenuItem>
-        <MenuItem value={"last"}>Last 24h</MenuItem>
-      </Select>
-    </div>
+    <DemoClock onDemoTimeChange={jest.fn()}/>
   )
   
   const timeRangeDropdown = within(screen.getByTestId('time_range')).getByRole("combobox")
@@ -88,5 +76,25 @@ test("selecting time range works correctly", async () => {
   expect(optionValues).toEqual(['next', 'last'])
   
   await user.click(options[1])
-  expect(spyOnSelectChange).toHaveBeenCalledWith('last')
+  const timeRangeElementAfterClick = screen.getByText(/Select time range:/)
+  expect(timeRangeElementAfterClick).toHaveTextContent("Last 24h")
+})
+
+test("selecting speed works correctly", async () => {
+  render(
+    <DemoClock onDemoTimeChange={jest.fn()}/>
+  )
+  
+  const speedDropdown = within(screen.getByTestId('speed')).getByRole("combobox")
+  await user.click(speedDropdown)
+  
+  const listbox = screen.getByRole("listbox")
+  const options = within(listbox).getAllByRole("option")
+  const optionValues = options.map((li) => li.getAttribute('data-value'))
+  
+  expect(optionValues).toEqual(["1000", "2000", "3000", "4000", "5000"])
+  await user.click(options[2])
+  
+  const speedElementAfterClick = screen.getByText(/Select speed:/)
+  expect(speedElementAfterClick).toHaveTextContent("3 secs / hour")
 })

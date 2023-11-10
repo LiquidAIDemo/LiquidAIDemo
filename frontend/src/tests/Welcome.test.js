@@ -20,7 +20,7 @@ test("'Start demo' button works correctly", async () => {
     </MemoryRouter>
   )
   
-  const startButtonElement = screen.getByText('Start demo')
+  const startButtonElement = screen.getByText('start')
   await userEvent.click(startButtonElement)
   expect(screen.getByText("Components")).toBeInTheDocument()
 })
