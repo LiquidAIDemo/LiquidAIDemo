@@ -36,6 +36,7 @@ const Consumption = ({ consumption }) => {
 }
 
 const Chart = ({ consumptionData }) => {
+  console.log(consumptionData)
   if (consumptionData.length > 0 && !consumptionData.every(item => isNaN(item.time) || isNaN(item.total))) {
     return (
       <LineChart
@@ -66,13 +67,14 @@ const Chart = ({ consumptionData }) => {
   return null
 }
 
-const ElectricityPrice = ({ demoTime, demoPassedHrs, totalConsumption }) => {
+function ElectricityPrice({ demoTime, demoPassedHrs, totalConsumption }) {
   const [prices, setPrices] = useState([])
   let currentPrice = setCurrentPrice(prices, demoTime)
   let currentConsumption = setCurrentConsumption(totalConsumption, demoTime)
   const [consumptionData, setConsumptionData] = useState([])
-  
+  //console.log(consumptionData, demoPassedHrs, demoTime)
   useEffect(() => {
+    console.log("use effect")
     try {
       axios("/api")
       .then(res => {
@@ -81,13 +83,29 @@ const ElectricityPrice = ({ demoTime, demoPassedHrs, totalConsumption }) => {
     } catch (e) {
       console.error("Error fetching prices:", e)
     }
+    const savedConsumptionData = JSON.parse(window.sessionStorage.getItem('consumptionData'))
+    console.log("saved", savedConsumptionData)
+    if (savedConsumptionData) {
+      const formattedData = savedConsumptionData.map(entry => ({
+        time: new Date(entry.time),
+        total: entry.total
+      }))
+      console.log(formattedData)
+      setConsumptionData("formatted", formattedData)
+    }
   }, [])
   
   useEffect(() => {
+    console.log("passed", demoPassedHrs)
     if (demoPassedHrs === 0) {
       setConsumptionData([{ time: demoTime, total: currentPrice * currentConsumption }])
+      window.sessionStorage.setItem('consumptionData', JSON.stringify([{ time: demoTime, total: currentPrice * currentConsumption }]))
     } else {
-      setConsumptionData(prev => [...prev, { time: demoTime, total: currentPrice * currentConsumption }])
+      setConsumptionData(prev => {
+        const newData = [...prev, { time: demoTime, total: currentPrice * currentConsumption }]
+        window.sessionStorage.setItem('consumptionData', JSON.stringify(newData))
+        return newData
+      })
     }
   }, [currentConsumption, currentPrice, demoPassedHrs, demoTime])
   
