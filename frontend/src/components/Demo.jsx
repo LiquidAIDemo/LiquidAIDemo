@@ -70,15 +70,17 @@ function useLocalStorageState(key, defaultValue) {
 
 const Demo = () => {
   const navigate = useNavigate();
-  const [demoTime, setDemoTime] = useLocalStorageState('demoTime', JSON.stringify(new Date()));
+  const [demoTime, setDemoTime] = useLocalStorageState('demoTime', new Date().setMinutes(0, 0));
   const [demoPassedHrs, setDemoPassedHrs] = useLocalStorageState('demoPassedHours', 0);
-
+  console.log("demo component", demoTime)
   const handlePassedHrsChange = (hours) => {
+    console.log("handle passed hours", hours)
     const hoursCopy = hours
     setDemoPassedHrs(hoursCopy)
   }
 
   const handleDemoTimeChange = (time) => {
+    console.log("handle demotime", time)
     const newDemoTime = new Date(time);
     setDemoTime(newDemoTime);
   };
