@@ -36,7 +36,7 @@ const Consumption = ({ consumption }) => {
 }
 
 const Chart = ({ consumptionData }) => {
-  console.log(consumptionData)
+  console.log("chart", consumptionData)
   if (consumptionData.length > 0 && !consumptionData.every(item => isNaN(item.time) || isNaN(item.total))) {
     return (
       <LineChart
@@ -70,10 +70,9 @@ const Chart = ({ consumptionData }) => {
 function ElectricityPrice({ demoTime, demoPassedHrs, totalConsumption }) {
   console.log("demotime", demoTime)
   console.log("demo passed", demoPassedHrs)
-  const demoTimeDate = new Date(demoTime)
   const [prices, setPrices] = useState([])
-  let currentPrice = setCurrentPrice(prices, demoTimeDate)
-  let currentConsumption = setCurrentConsumption(totalConsumption, demoTimeDate)
+  let currentPrice = setCurrentPrice(prices, demoTime)
+  let currentConsumption = setCurrentConsumption(totalConsumption, demoTime)
   const [consumptionData, setConsumptionData] = useState([])
 
   useEffect(() => {
@@ -93,7 +92,7 @@ function ElectricityPrice({ demoTime, demoPassedHrs, totalConsumption }) {
         time: new Date(entry.time),
         total: entry.total
       }))
-      console.log(formattedData)
+      console.log("formatted", formattedData)
       setConsumptionData(formattedData)
     }
   }, [])
@@ -101,11 +100,12 @@ function ElectricityPrice({ demoTime, demoPassedHrs, totalConsumption }) {
   useEffect(() => {
     console.log("passed", demoPassedHrs)
     if (demoPassedHrs === 0) {
-      setConsumptionData([{ time: demoTime, total: currentPrice * currentConsumption }])
+      window.sessionStorage.removeItem('consumptionData')
+      setConsumptionData([{ time: new Date(demoTime), total: currentPrice * currentConsumption }])
       window.sessionStorage.setItem('consumptionData', JSON.stringify([{ time: demoTime, total: currentPrice * currentConsumption }]))
     } else {
       setConsumptionData(prev => {
-        const newData = [...prev, { time: demoTime, total: currentPrice * currentConsumption }]
+        const newData = [...prev, { time: new Date(demoTime), total: currentPrice * currentConsumption }]
         window.sessionStorage.setItem('consumptionData', JSON.stringify(newData))
         return newData
       })
@@ -115,10 +115,11 @@ function ElectricityPrice({ demoTime, demoPassedHrs, totalConsumption }) {
 
   function setCurrentConsumption(totalConsumption, demoTime) {
     console.log("set consumption time", demoTime)
+    //const demoTimeFormatted = new Date(demoTime)
     if (totalConsumption.length === 0) {
       return null
     } else {
-      return totalConsumption.find(obj => obj.hour === demoTime.getHours()).value
+      return totalConsumption.find(obj => obj.hour === new Date(demoTime).getHours()).value
     }
   }
 

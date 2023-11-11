@@ -70,7 +70,7 @@ function useLocalStorageState(key, defaultValue) {
 
 const Demo = () => {
   const navigate = useNavigate();
-  const [demoTime, setDemoTime] = useLocalStorageState('demoTime', new Date());
+  const [demoTime, setDemoTime] = useLocalStorageState('demoTime', JSON.stringify(new Date()));
   const [demoPassedHrs, setDemoPassedHrs] = useLocalStorageState('demoPassedHours', 0);
 
   const handlePassedHrsChange = (hours) => {
@@ -416,7 +416,7 @@ const Demo = () => {
               overflow="hidden" >
             Time
               <Box>
-                <DemoClock onDemoTimeChange={handleDemoTimeChange} onPassedHrsChange={handlePassedHrsChange}/>
+                <DemoClock demoTime={demoTime} demoPassedHours={demoPassedHrs} onDemoTimeChange={handleDemoTimeChange} onPassedHrsChange={handlePassedHrsChange}/>
                 <RealtimeClock />
               </Box>
             </Box>

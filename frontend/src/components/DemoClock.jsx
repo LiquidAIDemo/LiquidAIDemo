@@ -28,29 +28,29 @@ function getDayName(date) {
   return dayName;
 }
 
-function DemoClock({onDemoTimeChange, onPassedHrsChange}) {
+function DemoClock({demoTime, demoPassedHours, onDemoTimeChange, onPassedHrsChange}) {
   let now = new Date();
-
-  const [demoTime, setDemoTime] = useState(new Date())
-  const [demoPassedHours, setDemoPassedHours] = useState(0)
+  const demoTimeDateObj = new Date(demoTime)
+  // const [demoTime, setDemoTime] = useState(new Date())
+  // const [demoPassedHours, setDemoPassedHours] = useState(0)
 
   const [isPaused, setIsPaused] = useState(false);
   
   // Default speed 1 sec
   const [speed, setSpeed] = useState(1000);
   const [start, setStart] = useState("next");
-
-  useEffect(() => {
-    const savedDemoTime = window.sessionStorage.getItem('demoTime');
-    const savedPassedHours = window.sessionStorage.getItem('demoPassedHours');
-    //const savedIsPaused = window.sessionStorage.getItem('isPaused');
-
-    if (savedDemoTime && savedPassedHours) {
-      setDemoTime(new Date(savedDemoTime));
-      setDemoPassedHours(parseInt(savedPassedHours));
-      //setIsPaused(JSON.parse(window.sessionStorage.getItem('isPaused')));
-    }
-  }, []);
+  console.log("clock passed", demoPassedHours, demoTime)
+  // useEffect(() => {
+  //   const savedDemoTime = window.sessionStorage.getItem('demoTime');
+  //   const savedPassedHours = window.sessionStorage.getItem('demoPassedHours');
+  //   //const savedIsPaused = window.sessionStorage.getItem('isPaused');
+  //   console.log("clock saved", savedDemoTime, savedPassedHours)
+  //   if (savedDemoTime && savedPassedHours) {
+  //     setDemoTime(new Date(savedDemoTime));
+  //     setDemoPassedHours(parseInt(savedPassedHours));
+  //     //setIsPaused(JSON.parse(window.sessionStorage.getItem('isPaused')));
+  //   }
+  // }, []);
   
   //console.log(window.sessionStorage, JSON.parse(window.sessionStorage.getItem('isPaused')))
   //console.log(demoTime, demoPassedHours, isPaused)
@@ -66,9 +66,9 @@ function DemoClock({onDemoTimeChange, onPassedHrsChange}) {
           // add one hour to demotime object
           const newDemoTime = new Date(demoTime);
           const newPassedHours = demoPassedHours + 1;
-          newDemoTime.setHours(demoTime.getHours() + 1);
-          setDemoTime(newDemoTime);
-          setDemoPassedHours(newPassedHours);
+          newDemoTime.setHours(newDemoTime.getHours() + 1);
+          // setDemoTime(newDemoTime);
+          // setDemoPassedHours(newPassedHours);
           //window.sessionStorage.setItem('demoTime', newDemoTime)
           //window.sessionStorage.setItem('demoPassedHours', JSON.stringify(newPassedHours))
           //window.sessionStorage.setItem('isPaused', JSON.stringify(isPaused))
@@ -112,8 +112,8 @@ function DemoClock({onDemoTimeChange, onPassedHrsChange}) {
     if (selectedValue === "next") {
       const newDemoTime = new Date();
       newDemoTime.setMinutes(0, 0);
-      setDemoTime(newDemoTime);
-      setDemoPassedHours(0);
+      // setDemoTime(newDemoTime);
+      // setDemoPassedHours(0);
       setIsPaused(false);
       onDemoTimeChange(newDemoTime);
     } 
@@ -122,8 +122,8 @@ function DemoClock({onDemoTimeChange, onPassedHrsChange}) {
       const newDemoTime = new Date();
       newDemoTime.setDate(now.getDate() - 1);
       demoTime.setMinutes(0);
-      setDemoTime(newDemoTime);
-      setDemoPassedHours(0);
+      // setDemoTime(newDemoTime);
+      // setDemoPassedHours(0);
       setIsPaused(false);
       onDemoTimeChange(newDemoTime);
     }
@@ -169,7 +169,7 @@ function DemoClock({onDemoTimeChange, onPassedHrsChange}) {
       </Box>
 
       <Box style={{padding: '1vh'}}>
-        <b>Demo: </b> {demoTime.getHours()}:00, {getDayName(demoTime)} {demoTime.getDate()}.{demoTime.getMonth()}. &#x1F4C5;
+        <b>Demo: </b> {demoTimeDateObj.getHours()}:00, {getDayName(demoTimeDateObj)} {demoTimeDateObj.getDate()}.{demoTimeDateObj.getMonth()+1}. &#x1F4C5;
         <br/>
 
         <ThemeProvider theme={theme}>

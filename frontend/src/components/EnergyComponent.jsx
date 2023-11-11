@@ -8,7 +8,7 @@ const EnergyComponent = (props) => {
     name: name,
     type: type,
     description: description,
-    demoTime: demoTime,
+    demoTime: new Date(demoTime),
     netConsumption: netConsumption
   }
   const componentData = energyComponents.components.filter(c => c.id === component.id)[0];
@@ -18,7 +18,7 @@ const EnergyComponent = (props) => {
   let totalConsumption = 0;
   let ownProduction = 0;
 
-  const demoHour = demoTime.getHours()
+  const demoHour = new Date(demoTime).getHours()
 
   if (component.type === "consumer") {
     consumptionData = componentData.consumption_per_hour_kwh
