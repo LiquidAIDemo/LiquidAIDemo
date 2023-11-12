@@ -72,6 +72,7 @@ const Demo = () => {
   const navigate = useNavigate();
   const [demoTime, setDemoTime] = useState(new Date());
 
+  window.addEventListener("popstate", () => navigate("/"));
 
   const [open, setOpen] = useState(false);
 
@@ -230,7 +231,7 @@ const Demo = () => {
               <div>
                 {/*Energy components inside the house*/}
                 {showHeatPump && <HeatPump demoTime={demoTime} />}
-                {showElectricBoard && <ElectricBoard demoTime={demoTime} />}
+                {showElectricBoard && <ElectricBoard demoTime={demoTime} netConsumption={netConsumption}/>}
                 {showFreezer && <Freezer demoTime={demoTime} />}
                 {showHeater && <Heater demoTime={demoTime} />}
                 {showHotWaterHeater && <HotWaterHeater demoTime={demoTime} />}
