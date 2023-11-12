@@ -23,14 +23,14 @@ const EnergyComponent = (props) => {
   if (component.type === "consumer") {
     consumptionData = componentData.consumption_per_hour_kwh
     consumptionData.forEach(h => {
-      h.startHour = new Date(h.startDate).getHours()
+      h.startHour = new Date(h.startDate).getUTCHours()
     });
     totalConsumption = consumptionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
   } else if (component.type === "producer") {
     productionData = componentData.production_per_hour_kwh
     if (productionData.length > 0) {
       productionData.forEach(h => {
-        h.startHour = new Date(h.startDate).getHours()
+        h.startHour = new Date(h.startDate).getUTCHours()
       })
       totalProduction = productionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
     } else if (component.id === "electric-board") {

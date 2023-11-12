@@ -35,15 +35,18 @@ const Consumption = ({ consumption }) => {
   }
 }
 
-const Chart = ({ consumptionData }) => {
+const Chart = React.memo(({ consumptionData }) => {
+  console.log("chart", consumptionData)
   if (consumptionData.length > 0 && !consumptionData.every(item => isNaN(item.time) || isNaN(item.total))) {
-    return (
+    const xAxisData = consumptionData.map(entry => entry.time.getHours() + ':00-' + (parseInt(entry.time.getHours()) + 1) + ':00')
+    return (      
       <LineChart
         xAxis={[
           { 
-            data: consumptionData.map(entry => entry.time),
-            scaleType: 'time',
-            min: consumptionData[0].time,
+            data: xAxisData,
+            scaleType: 'band',
+            label: 'time (h)',
+            tickLabelInterval: () => false,
           }
         ]}
         series={[
@@ -64,7 +67,7 @@ const Chart = ({ consumptionData }) => {
     )
   }
   return null
-}
+})
 
 function ElectricityPrice({ demoTime, demoPassedHrs, totalConsumption }) {
   const [prices, setPrices] = useState([])
@@ -102,11 +105,16 @@ function ElectricityPrice({ demoTime, demoPassedHrs, totalConsumption }) {
       window.sessionStorage.removeItem('consumptionData')
       setConsumptionData([{ time: new Date(demoTime), total: newPrice * newCurrentConsumption }])
       window.sessionStorage.setItem('consumptionData', JSON.stringify([{ time: new Date(demoTime), total: newPrice * newCurrentConsumption }]))
-    } else if (demoPassedHrs < 24) {
+    } else {
       setConsumptionData(prev => {
-        const newData = [...prev, { time: new Date(demoTime), total: newPrice * newCurrentConsumption }]
-        window.sessionStorage.setItem('consumptionData', JSON.stringify(newData))
-        return newData
+        const newItem = { time: new Date(demoTime), total: newPrice * newCurrentConsumption }
+
+        if (!prev.some(item => item.time.getTime() === newItem.time.getTime())) {
+          const newData = [...prev, newItem]
+          window.sessionStorage.setItem('consumptionData', JSON.stringify(newData))
+          return newData;
+        }
+        return prev;
       })
     }
   }, [demoPassedHrs, demoTime, prices, totalConsumption])  
@@ -143,13 +151,13 @@ function ElectricityPrice({ demoTime, demoPassedHrs, totalConsumption }) {
       <Price price={currentPrice} />
       <Consumption consumption={currentConsumption} />
       <Box
-        sx={{
-          
-            borderRadius: '20px',
+        sx={{         
+            borderRadius: '30px',
             background: 'white',
             width: '40vh',
-            height: '23vh'
-          
+            height: '23vh',
+            border: '1px solid #DCDCDC', 
+            boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
         }}
       >        
         <Chart consumptionData={consumptionData} />
