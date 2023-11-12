@@ -94,28 +94,34 @@ function ElectricityPrice({ demoTime, demoPassedHrs, totalConsumption }) {
       }))
       //console.log("formatted", formattedData)
       setConsumptionData(formattedData)
+    } else {
+      setConsumptionData([])
     }
   }, [])
   
-  useEffect(() => {
-    setCurrentConsumption(updateCurrentConsumption(totalConsumption, demoTime))
-    setCurrentPrice(updateCurrentPrice(prices, demoTime))
-  }, [totalConsumption, demoTime, prices])
+  //useEffect(() => {
+    //setCurrentConsumption(updateCurrentConsumption(totalConsumption, demoTime))
+    //setCurrentPrice(updateCurrentPrice(prices, demoTime))
+  //}, [totalConsumption, demoTime, prices])
 
   useEffect(() => {
     console.log("passed", demoPassedHrs)
+    const newPrice = updateCurrentPrice(prices, demoTime)
+    const newCurrentConsumption = updateCurrentConsumption(totalConsumption, demoTime)
+    setCurrentPrice(newPrice)
+    setCurrentConsumption(newCurrentConsumption)
     if (demoPassedHrs === 0) {
       window.sessionStorage.removeItem('consumptionData')
-      setConsumptionData([{ time: new Date(demoTime), total: currentPrice * currentConsumption }])
-      window.sessionStorage.setItem('consumptionData', JSON.stringify([{ time: new Date(demoTime), total: currentPrice * currentConsumption }]))
+      setConsumptionData([{ time: new Date(demoTime), total: newPrice * newCurrentConsumption }])
+      window.sessionStorage.setItem('consumptionData', JSON.stringify([{ time: new Date(demoTime), total: newPrice * newCurrentConsumption }]))
     } else {
       setConsumptionData(prev => {
-        const newData = [...prev, { time: new Date(demoTime), total: currentPrice * currentConsumption }]
+        const newData = [...prev, { time: new Date(demoTime), total: newPrice * newCurrentConsumption }]
         window.sessionStorage.setItem('consumptionData', JSON.stringify(newData))
         return newData
       })
     }
-  }, [currentConsumption, currentPrice, demoPassedHrs, demoTime])  
+  }, [demoPassedHrs, demoTime, prices, totalConsumption])  
 
   function updateCurrentConsumption(totalConsumption, demoTime) {
     console.log("set consumption time", demoTime)

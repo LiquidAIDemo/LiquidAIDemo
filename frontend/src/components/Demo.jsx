@@ -73,17 +73,14 @@ const Demo = () => {
   const [demoTime, setDemoTime] = useLocalStorageState('demoTime', new Date().setMinutes(0, 0));
   const [demoPassedHrs, setDemoPassedHrs] = useLocalStorageState('demoPassedHours', 0);
   console.log("demo component", demoTime)
-  const handlePassedHrsChange = (hours) => {
+  
+  const handleDemoTimeChange = (time, hours) => {
     console.log("handle passed hours", hours)
     const hoursCopy = hours
-    setDemoPassedHrs(hoursCopy)
-  }
-
-  const handleDemoTimeChange = (time) => {
-    console.log("handle demotime", time)
     const newDemoTime = new Date(time);
     setDemoTime(newDemoTime);
-  };
+    setDemoPassedHrs(hoursCopy)
+  }
 
   const [open, setOpen] = useState(false);
 
@@ -418,7 +415,7 @@ const Demo = () => {
               overflow="hidden" >
             Time
               <Box>
-                <DemoClock demoTime={demoTime} demoPassedHours={demoPassedHrs} onDemoTimeChange={handleDemoTimeChange} onPassedHrsChange={handlePassedHrsChange}/>
+                <DemoClock demoTime={demoTime} demoPassedHours={demoPassedHrs} onDemoTimeChange={handleDemoTimeChange} />
                 <RealtimeClock />
               </Box>
             </Box>

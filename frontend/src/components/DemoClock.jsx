@@ -28,7 +28,7 @@ function getDayName(date) {
   return dayName;
 }
 
-function DemoClock({demoTime, demoPassedHours, onDemoTimeChange, onPassedHrsChange}) {
+function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
   let now = new Date();
   const demoTimeDateObj = new Date(demoTime)
   // const [demoTime, setDemoTime] = useState(new Date())
@@ -58,7 +58,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange, onPassedHrsChan
   // speed depends on selected time value
   useEffect(() => {
     let intervalId;
-
+    console.log("clock effect", demoTime, demoPassedHours)
     if (!isPaused) {
     
       intervalId = setInterval(() => {
@@ -72,8 +72,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange, onPassedHrsChan
           //window.sessionStorage.setItem('demoTime', newDemoTime)
           //window.sessionStorage.setItem('demoPassedHours', JSON.stringify(newPassedHours))
           //window.sessionStorage.setItem('isPaused', JSON.stringify(isPaused))
-          onDemoTimeChange(newDemoTime);
-          onPassedHrsChange(newPassedHours)
+          onDemoTimeChange(newDemoTime, newPassedHours);
         }
         else {
           // stop the interval when demoPassedHours reaches 24
@@ -83,9 +82,12 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange, onPassedHrsChan
       }, speed);
     }
 
-    return () => clearInterval(intervalId);
+    return () => {
+      console.log("Clearing interval");
+      clearInterval(intervalId);
+    }
 
-  }, [isPaused, speed, demoTime, demoPassedHours, onDemoTimeChange, onPassedHrsChange]);
+  }, [isPaused, speed, onDemoTimeChange, demoTime, demoPassedHours]);
 
   const togglePause = () => {
     setIsPaused((isPaused) => !isPaused)
@@ -115,7 +117,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange, onPassedHrsChan
       // setDemoTime(newDemoTime);
       // setDemoPassedHours(0);
       setIsPaused(false);
-      onDemoTimeChange(newDemoTime);
+      onDemoTimeChange(newDemoTime, 0);
     } 
     
     else if (selectedValue === "last") {
@@ -125,11 +127,10 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange, onPassedHrsChan
       // setDemoTime(newDemoTime);
       // setDemoPassedHours(0);
       setIsPaused(false);
-      onDemoTimeChange(newDemoTime);
+      onDemoTimeChange(newDemoTime, 0);
     }
 
     //setDemoTime();
-    onPassedHrsChange(0);
 
   }
 
