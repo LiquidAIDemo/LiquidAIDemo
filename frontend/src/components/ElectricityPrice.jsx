@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, memo } from "react"
 import axios from 'axios'
 import { Box, Typography } from "@mui/material"
 import { LineChart } from '@mui/x-charts/LineChart'
@@ -35,7 +35,7 @@ const Consumption = ({ consumption }) => {
   }
 }
 
-const Chart = React.memo(({ consumptionData }) => {
+const Chart = memo(function Chart({ consumptionData }) {
   console.log("chart", consumptionData)
   if (consumptionData.length > 0 && !consumptionData.every(item => isNaN(item.time) || isNaN(item.total))) {
     const xAxisData = consumptionData.map(entry => entry.time.getHours() + ':00-' + (parseInt(entry.time.getHours()) + 1) + ':00')
