@@ -149,6 +149,7 @@ function ElectricityPrice({ demoTime, demoPassedHrs, totalConsumption }) {
     >
       <Price price={currentPrice} />
       <Consumption consumption={currentConsumption} />
+      <Typography marginTop='15px'>Electricity cost</Typography>
       <Box
         sx={{         
             borderRadius: '30px',

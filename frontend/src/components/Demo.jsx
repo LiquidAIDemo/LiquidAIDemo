@@ -428,7 +428,7 @@ const Demo = () => {
               borderRadius: '5px', 
               boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',}} 
               // bgcolor = "#cfe8fc" 
-              height="35vh"
+              height="30vh"
               overflow="hidden" >
             Time
               <Box>
@@ -446,7 +446,7 @@ const Demo = () => {
               border: '1px solid #DCDCDC', 
               borderRadius: '5px',
               boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',}} 
-              height="35vh">  
+              height="40vh">  
             Savings
               <ElectricityPrice demoTime={demoTime} demoPassedHrs={parseInt(demoPassedHrs)} totalConsumption={totalConsumption} />
             </Box>
