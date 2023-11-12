@@ -19,9 +19,6 @@ const theme = createTheme({
   }
 });
 
-//let demoTime = new Date();
-//let demoPassedHours = 0;
-
 function getDayName(date) {
   var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   var dayName = days[date.getDay()];
@@ -31,34 +28,18 @@ function getDayName(date) {
 function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
   let now = new Date();
   const demoTimeDateObj = new Date(demoTime)
-  // const [demoTime, setDemoTime] = useState(new Date())
-  // const [demoPassedHours, setDemoPassedHours] = useState(0)
 
   const [isPaused, setIsPaused] = useState(false);
   
   // Default speed 1 sec
   const [speed, setSpeed] = useState(1000);
   const [start, setStart] = useState("next");
-  console.log("clock passed", demoPassedHours, demoTime)
-  // useEffect(() => {
-  //   const savedDemoTime = window.sessionStorage.getItem('demoTime');
-  //   const savedPassedHours = window.sessionStorage.getItem('demoPassedHours');
-  //   //const savedIsPaused = window.sessionStorage.getItem('isPaused');
-  //   console.log("clock saved", savedDemoTime, savedPassedHours)
-  //   if (savedDemoTime && savedPassedHours) {
-  //     setDemoTime(new Date(savedDemoTime));
-  //     setDemoPassedHours(parseInt(savedPassedHours));
-  //     //setIsPaused(JSON.parse(window.sessionStorage.getItem('isPaused')));
-  //   }
-  // }, []);
   
-  //console.log(window.sessionStorage, JSON.parse(window.sessionStorage.getItem('isPaused')))
-  //console.log(demoTime, demoPassedHours, isPaused)
   // Time runs from demo start fro 24 hours
   // speed depends on selected time value
   useEffect(() => {
     let intervalId;
-    console.log("clock effect", demoTime, demoPassedHours)
+
     if (!isPaused) {
     
       intervalId = setInterval(() => {
@@ -67,25 +48,17 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
           const newDemoTime = new Date(demoTime);
           const newPassedHours = demoPassedHours + 1;
           newDemoTime.setHours(newDemoTime.getHours() + 1);
-          // setDemoTime(newDemoTime);
-          // setDemoPassedHours(newPassedHours);
-          //window.sessionStorage.setItem('demoTime', newDemoTime)
-          //window.sessionStorage.setItem('demoPassedHours', JSON.stringify(newPassedHours))
-          //window.sessionStorage.setItem('isPaused', JSON.stringify(isPaused))
           onDemoTimeChange(newDemoTime, newPassedHours);
         }
         else {
           // stop the interval when demoPassedHours reaches 24
-          console.log("toggle toglle toggle")
           togglePause();
         }
       }, speed);
     }
 
-    return () => {
-      console.log("Clearing interval");
-      clearInterval(intervalId);
-    }
+    return () => clearInterval(intervalId);
+    
 
   }, [isPaused, speed, onDemoTimeChange, demoTime, demoPassedHours]);
 
@@ -114,8 +87,6 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
     if (selectedValue === "next") {
       const newDemoTime = new Date();
       newDemoTime.setMinutes(0, 0);
-      // setDemoTime(newDemoTime);
-      // setDemoPassedHours(0);
       onDemoTimeChange(newDemoTime, 0);
       setIsPaused(false);
     } 
@@ -124,14 +95,9 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
       const newDemoTime = new Date();
       newDemoTime.setDate(now.getDate() - 1);
       newDemoTime.setMinutes(0, 0);
-      // setDemoTime(newDemoTime);
-      // setDemoPassedHours(0);
       onDemoTimeChange(newDemoTime, 0);
       setIsPaused(false);
     }
-
-    //setDemoTime();
-
   }
 
   // Select speed menu, demo time, pause button and real time
