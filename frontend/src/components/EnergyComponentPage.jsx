@@ -56,7 +56,9 @@ const EnergyComponentPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  window.addEventListener("popstate", () => navigate("/demo"));
+  window.onpopstate = () => {
+    navigate("/demo");
+  }
 
   if (location.state !== null) {
     const component = location.state.component;

@@ -70,9 +70,11 @@ function useLocalStorageState(key, defaultValue) {
 
 const Demo = () => {
   const navigate = useNavigate();
-  const [demoTime, setDemoTime] = useState(new Date());
+  const [demoTime, setDemoTime] = useState(new Date());  
 
-  window.addEventListener("popstate", () => navigate("/"));
+  window.onpopstate = () => {
+    navigate("/");
+  }
 
   const [open, setOpen] = useState(false);
 
