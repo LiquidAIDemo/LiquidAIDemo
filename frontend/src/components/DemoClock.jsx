@@ -116,18 +116,18 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
       newDemoTime.setMinutes(0, 0);
       // setDemoTime(newDemoTime);
       // setDemoPassedHours(0);
-      setIsPaused(false);
       onDemoTimeChange(newDemoTime, 0);
+      setIsPaused(false);
     } 
     
     else if (selectedValue === "last") {
       const newDemoTime = new Date();
       newDemoTime.setDate(now.getDate() - 1);
-      demoTime.setMinutes(0);
+      newDemoTime.setMinutes(0, 0);
       // setDemoTime(newDemoTime);
       // setDemoPassedHours(0);
-      setIsPaused(false);
       onDemoTimeChange(newDemoTime, 0);
+      setIsPaused(false);
     }
 
     //setDemoTime();
