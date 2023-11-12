@@ -259,7 +259,10 @@ const Demo = () => {
             <Box >
             <List
               sx={{width: '96%', bgcolor: 'background.paper'}}
-              style={{position: 'absolute', zIndex: 1000}}
+              style={{position: 'absolute', 
+              zIndex: 1000, border: '1px solid #DCDCDC', 
+              borderRadius: '5px', 
+              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',}}
             >
               <ListItemButton onClick={handleClick} sx={{ width: '100%' }}>
                 <ListItemText primary="Components" />
@@ -270,120 +273,133 @@ const Demo = () => {
                   <Grid container spacing={2}>
                     <Grid item xs={6}>
                       <ListItem>
+                        <label>
                         <input
                           type="checkbox"
                           checked={showHeatPump}
-                          onChange={() => setShowHeatPump(!showHeatPump)}
-                          
-                        />
-                        <label>Heat Pump</label>
+                          onChange={() => setShowHeatPump(!showHeatPump)}/>
+                        Heat Pump
+                        </label>
                       </ListItem>
                       <ListItem>
+                        <label>
                         <input
                           type="checkbox"
                           checked={showElectricBoard}
-                          onChange={() => setShowElectricBoard(!showElectricBoard)}
-                        />
-                        <label>Electric board</label>
+                          onChange={() => setShowElectricBoard(!showElectricBoard)}/>
+                        Electric board
+                        </label>
                       </ListItem>
                       <ListItem>
+                        <label>
                         <input
                           type="checkbox"
                           checked={showFreezer}
-                          onChange={() => setShowFreezer(!showFreezer)}
-                        />
-                        <label>Freezer</label>
+                          onChange={() => setShowFreezer(!showFreezer)}/>
+                        Freezer
+                        </label>
                       </ListItem>
                       <ListItem>
+                        <label>
                         <input
                           type="checkbox"
                           checked={showHeater}
-                          onChange={() => setShowHeater(!showHeater)}
-                        />
-                        <label>Heater</label>
+                          onChange={() => setShowHeater(!showHeater)}/>
+                        Heater
+                        </label>
                       </ListItem>
                       <ListItem>
+                        <label>
                         <input
                           type="checkbox"
                           checked={showHotWaterHeater}
-                          onChange={() => setShowHotWaterHeater(!showHotWaterHeater)}
-                        />
-                        <label>Hot water heater</label>
+                          onChange={() => setShowHotWaterHeater(!showHotWaterHeater)}/>
+                        Hot water heater
+                        </label>
                       </ListItem>
                       <ListItem>
+                        <label>
                         <input
                           type="checkbox"
                           checked={showStove}
-                          onChange={() => setShowStove(!showStove)}
-                        />
-                        <label>Stove</label>
+                          onChange={() => setShowStove(!showStove)}/>
+                        Stove
+                        </label>
                       </ListItem>
                       <ListItem>
+                        <label>
                         <input
                           type="checkbox"
                           checked={showWashingMachine}
-                          onChange={() => setShowWashingMachine(!showWashingMachine)}
-                        />
-                        <label>Washing machine</label>
+                          onChange={() => setShowWashingMachine(!showWashingMachine)}/>
+                        Washing machine
+                        </label>
                       </ListItem>
                       
                     </Grid>
                     <Grid item xs={6}>
                     <ListItem>
+                        <label>
                         <input
                           type="checkbox"
                           checked={showElectricCar1}
-                          onChange={() => setShowElectricCar1(!showElectricCar1)}
-                        />
-                        <label>Electric car 1</label>
+                          onChange={() => setShowElectricCar1(!showElectricCar1)}/>
+                        Electric car 1
+                        </label>
                       </ListItem>
                       <ListItem>
+                        <label>
                         <input
                           type="checkbox"
                           checked={showElectricCar2}
-                          onChange={() => setShowElectricCar2(!showElectricCar2)}
-                        />
-                        <label>Electric car 2</label>
+                          onChange={() => setShowElectricCar2(!showElectricCar2)}/>
+                        Electric car 2
+                        </label>
                       </ListItem>
                       <ListItem>
+                        <label>
                         <input
                           type="checkbox"
                           checked={showSolarPanel1}
-                          onChange={() => setShowSolarPanel1(!showSolarPanel1)}
-                        />
-                        <label>Solar panel 1</label>
+                          onChange={() => setShowSolarPanel1(!showSolarPanel1)}/>
+                        Solar panel 1
+                        </label>
                       </ListItem>
                       <ListItem>
+                        <label>
                         <input
                           type="checkbox"
                           checked={showSolarPanel2}
-                          onChange={() => setShowSolarPanel2(!showSolarPanel2)}
-                        />
-                        <label>Solar panel 2</label>
+                          onChange={() => setShowSolarPanel2(!showSolarPanel2)}/>
+                        Solar panel 2
+                        </label>
                       </ListItem>
                       <ListItem>
+                        <label>
                         <input
                           type="checkbox"
                           checked={showSolarPanel3}
-                          onChange={() => setShowSolarPanel3(!showSolarPanel3)}
-                        />
-                        <label>Solar panel 3</label>
+                          onChange={() => setShowSolarPanel3(!showSolarPanel3)}/>
+                        Solar panel 3
+                        </label>
                       </ListItem>
                       <ListItem>
+                        <label>
                         <input
                           type="checkbox"
                           checked={showSolarPanel4}
-                          onChange={() => setShowSolarPanel4(!showSolarPanel4)}
-                        />
-                        <label>Solar panel 4</label>
+                          onChange={() => setShowSolarPanel4(!showSolarPanel4)}/>
+                        Solar panel 4
+                        </label>
                       </ListItem>
                       <ListItem>
+                        <label>
                         <input
                           type="checkbox"
                           checked={showJacuzzi}
-                          onChange={() => setShowJacuzzi(!showJacuzzi)}
-                        />
-                        <label>Jacuzzi</label>
+                          onChange={() => setShowJacuzzi(!showJacuzzi)}/>
+                        Jacuzzi
+                        </label>
                       </ListItem>
                       <ThemeProvider theme={theme}>
                       <Button style={{ marginLeft: '15px ', color: '#0eafc9'}}
@@ -406,8 +422,11 @@ const Demo = () => {
               
           <Grid item xs={1} minWidth='350px'>
             <Box 
-              style={{padding: '2vh'}} 
-              bgcolor = "#cfe8fc" 
+              style={{padding: '2vh', 
+              border: '1px solid #DCDCDC', 
+              borderRadius: '5px', 
+              boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',}} 
+              // bgcolor = "#cfe8fc" 
               height="35vh"
               overflow="hidden" >
             Time
@@ -422,8 +441,10 @@ const Demo = () => {
           Savings text will be replaced*/}
           <Grid item xs={1} minWidth='350px'>
             <Box
-              style={{padding: '2vh'}} 
-              bgcolor = "#cfe8fc" 
+              style={{padding: '2vh', 
+              border: '1px solid #DCDCDC', 
+              borderRadius: '5px',
+              boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',}} 
               height="35vh">  
             Savings
               <ElectricityPrice demoTime={demoTime}/>
