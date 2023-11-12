@@ -72,7 +72,7 @@ const Demo = () => {
   const navigate = useNavigate();
   const [demoTime, setDemoTime] = useLocalStorageState('demoTime', new Date().setMinutes(0, 0));
   const [demoPassedHrs, setDemoPassedHrs] = useLocalStorageState('demoPassedHours', 0);
-  console.log("demo component", demoTime)
+  console.log("demo component", demoTime, demoPassedHrs)
   
   const handleDemoTimeChange = (time, hours) => {
     console.log("handle passed hours", hours)

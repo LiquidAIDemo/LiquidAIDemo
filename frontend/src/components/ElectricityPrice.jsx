@@ -114,7 +114,7 @@ function ElectricityPrice({ demoTime, demoPassedHrs, totalConsumption }) {
       window.sessionStorage.removeItem('consumptionData')
       setConsumptionData([{ time: new Date(demoTime), total: newPrice * newCurrentConsumption }])
       window.sessionStorage.setItem('consumptionData', JSON.stringify([{ time: new Date(demoTime), total: newPrice * newCurrentConsumption }]))
-    } else {
+    } if (demoPassedHrs < 24) {
       setConsumptionData(prev => {
         const newData = [...prev, { time: new Date(demoTime), total: newPrice * newCurrentConsumption }]
         window.sessionStorage.setItem('consumptionData', JSON.stringify(newData))
