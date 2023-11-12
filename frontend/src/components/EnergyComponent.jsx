@@ -64,8 +64,8 @@ const EnergyComponent = (props) => {
           </Typography>  
           <Typography variant='body2' sx={{marginBottom: 1}}>
             Energy consumed between {demoHour}:00-{parseInt(demoHour)+1}:00<br/>
-            {consumptionData.filter(h => h.startHour === demoHour).map(h => h.value)[0]} kwh<br/>
-            Total consumption during the demo {totalConsumption} kwh
+            {consumptionData.filter(h => h.startHour === demoHour).map(h => h.value)[0]} kWh<br/>
+            Total consumption during the demo {totalConsumption} kWh
           </Typography>
         </> } 
         {type === "producer" && component.id !== "electric-board" &&
@@ -75,8 +75,8 @@ const EnergyComponent = (props) => {
           </Typography>  
           <Typography variant='body2' sx={{marginBottom: 1}}>
             Energy produced between {demoHour}:00-{parseInt(demoHour)+1}:00<br/>
-            {productionData.filter(h => h.startHour === demoHour).map(h => h.value)[0]} kwh <br/>
-            Total production during the demo {totalProduction} kwh
+            {productionData.filter(h => h.startHour === demoHour).map(h => h.value)[0]} kWh <br/>
+            Total production during the demo {totalProduction} kWh
           </Typography>
         </> }
         {component.id === "electric-board" && component.netConsumption !== undefined &&
@@ -86,8 +86,8 @@ const EnergyComponent = (props) => {
           </Typography>  
           <Typography variant='body2' sx={{marginBottom: 1}}>
             Energy produced between {demoHour}:00-{parseInt(demoHour)+1}:00<br/>
-            {component.netConsumption.filter(h => h.startHour === demoHour).map(h => h.value)[0]} kwh <br/>
-            Total production during the demo {totalProduction} kwh
+            {component.netConsumption.filter(h => h.startHour === demoHour).map(h => h.value)[0]} kWh <br/>
+            Total production during the demo {totalProduction} kWh
           </Typography>
         </> }
         <Typography variant='body2'>

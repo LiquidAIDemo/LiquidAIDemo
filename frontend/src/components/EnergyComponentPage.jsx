@@ -164,8 +164,10 @@ const EnergyComponentPage = () => {
         <Grid container spacing={4} columns={1}>
           <Grid item xs={1} minWidth='350px'>
             <Box 
-              style={{padding: '2vh'}} 
-              bgcolor = "#cfe8fc" 
+              style={{padding: '2vh', 
+              border: '1px solid #DCDCDC', 
+              borderRadius: '5px', 
+              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',}} 
               height="80vh" >
               <Typography 
                 variant="body1"
