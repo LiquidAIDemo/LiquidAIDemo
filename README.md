@@ -18,7 +18,7 @@ After adding an SSH key, or if you already have one, clone the project to your l
 git clone git@github.com:LiquidAIDemo/LiquidAIDemo.git
 ```
 
-## Run the demo
+## Run the Demo
 
 1. Open your command line terminal in the root directory of the project.
 2. Run the following command:
@@ -46,7 +46,7 @@ npm run dev
 
 Remember to run `npm install` every time after pulling new code from the repository if you do not use the npm start command.
 
-## Run tests
+## Run Tests
 
 In the root directory of the project, run the following command to execute unit tests and print the test coverage:
 
