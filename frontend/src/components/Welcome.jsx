@@ -1,5 +1,5 @@
 import { Box, Typography, Button } from "@mui/material";
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import WaterWave from "react-water-wave";
 import backgroundImage from "./../assets/water.jpg";
@@ -7,18 +7,18 @@ import backgroundImage from "./../assets/water.jpg";
 const theme = createTheme({
   palette: {
     water: {
-      main: '#8BD4E2',
-      light: '#a7dee7',
-      dark: '#0eafc9',
-      contrastText: '#000000',
+      main: "#8BD4E2",
+      light: "#a7dee7",
+      dark: "#0eafc9",
+      contrastText: "#000000",
     },
   },
   typography: {
     button: {
-      textTransform: 'none',
-      fontWeight: 'bolder',
-    }
-  }
+      textTransform: "none",
+      fontWeight: "bolder",
+    },
+  },
 });
 
 const Welcome = () => {
@@ -76,7 +76,7 @@ const Welcome = () => {
               }}
             >
               <Typography variant="h4" sx={{ margin: 2, fontWeight: "bold" }}>
-                Welcome to Liquid AI demonstrator
+                Welcome to LiquidAI demonstrator
               </Typography>
               <Typography
                 variant="text"
@@ -110,14 +110,20 @@ const Welcome = () => {
               </Typography>
 
               <ThemeProvider theme={theme}>
-                <Button variant="contained" color="water" sx={{ borderRadius: 2}} onClick={() => navigate("/demo")}>
+                <Button
+                  variant="contained"
+                  color="water"
+                  sx={{ borderRadius: 2 }}
+                  onClick={() => navigate("/demo")}
+                >
                   start
                 </Button>
               </ThemeProvider>
 
               <Typography variant="body2" sx={{ margin: 2, color: "black" }}>
                 <a
-                  href="https://www.freepik.com/free-photo/blue-swimming-pool-rippled-water-detail_1238770.htm#query=blue-swimming-pool-rippled-water-detail&position=0&from_view=search&track=sph"
+                  href="https://www.freepik.com/free-photo/blue-swimming-pool-rippled-water-detail_1238770.htm"
+                  rel="noreferrer"
                   style={{ color: "black" }}
                 >
                   Image by benzoix
