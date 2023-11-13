@@ -47,7 +47,7 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material';
 function useLocalStorageState(key, defaultValue) {
   // Initialize state with value from localStorage or the provided default value
   const [state, setState] = useState(() => {
-    const savedState = localStorage.getItem(key);
+    const savedState = window.sessionStorage.getItem(key);
     if (savedState) {
       return JSON.parse(savedState);
     } else {
@@ -57,12 +57,12 @@ function useLocalStorageState(key, defaultValue) {
 
   const resetState = () => {
     setState(defaultValue);
-    localStorage.setItem(key, JSON.stringify(defaultValue));
+    window.sessionStorage.setItem(key, JSON.stringify(defaultValue));
 };
 
   // Use useEffect to update localStorage when state changes
   useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(state));
+    window.sessionStorage.setItem(key, JSON.stringify(state));
   }, [key, state]);
 
   return [state, setState, resetState];
@@ -70,7 +70,15 @@ function useLocalStorageState(key, defaultValue) {
 
 const Demo = () => {
   const navigate = useNavigate();
-  const [demoTime, setDemoTime] = useState(new Date());  
+  const [demoTime, setDemoTime] = useLocalStorageState('demoTime', new Date().setMinutes(0, 0));
+  const [demoPassedHrs, setDemoPassedHrs] = useLocalStorageState('demoPassedHours', 0);
+  
+  const handleDemoTimeChange = (time, hours) => {
+    const hoursCopy = hours;
+    const newDemoTime = new Date(time);
+    setDemoTime(newDemoTime);
+    setDemoPassedHrs(hoursCopy);
+  }
 
   window.onpopstate = () => {
     navigate("/");
@@ -116,12 +124,6 @@ const Demo = () => {
   const [showStove, setShowStove] = useLocalStorageState('showStove', true);
   const [showWashingMachine, setShowWashingMachine] = useLocalStorageState('showWashingMachine', true);
 
-
-  const handleDemoTimeChange = (time) => {
-    const newDemoTime = new Date(time);
-    setDemoTime(newDemoTime);
-  };
-
   const [openInstructions, setOpenInstructions] = useState(false);
 
   const componentData = energyComponents.components;
@@ -153,7 +155,7 @@ const Demo = () => {
   consumingComponents.forEach(c => {
     const data = c.consumption_per_hour_kwh;
     data.forEach(d => {
-      const hour = new Date(d.startDate).getHours()
+      const hour = new Date(d.startDate).getUTCHours()
       const consumptionHour = totalConsumption.find(obj => obj.hour === hour);
       consumptionHour.value += d.value;
     })    
@@ -162,7 +164,7 @@ const Demo = () => {
   producingComponents.forEach(c => {
     const data = c.production_per_hour_kwh;
     data.forEach(d => {
-      const hour = new Date(d.startDate).getHours()
+      const hour = new Date(d.startDate).getUTCHours()
       const productionHour = totalProduction.find(obj => obj.hour === hour);
       productionHour.value += d.value;
     })    
@@ -430,11 +432,11 @@ const Demo = () => {
               borderRadius: '5px', 
               boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',}} 
               // bgcolor = "#cfe8fc" 
-              height="35vh"
+              height="30vh"
               overflow="hidden" >
             Time
               <Box>
-                <DemoClock onDemoTimeChange={handleDemoTimeChange}/>
+                <DemoClock demoTime={demoTime} demoPassedHours={demoPassedHrs} onDemoTimeChange={handleDemoTimeChange} />
                 <RealtimeClock />
               </Box>
             </Box>
@@ -448,9 +450,9 @@ const Demo = () => {
               border: '1px solid #DCDCDC', 
               borderRadius: '5px',
               boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',}} 
-              height="35vh">  
+              height="40vh">  
             Savings
-              <ElectricityPrice demoTime={demoTime}/>
+              <ElectricityPrice demoTime={demoTime} demoPassedHrs={parseInt(demoPassedHrs)} totalConsumption={totalConsumption} />
             </Box>
           </Grid>
 

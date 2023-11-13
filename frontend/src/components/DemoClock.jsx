@@ -19,29 +19,22 @@ const theme = createTheme({
   }
 });
 
-let demoTime = new Date();
-let demoPassedHours = 0;
-
 function getDayName(date) {
   var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   var dayName = days[date.getDay()];
   return dayName;
 }
 
-function DemoClock({onDemoTimeChange}) {
+function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
   let now = new Date();
-  
-  const [demoHour, setTime] = useState(now.getHours());
-  const [demoDate, setDate] = useState(now.getDate());
-  const [demoMonth, setMonth] = useState(now.getMonth() + 1);
-  // const [demoYear, setYear] = useState(now.getFullYear());
+  const demoTimeDateObj = new Date(demoTime)
 
   const [isPaused, setIsPaused] = useState(false);
-
+  
   // Default speed 1 sec
   const [speed, setSpeed] = useState(1000);
   const [start, setStart] = useState("next");
-
+  
   // Time runs from demo start fro 24 hours
   // speed depends on selected time value
   useEffect(() => {
@@ -52,12 +45,11 @@ function DemoClock({onDemoTimeChange}) {
       intervalId = setInterval(() => {
         if (demoPassedHours < 24) {
           // add one hour to demotime object
-          demoTime.setHours(demoTime.getHours() + 1);
-          setDemoTime();
-          onDemoTimeChange(demoTime);
-          demoPassedHours = demoPassedHours + 1;
-        } 
-        
+          const newDemoTime = new Date(demoTime);
+          const newPassedHours = demoPassedHours + 1;
+          newDemoTime.setHours(newDemoTime.getHours() + 1);
+          onDemoTimeChange(newDemoTime, newPassedHours);
+        }
         else {
           // stop the interval when demoPassedHours reaches 24
           togglePause();
@@ -66,17 +58,9 @@ function DemoClock({onDemoTimeChange}) {
     }
 
     return () => clearInterval(intervalId);
+    
 
-  }, [isPaused, speed, demoHour, demoDate, onDemoTimeChange]);
-
-
-  const setDemoTime = () => {
-    setTime(demoTime.getHours())
-    setDate(demoTime.getDate())
-    setMonth(demoTime.getMonth()+1)
-    // setYear(demoTime.getFullYear())
-  }
-
+  }, [isPaused, speed, onDemoTimeChange, demoTime, demoPassedHours]);
 
   const togglePause = () => {
     setIsPaused((isPaused) => !isPaused)
@@ -101,23 +85,19 @@ function DemoClock({onDemoTimeChange}) {
     setStart(selectedValue);
 
     if (selectedValue === "next") {
-      demoTime = now
-      demoTime.setMinutes(0)
-      demoPassedHours = 0
-      setIsPaused(false)
+      const newDemoTime = new Date();
+      newDemoTime.setMinutes(0, 0);
+      onDemoTimeChange(newDemoTime, 0);
+      setIsPaused(false);
     } 
     
     else if (selectedValue === "last") {
-      demoTime = now
-      demoTime.setDate(now.getDate() - 1)
-      demoTime.setMinutes(0)
-      demoPassedHours = 0
-      setIsPaused(false)
+      const newDemoTime = new Date();
+      newDemoTime.setDate(now.getDate() - 1);
+      newDemoTime.setMinutes(0, 0);
+      onDemoTimeChange(newDemoTime, 0);
+      setIsPaused(false);
     }
-
-    setDemoTime();
-    onDemoTimeChange(demoTime);
-
   }
 
   // Select speed menu, demo time, pause button and real time
@@ -156,7 +136,7 @@ function DemoClock({onDemoTimeChange}) {
       </Box>
 
       <Box style={{padding: '1vh'}}>
-        <b>Demo: </b> {demoHour}:00, {getDayName(demoTime)} {demoDate}.{demoMonth}. &#x1F4C5;
+        <b>Demo: </b> {demoTimeDateObj.getHours()}:00, {getDayName(demoTimeDateObj)} {demoTimeDateObj.getDate()}.{demoTimeDateObj.getMonth()+1}. &#x1F4C5;
         <br/>
 
         <ThemeProvider theme={theme}>

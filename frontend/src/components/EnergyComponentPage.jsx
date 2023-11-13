@@ -72,7 +72,7 @@ const EnergyComponentPage = () => {
     if (component.type === "consumer") {
       consumptionData = componentData.consumption_per_hour_kwh
       consumptionData.forEach(h => {
-        const startHour = new Date(h.startDate).getHours()
+        const startHour = new Date(h.startDate).getUTCHours()
         h.hour = startHour + ':00-' + (parseInt(startHour) + 1) + ':00'
       });
       totalConsumption = consumptionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
@@ -80,7 +80,7 @@ const EnergyComponentPage = () => {
       productionData = componentData.production_per_hour_kwh
       if (productionData.length > 0) {
         productionData.forEach(h => {
-          const startHour = new Date(h.startDate).getHours()
+          const startHour = new Date(h.startDate).getUTCHours()
           h.hour = startHour + ':00-' + (parseInt(startHour) + 1) + ':00'
         })
         totalProduction = productionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
