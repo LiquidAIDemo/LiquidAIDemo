@@ -74,10 +74,14 @@ const Demo = () => {
   const [demoPassedHrs, setDemoPassedHrs] = useLocalStorageState('demoPassedHours', 0);
   
   const handleDemoTimeChange = (time, hours) => {
-    const hoursCopy = hours
+    const hoursCopy = hours;
     const newDemoTime = new Date(time);
     setDemoTime(newDemoTime);
-    setDemoPassedHrs(hoursCopy)
+    setDemoPassedHrs(hoursCopy);
+  }
+
+  window.onpopstate = () => {
+    navigate("/");
   }
 
   const [open, setOpen] = useState(false);
@@ -231,7 +235,7 @@ const Demo = () => {
               <div>
                 {/*Energy components inside the house*/}
                 {showHeatPump && <HeatPump demoTime={demoTime} />}
-                {showElectricBoard && <ElectricBoard demoTime={demoTime} />}
+                {showElectricBoard && <ElectricBoard demoTime={demoTime} netConsumption={netConsumption}/>}
                 {showFreezer && <Freezer demoTime={demoTime} />}
                 {showHeater && <Heater demoTime={demoTime} />}
                 {showHotWaterHeater && <HotWaterHeater demoTime={demoTime} />}
