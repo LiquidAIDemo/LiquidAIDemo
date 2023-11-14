@@ -282,7 +282,8 @@ const Demo = () => {
             <List
               sx={{width: '96%', bgcolor: 'background.paper'}}
               style={{position: 'absolute', 
-              zIndex: 1000, border: '1px solid #DCDCDC', 
+              zIndex: 1000, 
+              border: '1px solid #DCDCDC', 
               borderRadius: '5px', 
               boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',}}
             >
@@ -424,7 +425,7 @@ const Demo = () => {
                         </label>
                       </ListItem>
                       <ThemeProvider theme={theme}>
-                      <Button style={{ marginLeft: '10px ', }}
+                      <Button style={{ marginLeft: '10px '}}
                         onClick={handleReset}
                         variant="contained"
                         color="water" >
@@ -451,13 +452,13 @@ const Demo = () => {
           {/*Created container 2, where the current time and selected time range is shown
           Time text will be replaced*/}     
               
-          <Grid item xs={1} minWidth='350px' marginBottom={'10px'}>
+          <Grid item xs={1} minWidth='350px'>
             <Box 
-              style={{padding: '3vh', 
+              style={{padding: '2vh', 
               border: '1px solid #DCDCDC', 
               borderRadius: '5px', 
               boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',}}  
-              height="100%"
+              height="30vh"
               overflow="hidden" >
             Time
               <Box>
@@ -475,7 +476,7 @@ const Demo = () => {
               border: '1px solid #DCDCDC', 
               borderRadius: '5px',
               boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',}} 
-              height="100%">  
+              height="40vh">  
             Savings
               <ElectricityPrice demoTime={demoTime} demoPassedHrs={parseInt(demoPassedHrs)} totalConsumption={totalConsumption} />
             </Box>
