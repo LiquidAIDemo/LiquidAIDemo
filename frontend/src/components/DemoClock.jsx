@@ -1,8 +1,23 @@
 import { useState, useEffect } from 'react';
 import { Button, FormControl, MenuItem, Select, Box } from '@mui/material';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-let demoTime = new Date();
-let demoPassedHours = 0;
+const theme = createTheme({
+  palette: {
+    water: {
+      main: '#8BD4E2',
+      light: '#a7dee7',
+      dark: '#0eafc9',
+      contrastText: '#000000',
+    },
+  },
+  typography: {
+    button: {
+      textTransform: 'none',
+      fontWeight: 'bolder',
+    }
+  }
+});
 let demoPassedMinutes = 0;
 
 function getDayName(date) {
@@ -11,9 +26,9 @@ function getDayName(date) {
   return dayName;
 }
 
-function DemoClock({onDemoTimeChange}) {
+function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
   let now = new Date();
-  
+  //const demoTimeDateObj = new Date(demoTime)
   const [demoHour, setTime] = useState(now.getHours());
   const [demoMinute, setTimeMinutes] = useState(now.getMinutes());
   const [demoDate, setDate] = useState(now.getDate());
@@ -21,11 +36,11 @@ function DemoClock({onDemoTimeChange}) {
   // const [demoYear, setYear] = useState(now.getFullYear());
 
   const [isPaused, setIsPaused] = useState(false);
-
+  
   // Default speed 1 sec
   const [speed, setSpeed] = useState(1000);
   const [start, setStart] = useState("next");
-
+  
   // Time runs from demo start fro 24 hours
   // speed depends on selected time value
   useEffect(() => {
@@ -36,6 +51,7 @@ function DemoClock({onDemoTimeChange}) {
       intervalId = setInterval(() => {
         if (demoPassedHours < 24) {
           // add one hour to demotime object
+          /*
           // But only if minutes are high enough
           if (demoPassedMinutes >= 59) {
             // Increase hour by one, set minute back to zero
@@ -54,8 +70,12 @@ function DemoClock({onDemoTimeChange}) {
             
             demoPassedMinutes = demoPassedMinutes + 1;
           }
-        } 
-        
+          */
+          const newDemoTime = new Date(demoTime);
+          const newPassedHours = demoPassedHours + 1;
+          newDemoTime.setHours(newDemoTime.getHours() + 1);
+          onDemoTimeChange(newDemoTime, newPassedHours);
+        }
         else {
           // stop the interval when demoPassedHours reaches 24
           togglePause();
@@ -125,27 +145,19 @@ function DemoClock({onDemoTimeChange}) {
     setStart(selectedValue);
 
     if (selectedValue === "next") {
-      demoTime = now
-      demoTime.setMinutes(0)
-      
-      demoPassedHours = 0
-      demoPassedMinutes = 0
-      setIsPaused(false)
+      const newDemoTime = new Date();
+      newDemoTime.setMinutes(0, 0);
+      onDemoTimeChange(newDemoTime, 0);
+      setIsPaused(false);
     } 
     
     else if (selectedValue === "last") {
-      demoTime = now
-      demoTime.setDate(now.getDate() - 1)
-      demoTime.setMinutes(0)
-
-      demoPassedHours = 0
-      demoPassedMinutes = 0
-      setIsPaused(false)
+      const newDemoTime = new Date();
+      newDemoTime.setDate(now.getDate() - 1);
+      newDemoTime.setMinutes(0, 0);
+      onDemoTimeChange(newDemoTime, 0);
+      setIsPaused(false);
     }
-
-    setDemoTime();
-    onDemoTimeChange(demoTime);
-
   }
 
   // Select speed menu, demo time, pause button and real time
@@ -183,26 +195,23 @@ function DemoClock({onDemoTimeChange}) {
       </Box>
 
       <Box style={{padding: '1vh'}}>
-        <b>Demo: </b> {demoHour}:{demoMinute}, {getDayName(demoTime)} {demoDate}.{demoMonth}. &#x1F4C5;
+        <b>Demo: </b> {demoTimeDateObj.getHours()}:{demoMinute}, {getDayName(demoTimeDateObj)} {demoTimeDateObj.getDate()}.{demoTimeDateObj.getMonth()+1}. &#x1F4C5;
           <br/>
         <br/>
 
-        <Button
-          sx={{ height: '30px' }}
-          variant="contained"
-          onClick={() => handleResetClick(start)}
-        >
-          {'Restart'}
-        </Button>
+        <ThemeProvider theme={theme}>
+          <Button variant="contained" color="water" sx={{ borderRadius: 2}} onClick={() => handleResetClick(start)}>
+            restart
+          </Button>
+        </ThemeProvider>
         {
           demoPassedHours < 24 ? (
-            <Button
-              sx={{height: '30px'}}
-              style={{ marginLeft: '10px '}}
-              variant="outlined" onClick={togglePause}
-            >
-              {isPaused ? 'Continue' : 'Pause'}
-            </Button>
+            <ThemeProvider theme={theme}>
+              <Button variant="contained" color="water" sx={{ borderRadius: 2}} 
+                      style={{ marginLeft: '10px '}} onClick={togglePause}>
+                {isPaused ? 'continue' : 'pause'}
+              </Button>
+            </ThemeProvider>
           ) : null
         }
       </Box>
