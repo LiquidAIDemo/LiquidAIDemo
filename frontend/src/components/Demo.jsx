@@ -451,9 +451,9 @@ const Demo = () => {
           {/*Created container 2, where the current time and selected time range is shown
           Time text will be replaced*/}     
               
-          <Grid item xs={1} minWidth='350px'>
+          <Grid item xs={1} minWidth='350px' marginBottom={'10px'}>
             <Box 
-              style={{padding: '2vh', 
+              style={{padding: '3vh', 
               border: '1px solid #DCDCDC', 
               borderRadius: '5px', 
               boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',}}  
