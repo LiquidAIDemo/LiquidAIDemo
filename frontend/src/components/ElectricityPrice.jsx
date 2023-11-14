@@ -23,13 +23,29 @@ const Consumption = ({ consumption }) => {
   if (consumption) {
     return (
       <Typography>
-        Current consumption is {consumption.toFixed(2)} kWh
+        Consumption for current hour is {consumption.toFixed(2)} kWh
       </Typography>
     )
   } else {
     return (
       <Typography>
         Loading current consumption
+      </Typography>
+    )
+  }
+}
+
+const TotalConsumption = ({ total }) => {
+  if (total) {
+    return (
+      <Typography>
+        Total consumption during the demo is {total.toFixed(2)} kWh
+      </Typography>
+    )
+  } else {
+    return (
+      <Typography>
+        Loading total consumption
       </Typography>
     )
   }
@@ -140,7 +156,9 @@ function ElectricityPrice({ demoTime, demoPassedHrs, totalConsumption }) {
       }
     }
   }
-  
+
+  const total = totalConsumption.reduce((a,b) => a + b.value, 0);
+
   return (
     <Box
       sx={{
@@ -149,6 +167,7 @@ function ElectricityPrice({ demoTime, demoPassedHrs, totalConsumption }) {
     >
       <Price price={currentPrice} />
       <Consumption consumption={currentConsumption} />
+      <TotalConsumption total={total} />
       <Typography marginTop='15px'>Electricity cost</Typography>
       <Box
         sx={{         

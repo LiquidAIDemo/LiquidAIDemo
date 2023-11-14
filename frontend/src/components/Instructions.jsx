@@ -52,7 +52,8 @@ const Instructions = ({openInstructions, setOpenInstructions}) => {
           component individually, as well as the total consumption and price. <br/>
           You can select what components of the house are included in the demo from the Components
           dropdown menu. You can inspect individual components by hovering over the component and 
-          clicking it. <br/>
+          clicking it. Energy consuming components are marked with red border and producing components 
+          with green border. <br/>
           The time range and speed of demo time can be changed from 
           the dropdown menus.
         </DialogContentText>
