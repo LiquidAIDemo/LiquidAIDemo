@@ -248,7 +248,7 @@ const EnergyComponentPage = () => {
             <Grid item xs={1} style={{ display:"flex", justifyContent: "center" }}>
               <ThemeProvider theme={theme}>
                 <Button variant="contained" color="water" sx={{ borderRadius: 2}} onClick={() => navigate("/demo")}>
-                  back
+                  Back
                 </Button>
               </ThemeProvider>
             </Grid>
