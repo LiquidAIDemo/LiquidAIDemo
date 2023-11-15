@@ -22,8 +22,8 @@ test("renders content", async () => {
   expect(screen.getByText('Components')).toBeInTheDocument()
   expect(screen.getByText('Time')).toBeInTheDocument()
   expect(screen.getByText('Savings')).toBeInTheDocument()
-  expect(screen.getByText('back')).toBeInTheDocument()
-  expect(screen.getByText('information')).toBeInTheDocument()
+  expect(screen.getByText('Back')).toBeInTheDocument()
+  expect(screen.getByText('Information')).toBeInTheDocument()
 })
 
 test('"back" button navigates to welcome page', async () => {
@@ -40,9 +40,9 @@ test('"back" button navigates to welcome page', async () => {
   })
   
   const user = userEvent.setup({delay: null})
-  const stopButtonElement = screen.getByText('back')
+  const stopButtonElement = screen.getByText('Back')
   await user.click(stopButtonElement)
-  const welcomePageElement = screen.getByText("Welcome to Liquid AI demonstrator")
+  const welcomePageElement = screen.getByText("Welcome to LiquidAI demonstrator")
   expect(welcomePageElement).toBeInTheDocument()
 })
 

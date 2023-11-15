@@ -9,31 +9,31 @@ const now = new Date()
 const user = userEvent.setup({delay: null})
 
 test("renders content", () => {
-  render(<DemoClock onDemoTimeChange={jest.fn()}/>)
+  render(<DemoClock demoTime={now.toISOString()} demoPassedHours={0} onDemoTimeChange={jest.fn()}/>)
 
   expect(screen.getByText(/Select speed:/)).toBeInTheDocument()
   expect(screen.getByText(/Select time range:/)).toBeInTheDocument()
   expect(screen.getByText(/Demo:/)).toBeInTheDocument()
-  expect(screen.getByText('pause')).toBeInTheDocument()
-  expect(screen.getByText('restart')).toBeInTheDocument()
+  expect(screen.getByText('Pause')).toBeInTheDocument()
+  expect(screen.getByText('Restart')).toBeInTheDocument()
 })
 
 test("demo time runs correctly", () => {
   jest.useFakeTimers()
-  render(<DemoClock onDemoTimeChange={jest.fn()}/>)
+  render(<DemoClock demoTime={now.toISOString()} demoPassedHours={0} onDemoTimeChange={jest.fn()}/>)
   act(() => {
     jest.advanceTimersByTime(3000)
   })
   const demoTimeElement = screen.getByText(/Demo:/).parentElement
   const currentHrs = now.getHours()
-  expect(demoTimeElement).toHaveTextContent(`Demo: ${(currentHrs + 3) % 24}:00`)
+  expect(demoTimeElement).toHaveTextContent(`Demo: ${currentHrs}:00`)
   jest.useRealTimers()
 })
 
 test("pause button pauses demo time", async () => {
   jest.useFakeTimers()
-  render(<DemoClock onDemoTimeChange={jest.fn()}/>)
-  const pauseButtonElement = screen.getByText('pause')
+  render(<DemoClock demoTime={now.toISOString()} demoPassedHours={0} onDemoTimeChange={jest.fn()}/>)
+  const pauseButtonElement = screen.getByText('Pause')
   
   await user.click(pauseButtonElement)
   act(() => {
@@ -48,8 +48,8 @@ test("pause button pauses demo time", async () => {
 
 test("restart button restarts demo time", async () => {
   jest.useFakeTimers()
-  render(<DemoClock onDemoTimeChange={jest.fn()}/>)
-  const restartButtonElement = screen.getByText('restart')
+  render(<DemoClock demoTime={now.toISOString()} demoPassedHours={0} onDemoTimeChange={jest.fn()}/>)
+  const restartButtonElement = screen.getByText('Restart')
   
   act(() => {
     jest.advanceTimersByTime(2000)
@@ -64,7 +64,7 @@ test("restart button restarts demo time", async () => {
 
 test("selecting time range works correctly", async () => {
   render(
-    <DemoClock onDemoTimeChange={jest.fn()}/>
+    <DemoClock demoTime={now.toISOString()} demoPassedHours={0} onDemoTimeChange={jest.fn()}/>
   )
   
   const timeRangeDropdown = within(screen.getByTestId('time_range')).getByRole("combobox")
@@ -82,7 +82,7 @@ test("selecting time range works correctly", async () => {
 
 test("selecting speed works correctly", async () => {
   render(
-    <DemoClock onDemoTimeChange={jest.fn()}/>
+    <DemoClock demoTime={now.toISOString()} demoPassedHours={0} onDemoTimeChange={jest.fn()}/>
   )
   
   const speedDropdown = within(screen.getByTestId('speed')).getByRole("combobox")
