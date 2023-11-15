@@ -146,7 +146,6 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
 
       <Box style={{padding: '1vh'}}>
         <b>Demo: </b> {String(demoTimeDateObj.getHours()).padStart(2, '0')}:{String(demoPassedMinutes).padStart(2, '0')}, {getDayName(demoTimeDateObj)} {demoTimeDateObj.getDate()}.{demoTimeDateObj.getMonth()+1}. &#x1F4C5;
-          <br/>
         <br/>
 
         <ThemeProvider theme={theme}>
