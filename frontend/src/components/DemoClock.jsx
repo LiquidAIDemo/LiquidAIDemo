@@ -28,7 +28,7 @@ function getDayName(date) {
 
 function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
   let now = new Date();
-  //const demoTimeDateObj = new Date(demoTime)
+  const demoTimeDateObj = new Date(demoTime)
   const [demoHour, setTime] = useState(now.getHours());
   const [demoMinute, setTimeMinutes] = useState(now.getMinutes());
   const [demoDate, setDate] = useState(now.getDate());
@@ -49,32 +49,24 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
     if (!isPaused) {
     
       intervalId = setInterval(() => {
+        // Increase hours while passed hours are low enough
         if (demoPassedHours < 24) {
-          // add one hour to demotime object
-          /*
-          // But only if minutes are high enough
-          if (demoPassedMinutes >= 59) {
-            // Increase hour by one, set minute back to zero
-            demoTime.setHours(demoTime.getHours() + 1);
-            demoTime.setMinutes(0);
-            setDemoTime();
-            onDemoTimeChange(demoTime);
-            
-            demoPassedHours = demoPassedHours + 1;
-            demoPassedMinutes = 0;
-          } else {
-            // Increase minute by ten
-            demoTime.setMinutes(demoTime.getMinutes() + 10);
-            setDemoTime();
-            onDemoTimeChange(demoTime);
-            
-            demoPassedMinutes = demoPassedMinutes + 1;
-          }
-          */
           const newDemoTime = new Date(demoTime);
-          const newPassedHours = demoPassedHours + 1;
-          newDemoTime.setHours(newDemoTime.getHours() + 1);
-          onDemoTimeChange(newDemoTime, newPassedHours);
+          if (demoPassedMinutes >= 59) {
+            // add one hour to demotime object
+            const newPassedHours = demoPassedHours + 1;
+            newDemoTime.setHours(newDemoTime.getHours() + 1);
+            onDemoTimeChange(newDemoTime, newPassedHours);
+          } else {
+            // Increase minutes by ten
+            const newPassedMinutes = demoPassedMinutes + 10;
+            demoTime.setMinutes(demoTime.getMinutes() + 10);
+            newDemoTime.setMinutes(newDemoTime.getMinutes() + 10);
+            onDemoTimeChange(newDemoTime, newPassedMinutes);
+            
+            // This line should be necessary, but on the contrary, it breaks the function
+            //demoPassedMinutes = demoPassedMinutes + 10; 
+          }
         }
         else {
           // stop the interval when demoPassedHours reaches 24
@@ -87,7 +79,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
 
   }, [isPaused, speed, demoHour, demoDate, onDemoTimeChange]);
 
-
+  /*
   const setDemoTime = () => {
     var chour = demoTime.getHours();
     var cmin = demoTime.getMinutes();
@@ -120,7 +112,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
     
     demominute = 200;
   }
-
+  */
 
   const togglePause = () => {
     setIsPaused((isPaused) => !isPaused)
@@ -195,7 +187,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
       </Box>
 
       <Box style={{padding: '1vh'}}>
-        <b>Demo: </b> {demoTimeDateObj.getHours()}:{demoMinute}, {getDayName(demoTimeDateObj)} {demoTimeDateObj.getDate()}.{demoTimeDateObj.getMonth()+1}. &#x1F4C5;
+        <b>Demo: </b> {demoTimeDateObj.getHours()}:{demoTimeDateObj.getMinutes()}, {getDayName(demoTimeDateObj)} {demoTimeDateObj.getDate()}.{demoTimeDateObj.getMonth()+1}. &#x1F4C5;
           <br/>
         <br/>
 
