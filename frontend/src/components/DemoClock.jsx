@@ -18,7 +18,6 @@ const theme = createTheme({
     }
   }
 });
-let demoPassedMinutes = 0;
 
 function getDayName(date) {
   var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -29,11 +28,7 @@ function getDayName(date) {
 function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
   let now = new Date();
   const demoTimeDateObj = new Date(demoTime)
-  const [demoHour, setTime] = useState(now.getHours());
-  const [demoMinute, setTimeMinutes] = useState(now.getMinutes());
-  const [demoDate, setDate] = useState(now.getDate());
-  const [demoMonth, setMonth] = useState(now.getMonth() + 1);
-  // const [demoYear, setYear] = useState(now.getFullYear());
+  const [demoPassedMinutes, setDemoPassedMinutes] = useState(0);
 
   const [isPaused, setIsPaused] = useState(false);
   
@@ -52,67 +47,28 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
         // Increase hours while passed hours are low enough
         if (demoPassedHours < 24) {
           const newDemoTime = new Date(demoTime);
-          if (demoPassedMinutes >= 59) {
+          if (demoPassedMinutes >= 50) {
             // add one hour to demotime object
+            setDemoPassedMinutes(0)
             const newPassedHours = demoPassedHours + 1;
             newDemoTime.setHours(newDemoTime.getHours() + 1);
             onDemoTimeChange(newDemoTime, newPassedHours);
           } else {
-            // Increase minutes by ten
+            // Increase passed minutes by ten
             const newPassedMinutes = demoPassedMinutes + 10;
-            demoTime.setMinutes(demoTime.getMinutes() + 10);
-            newDemoTime.setMinutes(newDemoTime.getMinutes() + 10);
-            onDemoTimeChange(newDemoTime, newPassedMinutes);
-            
-            // This line should be necessary, but on the contrary, it breaks the function
-            //demoPassedMinutes = demoPassedMinutes + 10; 
+            setDemoPassedMinutes(newPassedMinutes);
           }
         }
         else {
           // stop the interval when demoPassedHours reaches 24
           togglePause();
         }
-      }, (speed));
+      }, speed);
     }
 
     return () => clearInterval(intervalId);
 
-  }, [isPaused, speed, demoHour, demoDate, onDemoTimeChange]);
-
-  /*
-  const setDemoTime = () => {
-    var chour = demoTime.getHours();
-    var cmin = demoTime.getMinutes();
-  
-    setTimeMinutes(cmin);
-    
-    if (chour < 10) {
-      setTime("0" + chour);
-    } else {
-      setTime(chour);
-    }
-    
-    if (cmin < 10) {
-      setTimeMinutes("0" + cmin);
-    } else {
-      setTimeMinutes(cmin);
-    }
-    
-    setDate(demoTime.getDate())
-    setMonth(demoTime.getMonth()+1)
-    // setYear(demoTime.getFullYear())
-    
-  }
-  
-  const addZeroes = () => {
-    var chour = demoTime.getHours();
-    if (chour < 10) {
-      demoHour = 1;
-    }
-    
-    demominute = 200;
-  }
-  */
+  }, [isPaused, speed, onDemoTimeChange, demoTime, demoPassedHours, demoPassedMinutes]);
 
   const togglePause = () => {
     setIsPaused((isPaused) => !isPaused)
@@ -139,6 +95,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
     if (selectedValue === "next") {
       const newDemoTime = new Date();
       newDemoTime.setMinutes(0, 0);
+      setDemoPassedMinutes(0);
       onDemoTimeChange(newDemoTime, 0);
       setIsPaused(false);
     } 
@@ -147,6 +104,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
       const newDemoTime = new Date();
       newDemoTime.setDate(now.getDate() - 1);
       newDemoTime.setMinutes(0, 0);
+      setDemoPassedMinutes(0);
       onDemoTimeChange(newDemoTime, 0);
       setIsPaused(false);
     }
@@ -165,9 +123,9 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
             sx={{width: '140px', height: '30px'}}
           >
             <MenuItem value={1000}>10 min / sec</MenuItem>
-            <MenuItem value={500}>20 min / sec</MenuItem>
-            <MenuItem value={150}>30 min / sec</MenuItem>
-            <MenuItem value={100}>1 hour / sec</MenuItem>
+            <MenuItem value={1000/2}>20 min / sec</MenuItem>
+            <MenuItem value={1000/3}>30 min / sec</MenuItem>
+            <MenuItem value={1000/6}>1 hour / sec</MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -187,7 +145,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
       </Box>
 
       <Box style={{padding: '1vh'}}>
-        <b>Demo: </b> {demoTimeDateObj.getHours()}:{demoTimeDateObj.getMinutes()}, {getDayName(demoTimeDateObj)} {demoTimeDateObj.getDate()}.{demoTimeDateObj.getMonth()+1}. &#x1F4C5;
+        <b>Demo: </b> {String(demoTimeDateObj.getHours()).padStart(2, '0')}:{String(demoPassedMinutes).padStart(2, '0')}, {getDayName(demoTimeDateObj)} {demoTimeDateObj.getDate()}.{demoTimeDateObj.getMonth()+1}. &#x1F4C5;
           <br/>
         <br/>
 
@@ -209,6 +167,6 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
       </Box>
     </Box>
   );
-} //<b>DEBUG phours, pmin: </b> {demoPassedHours}, {demoPassedMinutes} &#x1F4C5;
+}
 
 export default DemoClock;
