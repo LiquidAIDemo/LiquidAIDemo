@@ -80,14 +80,14 @@ const Demo = () => {
     setDemoPassedHrs(hoursCopy);
   }
 
-  window.onpopstate = () => {
-    navigate("/");
-  }
+  window.onpopstate = () => navigate("/");
+
+  const [openInstructions, setOpenInstructions] = useState(false);
 
   const [open, setOpen] = useState(false);
 
   const handleReset = () => {
-    // Reset all visibility settings to their original values
+    // Reset all visibility to default
     setShowHeatPump(true);
     setShowElectricBoard(true);
     setShowElectricCar1(true);
@@ -102,6 +102,23 @@ const Demo = () => {
     setShowSolarPanel4(true);
     setShowStove(true);
     setShowWashingMachine(true);
+};
+  const handleClear = () => {
+    // clearing all components
+    setShowHeatPump(false);
+    setShowElectricBoard(false);
+    setShowElectricCar1(false);
+    setShowElectricCar2(false);
+    setShowFreezer(false);
+    setShowHeater(false);
+    setShowHotWaterHeater(false);
+    setShowJacuzzi(false);
+    setShowSolarPanel1(false);
+    setShowSolarPanel2(false);
+    setShowSolarPanel3(false);
+    setShowSolarPanel4(false);
+    setShowStove(false);
+    setShowWashingMachine(false);
 };
 
   const handleClick = () => {
@@ -124,34 +141,45 @@ const Demo = () => {
   const [showStove, setShowStove] = useLocalStorageState('showStove', true);
   const [showWashingMachine, setShowWashingMachine] = useLocalStorageState('showWashingMachine', true);
 
-  const [openInstructions, setOpenInstructions] = useState(false);
+  const visibilityValues = [
+    {id: "heat-pump", visibility: showHeatPump},
+    {id: "electric-board", visibility: showElectricBoard},
+    {id: "electric-car-1", visibility: showElectricCar1},
+    {id: "electric-car-2", visibility: showElectricCar2}, 
+    {id: "freezer", visibility: showFreezer},
+    {id: "heater", visibility: showHeater},
+    {id: "hot-water-heater", visibility: showHotWaterHeater}, 
+    {id: "jacuzzi", visibility: showJacuzzi}, 
+    {id: "solar-panel-1", visibility: showSolarPanel1}, 
+    {id: "solar-panel-2", visibility: showSolarPanel2},
+    {id: "solar-panel-3", visibility: showSolarPanel3},
+    {id: "solar-panel-4", visibility: showSolarPanel4},
+    {id: "stove", visibility: showStove}, 
+    {id: "washing-machine", visibility: showWashingMachine}
+  ];
+
+  const visibleComponents = visibilityValues.filter(c => c.visibility === true);
 
   const componentData = energyComponents.components;
-  const consumingComponents = componentData.filter(c => c.consumption_per_hour_kwh.length > 0);
-  const producingComponents = componentData.filter(c => c.production_per_hour_kwh.length > 0);
-  
+  const consumingComponents = componentData.filter(c => c.consumption_per_hour_kwh.length > 0).filter(c => visibleComponents.findIndex(v => v.id === c.id) !== -1);
+  const producingComponents = componentData.filter(c => c.production_per_hour_kwh.length > 0).filter(c => visibleComponents.findIndex(v => v.id === c.id) !== -1);
+
   let totalConsumption = [];
   let totalProduction = [];
   let netConsumption = [];
 
-  if (totalConsumption.length === 0) {
-    for (let i=0; i<=23; i++) {
-      totalConsumption.push({hour: i, value: 0});
-    }
-  }
-  
-  if (totalProduction.length === 0) {
-    for (let i=0; i<=23; i++) {
-      totalProduction.push({hour: i, value: 0});
-    }
+  for (let i=0; i<=23; i++) {
+    totalConsumption.push({hour: i, value: 0});
   }
 
-  if (netConsumption.length === 0) {
-    for (let i=0; i<=23; i++) {
-      netConsumption.push({startHour: i, value: 0});
-    }
+  for (let i=0; i<=23; i++) {
+    totalProduction.push({hour: i, value: 0});
   }
-    
+
+  for (let i=0; i<=23; i++) {
+    netConsumption.push({startHour: i, value: 0});
+  }
+
   consumingComponents.forEach(c => {
     const data = c.consumption_per_hour_kwh;
     data.forEach(d => {
@@ -160,7 +188,7 @@ const Demo = () => {
       consumptionHour.value += d.value;
     })    
   })
-
+  
   producingComponents.forEach(c => {
     const data = c.production_per_hour_kwh;
     data.forEach(d => {
@@ -169,7 +197,7 @@ const Demo = () => {
       productionHour.value += d.value;
     })    
   })
-  
+
   netConsumption.forEach(h => {
     const hourConsumption = totalConsumption.find(obj => obj.hour === h.startHour);
     const hourProduction = totalProduction.find(obj => obj.hour === h.startHour);
@@ -235,7 +263,7 @@ const Demo = () => {
               <div>
                 {/*Energy components inside the house*/}
                 {showHeatPump && <HeatPump demoTime={demoTime} />}
-                {showElectricBoard && <ElectricBoard demoTime={demoTime} netConsumption={netConsumption}/>}
+                {showElectricBoard && <ElectricBoard demoTime={demoTime} netConsumption={netConsumption} visibleComponents={visibleComponents}/>}
                 {showFreezer && <Freezer demoTime={demoTime} />}
                 {showHeater && <Heater demoTime={demoTime} />}
                 {showHotWaterHeater && <HotWaterHeater demoTime={demoTime} />}
@@ -258,14 +286,15 @@ const Demo = () => {
       {/*Created container to span 1/3 columns */}
       <Grid item xs={2} style={{position: 'relative'}}>
         {/*Created container grid to have containers on top of another */}
-        <Grid container spacing={4} columns={1}>
+        <Grid container spacing={2} columns={1}>
           <Grid item xs={1} height="10vh">
             {/*Component menu width is not working perfectly*/}
             <Box >
             <List
               sx={{width: '96%', bgcolor: 'background.paper'}}
               style={{position: 'absolute', 
-              zIndex: 1000, border: '1px solid #DCDCDC', 
+              zIndex: 1000, 
+              border: '1px solid #DCDCDC', 
               borderRadius: '5px', 
               boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',}}
             >
@@ -407,10 +436,19 @@ const Demo = () => {
                         </label>
                       </ListItem>
                       <ThemeProvider theme={theme}>
-                      <Button style={{ marginLeft: '15px ', color: '#0eafc9'}}
+                      <Button style={{ marginLeft: '10px ', marginBottom: '5px'}}
                         onClick={handleReset}
-                        variant="outlined">
-                        Reset to Default
+                        variant="contained"
+                        color="water" >
+                        Reset to default
+                      </Button>
+                      </ThemeProvider>
+                      <ThemeProvider theme={theme}>
+                      <Button style={{ marginLeft: '10px ', marginBottom: '5px'}}
+                        onClick={handleClear}
+                        variant="contained"
+                        color="water" >
+                        Clear all
                         </Button>
                         </ThemeProvider>
                     </Grid>
@@ -431,8 +469,7 @@ const Demo = () => {
               border: '1px solid #DCDCDC', 
               borderRadius: '5px', 
               boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',}} 
-              // bgcolor = "#cfe8fc" 
-              height="30vh"
+              height="32vh"
               overflow="hidden" >
             Time
               <Box>
@@ -444,13 +481,13 @@ const Demo = () => {
 
           {/*Created container 3, where the savings is shown
           Savings text will be replaced*/}
-          <Grid item xs={1} minWidth='350px'>
+          <Grid item xs={1} minWidth='50vh'>
             <Box
               style={{padding: '2vh', 
               border: '1px solid #DCDCDC', 
               borderRadius: '5px',
               boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',}} 
-              height="40vh">  
+              height="45vh">  
             Savings
               <ElectricityPrice demoTime={demoTime} demoPassedHrs={parseInt(demoPassedHrs)} totalConsumption={totalConsumption} />
             </Box>
@@ -463,14 +500,14 @@ const Demo = () => {
                       sx={{ borderRadius: 2, margin: 1 }} 
                       onClick={() => navigate("/")}
               >
-                back
+                Back
               </Button>
               <Button variant="contained" 
                       color="water" 
                       sx={{ borderRadius: 2, margin: 1 }} 
                       onClick={() => setOpenInstructions(true)}
               >
-                information
+                Information
               </Button>
             </ThemeProvider>
             <Instructions openInstructions={openInstructions} setOpenInstructions={setOpenInstructions}/>

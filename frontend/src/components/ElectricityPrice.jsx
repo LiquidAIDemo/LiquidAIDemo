@@ -4,7 +4,7 @@ import { Box, Typography } from "@mui/material"
 import { LineChart } from '@mui/x-charts/LineChart'
 
 const Price = ({ price }) => {
-  if (price) {
+  if (price !== null && price !== undefined) {
     return (
       <Typography>
         Current price is {price.toFixed(2)} cents / kWh
@@ -20,16 +20,32 @@ const Price = ({ price }) => {
 }
 
 const Consumption = ({ consumption }) => {
-  if (consumption) {
+  if (consumption !== null && consumption !== undefined) {
     return (
       <Typography>
-        Current consumption is {consumption.toFixed(2)} kWh
+        Consumption for current hour is {consumption.toFixed(2)} kWh
       </Typography>
     )
   } else {
     return (
       <Typography>
         Loading current consumption
+      </Typography>
+    )
+  }
+}
+
+const TotalConsumption = ({ total }) => {
+  if (total !== null && total !== undefined) {
+    return (
+      <Typography>
+        Total consumption during the demo is {total.toFixed(2)} kWh
+      </Typography>
+    )
+  } else {
+    return (
+      <Typography>
+        Loading total consumption
       </Typography>
     )
   }
@@ -101,7 +117,6 @@ function ElectricityPrice({ demoTime, demoPassedHrs, totalConsumption }) {
     setCurrentPrice(newPrice)
     setCurrentConsumption(newCurrentConsumption)
     if (demoPassedHrs === 0) {
-      window.sessionStorage.removeItem('consumptionData')
       setConsumptionData([{ time: new Date(demoTime), total: newPrice * newCurrentConsumption }])
       window.sessionStorage.setItem('consumptionData', JSON.stringify([{ time: new Date(demoTime), total: newPrice * newCurrentConsumption }]))
     } else if (demoPassedHrs < 24) {
@@ -140,7 +155,9 @@ function ElectricityPrice({ demoTime, demoPassedHrs, totalConsumption }) {
       }
     }
   }
-  
+
+  const total = totalConsumption.reduce((a,b) => a + b.value, 0);
+
   return (
     <Box
       sx={{
@@ -149,6 +166,7 @@ function ElectricityPrice({ demoTime, demoPassedHrs, totalConsumption }) {
     >
       <Price price={currentPrice} />
       <Consumption consumption={currentConsumption} />
+      <TotalConsumption total={total} />
       <Typography marginTop='15px'>Electricity cost</Typography>
       <Box
         sx={{         

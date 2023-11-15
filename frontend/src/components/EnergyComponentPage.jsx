@@ -56,9 +56,7 @@ const EnergyComponentPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  window.onpopstate = () => {
-    navigate("/demo");
-  }
+  window.onpopstate = () => navigate("/demo");
 
   if (location.state !== null) {
     const component = location.state.component;
@@ -85,12 +83,13 @@ const EnergyComponentPage = () => {
         })
         totalProduction = productionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
       } else if (component.id === "electric-board") {
-        const consumingComponents = energyComponents.components.filter(c => c.consumption_per_hour_kwh.length > 0);
+        const visibleComponents = component.visibleComponents.visibleComponents;
+        const consumingComponents = energyComponents.components.filter(c => c.consumption_per_hour_kwh.length > 0).filter(c => visibleComponents.findIndex(v => v.id === c.id) !== -1);
         consumingComponents.forEach(c => {
           const componentConsumption = c.consumption_per_hour_kwh.reduce((a, b) => a + b.value, 0);
           totalConsumption += componentConsumption;
         })
-        const producingComponents = energyComponents.components.filter(c => c.production_per_hour_kwh.length > 0);
+        const producingComponents = energyComponents.components.filter(c => c.production_per_hour_kwh.length > 0).filter(c => visibleComponents.findIndex(v => v.id === c.id) !== -1);
         producingComponents.forEach(c => {
           const componentProduction = c.production_per_hour_kwh.reduce((a, b) => a + b.value, 0);
           ownProduction += componentProduction;
@@ -169,7 +168,7 @@ const EnergyComponentPage = () => {
         </Grid>
         <Grid item xs={1}>
           <Grid container spacing={4} columns={1}>
-            <Grid item xs={1} minWidth='350px'>
+            <Grid item xs={1} minWidth='45vh'>
               <Box 
                 style={{padding: '2vh', 
                 border: '1px solid #DCDCDC', 
@@ -187,7 +186,7 @@ const EnergyComponentPage = () => {
                   sx={{margin: 2}}
                   >{component.description}
                 </Typography>
-                {component.type === "producer" && 
+                {component.type === "producer" && component.id !== "electric-board" &&
                   <>
                     <Typography 
                       variant="body1"
@@ -210,6 +209,35 @@ const EnergyComponentPage = () => {
                         yAxis={[{label: 'kWh'}]}
                         xAxis={[{scaleType: 'band', dataKey: 'hour', tickLabelInterval: () => false, label: 'time (h)'}]}
                         series={[{dataKey: 'value', label: 'production (kWh)'}]}
+                        width={350}
+                        height={300}
+                      />
+                    }                    
+                    </>
+                  }
+                  {component.type === "producer" && component.id === "electric-board" &&
+                  <>
+                    <Typography 
+                      variant="body1"
+                      sx={{margin: 2}}
+                      >Energy producing component
+                    </Typography> 
+                    <Typography 
+                      variant="body2"
+                      sx={{margin: 2}}
+                      >Energy received from the electricity network in the last 24 hours:
+                    </Typography>
+                    <Typography 
+                      variant="body2"
+                      sx={{margin: 2}}
+                      >Total use of outside energy {totalProduction} kWh
+                    </Typography>
+                    {productionData.length > 0 &&
+                      <BarChart
+                        dataset={productionData}
+                        yAxis={[{label: 'kWh'}]}
+                        xAxis={[{scaleType: 'band', dataKey: 'hour', tickLabelInterval: () => false, label: 'time (h)'}]}
+                        series={[{dataKey: 'value', label: 'received energy (kWh)'}]}
                         width={350}
                         height={300}
                       />
@@ -248,7 +276,7 @@ const EnergyComponentPage = () => {
             <Grid item xs={1} style={{ display:"flex", justifyContent: "center" }}>
               <ThemeProvider theme={theme}>
                 <Button variant="contained" color="water" sx={{ borderRadius: 2}} onClick={() => navigate("/demo")}>
-                  back
+                  Back
                 </Button>
               </ThemeProvider>
             </Grid>
