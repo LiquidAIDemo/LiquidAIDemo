@@ -4,7 +4,7 @@ import { Box, Typography } from "@mui/material"
 import { LineChart } from '@mui/x-charts/LineChart'
 
 const Price = ({ price }) => {
-  if (price !== null) {
+  if (price !== null && price !== undefined) {
     return (
       <Typography>
         Current price is {price.toFixed(2)} cents / kWh
@@ -20,7 +20,7 @@ const Price = ({ price }) => {
 }
 
 const Consumption = ({ consumption }) => {
-  if (consumption !== null) {
+  if (consumption !== null && consumption !== undefined) {
     return (
       <Typography>
         Consumption for current hour is {consumption.toFixed(2)} kWh
@@ -36,7 +36,7 @@ const Consumption = ({ consumption }) => {
 }
 
 const TotalConsumption = ({ total }) => {
-  if (total) {
+  if (total !== null && total !== undefined) {
     return (
       <Typography>
         Total consumption during the demo is {total.toFixed(2)} kWh

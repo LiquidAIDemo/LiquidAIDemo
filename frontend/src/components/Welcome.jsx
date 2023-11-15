@@ -116,7 +116,7 @@ const Welcome = () => {
                   sx={{ borderRadius: 2 }}
                   onClick={() => navigate("/demo")}
                 >
-                  start
+                  Start
                 </Button>
               </ThemeProvider>
 

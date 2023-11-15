@@ -141,7 +141,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
 
         <ThemeProvider theme={theme}>
           <Button variant="contained" color="water" sx={{ borderRadius: 2}} onClick={() => handleResetClick(start)}>
-            restart
+            Restart
           </Button>
         </ThemeProvider>
         {
@@ -149,7 +149,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
             <ThemeProvider theme={theme}>
               <Button variant="contained" color="water" sx={{ borderRadius: 2}} 
                       style={{ marginLeft: '10px '}} onClick={togglePause}>
-                {isPaused ? 'continue' : 'pause'}
+                {isPaused ? 'Continue' : 'Pause'}
               </Button>
             </ThemeProvider>
           ) : null

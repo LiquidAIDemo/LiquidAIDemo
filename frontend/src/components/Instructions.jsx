@@ -70,7 +70,7 @@ const Instructions = ({openInstructions, setOpenInstructions}) => {
         <DialogActions sx={{display: 'flex', justifyContent: 'center', margin: 2}}>
           <ThemeProvider theme={theme}>
             <Button variant="contained" color="water" sx={{ borderRadius: 2}} onClick={handleCloseInstructions}>
-              back
+              Back
             </Button>
           </ThemeProvider>
         </DialogActions>

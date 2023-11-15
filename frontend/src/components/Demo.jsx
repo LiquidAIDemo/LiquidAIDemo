@@ -87,7 +87,7 @@ const Demo = () => {
   const [open, setOpen] = useState(false);
 
   const handleReset = () => {
-    // Reset all visibility settings to their original values
+    // Reset all visibility to default
     setShowHeatPump(true);
     setShowElectricBoard(true);
     setShowElectricCar1(true);
@@ -102,6 +102,23 @@ const Demo = () => {
     setShowSolarPanel4(true);
     setShowStove(true);
     setShowWashingMachine(true);
+};
+  const handleClear = () => {
+    // clearing all components
+    setShowHeatPump(false);
+    setShowElectricBoard(false);
+    setShowElectricCar1(false);
+    setShowElectricCar2(false);
+    setShowFreezer(false);
+    setShowHeater(false);
+    setShowHotWaterHeater(false);
+    setShowJacuzzi(false);
+    setShowSolarPanel1(false);
+    setShowSolarPanel2(false);
+    setShowSolarPanel3(false);
+    setShowSolarPanel4(false);
+    setShowStove(false);
+    setShowWashingMachine(false);
 };
 
   const handleClick = () => {
@@ -276,7 +293,8 @@ const Demo = () => {
             <List
               sx={{width: '96%', bgcolor: 'background.paper'}}
               style={{position: 'absolute', 
-              zIndex: 1000, border: '1px solid #DCDCDC', 
+              zIndex: 1000, 
+              border: '1px solid #DCDCDC', 
               borderRadius: '5px', 
               boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',}}
             >
@@ -418,10 +436,19 @@ const Demo = () => {
                         </label>
                       </ListItem>
                       <ThemeProvider theme={theme}>
-                      <Button style={{ marginLeft: '15px ', color: '#0eafc9'}}
+                      <Button style={{ marginLeft: '10px ', marginBottom: '5px'}}
                         onClick={handleReset}
-                        variant="outlined">
-                        Reset to Default
+                        variant="contained"
+                        color="water" >
+                        Reset to default
+                      </Button>
+                      </ThemeProvider>
+                      <ThemeProvider theme={theme}>
+                      <Button style={{ marginLeft: '10px ', marginBottom: '5px'}}
+                        onClick={handleClear}
+                        variant="contained"
+                        color="water" >
+                        Clear all
                         </Button>
                         </ThemeProvider>
                     </Grid>
@@ -442,8 +469,7 @@ const Demo = () => {
               border: '1px solid #DCDCDC', 
               borderRadius: '5px', 
               boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',}} 
-              // bgcolor = "#cfe8fc" 
-              height="33vh"
+              height="32vh"
               overflow="hidden" >
             Time
               <Box>
@@ -474,14 +500,14 @@ const Demo = () => {
                       sx={{ borderRadius: 2, margin: 1 }} 
                       onClick={() => navigate("/")}
               >
-                back
+                Back
               </Button>
               <Button variant="contained" 
                       color="water" 
                       sx={{ borderRadius: 2, margin: 1 }} 
                       onClick={() => setOpenInstructions(true)}
               >
-                information
+                Information
               </Button>
             </ThemeProvider>
             <Instructions openInstructions={openInstructions} setOpenInstructions={setOpenInstructions}/>
