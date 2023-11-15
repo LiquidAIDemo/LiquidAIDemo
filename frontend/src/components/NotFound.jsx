@@ -1,5 +1,5 @@
 import { Box, Typography, Button } from "@mui/material";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useNavigate } from "react-router-dom";
 import WaterWave from "react-water-wave";
 import backgroundImage from "./../assets/water.jpg";
@@ -7,21 +7,21 @@ import backgroundImage from "./../assets/water.jpg";
 const theme = createTheme({
   palette: {
     water: {
-      main: "#8BD4E2",
-      light: "#a7dee7",
-      dark: "#0eafc9",
-      contrastText: "#000000",
+      main: '#8BD4E2',
+      light: '#a7dee7',
+      dark: '#0eafc9',
+      contrastText: '#000000',
     },
   },
   typography: {
     button: {
-      textTransform: "none",
-      fontWeight: "bolder",
-    },
-  },
+      textTransform: 'none',
+      fontWeight: 'bolder',
+    }
+  }
 });
 
-const Welcome = () => {
+const NotFound = () => {
   const navigate = useNavigate();
 
   return (
@@ -76,54 +76,21 @@ const Welcome = () => {
               }}
             >
               <Typography variant="h4" sx={{ margin: 2, fontWeight: "bold" }}>
-                Welcome to LiquidAI demonstrator
-              </Typography>
-              <Typography
-                variant="text"
-                sx={{ margin: 2, fontWeight: "bold", fontSize: 18 }}
-              >
-                Experience the power of liquid software with intelligent energy
-                optimization
+                Page not found
               </Typography>
               <Typography variant="text" sx={{ margin: 2, fontSize: 18 }}>
-                This demo shows you how energy consumption can be optimized in a
-                single-family house
-                <br />
-                <br />
-                You can read more about liquid software{" "}
-                <a
-                  href="https://webpages.tuni.fi/liquid/"
-                  style={{ color: "black" }}
-                >
-                  here
-                </a>
-                <br />
-                <br />
-                This project is licensed under MIT. For more info and
-                documentation, take a look in{" "}
-                <a
-                  href="https://github.com/LiquidAIDemo/LiquidAIDemo"
-                  style={{ color: "black" }}
-                >
-                  Git
-                </a>
+                Demo component pages can be accessed by <br/>
+                clicking on the visual demo components.
               </Typography>
-
               <ThemeProvider theme={theme}>
-                <Button
-                  variant="contained"
-                  color="water"
-                  sx={{ borderRadius: 2 }}
-                  onClick={() => navigate("/demo")}
-                >
-                  Start
+                <Button variant="contained" color="water" sx={{ borderRadius: 2}} onClick={() => navigate("/demo")}>
+                  back to demo
                 </Button>
               </ThemeProvider>
 
               <Typography variant="body2" sx={{ margin: 2, color: "black" }}>
                 <a
-                  href="https://www.freepik.com/free-photo/blue-swimming-pool-rippled-water-detail_1238770.htm"
-                  rel="noreferrer"
+                  href="https://www.freepik.com/free-photo/blue-swimming-pool-rippled-water-detail_1238770.htm#query=blue-swimming-pool-rippled-water-detail&position=0&from_view=search&track=sph"
                   style={{ color: "black" }}
                 >
                   Image by benzoix
@@ -138,4 +105,4 @@ const Welcome = () => {
   );
 };
 
-export default Welcome;
+export default NotFound;
