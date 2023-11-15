@@ -436,7 +436,7 @@ const Demo = () => {
                         </label>
                       </ListItem>
                       <ThemeProvider theme={theme}>
-                      <Button style={{ marginLeft: '10px '}}
+                      <Button style={{ marginLeft: '10px ', marginBottom: '5px'}}
                         onClick={handleReset}
                         variant="contained"
                         color="water" >
@@ -444,7 +444,7 @@ const Demo = () => {
                       </Button>
                       </ThemeProvider>
                       <ThemeProvider theme={theme}>
-                      <Button style={{ marginLeft: '10px '}}
+                      <Button style={{ marginLeft: '10px ', marginBottom: '5px'}}
                         onClick={handleClear}
                         variant="contained"
                         color="water" >
@@ -469,8 +469,7 @@ const Demo = () => {
               border: '1px solid #DCDCDC', 
               borderRadius: '5px', 
               boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',}} 
-              // bgcolor = "#cfe8fc" 
-              height="30vh"
+              height="32vh"
               overflow="hidden" >
             Time
               <Box>
