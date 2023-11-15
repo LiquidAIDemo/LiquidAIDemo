@@ -80,9 +80,9 @@ const Demo = () => {
     setDemoPassedHrs(hoursCopy);
   }
 
-  window.onpopstate = () => {
-    navigate("/");
-  }
+  window.onpopstate = () => navigate("/");
+
+  const [openInstructions, setOpenInstructions] = useState(false);
 
   const [open, setOpen] = useState(false);
 
@@ -141,34 +141,45 @@ const Demo = () => {
   const [showStove, setShowStove] = useLocalStorageState('showStove', true);
   const [showWashingMachine, setShowWashingMachine] = useLocalStorageState('showWashingMachine', true);
 
-  const [openInstructions, setOpenInstructions] = useState(false);
+  const visibilityValues = [
+    {id: "heat-pump", visibility: showHeatPump},
+    {id: "electric-board", visibility: showElectricBoard},
+    {id: "electric-car-1", visibility: showElectricCar1},
+    {id: "electric-car-2", visibility: showElectricCar2}, 
+    {id: "freezer", visibility: showFreezer},
+    {id: "heater", visibility: showHeater},
+    {id: "hot-water-heater", visibility: showHotWaterHeater}, 
+    {id: "jacuzzi", visibility: showJacuzzi}, 
+    {id: "solar-panel-1", visibility: showSolarPanel1}, 
+    {id: "solar-panel-2", visibility: showSolarPanel2},
+    {id: "solar-panel-3", visibility: showSolarPanel3},
+    {id: "solar-panel-4", visibility: showSolarPanel4},
+    {id: "stove", visibility: showStove}, 
+    {id: "washing-machine", visibility: showWashingMachine}
+  ];
+
+  const visibleComponents = visibilityValues.filter(c => c.visibility === true);
 
   const componentData = energyComponents.components;
-  const consumingComponents = componentData.filter(c => c.consumption_per_hour_kwh.length > 0);
-  const producingComponents = componentData.filter(c => c.production_per_hour_kwh.length > 0);
-  
+  const consumingComponents = componentData.filter(c => c.consumption_per_hour_kwh.length > 0).filter(c => visibleComponents.findIndex(v => v.id === c.id) !== -1);
+  const producingComponents = componentData.filter(c => c.production_per_hour_kwh.length > 0).filter(c => visibleComponents.findIndex(v => v.id === c.id) !== -1);
+
   let totalConsumption = [];
   let totalProduction = [];
   let netConsumption = [];
 
-  if (totalConsumption.length === 0) {
-    for (let i=0; i<=23; i++) {
-      totalConsumption.push({hour: i, value: 0});
-    }
-  }
-  
-  if (totalProduction.length === 0) {
-    for (let i=0; i<=23; i++) {
-      totalProduction.push({hour: i, value: 0});
-    }
+  for (let i=0; i<=23; i++) {
+    totalConsumption.push({hour: i, value: 0});
   }
 
-  if (netConsumption.length === 0) {
-    for (let i=0; i<=23; i++) {
-      netConsumption.push({startHour: i, value: 0});
-    }
+  for (let i=0; i<=23; i++) {
+    totalProduction.push({hour: i, value: 0});
   }
-    
+
+  for (let i=0; i<=23; i++) {
+    netConsumption.push({startHour: i, value: 0});
+  }
+
   consumingComponents.forEach(c => {
     const data = c.consumption_per_hour_kwh;
     data.forEach(d => {
@@ -177,7 +188,7 @@ const Demo = () => {
       consumptionHour.value += d.value;
     })    
   })
-
+  
   producingComponents.forEach(c => {
     const data = c.production_per_hour_kwh;
     data.forEach(d => {
@@ -186,7 +197,7 @@ const Demo = () => {
       productionHour.value += d.value;
     })    
   })
-  
+
   netConsumption.forEach(h => {
     const hourConsumption = totalConsumption.find(obj => obj.hour === h.startHour);
     const hourProduction = totalProduction.find(obj => obj.hour === h.startHour);
@@ -252,7 +263,7 @@ const Demo = () => {
               <div>
                 {/*Energy components inside the house*/}
                 {showHeatPump && <HeatPump demoTime={demoTime} />}
-                {showElectricBoard && <ElectricBoard demoTime={demoTime} netConsumption={netConsumption}/>}
+                {showElectricBoard && <ElectricBoard demoTime={demoTime} netConsumption={netConsumption} visibleComponents={visibleComponents}/>}
                 {showFreezer && <Freezer demoTime={demoTime} />}
                 {showHeater && <Heater demoTime={demoTime} />}
                 {showHotWaterHeater && <HotWaterHeater demoTime={demoTime} />}
@@ -457,7 +468,8 @@ const Demo = () => {
               style={{padding: '2vh', 
               border: '1px solid #DCDCDC', 
               borderRadius: '5px', 
-              boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',}}  
+              boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',}} 
+              // bgcolor = "#cfe8fc" 
               height="30vh"
               overflow="hidden" >
             Time
@@ -470,13 +482,13 @@ const Demo = () => {
 
           {/*Created container 3, where the savings is shown
           Savings text will be replaced*/}
-          <Grid item xs={1} minWidth='350px'>
+          <Grid item xs={1} minWidth='50vh'>
             <Box
               style={{padding: '2vh', 
               border: '1px solid #DCDCDC', 
               borderRadius: '5px',
               boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',}} 
-              height="40vh">  
+              height="45vh">  
             Savings
               <ElectricityPrice demoTime={demoTime} demoPassedHrs={parseInt(demoPassedHrs)} totalConsumption={totalConsumption} />
             </Box>
