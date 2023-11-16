@@ -3,7 +3,6 @@ import { render, screen, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { within } from '@testing-library/dom'
 import DemoClock from '../components/DemoClock'
-import { MenuItem, Select } from '@mui/material';
 
 const now = new Date()
 const user = userEvent.setup({delay: null})
@@ -22,11 +21,11 @@ test("demo time runs correctly", () => {
   jest.useFakeTimers()
   render(<DemoClock demoTime={now.toISOString()} demoPassedHours={0} onDemoTimeChange={jest.fn()}/>)
   act(() => {
-    jest.advanceTimersByTime(3000)
+    jest.advanceTimersByTime(1000)
   })
   const demoTimeElement = screen.getByText(/Demo:/).parentElement
   const currentHrs = now.getHours()
-  expect(demoTimeElement).toHaveTextContent(`Demo: ${currentHrs}:00`)
+  expect(demoTimeElement).toHaveTextContent(`Demo: ${currentHrs}:10`)
   jest.useRealTimers()
 })
 
@@ -90,11 +89,11 @@ test("selecting speed works correctly", async () => {
   
   const listbox = screen.getByRole("listbox")
   const options = within(listbox).getAllByRole("option")
-  const optionValues = options.map((li) => li.getAttribute('data-value'))
+  const optionValues = options.map((li) => parseFloat(li.getAttribute('data-value')))
   
-  expect(optionValues).toEqual(["1000", "2000", "3000", "4000", "5000"])
+  expect(optionValues).toEqual([1000, 1000/2, 1000/3, 1000/6])
   await user.click(options[2])
   
   const speedElementAfterClick = screen.getByText(/Select speed:/)
-  expect(speedElementAfterClick).toHaveTextContent("3 secs / hour")
+  expect(speedElementAfterClick).toHaveTextContent("30 min / sec")
 })
