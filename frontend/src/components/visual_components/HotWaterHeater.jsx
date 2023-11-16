@@ -5,14 +5,17 @@ import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
 import { Popover } from '@mui/material';
 
-const HotWaterHeater = ({demoTime}) => {
+const HotWaterHeater = ({demoTime, demoStartTime}) => {
 
   const component = {
     id: "hot-water-heater", 
     name: "Hot water heater",
     type: "consumer",
     description: "Hot water heater stores hot water for the shower.",
-    demoTime: {demoTime}
+    demoTime: {demoTime},
+    optimal24hConsumption: 12.2,
+    maxHourlyConsumption: 3,
+    demoStartTime: {demoStartTime}
   }
 
   const [anchorEl, setAnchorEl] = useState(null);

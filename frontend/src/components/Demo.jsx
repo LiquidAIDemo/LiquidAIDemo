@@ -72,12 +72,16 @@ const Demo = () => {
   const navigate = useNavigate();
   const [demoTime, setDemoTime] = useLocalStorageState('demoTime', new Date().setMinutes(0, 0));
   const [demoPassedHrs, setDemoPassedHrs] = useLocalStorageState('demoPassedHours', 0);
+  const [demoStartTime, setDemoStartTime] = useLocalStorageState('demoStartTime', new Date().setMinutes(0, 0));
   
   const handleDemoTimeChange = (time, hours) => {
     const hoursCopy = hours;
     const newDemoTime = new Date(time);
     setDemoTime(newDemoTime);
     setDemoPassedHrs(hoursCopy);
+    if (demoPassedHrs == 0) {
+      setDemoStartTime(demoTime);
+    }
   }
 
   window.onpopstate = () => navigate("/");
@@ -266,7 +270,7 @@ const Demo = () => {
                 {showElectricBoard && <ElectricBoard demoTime={demoTime} netConsumption={netConsumption} visibleComponents={visibleComponents}/>}
                 {showFreezer && <Freezer demoTime={demoTime} />}
                 {showHeater && <Heater demoTime={demoTime} />}
-                {showHotWaterHeater && <HotWaterHeater demoTime={demoTime} />}
+                {showHotWaterHeater && <HotWaterHeater demoTime={demoTime} demoStartTime={demoStartTime} />}
                 {showJacuzzi && <Jacuzzi demoTime={demoTime} />}
                 {showStove && <Stove demoTime={demoTime} />}
                 {showWashingMachine && <WashingMachine demoTime={demoTime} />}

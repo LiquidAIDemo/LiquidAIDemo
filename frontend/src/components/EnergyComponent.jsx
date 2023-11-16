@@ -48,6 +48,8 @@ const EnergyComponent = (props) => {
       totalProduction = (totalConsumption - ownProduction).toFixed(2);
     }
   }  
+
+
   
   return (
     
