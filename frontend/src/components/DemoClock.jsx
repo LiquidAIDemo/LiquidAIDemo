@@ -28,6 +28,7 @@ function getDayName(date) {
 function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
   let now = new Date();
   const demoTimeDateObj = new Date(demoTime)
+  const [demoPassedMinutes, setDemoPassedMinutes] = useState(0);
 
   const [isPaused, setIsPaused] = useState(false);
   
@@ -43,12 +44,20 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
     if (!isPaused) {
     
       intervalId = setInterval(() => {
+        // Increase hours while passed hours are low enough
         if (demoPassedHours < 24) {
-          // add one hour to demotime object
           const newDemoTime = new Date(demoTime);
-          const newPassedHours = demoPassedHours + 1;
-          newDemoTime.setHours(newDemoTime.getHours() + 1);
-          onDemoTimeChange(newDemoTime, newPassedHours);
+          if (demoPassedMinutes >= 50) {
+            // add one hour to demotime object
+            setDemoPassedMinutes(0)
+            const newPassedHours = demoPassedHours + 1;
+            newDemoTime.setHours(newDemoTime.getHours() + 1);
+            onDemoTimeChange(newDemoTime, newPassedHours);
+          } else {
+            // Increase passed minutes by ten
+            const newPassedMinutes = demoPassedMinutes + 10;
+            setDemoPassedMinutes(newPassedMinutes);
+          }
         }
         else {
           // stop the interval when demoPassedHours reaches 24
@@ -58,9 +67,8 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
     }
 
     return () => clearInterval(intervalId);
-    
 
-  }, [isPaused, speed, onDemoTimeChange, demoTime, demoPassedHours]);
+  }, [isPaused, speed, onDemoTimeChange, demoTime, demoPassedHours, demoPassedMinutes]);
 
   const togglePause = () => {
     setIsPaused((isPaused) => !isPaused)
@@ -79,7 +87,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
     // Call handleStartingChange with the new event object
     handleStartingChange(event);
   };
-
+  
   const handleStartingChange = (event) => {
     let selectedValue = event.target.value;
     setStart(selectedValue);
@@ -87,6 +95,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
     if (selectedValue === "next") {
       const newDemoTime = new Date();
       newDemoTime.setMinutes(0, 0);
+      setDemoPassedMinutes(0);
       onDemoTimeChange(newDemoTime, 0);
       setIsPaused(false);
     } 
@@ -95,6 +104,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
       const newDemoTime = new Date();
       newDemoTime.setDate(now.getDate() - 1);
       newDemoTime.setMinutes(0, 0);
+      setDemoPassedMinutes(0);
       onDemoTimeChange(newDemoTime, 0);
       setIsPaused(false);
     }
@@ -112,11 +122,10 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
             onChange={handleSpeedChange}
             sx={{width: '140px', height: '30px'}}
           >
-            <MenuItem value={1000}>1 sec / hour</MenuItem>
-            <MenuItem value={2000}>2 secs / hour</MenuItem>
-            <MenuItem value={3000}>3 secs / hour</MenuItem>
-            <MenuItem value={4000}>4 secs / hour</MenuItem>
-            <MenuItem value={5000}>5 secs / hour</MenuItem>
+            <MenuItem value={1000}>10 min / sec</MenuItem>
+            <MenuItem value={1000/2}>20 min / sec</MenuItem>
+            <MenuItem value={1000/3}>30 min / sec</MenuItem>
+            <MenuItem value={1000/6}>1 hour / sec</MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -136,7 +145,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
       </Box>
 
       <Box style={{padding: '1vh'}}>
-        <b>Demo: </b> {demoTimeDateObj.getHours()}:00, {getDayName(demoTimeDateObj)} {demoTimeDateObj.getDate()}.{demoTimeDateObj.getMonth()+1}. &#x1F4C5;
+        <b>Demo: </b> {String(demoTimeDateObj.getHours()).padStart(2, '0')}:{String(demoPassedMinutes).padStart(2, '0')}, {getDayName(demoTimeDateObj)} {demoTimeDateObj.getDate()}.{demoTimeDateObj.getMonth()+1}. &#x1F4C5;
         <br/>
 
         <ThemeProvider theme={theme}>
