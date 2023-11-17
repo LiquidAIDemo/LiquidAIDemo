@@ -93,10 +93,11 @@ const EnergyComponentPage = () => {
     let savings = 0;
 
     if (component.type === "consumer") {
-      consumptionData = componentData.consumption_per_hour_kwh
+      consumptionData = componentData.consumption_per_hour_kwh;
       consumptionData.forEach(h => {
-        const startHour = new Date(h.startDate).getUTCHours()
-        h.hour = startHour + ':00-' + (parseInt(startHour) + 1) + ':00'
+        const startHour = new Date(h.startDate).getUTCHours();
+        h.startHour = startHour;
+        h.hour = startHour + ':00-' + (parseInt(startHour) + 1) + ':00';
       });
       totalConsumption = consumptionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
 
@@ -421,12 +422,12 @@ const EnergyComponentPage = () => {
                                 </Typography>
                                 <div>
                                   <p>
-                                    <span style={{'margin': 2, 'font-size': '14px', 'color': 'transparent', 'text-shadow': '0 0 0 mediumblue'}}>&#9899;</span>
-                                    <span style={{'margin': 2, 'font-size': '14px', 'color': 'transparent', 'text-shadow': '0 0 0 black'}}>real consumption</span>
-                                    <span style={{'margin': 2, 'font-size': '14px', 'color': 'transparent', 'text-shadow': '0 0 0 limegreen'}}>&#9899;</span>
-                                    <span style={{'margin': 2, 'font-size': '14px', 'color': 'transparent', 'text-shadow': '0 0 0 black'}}>optimized consumption</span>
-                                    <span style={{'margin': 2, 'font-size': '14px', 'color': 'transparent', 'text-shadow': '0 0 0 red'}}>&#9899;</span>
-                                    <span style={{'margin': 2, 'font-size': '14px', 'color': 'transparent', 'text-shadow': '0 0 0 black'}}>price</span>
+                                    <span style={{'margin': 2, 'fontSize': '14px', 'color': 'transparent', 'textShadow': '0 0 0 mediumblue'}}>&#9899;</span>
+                                    <span style={{'margin': 2, 'fontSize': '14px', 'color': 'transparent', 'textShadow': '0 0 0 black'}}>real consumption</span>
+                                    <span style={{'margin': 2, 'fontSize': '14px', 'color': 'transparent', 'textShadow': '0 0 0 limegreen'}}>&#9899;</span>
+                                    <span style={{'margin': 2, 'fontSize': '14px', 'color': 'transparent', 'textShadow': '0 0 0 black'}}>optimized consumption</span>
+                                    <span style={{'margin': 2, 'fontSize': '14px', 'color': 'transparent', 'textShadow': '0 0 0 red'}}>&#9899;</span>
+                                    <span style={{'margin': 2, 'fontSize': '14px', 'color': 'transparent', 'textShadow': '0 0 0 black'}}>price</span>
                                   </p>
                                 </div>
                                 <ChartContainer
