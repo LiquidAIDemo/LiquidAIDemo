@@ -33,10 +33,10 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
   const [isPaused, setIsPaused] = useState(false);
   
   // Default speed 1 sec
-  const [speed, setSpeed] = useState(1000);
+  const [speed, setSpeed] = useState(localStorage.getItem('selectedSpeed') || 1000/6);
   const [start, setStart] = useState("next");
   
-  // Time runs from demo start fro 24 hours
+  // Time runs from demo start from 24 hours
   // speed depends on selected time value
   useEffect(() => {
     let intervalId;
@@ -44,6 +44,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
     if (!isPaused) {
     
       intervalId = setInterval(() => {
+        
         // Increase hours while passed hours are low enough
         if (demoPassedHours < 24) {
           const newDemoTime = new Date(demoTime);
@@ -76,6 +77,8 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
 
   const handleSpeedChange = (event) => {
     setSpeed(event.target.value);
+    localStorage.setItem('selectedSpeed', event.target.value);
+
   };
 
   const handleResetClick = (selectedValue) => {
@@ -117,7 +120,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
         Select speed:
         <FormControl style={{ marginLeft: '10px '}}>
           <Select
-            defaultValue={1}
+            // defaultValue={1000/6}
             value={speed}
             onChange={handleSpeedChange}
             sx={{width: '140px', height: '30px'}}
