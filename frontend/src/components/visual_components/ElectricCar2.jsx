@@ -5,14 +5,15 @@ import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
 import { Popover } from '@mui/material';
 
-const ElectricCar2 = ({demoTime}) => {
+const ElectricCar2 = ({demoTime, demoStartTime}) => {
 
   const component = {
     id: "electric-car-2", 
     name: "Electric car 2",
     type: "consumer",
     description: "Electric car is charged at the charging station.",
-    demoTime: {demoTime}
+    demoTime: {demoTime},
+    demoStartTime: {demoStartTime}
   }
 
   const navigate = useNavigate();
@@ -46,10 +47,10 @@ const ElectricCar2 = ({demoTime}) => {
         className="electric-car-energy-border"
         style={{
           position: 'absolute',
-          top: '59%',
+          top: '58%',
           left: '82.4%',
-          width: '13%',
-          height: '32%',
+          width: '11%',
+          height: '29%',
         }}
       />
       <img
@@ -59,10 +60,10 @@ const ElectricCar2 = ({demoTime}) => {
         className='car-image-2'
         style={{
           position: 'absolute',
-          top: '60%',
+          top: '59%',
           left: '83%',
-          width: '12%',
-          height: '30%'
+          width: '10%',
+          height: '27%'
         }}
         onClick={handleClick}
         onMouseEnter={handleHoverOn}
