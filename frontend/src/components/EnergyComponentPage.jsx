@@ -88,6 +88,9 @@ const EnergyComponentPage = () => {
     let totalProduction = 0;
     let totalConsumption = 0;
     let ownProduction = 0;
+    let totalPrice = 0;
+    let optimalPrice = 0;
+    let savings = 0;
 
     if (component.type === "consumer") {
       consumptionData = componentData.consumption_per_hour_kwh
@@ -97,8 +100,7 @@ const EnergyComponentPage = () => {
       });
       totalConsumption = consumptionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
 
-      if (component.optimal24hConsumption !== undefined && component.maxHourlyConsumption !== undefined 
-        && component.demoStartTime !== undefined && prices.length > 0) {
+      if (component.demoStartTime !== undefined && prices.length > 0) {
         const optimal24hConsumption = parseFloat(totalConsumption);
         const maxHourlyConsumption = parseFloat(consumptionData.reduce((a, b) => Math.max(a, b.value), 0));
         const demoStartTime = component.demoStartTime.demoStartTime;
@@ -119,6 +121,13 @@ const EnergyComponentPage = () => {
           demoPrices.push(price);
         }
 
+        consumptionData.forEach(c => {
+          const value = c.value;
+          const price = demoPrices.find(p => p.startHour === c.startHour).price;
+          const hourPrice = parseFloat(value) * parseFloat(price);
+          totalPrice = totalPrice + hourPrice;
+        })
+
         const sortedPrices = demoPrices.sort((a, b) => {
           return a.price - b.price;
         })
@@ -131,7 +140,6 @@ const EnergyComponentPage = () => {
           }
         }
 
-        // optimized consumption array disappears on page refresh
         if (optimizedConsumption.length > 0) {
           for (let i=0; i < wholeConsumptionHours; i++) {
             const priceData = sortedPrices[i];
@@ -139,8 +147,14 @@ const EnergyComponentPage = () => {
           }
 
           optimizedConsumption.forEach(h => {
-            h.hour = h.startHour + ':00-' + (parseInt(h.startHour) + 1) + ':00'
+            h.hour = h.startHour + ':00-' + (parseInt(h.startHour) + 1) + ':00';
+            const value = h.optimizedValue;
+            const price = demoPrices.find(p => p.startHour === h.startHour).price;
+            const hourPrice = parseFloat(value) * parseFloat(price);
+            optimalPrice = optimalPrice + hourPrice;
           })
+
+          savings = totalPrice/100 - optimalPrice/100;
 
           if (residualHour > 0) {
             const priceData = sortedPrices[wholeConsumptionHours];
@@ -167,7 +181,7 @@ const EnergyComponentPage = () => {
             type: 'bar',
             label: 'real consumption (kWh)',
             yAxisKey: 'consumption (kWh)',
-            color: 'darkslateblue',
+            color: 'mediumblue',
             data: optimizedConsumption.map(c => c.realValue)
           }
         ]
@@ -276,7 +290,7 @@ const EnergyComponentPage = () => {
                 border: '1px solid #DCDCDC', 
                 borderRadius: '5px', 
                 boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',}} 
-                height="80vh" >
+                height="85vh" >
                 <Typography 
                   variant="body1"
                   fontWeight="bold"
@@ -309,10 +323,10 @@ const EnergyComponentPage = () => {
                       <BarChart
                         dataset={productionData}
                         yAxis={[{label: 'kWh'}]}
-                        xAxis={[{scaleType: 'band', dataKey: 'hour', tickLabelInterval: () => false, label: 'time (h)'}]}
+                        xAxis={[{scaleType: 'band', dataKey: 'hour', label: 'time (h)'}]}
                         series={[{dataKey: 'value', label: 'production (kWh)'}]}
-                        width={350}
-                        height={300}
+                        width={450}
+                        height={350}
                       />
                     }                    
                     </>
@@ -338,10 +352,10 @@ const EnergyComponentPage = () => {
                       <BarChart
                         dataset={productionData}
                         yAxis={[{label: 'kWh'}]}
-                        xAxis={[{scaleType: 'band', dataKey: 'hour', tickLabelInterval: () => false, label: 'time (h)'}]}
+                        xAxis={[{scaleType: 'band', dataKey: 'hour', label: 'time (h)'}]}
                         series={[{dataKey: 'value', label: 'received energy (kWh)'}]}
-                        width={350}
-                        height={300}
+                        width={450}
+                        height={350}
                       />
                     }                    
                     </>
@@ -361,24 +375,41 @@ const EnergyComponentPage = () => {
                     <Typography 
                       variant="body2"
                       sx={{margin: 2}}
-                      >Total consumption {totalConsumption} kWh
+                      >Total consumption {totalConsumption} kWh                      
                     </Typography>
                       {optimizedConsumption.length !== 24 && 
-                        
                         <BarChart
                           dataset={consumptionData}
                           yAxis={[{label: 'kWh'}]}
-                          xAxis={[{scaleType: 'band', dataKey: 'hour', tickLabelInterval: () => false, label: 'time (h)'}]}
+                          xAxis={[{scaleType: 'band', dataKey: 'hour', label: 'time (h)'}]}
                           series={[{dataKey: 'value', label: 'consumption (kWh)'}]}
-                          width={350}
-                          height={300}
+                          width={450}
+                          height={350}
                         />
                       } 
                       {optimizedConsumption.length === 24 && 
+                      <>
+                        <Typography
+                          variant="body2"
+                          sx={{margin: 2}}>
+                            Total price for consumed energy {(totalPrice/100).toFixed(2)} euros<br/>
+                            Total price with optimized consumption {(optimalPrice/100).toFixed(2)} euros<br/>
+                            Savings made with optimization {(savings).toFixed(2)} euros (-{((savings/(totalPrice/100))*100).toFixed(2)} %)
+                        </Typography>
+                        <div>
+                          <p>
+                            <span style={{'margin': 2, 'font-size': '14px', 'color': 'transparent', 'text-shadow': '0 0 0 mediumblue'}}>&#9899;</span>
+                            <span style={{'margin': 2, 'font-size': '14px', 'color': 'transparent', 'text-shadow': '0 0 0 black'}}>real consumption</span>
+                            <span style={{'margin': 2, 'font-size': '14px', 'color': 'transparent', 'text-shadow': '0 0 0 limegreen'}}>&#9899;</span>
+                            <span style={{'margin': 2, 'font-size': '14px', 'color': 'transparent', 'text-shadow': '0 0 0 black'}}>optimized consumption</span>
+                            <span style={{'margin': 2, 'font-size': '14px', 'color': 'transparent', 'text-shadow': '0 0 0 red'}}>&#9899;</span>
+                            <span style={{'margin': 2, 'font-size': '14px', 'color': 'transparent', 'text-shadow': '0 0 0 black'}}>price</span>
+                          </p>
+                        </div>
                         <ChartContainer
                           series={chartData}
                           width={450}
-                          height={400}
+                          height={350}
                           xAxis={[
                             {
                               id: 'time (h)',
@@ -398,14 +429,14 @@ const EnergyComponentPage = () => {
                             }
                           ]}
                         >
-                          <LinePlot />
                           <BarPlot />
-                          
+                          <LinePlot />
                           <ChartsTooltip trigger='axis'/>
                           <ChartsXAxis label="time (h)" position="bottom" axisId="time (h)" />
                           <ChartsYAxis label="consumption (kWh)" position="left" axisId="consumption (kWh)" />
                           <ChartsYAxis label="price (cents)" position="right" axisId="price (cents)" />
                         </ChartContainer>
+                      </>
                       }
                   </>
                 }

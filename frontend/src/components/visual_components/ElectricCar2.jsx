@@ -5,14 +5,15 @@ import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
 import { Popover } from '@mui/material';
 
-const ElectricCar2 = ({demoTime}) => {
+const ElectricCar2 = ({demoTime, demoStartTime}) => {
 
   const component = {
     id: "electric-car-2", 
     name: "Electric car 2",
     type: "consumer",
     description: "Electric car is charged at the charging station.",
-    demoTime: {demoTime}
+    demoTime: {demoTime},
+    demoStartTime: {demoStartTime}
   }
 
   const navigate = useNavigate();

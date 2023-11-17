@@ -5,14 +5,15 @@ import { useNavigate } from "react-router-dom";
 import EnergyComponent from "../EnergyComponent";
 import { Popover } from '@mui/material';
 
-const Freezer = ({demoTime}) => {
+const Freezer = ({demoTime, demoStartTime}) => {
 
   const component = {
     id: "freezer", 
     name: "Freezer",
     type: "consumer",
     description: "Food stays cold in the freezer.",
-    demoTime: {demoTime}
+    demoTime: {demoTime},
+    demoStartTime: {demoStartTime}
   }
 
   const [anchorEl, setAnchorEl] = useState(null);

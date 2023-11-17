@@ -13,8 +13,6 @@ const HotWaterHeater = ({demoTime, demoStartTime}) => {
     type: "consumer",
     description: "Hot water heater stores hot water for the shower.",
     demoTime: {demoTime},
-    optimal24hConsumption: 12.2,
-    maxHourlyConsumption: 3,
     demoStartTime: {demoStartTime}
   }
 

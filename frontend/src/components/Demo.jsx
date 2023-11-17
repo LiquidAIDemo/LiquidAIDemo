@@ -266,22 +266,22 @@ const Demo = () => {
               />
               <div>
                 {/*Energy components inside the house*/}
-                {showHeatPump && <HeatPump demoTime={demoTime} />}
+                {showHeatPump && <HeatPump demoTime={demoTime} demoStartTime={demoStartTime} />}
                 {showElectricBoard && <ElectricBoard demoTime={demoTime} netConsumption={netConsumption} visibleComponents={visibleComponents}/>}
-                {showFreezer && <Freezer demoTime={demoTime} />}
-                {showHeater && <Heater demoTime={demoTime} />}
+                {showFreezer && <Freezer demoTime={demoTime} demoStartTime={demoStartTime}/>}
+                {showHeater && <Heater demoTime={demoTime} demoStartTime={demoStartTime}/>}
                 {showHotWaterHeater && <HotWaterHeater demoTime={demoTime} demoStartTime={demoStartTime} />}
-                {showJacuzzi && <Jacuzzi demoTime={demoTime} />}
-                {showStove && <Stove demoTime={demoTime} />}
-                {showWashingMachine && <WashingMachine demoTime={demoTime} />}
+                {showJacuzzi && <Jacuzzi demoTime={demoTime} demoStartTime={demoStartTime}/>}
+                {showStove && <Stove demoTime={demoTime} demoStartTime={demoStartTime}/>}
+                {showWashingMachine && <WashingMachine demoTime={demoTime} demoStartTime={demoStartTime}/>}
               </div>
               {/*Energy components outside the house*/}
               {showSolarPanel1 && <SolarPanel1 demoTime={demoTime} />}
               {showSolarPanel2 && <SolarPanel2 demoTime={demoTime} />}
               {showSolarPanel3 && <SolarPanel3 demoTime={demoTime} />}
               {showSolarPanel4 && <SolarPanel4 demoTime={demoTime} />}
-              {showElectricCar1 && <ElectricCar1 demoTime={demoTime} />}
-              {showElectricCar2 && <ElectricCar2 demoTime={demoTime} />}
+              {showElectricCar1 && <ElectricCar1 demoTime={demoTime} demoStartTime={demoStartTime}/>}
+              {showElectricCar2 && <ElectricCar2 demoTime={demoTime} demoStartTime={demoStartTime}/>}
             </div>
           </div>
         </Box>
