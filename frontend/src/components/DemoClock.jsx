@@ -33,7 +33,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
   const [isPaused, setIsPaused] = useState(false);
   
   // Default speed 1 sec
-  const [speed, setSpeed] = useState(1000);
+  const [speed, setSpeed] = useState(1000/6);
   const [start, setStart] = useState("next");
   
   // Time runs from demo start fro 24 hours
@@ -117,7 +117,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
         Select speed:
         <FormControl style={{ marginLeft: '10px '}}>
           <Select
-            defaultValue={1}
+            // defaultValue={1000/6}
             value={speed}
             onChange={handleSpeedChange}
             sx={{width: '140px', height: '30px'}}
