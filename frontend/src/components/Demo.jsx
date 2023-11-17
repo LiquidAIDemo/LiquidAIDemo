@@ -72,12 +72,16 @@ const Demo = () => {
   const navigate = useNavigate();
   const [demoTime, setDemoTime] = useLocalStorageState('demoTime', new Date().setMinutes(0, 0));
   const [demoPassedHrs, setDemoPassedHrs] = useLocalStorageState('demoPassedHours', 0);
+  const [demoStartTime, setDemoStartTime] = useLocalStorageState('demoStartTime', new Date().setMinutes(0, 0));
   
   const handleDemoTimeChange = (time, hours) => {
     const hoursCopy = hours;
     const newDemoTime = new Date(time);
     setDemoTime(newDemoTime);
     setDemoPassedHrs(hoursCopy);
+    if (demoPassedHrs == 0) {
+      setDemoStartTime(demoTime);
+    }
   }
 
   window.onpopstate = () => navigate("/");
@@ -225,24 +229,24 @@ const Demo = () => {
           top: 20,
         }}>
         <Grid
-        container
-        spacing={4}
-        columns={5}
-        style={{ padding: '2vh' }} 
-        >
+          container
+          spacing={4}
+          columns={5}
+          style={{ padding: '2vh' }} 
+          >
           <Grid item xs={12} sm={3} minWidth='350px'>
-          <Typography
-        variant="h6"
-        sx={{
-          position: "absolute",
-          top: "15px",
-          left: "15px",
-          zIndex: 1,
-          fontWeight: "bold",
-        }}
-      >
-        LiquidAI Demo
-      </Typography>
+            <Typography
+              variant="h6"
+              sx={{
+                position: "absolute",
+                top: "15px",
+                left: "15px",
+                zIndex: 1,
+                fontWeight: "bold",
+              }}
+            >
+              LiquidAI Demo
+            </Typography>
             <Box height="96vh">
               <div
                 style={{
@@ -292,32 +296,32 @@ const Demo = () => {
                       width: '90%',
                       height: '55%',
                     }}
-                  />
-                  <div>
-                    {/*Energy components inside the house*/}
-                    {showHeatPump && <HeatPump demoTime={demoTime} />}
-                    {showElectricBoard && <ElectricBoard demoTime={demoTime} netConsumption={netConsumption} visibleComponents={visibleComponents}/>}
-                    {showFreezer && <Freezer demoTime={demoTime} />}
-                    {showHeater && <Heater demoTime={demoTime} />}
-                    {showHotWaterHeater && <HotWaterHeater demoTime={demoTime} />}
-                    {showJacuzzi && <Jacuzzi demoTime={demoTime} />}
-                    {showStove && <Stove demoTime={demoTime} />}
-                    {showWashingMachine && <WashingMachine demoTime={demoTime} />}
-                  </div>
-                  {/*Energy components outside the house*/}
-                  {showSolarPanel1 && <SolarPanel1 demoTime={demoTime} />}
-                  {showSolarPanel2 && <SolarPanel2 demoTime={demoTime} />}
-                  {showSolarPanel3 && <SolarPanel3 demoTime={demoTime} />}
-                  {showSolarPanel4 && <SolarPanel4 demoTime={demoTime} />}
-                  {showElectricCar1 && <ElectricCar1 demoTime={demoTime} />}
-                  {showElectricCar2 && <ElectricCar2 demoTime={demoTime} />}
+                />
+                <div>
+                  {/*Energy components inside the house*/}
+                  {showHeatPump && <HeatPump demoTime={demoTime} demoStartTime={demoStartTime} />}
+                  {showElectricBoard && <ElectricBoard demoTime={demoTime} netConsumption={netConsumption} visibleComponents={visibleComponents}/>}
+                  {showFreezer && <Freezer demoTime={demoTime} demoStartTime={demoStartTime}/>}
+                  {showHeater && <Heater demoTime={demoTime} demoStartTime={demoStartTime}/>}
+                  {showHotWaterHeater && <HotWaterHeater demoTime={demoTime} demoStartTime={demoStartTime} />}
+                  {showJacuzzi && <Jacuzzi demoTime={demoTime} demoStartTime={demoStartTime}/>}
+                  {showStove && <Stove demoTime={demoTime} demoStartTime={demoStartTime}/>}
+                  {showWashingMachine && <WashingMachine demoTime={demoTime} demoStartTime={demoStartTime}/>}
                 </div>
+                {/*Energy components outside the house*/}
+                {showSolarPanel1 && <SolarPanel1 demoTime={demoTime} />}
+                {showSolarPanel2 && <SolarPanel2 demoTime={demoTime} />}
+                {showSolarPanel3 && <SolarPanel3 demoTime={demoTime} />}
+                {showSolarPanel4 && <SolarPanel4 demoTime={demoTime} />}
+                {showElectricCar1 && <ElectricCar1 demoTime={demoTime} demoStartTime={demoStartTime}/>}
+                {showElectricCar2 && <ElectricCar2 demoTime={demoTime} demoStartTime={demoStartTime}/>}
               </div>
-            </Box>
-          </Grid>
-
-          {/*Created container to span 1/3 columns */}
-          <Grid item xs={2} style={{position: 'relative'}}>
+            </div>
+          </Box>
+        </Grid>
+      
+      {/*Created container to span 1/3 columns */}
+      <Grid item xs={2} style={{position: 'relative'}}>
             {/*Created container grid to have containers on top of another */}
             <Grid container spacing={2} columns={1}>
             <Grid container style={{display: "flex", justifyContent: "center", alignItems: "center",}}>

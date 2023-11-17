@@ -4,14 +4,16 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
 import { Popover } from '@mui/material';
-const Stove = ({demoTime}) => {
+
+const Stove = ({demoTime, demoStartTime}) => {
 
   const component = {
     id: "stove", 
     name: "Stove",
     type: "consumer",
     description: "Delicious meals are cooked on the stove.",
-    demoTime: {demoTime}
+    demoTime: {demoTime},
+    demoStartTime: {demoStartTime}
   }
 
   const navigate = useNavigate();
