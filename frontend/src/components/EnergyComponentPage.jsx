@@ -106,7 +106,20 @@ const EnergyComponentPage = () => {
 
     return (
       <div>
-        <Typography
+        
+        <div 
+        style={{
+          position: 'relative',
+          top: 20,
+        }}>
+          <Grid 
+            container
+            spacing={4}
+            columns={3}
+            style={{ padding: '2vh' }}
+            > 
+            <Grid item xs={12} sm={2} minWidth='350px'>
+            <Typography
           variant="h6"
           sx={{
             position: "absolute",
@@ -118,18 +131,6 @@ const EnergyComponentPage = () => {
         >
           LiquidAI Demo
         </Typography>
-        <div 
-        style={{
-          position: 'relative',
-          top: 50,
-        }}>
-          <Grid 
-            container
-            spacing={4}
-            columns={3}
-            style={{ padding: '2vh' }}
-            > 
-            <Grid item xs={12} sm={2} minWidth='350px'>
               <Box height="96vh">
                 <div
                   style={{

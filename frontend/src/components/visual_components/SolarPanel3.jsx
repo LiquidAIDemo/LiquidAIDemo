@@ -46,7 +46,7 @@ const SolarPanel3 = ({demoTime}) => {
         className="solar-panel-energy-border"
         style={{
           position: 'absolute',
-          top: '78%',
+          top: '76.5%',
           left: '6%',
           width: '12%',
           height: '10%'
@@ -59,7 +59,7 @@ const SolarPanel3 = ({demoTime}) => {
         className='solar-panel-image-3'
         style={{
           position: 'absolute',
-          top: '78.5%',
+          top: '77%',
           left: '6.5%',
           width: '11%',
           height: '9%',

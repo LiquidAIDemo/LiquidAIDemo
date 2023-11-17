@@ -207,7 +207,31 @@ const Demo = () => {
   return (
     //Created container grid
     <div>
-      <Typography
+      {/*<Typography
+        variant="h6"
+        sx={{
+          position: "absolute",
+          top: "15px",
+          left: "15px",
+          zIndex: 1,
+          fontWeight: "bold",
+        }}
+      >
+        LiquidAI Demo
+      </Typography>*/}
+      <div 
+        style={{
+          position: 'relative',
+          top: 20,
+        }}>
+        <Grid
+        container
+        spacing={4}
+        columns={5}
+        style={{ padding: '2vh' }} 
+        >
+          <Grid item xs={12} sm={3} minWidth='350px'>
+          <Typography
         variant="h6"
         sx={{
           position: "absolute",
@@ -219,18 +243,6 @@ const Demo = () => {
       >
         LiquidAI Demo
       </Typography>
-      <div 
-        style={{
-          position: 'relative',
-          top: 50,
-        }}>
-        <Grid
-        container
-        spacing={4}
-        columns={5}
-        style={{ padding: '2vh' }} 
-        >
-          <Grid item xs={12} sm={3} minWidth='350px'>
             <Box height="96vh">
               <div
                 style={{
@@ -249,7 +261,7 @@ const Demo = () => {
                     top: 0,
                     left: 0,
                     width: '100%',
-                    height: '92%',
+                    height: '89%',
                     objectFit: 'cover',
                     border: '1px solid #DCDCDC', 
                     borderRadius: '5px', 
@@ -308,6 +320,24 @@ const Demo = () => {
           <Grid item xs={2} style={{position: 'relative'}}>
             {/*Created container grid to have containers on top of another */}
             <Grid container spacing={2} columns={1}>
+            <Grid container style={{display: "flex", justifyContent: "center", alignItems: "center",}}>
+                <ThemeProvider theme={theme}>
+                  <Button variant="contained" color="water" 
+                          sx={{ borderRadius: 2, margin: 1, width: '90px', }} 
+                          onClick={() => navigate("/")}
+                  >
+                    Back
+                  </Button>
+                  <Button variant="contained" 
+                          color="water" 
+                          sx={{ borderRadius: 2, marginLeft: 2, width: '130px', }} 
+                          onClick={() => setOpenInstructions(true)}
+                  >
+                    Information
+                  </Button>
+                </ThemeProvider>
+                <Instructions openInstructions={openInstructions} setOpenInstructions={setOpenInstructions}/>
+              </Grid>
               <Grid item xs={1} height="10vh">
                 {/*Component menu width is not working perfectly*/}
                 <Box >
@@ -484,15 +514,15 @@ const Demo = () => {
               {/*Created container 2, where the current time and selected time range is shown
               Time text will be replaced*/}     
                   
-              <Grid item xs={1} minWidth='350px'>
+              <Grid item xs={1} minWidth='50vh'>
                 <Box 
-                  style={{padding: '2vh', 
+                  style={{padding: '1vh', 
                   border: '1px solid #DCDCDC', 
                   borderRadius: '5px', 
                   boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',}} 
-                  height="32vh"
+                  height="30vh"
                   overflow="hidden" >
-                Time
+                
                   <Box>
                     <DemoClock demoTime={demoTime} demoPassedHours={demoPassedHrs} onDemoTimeChange={handleDemoTimeChange} />
                     <RealtimeClock />
@@ -515,24 +545,7 @@ const Demo = () => {
               </Grid>
 
               {/*Created container 4 for buttons and justify its content to the center*/}
-              <Grid container style={{display: "flex", justifyContent: "center", alignItems: "center", margin: 10}}>
-                <ThemeProvider theme={theme}>
-                  <Button variant="contained" color="water" 
-                          sx={{ borderRadius: 2, margin: 1 }} 
-                          onClick={() => navigate("/")}
-                  >
-                    Back
-                  </Button>
-                  <Button variant="contained" 
-                          color="water" 
-                          sx={{ borderRadius: 2, margin: 1 }} 
-                          onClick={() => setOpenInstructions(true)}
-                  >
-                    Information
-                  </Button>
-                </ThemeProvider>
-                <Instructions openInstructions={openInstructions} setOpenInstructions={setOpenInstructions}/>
-              </Grid>
+              
             </Grid>         
           </Grid> 
         </Grid>
