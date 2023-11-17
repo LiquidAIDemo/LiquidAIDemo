@@ -221,237 +221,262 @@ const EnergyComponentPage = () => {
     }
 
     return (
-      <Grid 
-        container
-        spacing={4}
-        columns={3}
-        style={{ padding: '2vh' }}
-        > 
-        <Grid item xs={12} sm={1.5} width="50vh">
-          <Box height="96vh">
-            <div
-              style={{
-                position: 'relative',
-                paddingBottom: '83%',
-                width: '100%',
-                height: 0,
-              }}
-            >
-              <img
-                src={backgroundImage}
-                alt='Home yard'
-                className='background-image'
-                style={{
-                  position:'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '92%',
-                  objectFit: 'cover',
-                }}
-              />
-              <div
-                className='overlay-content'
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
+      <div>
+              
+        <div 
+          style={{
+            position: 'relative',
+            top: 20,
+          }}>
+          <Grid 
+            container
+            spacing={4}
+            columns={3}
+            style={{ padding: '2vh' }}
+            > 
+            <Grid item xs={12} sm={1.5} width="50vh">
+              <Typography
+                variant="h6"
+                sx={{
+                  position: "absolute",
+                  top: "15px",
+                  left: "15px",
+                  zIndex: 1,
+                  fontWeight: "bold",
                 }}
               >
-                <img
-                  id={component.id}
-                  src={imageMapping[component.id]}
-                  alt={component.id}
-                  className={`${component.id}-image`}
+                LiquidAI Demo
+              </Typography>
+              <Box height="96vh">
+                <div
                   style={{
-                    display: 'block',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                    marginTop: 'auto',
-                    marginBottom: 'auto',
-                    width: 'auto',
-                    height: '50%',
+                    position: 'relative',
+                    paddingBottom: '83%',
+                    width: '100%',
+                    height: 0,
                   }}
-                />
-              </div>
-            </div>
-          </Box>
-        </Grid>
-        <Grid item xs={1}>
-          <Grid container spacing={4} columns={1}>
-            <Grid item xs={1} minWidth='500px'>
-              <Box 
-                style={{padding: '2vh', 
-                border: '1px solid #DCDCDC', 
-                borderRadius: '5px', 
-                boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',}} 
-                height="85vh" >
-                <Typography 
-                  variant="body1"
-                  fontWeight="bold"
-                  sx={{margin: 2}}
-                  >{component.name}
-                </Typography>
-                <Typography 
-                  variant="body2"
-                  sx={{margin: 2}}
-                  >{component.description}
-                </Typography>
-                {component.type === "producer" && component.id !== "electric-board" &&
-                  <>
-                    <Typography 
-                      variant="body1"
-                      sx={{margin: 2}}
-                      >Energy producing component
-                    </Typography> 
-                    <Typography 
-                      variant="body2"
-                      sx={{margin: 2}}
-                      >Energy produced in the last 24 hours:
-                    </Typography>
-                    <Typography 
-                      variant="body2"
-                      sx={{margin: 2}}
-                      >Total production {totalProduction} kWh
-                    </Typography>
-                    {productionData.length > 0 &&
-                      <BarChart
-                        dataset={productionData}
-                        yAxis={[{label: 'kWh'}]}
-                        xAxis={[{scaleType: 'band', dataKey: 'hour', label: 'time (h)'}]}
-                        series={[{dataKey: 'value', label: 'production (kWh)'}]}
-                        width={450}
-                        height={350}
+                >
+                  <img
+                        src={backgroundImage}
+                        alt='Home yard'
+                        className='background-image'
+                        style={{
+                          position:'absolute',
+                          top: 0,
+                          left: 0,
+                          width: '100%',
+                          height: '92%',
+                          objectFit: 'cover',
+                          border: '1px solid #DCDCDC', 
+                          borderRadius: '5px', 
+                          boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                        }}
                       />
-                    }                    
-                    </>
-                  }
-                  {component.type === "producer" && component.id === "electric-board" &&
-                  <>
-                    <Typography 
-                      variant="body1"
-                      sx={{margin: 2}}
-                      >Energy producing component
-                    </Typography> 
-                    <Typography 
-                      variant="body2"
-                      sx={{margin: 2}}
-                      >Energy received from the electricity network in the last 24 hours:
-                    </Typography>
-                    <Typography 
-                      variant="body2"
-                      sx={{margin: 2}}
-                      >Total use of outside energy {totalProduction} kWh
-                    </Typography>
-                    {productionData.length > 0 &&
-                      <BarChart
-                        dataset={productionData}
-                        yAxis={[{label: 'kWh'}]}
-                        xAxis={[{scaleType: 'band', dataKey: 'hour', label: 'time (h)'}]}
-                        series={[{dataKey: 'value', label: 'received energy (kWh)'}]}
-                        width={450}
-                        height={350}
-                      />
-                    }                    
-                    </>
-                  }
-                  {component.type === "consumer" && 
-                    <>
-                    <Typography 
-                      variant="body1"
-                      sx={{margin: 2}}
-                      >Energy consuming component
-                    </Typography>
-                    <Typography 
-                      variant="body2"
-                      sx={{margin: 2}}
-                      >Energy consumed in the last 24 hours:
-                    </Typography>
-                    <Typography 
-                      variant="body2"
-                      sx={{margin: 2}}
-                      >Total consumption {totalConsumption} kWh                      
-                    </Typography>
-                      {optimizedConsumption.length !== 24 && 
-                        <BarChart
-                          dataset={consumptionData}
-                          yAxis={[{label: 'kWh'}]}
-                          xAxis={[{scaleType: 'band', dataKey: 'hour', label: 'time (h)'}]}
-                          series={[{dataKey: 'value', label: 'consumption (kWh)'}]}
-                          width={450}
-                          height={350}
+                      <div
+                        className='overlay-content'
+                        style={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          width: '100%',
+                          height: '100%',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'space-between',
+                        }}
+                      >
+                        <img
+                          id={component.id}
+                          src={imageMapping[component.id]}
+                          alt={component.id}
+                          className={`${component.id}-image`}
+                          style={{
+                            display: 'block',
+                            marginLeft: 'auto',
+                            marginRight: 'auto',
+                            marginTop: 'auto',
+                            marginBottom: 'auto',
+                            width: 'auto',
+                            height: '50%',
+                          }}
                         />
-                      } 
-                      {optimizedConsumption.length === 24 && 
-                      <>
-                        <Typography
-                          variant="body2"
-                          sx={{margin: 2}}>
-                            Total price for consumed energy {(totalPrice/100).toFixed(2)} euros<br/>
-                            Total price with optimized consumption {(optimalPrice/100).toFixed(2)} euros<br/>
-                            Savings made with optimization {(savings).toFixed(2)} euros (-{((savings/(totalPrice/100))*100).toFixed(2)} %)
+                      </div>
+                    </div>
+                  </Box>
+                </Grid>
+                <Grid item xs={1}>
+                  <Grid container spacing={4} columns={1}>
+                    <Grid item xs={1} minWidth='500px'>
+                      <Box 
+                        style={{padding: '2vh', 
+                          border: '1px solid #DCDCDC', 
+                          borderRadius: '5px', 
+                          boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                        }} 
+                        height="85vh" >
+                        <Typography 
+                          variant="body1"
+                          fontWeight="bold"
+                          sx={{margin: 2}}
+                          >{component.name}
                         </Typography>
-                        <div>
-                          <p>
-                            <span style={{'margin': 2, 'font-size': '14px', 'color': 'transparent', 'text-shadow': '0 0 0 mediumblue'}}>&#9899;</span>
-                            <span style={{'margin': 2, 'font-size': '14px', 'color': 'transparent', 'text-shadow': '0 0 0 black'}}>real consumption</span>
-                            <span style={{'margin': 2, 'font-size': '14px', 'color': 'transparent', 'text-shadow': '0 0 0 limegreen'}}>&#9899;</span>
-                            <span style={{'margin': 2, 'font-size': '14px', 'color': 'transparent', 'text-shadow': '0 0 0 black'}}>optimized consumption</span>
-                            <span style={{'margin': 2, 'font-size': '14px', 'color': 'transparent', 'text-shadow': '0 0 0 red'}}>&#9899;</span>
-                            <span style={{'margin': 2, 'font-size': '14px', 'color': 'transparent', 'text-shadow': '0 0 0 black'}}>price</span>
-                          </p>
-                        </div>
-                        <ChartContainer
-                          series={chartData}
-                          width={450}
-                          height={350}
-                          xAxis={[
-                            {
-                              id: 'time (h)',
-                              data: timeData,
-                              scaleType: 'band',
-                              valueFormatter: (value) => value.toString(),
-                            },
-                          ]}
-                          yAxis={[
-                             {
-                              id: 'consumption (kWh)',
-                              scaleType: 'linear',
-                            },
-                            {
-                              id: 'price (cents)',
-                              scaleType: 'linear',
-                            }
-                          ]}
-                        >
-                          <BarPlot />
-                          <LinePlot />
-                          <ChartsTooltip trigger='axis'/>
-                          <ChartsXAxis label="time (h)" position="bottom" axisId="time (h)" />
-                          <ChartsYAxis label="consumption (kWh)" position="left" axisId="consumption (kWh)" />
-                          <ChartsYAxis label="price (cents)" position="right" axisId="price (cents)" />
-                        </ChartContainer>
-                      </>
-                      }
-                  </>
-                }
-              </Box>
-            </Grid>
-            <Grid item xs={1} style={{ display:"flex", justifyContent: "center" }}>
-              <ThemeProvider theme={theme}>
-                <Button variant="contained" color="water" sx={{ borderRadius: 2}} onClick={() => navigate("/demo")}>
-                  Back
-                </Button>
-              </ThemeProvider>
+                        <Typography 
+                          variant="body2"
+                          sx={{margin: 2}}
+                          >{component.description}
+                        </Typography>
+                        {component.type === "producer" && component.id !== "electric-board" &&
+                          <>
+                            <Typography 
+                              variant="body1"
+                              sx={{margin: 2}}
+                              >Energy producing component
+                            </Typography> 
+                            <Typography 
+                              variant="body2"
+                              sx={{margin: 2}}
+                              >Energy produced in the last 24 hours:
+                            </Typography>
+                            <Typography 
+                              variant="body2"
+                              sx={{margin: 2}}
+                              >Total production {totalProduction} kWh
+                            </Typography>
+                            {productionData.length > 0 &&
+                              <BarChart
+                                dataset={productionData}
+                                yAxis={[{label: 'kWh'}]}
+                                xAxis={[{scaleType: 'band', dataKey: 'hour', label: 'time (h)'}]}
+                                series={[{dataKey: 'value', label: 'production (kWh)'}]}
+                                width={450}
+                                height={350}
+                              />
+                            }                    
+                            </>
+                          }
+                          {component.type === "producer" && component.id === "electric-board" &&
+                          <>
+                            <Typography 
+                              variant="body1"
+                              sx={{margin: 2}}
+                              >Energy producing component
+                            </Typography> 
+                            <Typography 
+                              variant="body2"
+                              sx={{margin: 2}}
+                              >Energy received from the electricity network in the last 24 hours:
+                            </Typography>
+                            <Typography 
+                              variant="body2"
+                              sx={{margin: 2}}
+                              >Total use of outside energy {totalProduction} kWh
+                            </Typography>
+                            {productionData.length > 0 &&
+                              <BarChart
+                                dataset={productionData}
+                                yAxis={[{label: 'kWh'}]}
+                                xAxis={[{scaleType: 'band', dataKey: 'hour', label: 'time (h)'}]}
+                                series={[{dataKey: 'value', label: 'received energy (kWh)'}]}
+                                width={450}
+                                height={350}
+                              />
+                            }                    
+                            </>
+                          }
+                          {component.type === "consumer" && 
+                            <>
+                            <Typography 
+                              variant="body1"
+                              sx={{margin: 2}}
+                              >Energy consuming component
+                            </Typography>
+                            <Typography 
+                              variant="body2"
+                              sx={{margin: 2}}
+                              >Energy consumed in the last 24 hours:
+                            </Typography>
+                            <Typography 
+                              variant="body2"
+                              sx={{margin: 2}}
+                              >Total consumption {totalConsumption} kWh                      
+                            </Typography>
+                              {optimizedConsumption.length !== 24 && 
+                                <BarChart
+                                  dataset={consumptionData}
+                                  yAxis={[{label: 'kWh'}]}
+                                  xAxis={[{scaleType: 'band', dataKey: 'hour', label: 'time (h)'}]}
+                                  series={[{dataKey: 'value', label: 'consumption (kWh)'}]}
+                                  width={450}
+                                  height={350}
+                                />
+                              } 
+                              {optimizedConsumption.length === 24 && 
+                              <>
+                                <Typography
+                                  variant="body2"
+                                  sx={{margin: 2}}>
+                                    Total price for consumed energy {(totalPrice/100).toFixed(2)} euros<br/>
+                                    Total price with optimized consumption {(optimalPrice/100).toFixed(2)} euros<br/>
+                                    Savings made with optimization {(savings).toFixed(2)} euros (-{((savings/(totalPrice/100))*100).toFixed(2)} %)
+                                </Typography>
+                                <div>
+                                  <p>
+                                    <span style={{'margin': 2, 'font-size': '14px', 'color': 'transparent', 'text-shadow': '0 0 0 mediumblue'}}>&#9899;</span>
+                                    <span style={{'margin': 2, 'font-size': '14px', 'color': 'transparent', 'text-shadow': '0 0 0 black'}}>real consumption</span>
+                                    <span style={{'margin': 2, 'font-size': '14px', 'color': 'transparent', 'text-shadow': '0 0 0 limegreen'}}>&#9899;</span>
+                                    <span style={{'margin': 2, 'font-size': '14px', 'color': 'transparent', 'text-shadow': '0 0 0 black'}}>optimized consumption</span>
+                                    <span style={{'margin': 2, 'font-size': '14px', 'color': 'transparent', 'text-shadow': '0 0 0 red'}}>&#9899;</span>
+                                    <span style={{'margin': 2, 'font-size': '14px', 'color': 'transparent', 'text-shadow': '0 0 0 black'}}>price</span>
+                                  </p>
+                                </div>
+                                <ChartContainer
+                                  series={chartData}
+                                  width={450}
+                                  height={350}
+                                  xAxis={[
+                                    {
+                                      id: 'time (h)',
+                                      data: timeData,
+                                      scaleType: 'band',
+                                      valueFormatter: (value) => value.toString(),
+                                    },
+                                  ]}
+                                  yAxis={[
+                                    {
+                                      id: 'consumption (kWh)',
+                                      scaleType: 'linear',
+                                    },
+                                    {
+                                      id: 'price (cents)',
+                                      scaleType: 'linear',
+                                    }
+                                  ]}
+                                >
+                                  <BarPlot />
+                                  <LinePlot />
+                                  <ChartsTooltip trigger='axis'/>
+                                  <ChartsXAxis label="time (h)" position="bottom" axisId="time (h)" />
+                                  <ChartsYAxis label="consumption (kWh)" position="left" axisId="consumption (kWh)" />
+                                  <ChartsYAxis label="price (cents)" position="right" axisId="price (cents)" />
+                                </ChartContainer>
+                              </>
+                              }
+                          </>
+                        }
+                  </Box>
+                </Grid>
+                <Grid item xs={1} style={{ display:"flex", justifyContent: "center" }}>
+                  <ThemeProvider theme={theme}>
+                    <Button variant="contained" color="water" sx={{ borderRadius: 2}} onClick={() => navigate("/demo")}>
+                      Back
+                    </Button>
+                  </ThemeProvider>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-      </Grid>
+        </div>
+      </div>
     )
   } else {
     return <NotFound />
