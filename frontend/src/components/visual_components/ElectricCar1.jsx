@@ -6,14 +6,15 @@ import EnergyComponent from "../EnergyComponent";
 import { Popover } from '@mui/material';
 
 
-const ElectricCar1 = ({demoTime}) => {
+const ElectricCar1 = ({demoTime, demoStartTime}) => {
 
   const component = {
     id: "electric-car-1", 
     name: "Electric car 1",
     type: "consumer",
     description: "Electric car is charged at the charging station.",
-    demoTime: {demoTime}
+    demoTime: {demoTime},
+    demoStartTime: {demoStartTime}
   }
 
   const navigate = useNavigate();
