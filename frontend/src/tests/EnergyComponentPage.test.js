@@ -25,15 +25,17 @@ jest.mock('react-router-dom', () => ({
   })
 }))
 
-test("renders content correctly", () => {
-
-  render(
-    <MemoryRouter initialEntries={[componentPagePath]}>
-      <Routes>
-        <Route path={componentPagePath} element={<EnergyComponentPage />} />
-      </Routes>
-    </MemoryRouter>
-  )
+test("renders content correctly", async () => {
+  axiosMock.onGet('/api').reply(200, [{ price: 0 }])
+  await act(async () => {
+    render(
+      <MemoryRouter initialEntries={[componentPagePath]}>
+        <Routes>
+          <Route path={componentPagePath} element={<EnergyComponentPage />} />
+        </Routes>
+      </MemoryRouter>
+    )
+  })
   
   expect(screen.getByText(`${eComponent.name}`)).toBeInTheDocument()
   expect(screen.getByText(`${eComponent.description}`)).toBeInTheDocument()

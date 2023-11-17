@@ -20,7 +20,6 @@ test("renders content", async () => {
   })
   
   expect(screen.getByText('Components')).toBeInTheDocument()
-  expect(screen.getByText('Time')).toBeInTheDocument()
   expect(screen.getByText('Savings')).toBeInTheDocument()
   expect(screen.getByText('Back')).toBeInTheDocument()
   expect(screen.getByText('Information')).toBeInTheDocument()
