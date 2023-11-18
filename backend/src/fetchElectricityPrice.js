@@ -1,30 +1,74 @@
 import fetch from "node-fetch";
 import fs from "fs/promises";
 
+// API endpoints
 const LATEST_PRICES_ENDPOINT =
   "https://api.porssisahko.net/v1/latest-prices.json";
-
 const ONE_HOUR_PRICES =
   "https://api.porssisahko.net/v1/price.json?date=[date]&hour=[hour]";
 
-async function fetchLatestPriceData() {
-  const response = await fetch(LATEST_PRICES_ENDPOINT);
-  return response.json();
+// Function to fetch latest prices from the API
+async function fetchLatestPrices() {
+  try {
+    const response = await fetch(LATEST_PRICES_ENDPOINT);
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch latest prices: ${response.status} ${response.statusText}`
+      );
+    }
+    const data = await response.json();
+    if (!data.prices || !Array.isArray(data.prices)) {
+      return { prices: [] };
+    }
+
+    // Assign 'api' type to all prices fetched from the API
+    const fixedPrices = data.prices.map((price) => ({
+      ...price,
+      type: "api",
+    }));
+
+    return { prices: fixedPrices };
+  } catch (e) {
+    if (e instanceof TypeError) {
+      return { prices: [] };
+    } else {
+      console.error("Failed to fetch latest prices:", e);
+      return { prices: [] };
+    }
+  }
 }
 
 async function fetchElectricityPriceForDateAndHour(date, hour) {
   const url = ONE_HOUR_PRICES.replace("[date]", date).replace("[hour]", hour);
   try {
     const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch electricity price: ${response.status} ${response.statusText}`
+      );
+    }
     const data = await response.json();
     return data.price;
-  } catch (error) {
-    console.error("Failed to fetch electricity price:", error);
-    return 5; // TODO: Decide what to do if error
+  } catch (e) {
+    if (e instanceof TypeError) {
+      return undefined;
+    } else {
+      console.error("Failed to fetch electricity price:", e);
+      return undefined; // Return undefined if error
+    }
   }
 }
 
-// Checks if price exists for a certain date
+function isPriceWithinDate(date, price) {
+  return new Date(price.startDate) <= date && new Date(price.endDate) > date;
+}
+
+function sortPricesByDate(prices) {
+  prices.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+  return prices;
+}
+
+// Function to check if price exists for a certain date
 function checkIfPriceExists(date, prices) {
   const matchingPriceEntry = prices.find(
     (price) =>
@@ -37,70 +81,62 @@ function checkIfPriceExists(date, prices) {
   return matchingPriceEntry.price;
 }
 
-function sortPricesByDate(prices) {
-  // Sort the array by the startDate property
-  prices.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
-  return prices;
-}
+// Function to fetch missing price history between given dates
+async function fetchMissingPriceHistory(startDate, endDate, priceData) {
+  let currentHour = new Date(startDate);
+  currentHour.setMinutes(0, 0, 0);
+  currentHour.setHours(currentHour.getHours() - 2);
+  const end = new Date(endDate);
+  const updatedPriceData = [...priceData];
 
-async function fetchMissingPriceHistory(yesterday, today, price_values) {
-  let start = new Date(yesterday);
-  start.setMinutes(0, 0, 0);
-  start.setHours(start.getHours() - 2);
-  let end = new Date(today);
-  let updatedPriceValues = [...price_values];
-
-  while (start <= end) {
+  // Loop through each hour between start and end dates
+  while (currentHour <= end) {
     try {
-      checkIfPriceExists(start, updatedPriceValues);
-    } catch (fetchError) {
-      let missingStartDate = new Date(start);
-      let missingEndDate = new Date(start);
-      missingEndDate.setHours(missingEndDate.getHours() + 1);
+      // Find if there's a price within the current hour
+      const matchingPrice = updatedPriceData.find((price) =>
+        isPriceWithinDate(currentHour, price)
+      );
+      if (!matchingPrice) {
+        // If no price exists, fetch the electricity price for that hour
+        const missingStart = new Date(currentHour);
+        const missingEnd = new Date(currentHour);
+        missingEnd.setHours(missingEnd.getHours() + 1);
 
-      const year = missingStartDate.getFullYear();
-      const month = (missingStartDate.getMonth() + 1)
-        .toString()
-        .padStart(2, "0"); // Months start from 0
-      const day = missingStartDate.getDate().toString().padStart(2, "0");
+        const year = missingStart.getFullYear();
+        const month = (missingStart.getMonth() + 1).toString().padStart(2, "0");
+        const day = missingStart.getDate().toString().padStart(2, "0");
+        const formattedDate = `${year}-${month}-${day}`;
 
-      const formattedDate = `${year}-${month}-${day}`;
-
-      try {
         let fetchedPrice = await fetchElectricityPriceForDateAndHour(
           formattedDate,
-          missingStartDate.getHours()
+          missingStart.getHours()
         );
 
-        updatedPriceValues.push(
-          JSON.parse(
-            JSON.stringify({
-              price: fetchedPrice,
-              startDate: missingStartDate,
-              endDate: missingEndDate,
-            })
-          )
-        );
-      } catch (error) {
-        console.error("Failed to fetch electricity price:", error);
-        // TODO: Decide what to do if error
+        updatedPriceData.push({
+          price: fetchedPrice !== undefined ? fetchedPrice : 5,
+          startDate: missingStart,
+          endDate: missingEnd,
+          type: fetchedPrice !== undefined ? "api" : "fixed",
+        });
       }
+    } catch (e) {
+      console.error("Error while fetching missing price history:", e);
+      // Handle error here
     }
-    start.setHours(start.getHours() + 1);
+    currentHour.setHours(currentHour.getHours() + 1);
   }
 
-  let sortedPriceValues = sortPricesByDate(updatedPriceValues);
-
-  return sortedPriceValues;
+  return sortPricesByDate(updatedPriceData);
 }
 
-// Sets fixed price of 5 snt / kwh to the dates that are missing price
-function forecastElectricityPrice(today, tomorrow, price_values) {
+// Function to forecast electricity prices for future dates
+// The price is assumed to be the same that it was 24 hours ago
+function forecastElectricityPrice(today, tomorrow, priceValues) {
   let start = new Date(today);
   start.setMinutes(0, 0, 0);
   let end = new Date(tomorrow);
   end.setHours(end.getHours() + 2);
-  let updatedPriceValues = [...price_values];
+  let updatedPriceValues = [...priceValues];
 
   while (start <= end) {
     try {
@@ -110,7 +146,6 @@ function forecastElectricityPrice(today, tomorrow, price_values) {
       let missingEndDate = new Date(start);
       missingEndDate.setHours(missingEndDate.getHours() + 1);
 
-      // Find the previous day's price if available
       const previousDay = new Date(missingStartDate);
       previousDay.setDate(previousDay.getDate() - 1);
       const previousPrice = updatedPriceValues.find(
@@ -120,18 +155,18 @@ function forecastElectricityPrice(today, tomorrow, price_values) {
       );
 
       if (previousPrice) {
-        // Use the previous day's price
         updatedPriceValues.push({
           price: previousPrice.price,
           startDate: missingStartDate,
           endDate: missingEndDate,
+          type: "forecasted",
         });
       } else {
-        // If no previous day's price is available, set it to 5
         updatedPriceValues.push({
           price: 5,
           startDate: missingStartDate,
           endDate: missingEndDate,
+          type: "fixed",
         });
       }
     }
@@ -139,7 +174,6 @@ function forecastElectricityPrice(today, tomorrow, price_values) {
   }
 
   let sortedPriceValues = sortPricesByDate(updatedPriceValues);
-
   return sortedPriceValues;
 }
 
@@ -152,47 +186,48 @@ async function checkAndFetchData(priceFileName) {
   tomorrow.setDate(tomorrow.getDate() + 1);
 
   try {
-    // Fetch the prices from latest prices api
-    const { prices } = await fetchLatestPriceData();
+    let apiPrices = await fetchLatestPrices();
+    if (!apiPrices.prices || apiPrices.prices.length === 0) {
+      apiPrices = { prices: [] };
+    }
 
-    // Fetch missing history prices from single price api
-    const filledPrices = await fetchMissingPriceHistory(
+    let filledPrices = await fetchMissingPriceHistory(
       yesterday,
       today,
-      prices
+      apiPrices.prices
     );
 
-    // Forecast rest of the needed prices
+    if (!filledPrices || filledPrices.length === 0) {
+      filledPrices = [];
+    }
+
     const updatedPrices = forecastElectricityPrice(
       today,
       tomorrow,
       filledPrices
     );
 
-    // Write prices to price-file
     await fs.writeFile(priceFileName, JSON.stringify(updatedPrices, null, 2));
 
     let priceToday, priceYesterday, priceTomorrow;
 
-    // Check that needed dates were added
     try {
       priceToday = checkIfPriceExists(today, updatedPrices);
       priceYesterday = checkIfPriceExists(yesterday, updatedPrices);
       priceTomorrow = checkIfPriceExists(tomorrow, updatedPrices);
     } catch (e) {
-      if (priceToday == undefined) {
+      if (priceToday === undefined) {
         console.error("Missing data for today: ", e);
       }
-      if (priceYesterday == undefined) {
+      if (priceYesterday === undefined) {
         console.error("Missing data for yesterday: ", e);
       }
-      if (priceTomorrow == undefined) {
+      if (priceTomorrow === undefined) {
         console.error("Missing data for tomorrow: ", e);
       }
     }
   } catch (e) {
-    console.error("Failed to fetch the price: ", e);
-    // TODO: Decide what to do if error
+    console.error("Failed to fetch or process the price data: ", e);
   }
 }
 

@@ -30,8 +30,8 @@ app.get("/", async (req, res) => {
     const prices = JSON.parse(data);
 
     res.json(prices);
-  } catch (err) {
-    res.status(500).send("Error reading price data.");
+  } catch (e) {
+    res.status(500).send("Error reading price data.", e);
   }
 });
 
