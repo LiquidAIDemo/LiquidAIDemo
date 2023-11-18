@@ -72,7 +72,6 @@ const Welcome = () => {
                 background: "rgba(255, 255, 255, 0.9)",
                 textAlign: "center",
                 zIndex: 2,
-                borderRadius: 2,
                 border: '1px solid #DCDCDC', 
                 borderRadius: '5px', 
                 boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
