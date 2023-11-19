@@ -3,7 +3,7 @@ import { render, screen, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import EnergyComponentPage from '../components/EnergyComponentPage'
 import Demo from '../components/Demo'
-import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
@@ -37,6 +37,7 @@ const electricBoard = {
 }
 
 let mockComponent = consumerComponent
+let componentPagePath = `/component/${mockComponent.id}`
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -44,9 +45,6 @@ jest.mock('react-router-dom', () => ({
     state: { component: mockComponent }
   })
 }))
-
-const mockLocation = useLocation()
-const componentPagePath = `/component/${mockLocation.state.component.id}`
 
 test("renders consumer component correctly", async () => {
   axiosMock.onGet('/api').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
@@ -95,7 +93,7 @@ test("renders electric board correctly", async () => {
       </MemoryRouter>
     )
   })
-  screen.debug()
+  
   expect(screen.getByText(`${electricBoard.name}`)).toBeInTheDocument()
   expect(screen.getByText(`${electricBoard.description}`)).toBeInTheDocument()
   expect(screen.getByText('Back')).toBeInTheDocument()
