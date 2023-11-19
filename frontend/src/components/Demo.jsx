@@ -44,6 +44,17 @@ const theme = createTheme({
 import { List, ListItemButton, ListItemText, ListItem, Collapse } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
+// Something needs to monitor energy usage per component and hide zero-usage ones' outlines
+function showOutlines() {
+  var outlines;
+  if (hours < 12) {
+    outlines = document.getElementById("electric-car-energy");
+  } else {
+    outlines = document.getElementById("electric-board-energy");
+  }
+  outlines.style.opacity = "0.0";
+}
+
 function useLocalStorageState(key, defaultValue) {
   // Initialize state with value from localStorage or the provided default value
   const [state, setState] = useState(() => {
@@ -78,10 +89,22 @@ const Demo = () => {
     const newDemoTime = new Date(time);
     setDemoTime(newDemoTime);
     setDemoPassedHrs(hoursCopy);
+    
+    hideOutlines();
   }
 
   window.onpopstate = () => {
     navigate("/");
+  }
+  
+  const hideOutlines = () => {
+    var outlines;
+    if (demoTime.getUTCHours() < 12) {
+      outlines = document.getElementById("electric-car-energy");
+    } else {
+      outlines = document.getElementById("electric-board-energy");
+    }
+    outlines.style.opacity = "0.0";
   }
 
   const [open, setOpen] = useState(false);
@@ -102,6 +125,9 @@ const Demo = () => {
     setShowSolarPanel4(true);
     setShowStove(true);
     setShowWashingMachine(true);
+    
+    showOutlines();
+    hideOutlines();
 };
 
   const handleClick = () => {
@@ -151,6 +177,7 @@ const Demo = () => {
       netConsumption.push({startHour: i, value: 0});
     }
   }
+  
     
   consumingComponents.forEach(c => {
     const data = c.consumption_per_hour_kwh;

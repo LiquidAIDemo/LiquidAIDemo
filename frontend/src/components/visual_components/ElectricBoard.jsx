@@ -31,12 +31,12 @@ const ElectricBoard = ({demoTime, netConsumption}) => {
   
   const handleHoverOn = (event) => {
     setAnchorEl(event.currentTarget);
-    hideOutline(true);
+    //hideOutline(true);
   };
 
   const handleHoverAway = () => {
     setAnchorEl(null);
-    hideOutline(false);
+    //hideOutline(false);
   };
 
   const open = Boolean(anchorEl);
