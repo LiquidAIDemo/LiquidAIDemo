@@ -42,7 +42,7 @@ const ElectricCar2 = ({demoTime, demoStartTime}) => {
   return(
     <div>
       <img
-        id="electric-car-energy"
+        id="electric-car-energy-2"
         src={energyBorder}
         alt="energy"
         className="electric-car-energy-border"
