@@ -90,21 +90,38 @@ const Demo = () => {
     setDemoTime(newDemoTime);
     setDemoPassedHrs(hoursCopy);
     
-    hideOutlines();
+    hideOutlines(hours);
   }
 
   window.onpopstate = () => {
     navigate("/");
   }
   
-  const hideOutlines = () => {
-    var outlines;
-    if (demoTime.getUTCHours() < 12) {
-      outlines = document.getElementById("electric-car-energy");
+  // WIP: Hide outlines for components with no energy effect
+  const hideOutlines = (h) => {
+    var carEdge = document.getElementById("electric-car-energy");
+    var boardEdge = document.getElementById("electric-board-energy");
+    
+    // Data from the component is needed
+    const componentData = energyComponents.components.filter(c => c.id === "electric-car-1")[0];
+    var consumptionData = componentData.consumption_per_hour_kwh;
+    consumptionData.forEach(h => {
+      h.startHour = new Date(h.startDate).getUTCHours()
+    });
+    
+    document.getElementById('debug').innerHTML = "Testailua";
+    var demoHour = h;
+    document.getElementById('debug').innerHTML = consumptionData.filter(h => h.startHour === demoHour).map(h => h.value)[0];
+    //document.getElementById('debug').innerHTML = "Testailua?";
+    /*if (consumptionData.filter(h => h.startHour === demoHour).map(h => h.value)[0] < 1) {
+      boardEdge.style.opacity = "1.0";
+      carEdge.style.opacity = "0.0";
     } else {
-      outlines = document.getElementById("electric-board-energy");
+      boardEdge.style.opacity = "0.0";
+      carEdge.style.opacity = "1.0";
     }
-    outlines.style.opacity = "0.0";
+    */
+    
   }
 
   const [open, setOpen] = useState(false);
@@ -461,6 +478,10 @@ const Demo = () => {
               // bgcolor = "#cfe8fc" 
               height="30vh"
               overflow="hidden" >
+            
+            Debug:
+            <b id='debug'>DATA</b>
+            
             Time
               <Box>
                 <DemoClock demoTime={demoTime} demoPassedHours={demoPassedHrs} onDemoTimeChange={handleDemoTimeChange} />
