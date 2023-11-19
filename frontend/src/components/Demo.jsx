@@ -15,6 +15,7 @@ import Freezer from './visual_components/Freezer';
 import Heater from './visual_components/Heater';
 import HotWaterHeater from './visual_components/HotWaterHeater';
 import Jacuzzi from './visual_components/Jacuzzi';
+import Optimizer from './visual_components/Optimizer';
 import ElectricCar2 from './visual_components/ElectricCar2';
 import Stove from './visual_components/Stove';
 import SolarPanel2 from './visual_components/SolarPanel2';
@@ -100,6 +101,7 @@ const Demo = () => {
     setShowHeater(true);
     setShowHotWaterHeater(true);
     setShowJacuzzi(true);
+    setShowOptimizer(true);
     setShowSolarPanel1(true);
     setShowSolarPanel2(true);
     setShowSolarPanel3(true);
@@ -117,6 +119,7 @@ const Demo = () => {
     setShowHeater(false);
     setShowHotWaterHeater(false);
     setShowJacuzzi(false);
+    setShowOptimizer(false);
     setShowSolarPanel1(false);
     setShowSolarPanel2(false);
     setShowSolarPanel3(false);
@@ -138,6 +141,7 @@ const Demo = () => {
   const [showHeater, setShowHeater] = useLocalStorageState('showHeater', true);
   const [showHotWaterHeater, setShowHotWaterHeater] = useLocalStorageState('showHotWaterHeater', true);
   const [showJacuzzi, setShowJacuzzi] = useLocalStorageState('showJacuzzi', true);
+  const [showOptimizer, setShowOptimizer] = useLocalStorageState('showOptimizer', true);
   const [showSolarPanel1, setShowSolarPanel1] = useLocalStorageState('showSolarPanel1', true);
   const [showSolarPanel2, setShowSolarPanel2] = useLocalStorageState('showSolarPanel2', true);
   const [showSolarPanel3, setShowSolarPanel3] = useLocalStorageState('showSolarPanel3', true);
@@ -154,6 +158,7 @@ const Demo = () => {
     {id: "heater", visibility: showHeater},
     {id: "hot-water-heater", visibility: showHotWaterHeater}, 
     {id: "jacuzzi", visibility: showJacuzzi}, 
+    {id: "optimizer", visibility: showOptimizer},
     {id: "solar-panel-1", visibility: showSolarPanel1}, 
     {id: "solar-panel-2", visibility: showSolarPanel2},
     {id: "solar-panel-3", visibility: showSolarPanel3},
@@ -305,6 +310,7 @@ const Demo = () => {
                   {showHeater && <Heater demoTime={demoTime} demoStartTime={demoStartTime}/>}
                   {showHotWaterHeater && <HotWaterHeater demoTime={demoTime} demoStartTime={demoStartTime} />}
                   {showJacuzzi && <Jacuzzi demoTime={demoTime} demoStartTime={demoStartTime}/>}
+                  {showOptimizer && <Optimizer demoTime={demoTime} demoStartTime={demoStartTime}/>}
                   {showStove && <Stove demoTime={demoTime} demoStartTime={demoStartTime}/>}
                   {showWashingMachine && <WashingMachine demoTime={demoTime} demoStartTime={demoStartTime}/>}
                 </div>
@@ -361,6 +367,15 @@ const Demo = () => {
                     <List component="div">
                       <Grid container spacing={2}>
                         <Grid item xs={6}>
+                          <ListItem>
+                            <label>
+                            <input
+                              type="checkbox"
+                              checked={showOptimizer}
+                              onChange={() => setShowOptimizer(!showOptimizer)}/>
+                            Energy optimizer
+                            </label>
+                          </ListItem>
                           <ListItem>
                             <label>
                             <input
@@ -504,8 +519,8 @@ const Demo = () => {
                             variant="contained"
                             color="water" >
                             Clear all
-                            </Button>
-                            </ThemeProvider>
+                          </Button>
+                          </ThemeProvider>
                         </Grid>
                         
                       </Grid>
