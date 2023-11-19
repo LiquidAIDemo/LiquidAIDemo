@@ -256,6 +256,7 @@ const Demo = () => {
               <div
                 style={{
                   position: 'relative',
+                  marginTop: '52px',
                   paddingBottom: '83%', 
                   width: '100%',
                   height: 0,
@@ -330,20 +331,20 @@ const Demo = () => {
       <Grid item xs={2} style={{position: 'relative'}}>
             {/*Created container grid to have containers on top of another */}
             <Grid container spacing={2} columns={1}>
-            <Grid container style={{display: "flex", justifyContent: "center", alignItems: "center",}}>
+            <Grid container style={{display: "flex", justifyContent: "right", alignItems: "center",}}>
                 <ThemeProvider theme={theme}>
-                  <Button variant="contained" color="water" 
-                          sx={{ borderRadius: 2, margin: 1, width: '90px', }} 
-                          onClick={() => navigate("/")}
-                  >
-                    Back
-                  </Button>
                   <Button variant="contained" 
                           color="water" 
                           sx={{ borderRadius: 2, marginLeft: 2, width: '130px', }} 
                           onClick={() => setOpenInstructions(true)}
                   >
                     Information
+                  </Button>
+                  <Button variant="contained" color="water" 
+                          sx={{ borderRadius: 2, margin: 1, width: '90px', }} 
+                          onClick={() => navigate("/")}
+                  >
+                    Back
                   </Button>
                 </ThemeProvider>
                 <Instructions openInstructions={openInstructions} setOpenInstructions={setOpenInstructions}/>
