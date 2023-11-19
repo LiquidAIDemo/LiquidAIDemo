@@ -166,8 +166,8 @@ const EnergyComponentPage = () => {
         chartData = [
           {
             type: 'line',
-            label: 'price (cents)',
-            yAxisKey: 'price (cents)',
+            label: 'price (cents/kWh)',
+            yAxisKey: 'price (cents/kWh)',
             color: 'red',
             data: optimizedConsumption.map(c => c.price)
           },
@@ -423,11 +423,11 @@ const EnergyComponentPage = () => {
                                 <div>
                                   <p>
                                     <span style={{'margin': 2, 'fontSize': '14px', 'color': 'transparent', 'textShadow': '0 0 0 mediumblue'}}>&#9899;</span>
-                                    <span style={{'margin': 2, 'fontSize': '14px', 'color': 'transparent', 'textShadow': '0 0 0 black'}}>real consumption</span>
+                                    <span style={{'margin': 2, 'fontSize': '14px'}}>real consumption</span>
                                     <span style={{'margin': 2, 'fontSize': '14px', 'color': 'transparent', 'textShadow': '0 0 0 limegreen'}}>&#9899;</span>
-                                    <span style={{'margin': 2, 'fontSize': '14px', 'color': 'transparent', 'textShadow': '0 0 0 black'}}>optimized consumption</span>
+                                    <span style={{'margin': 2, 'fontSize': '14px'}}>optimized consumption</span>
                                     <span style={{'margin': 2, 'fontSize': '14px', 'color': 'transparent', 'textShadow': '0 0 0 red'}}>&#9899;</span>
-                                    <span style={{'margin': 2, 'fontSize': '14px', 'color': 'transparent', 'textShadow': '0 0 0 black'}}>price</span>
+                                    <span style={{'margin': 2, 'fontSize': '14px'}}>price</span>
                                   </p>
                                 </div>
                                 <ChartContainer
@@ -448,7 +448,7 @@ const EnergyComponentPage = () => {
                                       scaleType: 'linear',
                                     },
                                     {
-                                      id: 'price (cents)',
+                                      id: 'price (cents/kWh)',
                                       scaleType: 'linear',
                                     }
                                   ]}
@@ -458,7 +458,7 @@ const EnergyComponentPage = () => {
                                   <ChartsTooltip trigger='axis'/>
                                   <ChartsXAxis label="time (h)" position="bottom" axisId="time (h)" />
                                   <ChartsYAxis label="consumption (kWh)" position="left" axisId="consumption (kWh)" />
-                                  <ChartsYAxis label="price (cents)" position="right" axisId="price (cents)" />
+                                  <ChartsYAxis label="price (cents/kWh)" position="right" axisId="price (cents/kWh)" />
                                 </ChartContainer>
                               </>
                               }

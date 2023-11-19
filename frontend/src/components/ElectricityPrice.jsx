@@ -61,7 +61,7 @@ const Chart = memo(function Chart({ consumptionData }) {
             data: xAxisData,
             scaleType: 'band',
             label: 'time (h)',
-            tickLabelInterval: () => false,
+            tickLabelStyle: { fontSize: 10 }
           }
         ]}
         series={[
@@ -167,7 +167,7 @@ function ElectricityPrice({ demoTime, demoPassedHrs, totalConsumption }) {
       <Price price={currentPrice} />
       <Consumption consumption={currentConsumption} />
       <TotalConsumption total={total} />
-      <Typography marginTop='15px'>Electricity cost</Typography>
+      <Typography marginTop='15px'>Cost of consumed electricity by hour</Typography>
       <Box
         sx={{         
             borderRadius: '30px',
