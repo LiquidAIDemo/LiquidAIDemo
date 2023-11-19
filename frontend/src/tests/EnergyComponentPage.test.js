@@ -10,27 +10,45 @@ import MockAdapter from 'axios-mock-adapter'
 const axiosMock = new MockAdapter(axios)
 const now = new Date()
 
+const consumerComponent = {
+  id: 'heat-pump',
+  name: 'Heat pump',
+  type: 'consumer',
+  description: 'Heat pump is used to adjust the temperature inside the house.',
+  demoTime: now
+}
+
+const producerComponent = {
+  id: 'solar-panel-1', 
+  name: 'Solar panel 1',
+  type: 'producer',
+  description: 'Solar panels turn sunlight into energy.',
+  demoTime: now
+}
+
+const electricBoard = {
+  id: 'electric-board', 
+  name: 'Electric board',
+  type: 'producer',
+  description: 'Electric board represents electricity coming from outside the house to balance energy production and consumption.',
+  demoTime: now,
+  netConsumption: {netConsumption: [{hour: now.getHours(), value: 3}]},
+  visibleComponents: {visibleComponents: [{id: "heat-pump", visibility: true}, {id: "solar-panel-1", visibility: true}]}
+}
+
+let mockComponent = consumerComponent
+
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useLocation: () => ({
-    state: {
-      component: {
-        id: 'heat-pump',
-        name: 'Heat Pump',
-        type: 'consumer',
-        description: 'Test description',
-        demoTime: new Date(),
-        netConsumption: [{ hour: new Date().getHours(), value: 3 }],
-        visibleComponents: [{ id: "heat-pump", visibility: true }]
-      }
-    }
+    state: { component: mockComponent }
   })
 }))
 
 const mockLocation = useLocation()
 const componentPagePath = `/component/${mockLocation.state.component.id}`
 
-test("renders content correctly", async () => {
+test("renders consumer component correctly", async () => {
   axiosMock.onGet('/api').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
   await act(async () => {
     render(
@@ -42,12 +60,48 @@ test("renders content correctly", async () => {
     )
   })
   
-  expect(screen.getByText(`${mockLocation.state.component.name}`)).toBeInTheDocument()
-  expect(screen.getByText(`${mockLocation.state.component.description}`)).toBeInTheDocument()
+  expect(screen.getByText(`${consumerComponent.name}`)).toBeInTheDocument()
+  expect(screen.getByText(`${consumerComponent.description}`)).toBeInTheDocument()
   expect(screen.getByText('Back')).toBeInTheDocument()
 })
 
-test("'back to demo' button returns to demo", async () => {
+test("renders producer component correctly", async () => {
+  mockComponent = producerComponent
+  axiosMock.onGet('/api').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
+  await act(async () => {
+    render(
+      <MemoryRouter initialEntries={[componentPagePath]}>
+        <Routes>
+          <Route path={componentPagePath} element={<EnergyComponentPage />} />
+        </Routes>
+      </MemoryRouter>
+    )
+  })
+  
+  expect(screen.getByText(`${producerComponent.name}`)).toBeInTheDocument()
+  expect(screen.getByText(`${producerComponent.description}`)).toBeInTheDocument()
+  expect(screen.getByText('Back')).toBeInTheDocument()
+})
+
+test("renders electric board correctly", async () => {
+  mockComponent = electricBoard
+  axiosMock.onGet('/api').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
+  await act(async () => {
+    render(
+      <MemoryRouter initialEntries={[componentPagePath]}>
+        <Routes>
+          <Route path={componentPagePath} element={<EnergyComponentPage />} />
+        </Routes>
+      </MemoryRouter>
+    )
+  })
+  screen.debug()
+  expect(screen.getByText(`${electricBoard.name}`)).toBeInTheDocument()
+  expect(screen.getByText(`${electricBoard.description}`)).toBeInTheDocument()
+  expect(screen.getByText('Back')).toBeInTheDocument()
+})
+
+test("'back' button returns to demo", async () => {
   axiosMock.onGet('/api').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
   await act(async () => {
     render(

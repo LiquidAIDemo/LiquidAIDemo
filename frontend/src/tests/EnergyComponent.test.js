@@ -9,33 +9,68 @@ import userEvent from '@testing-library/user-event'
 const now = new Date()
 const user = userEvent.setup({delay: null})
 
-const eComponent = {
+const consumerComponent = {
   id: 'heat-pump',
   name: 'Heat pump',
   type: 'consumer',
   description: 'Heat pump is used to adjust the temperature inside the house.',
-  demoTime: now,
-  netConsumption: [{hour: now.getHours(), value: 3}],
-  visibleComponents: [{id: "heat-pump", visibility: true}]
+  demoTime: now
 }
 
-test("renders content correctly", () => {
-  
+const producerComponent = {
+  id: 'solar-panel-1', 
+  name: 'Solar panel 1',
+  type: 'producer',
+  description: 'Solar panels turn sunlight into energy.',
+  demoTime: now
+}
+
+const electricBoard = {
+  id: 'electric-board', 
+  name: 'Electric board',
+  type: 'producer',
+  description: 'Electric board represents electricity coming from outside the house to balance energy production and consumption.',
+  demoTime: now,
+  netConsumption: [{hour: now.getHours(), value: 3}],
+  visibleComponents: [{id: "heat-pump", visibility: true}, {id: "solar-panel-1", visibility: true}]
+}
+
+test("renders consumer component correctly", () => { 
   render(
-    <MemoryRouter>
-      <EnergyComponent {...eComponent} />
-    </MemoryRouter>
+    <EnergyComponent {...consumerComponent} />
   )
   
-  expect(screen.getByText(`${eComponent.name}`)).toBeInTheDocument()
-  expect(screen.getByText(`(Energy ${eComponent.type})`)).toBeInTheDocument()
+  expect(screen.getByText(`${consumerComponent.name}`)).toBeInTheDocument()
+  expect(screen.getByText(`(Energy ${consumerComponent.type})`)).toBeInTheDocument()
   expect(screen.getByText('Click the component for more info')).toBeInTheDocument()
-  expect(screen.queryByText(`${eComponent.description}`)).not.toBeInTheDocument()
+  expect(screen.queryByText(`${consumerComponent.description}`)).not.toBeInTheDocument()
+})
+
+test("renders producer component correctly", () => {
+  render(
+    <EnergyComponent {...producerComponent} />
+  )
+  
+  expect(screen.getByText(`${producerComponent.name}`)).toBeInTheDocument()
+  expect(screen.getByText(`(Energy ${producerComponent.type})`)).toBeInTheDocument()
+  expect(screen.getByText('Click the component for more info')).toBeInTheDocument()
+  expect(screen.queryByText(`${producerComponent.description}`)).not.toBeInTheDocument()
+})
+
+test("renders electric board correctly", () => {
+  render(
+    <EnergyComponent {...electricBoard} />
+  )
+  
+  expect(screen.getByText(`${electricBoard.name}`)).toBeInTheDocument()
+  expect(screen.getByText(`(Energy ${electricBoard.type})`)).toBeInTheDocument()
+  expect(screen.getByText('Click the component for more info')).toBeInTheDocument()
+  expect(screen.queryByText(`${electricBoard.description}`)).not.toBeInTheDocument()
 })
 
 test('Clicking component navigates to component page', async () => {
 
-  const componentPagePath = `/component/${eComponent.id}`
+  const componentPagePath = `/component/${consumerComponent.id}`
   await act( async () => {
     render(
       <MemoryRouter initialEntries={['/demo']}>
@@ -49,7 +84,7 @@ test('Clicking component navigates to component page', async () => {
   
   const eComponentImage = screen.getByAltText("heatPump")
   await user.click(eComponentImage)
-  expect(screen.getByText(eComponent.description)).toBeInTheDocument()
+  expect(screen.getByText(consumerComponent.description)).toBeInTheDocument()
 })
 
 test('Hovering over component shows info about component', async () => {
@@ -60,7 +95,7 @@ test('Hovering over component shows info about component', async () => {
   )
   const eComponentImage = screen.getByAltText("heatPump")
   await user.hover(eComponentImage)
-  expect(screen.getByText(`${eComponent.name}`)).toBeInTheDocument()
+  expect(screen.getByText(`${consumerComponent.name}`)).toBeInTheDocument()
   expect(screen.getByText('Click the component for more info')).toBeInTheDocument()
 }) 
 
