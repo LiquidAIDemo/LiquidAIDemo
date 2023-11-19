@@ -22,7 +22,7 @@ test("'back to demo' button returns to demo", async () => {
     )
   })
 
-  const backToDemoButtonElement = screen.getByText('back to demo')
+  const backToDemoButtonElement = screen.getByText('Back to demo')
   await act(async () => {
     await userEvent.click(backToDemoButtonElement)
   })
