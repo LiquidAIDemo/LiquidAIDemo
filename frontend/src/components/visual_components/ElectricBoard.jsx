@@ -31,13 +31,24 @@ const ElectricBoard = ({demoTime, netConsumption}) => {
   
   const handleHoverOn = (event) => {
     setAnchorEl(event.currentTarget);
+    hideOutline(true);
   };
 
   const handleHoverAway = () => {
     setAnchorEl(null);
+    hideOutline(false);
   };
 
   const open = Boolean(anchorEl);
+  
+  const hideOutline = (show) => {
+    var outlines = document.getElementById("electric-board-energy");
+    if (show) {
+      outlines.style.opacity = "0.0";
+    } else {
+      outlines.style.opacity = "1.0";
+    }
+  }
 
   return (
     <div>
