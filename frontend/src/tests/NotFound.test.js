@@ -8,9 +8,10 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
 const axiosMock = new MockAdapter(axios)
+const now = new Date()
 
 test("'back to demo' button returns to demo", async () => {
-  axiosMock.onGet('/api').reply(200, [{ price: 0 }])
+  axiosMock.onGet('/api').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
   await act(async () => {
     render(
       <MemoryRouter initialEntries={['/nonexistingpath']}>

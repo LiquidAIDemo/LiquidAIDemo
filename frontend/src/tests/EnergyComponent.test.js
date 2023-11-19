@@ -14,7 +14,9 @@ const eComponent = {
   name: 'Heat pump',
   type: 'consumer',
   description: 'Heat pump is used to adjust the temperature inside the house.',
-  demoTime: now
+  demoTime: now,
+  netConsumption: [{hour: now.getHours(), value: 3}],
+  visibleComponents: [{id: "heat-pump", visibility: true}]
 }
 
 test("renders content correctly", () => {
