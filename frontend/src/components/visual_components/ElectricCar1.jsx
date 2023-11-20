@@ -1,6 +1,7 @@
 import carImage from "../../assets/car.png";
 import energyBorder from "../../assets/car_energy.png";
 import chargingPoint from "../../assets/charging_point.png";
+import downloadIcon from "../../assets/download.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
@@ -106,6 +107,19 @@ const ElectricCar1 = ({demoTime, demoStartTime}) => {
           demoTime={demoTime}
           />
       </Popover>
+      <img
+        id="download-icon"
+        src={downloadIcon}
+        alt="download-icon"
+        className="download-icon"
+        style={{
+          position: 'absolute',
+          top: '59.5%',
+          left: '71%',
+          width: '3%',
+          height: '3%',
+        }}
+      />
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import airHeatPumpImage from "../../assets/air_heat_pump.png";
 import energyBorder from "../../assets/air_heat_pump_energy.png";
+import downloadIcon from "../../assets/download.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
@@ -91,7 +92,20 @@ const HeatPump = ({demoTime, demoStartTime}) => {
           description={component.description}
           demoTime={demoTime}
           />
-      </Popover>  
+      </Popover> 
+      <img
+        id="download-icon"
+        src={downloadIcon}
+        alt="download-icon"
+        className="download-icon"
+        style={{
+          position: 'absolute',
+          top: '33.5%',
+          left: '37%',
+          width: '3%',
+          height: '3%',
+        }}
+      /> 
     </div>    
   )
 

@@ -1,5 +1,6 @@
 import hotWaterHeaterImage from "../../assets/hot_water_heater.png";
 import energyBorder from "../../assets/hot_water_heater_energy.png";
+import downloadIcon from "../../assets/download.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
@@ -92,6 +93,19 @@ const HotWaterHeater = ({demoTime, demoStartTime}) => {
             demoTime={demoTime}
             />
         </Popover>  
+        <img
+        id="download-icon"
+        src={downloadIcon}
+        alt="download-icon"
+        className="download-icon"
+        style={{
+          position: 'absolute',
+          top: '22%',
+          left: '21%',
+          width: '3%',
+          height: '3%',
+        }}
+      />
     </div>
   )
 }
