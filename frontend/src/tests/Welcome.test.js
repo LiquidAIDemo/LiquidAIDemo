@@ -8,9 +8,10 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
 const axiosMock = new MockAdapter(axios)
+const now = new Date()
 
 test("'Start demo' button works correctly", async () => {
-  axiosMock.onGet('/api').reply(200, [{ price: 0 }])
+  axiosMock.onGet('/api').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
   render(
     <MemoryRouter initialEntries={['/']}>
       <Routes>
@@ -20,7 +21,7 @@ test("'Start demo' button works correctly", async () => {
     </MemoryRouter>
   )
   
-  const startButtonElement = screen.getByText('Start demo')
+  const startButtonElement = screen.getByText('Start')
   await userEvent.click(startButtonElement)
   expect(screen.getByText("Components")).toBeInTheDocument()
 })
