@@ -3,13 +3,12 @@ import { render, screen, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { within } from '@testing-library/dom'
 import DemoClock from '../components/DemoClock'
-import { MenuItem, Select } from '@mui/material';
 
 const now = new Date()
 const user = userEvent.setup({delay: null})
 
 test("renders content", () => {
-  render(<DemoClock onDemoTimeChange={jest.fn()}/>)
+  render(<DemoClock demoTime={now.toISOString()} demoPassedHours={0} onDemoTimeChange={jest.fn()}/>)
 
   expect(screen.getByText(/Select speed:/)).toBeInTheDocument()
   expect(screen.getByText(/Select time range:/)).toBeInTheDocument()
@@ -20,19 +19,19 @@ test("renders content", () => {
 
 test("demo time runs correctly", () => {
   jest.useFakeTimers()
-  render(<DemoClock onDemoTimeChange={jest.fn()}/>)
+  render(<DemoClock demoTime={now.toISOString()} demoPassedHours={0} onDemoTimeChange={jest.fn()}/>)
   act(() => {
-    jest.advanceTimersByTime(3000)
+    jest.advanceTimersByTime(1000)
   })
   const demoTimeElement = screen.getByText(/Demo:/).parentElement
   const currentHrs = now.getHours()
-  expect(demoTimeElement).toHaveTextContent(`Demo: ${(currentHrs + 3) % 24}:00`)
+  expect(demoTimeElement).toHaveTextContent(`Demo: ${currentHrs}:10`)
   jest.useRealTimers()
 })
 
 test("pause button pauses demo time", async () => {
   jest.useFakeTimers()
-  render(<DemoClock onDemoTimeChange={jest.fn()}/>)
+  render(<DemoClock demoTime={now.toISOString()} demoPassedHours={0} onDemoTimeChange={jest.fn()}/>)
   const pauseButtonElement = screen.getByText('Pause')
   
   await user.click(pauseButtonElement)
@@ -48,7 +47,7 @@ test("pause button pauses demo time", async () => {
 
 test("restart button restarts demo time", async () => {
   jest.useFakeTimers()
-  render(<DemoClock onDemoTimeChange={jest.fn()}/>)
+  render(<DemoClock demoTime={now.toISOString()} demoPassedHours={0} onDemoTimeChange={jest.fn()}/>)
   const restartButtonElement = screen.getByText('Restart')
   
   act(() => {
@@ -63,20 +62,8 @@ test("restart button restarts demo time", async () => {
 })
 
 test("selecting time range works correctly", async () => {
-  const spyOnSelectChange = jest.fn()
   render(
-    <div>
-      <Select
-        value={"next"}
-        onChange={(e) => spyOnSelectChange(e.target.value)}
-        data-testid="time_range"
-        name='time'
-        sx={{width: '140px', height: '30px'}}
-      >
-        <MenuItem value={"next"}>Next 24h</MenuItem>
-        <MenuItem value={"last"}>Last 24h</MenuItem>
-      </Select>
-    </div>
+    <DemoClock demoTime={now.toISOString()} demoPassedHours={0} onDemoTimeChange={jest.fn()}/>
   )
   
   const timeRangeDropdown = within(screen.getByTestId('time_range')).getByRole("combobox")
@@ -88,5 +75,25 @@ test("selecting time range works correctly", async () => {
   expect(optionValues).toEqual(['next', 'last'])
   
   await user.click(options[1])
-  expect(spyOnSelectChange).toHaveBeenCalledWith('last')
+  const timeRangeElementAfterClick = screen.getByText(/Select time range:/)
+  expect(timeRangeElementAfterClick).toHaveTextContent("Last 24h")
+})
+
+test("selecting speed works correctly", async () => {
+  render(
+    <DemoClock demoTime={now.toISOString()} demoPassedHours={0} onDemoTimeChange={jest.fn()}/>
+  )
+  
+  const speedDropdown = within(screen.getByTestId('speed')).getByRole("combobox")
+  await user.click(speedDropdown)
+  
+  const listbox = screen.getByRole("listbox")
+  const options = within(listbox).getAllByRole("option")
+  const optionValues = options.map((li) => parseFloat(li.getAttribute('data-value')))
+  
+  expect(optionValues).toEqual([1000, 1000/2, 1000/3, 1000/6])
+  await user.click(options[2])
+  
+  const speedElementAfterClick = screen.getByText(/Select speed:/)
+  expect(speedElementAfterClick).toHaveTextContent("30 min / sec")
 })
