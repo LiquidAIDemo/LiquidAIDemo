@@ -9,9 +9,9 @@ const Freezer = ({demoTime, demoStartTime}) => {
 
   const component = {
     id: "freezer", 
-    name: "Freezer",
+    name: "Fridge&Freezer",
     type: "consumer",
-    description: "Food stays cold in the freezer.",
+    description: "Food stays cold in the fridge and freezer.",
     demoTime: {demoTime},
     demoStartTime: {demoStartTime}
   }

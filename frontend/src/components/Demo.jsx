@@ -150,7 +150,7 @@ const Demo = () => {
     {id: "electric-board", visibility: showElectricBoard},
     {id: "electric-car-1", visibility: showElectricCar1},
     {id: "electric-car-2", visibility: showElectricCar2}, 
-    {id: "freezer", visibility: showFreezer},
+    {id: "fridge&freezer", visibility: showFreezer},
     {id: "heater", visibility: showHeater},
     {id: "hot-water-heater", visibility: showHotWaterHeater}, 
     {id: "jacuzzi", visibility: showJacuzzi}, 
@@ -385,7 +385,7 @@ const Demo = () => {
                               type="checkbox"
                               checked={showFreezer}
                               onChange={() => setShowFreezer(!showFreezer)}/>
-                            Freezer
+                            Fridge&Freezer
                             </label>
                           </ListItem>
                           <ListItem>
