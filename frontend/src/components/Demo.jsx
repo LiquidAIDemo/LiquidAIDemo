@@ -15,6 +15,7 @@ import Freezer from './visual_components/Freezer';
 import Heater from './visual_components/Heater';
 import HotWaterHeater from './visual_components/HotWaterHeater';
 import Jacuzzi from './visual_components/Jacuzzi';
+import Optimizer from './visual_components/Optimizer';
 import ElectricCar2 from './visual_components/ElectricCar2';
 import Stove from './visual_components/Stove';
 import SolarPanel2 from './visual_components/SolarPanel2';
@@ -138,6 +139,7 @@ const Demo = () => {
   const [showHeater, setShowHeater] = useLocalStorageState('showHeater', true);
   const [showHotWaterHeater, setShowHotWaterHeater] = useLocalStorageState('showHotWaterHeater', true);
   const [showJacuzzi, setShowJacuzzi] = useLocalStorageState('showJacuzzi', true);
+  const [showOptimizer] = useLocalStorageState('showOptimizer', true);
   const [showSolarPanel1, setShowSolarPanel1] = useLocalStorageState('showSolarPanel1', true);
   const [showSolarPanel2, setShowSolarPanel2] = useLocalStorageState('showSolarPanel2', true);
   const [showSolarPanel3, setShowSolarPanel3] = useLocalStorageState('showSolarPanel3', true);
@@ -154,6 +156,7 @@ const Demo = () => {
     {id: "heater", visibility: showHeater},
     {id: "hot-water-heater", visibility: showHotWaterHeater}, 
     {id: "jacuzzi", visibility: showJacuzzi}, 
+    {id: "optimizer", visibility: showOptimizer},
     {id: "solar-panel-1", visibility: showSolarPanel1}, 
     {id: "solar-panel-2", visibility: showSolarPanel2},
     {id: "solar-panel-3", visibility: showSolarPanel3},
@@ -211,18 +214,6 @@ const Demo = () => {
   return (
     //Created container grid
     <div>
-      {/*<Typography
-        variant="h6"
-        sx={{
-          position: "absolute",
-          top: "15px",
-          left: "15px",
-          zIndex: 1,
-          fontWeight: "bold",
-        }}
-      >
-        LiquidAI Demo
-      </Typography>*/}
       <div 
         style={{
           position: 'relative',
@@ -251,6 +242,7 @@ const Demo = () => {
               <div
                 style={{
                   position: 'relative',
+                  marginTop: '52px',
                   paddingBottom: '83%', 
                   width: '100%',
                   height: 0,
@@ -307,6 +299,7 @@ const Demo = () => {
                   {showJacuzzi && <Jacuzzi demoTime={demoTime} demoStartTime={demoStartTime}/>}
                   {showStove && <Stove demoTime={demoTime} demoStartTime={demoStartTime}/>}
                   {showWashingMachine && <WashingMachine demoTime={demoTime} demoStartTime={demoStartTime}/>}
+                  {showOptimizer && <Optimizer demoTime={demoTime} demoStartTime={demoStartTime}/>}
                 </div>
                 {/*Energy components outside the house*/}
                 {showSolarPanel1 && <SolarPanel1 demoTime={demoTime} />}
@@ -324,20 +317,20 @@ const Demo = () => {
       <Grid item xs={2} style={{position: 'relative'}}>
             {/*Created container grid to have containers on top of another */}
             <Grid container spacing={2} columns={1}>
-            <Grid container style={{display: "flex", justifyContent: "center", alignItems: "center",}}>
+            <Grid container style={{display: "flex", justifyContent: "right", alignItems: "center",}}>
                 <ThemeProvider theme={theme}>
-                  <Button variant="contained" color="water" 
-                          sx={{ borderRadius: 2, margin: 1, width: '90px', }} 
-                          onClick={() => navigate("/")}
-                  >
-                    Back
-                  </Button>
                   <Button variant="contained" 
                           color="water" 
                           sx={{ borderRadius: 2, marginLeft: 2, width: '130px', }} 
                           onClick={() => setOpenInstructions(true)}
                   >
                     Information
+                  </Button>
+                  <Button variant="contained" color="water" 
+                          sx={{ borderRadius: 2, margin: 1, width: '90px', }} 
+                          onClick={() => navigate("/")}
+                  >
+                    Back
                   </Button>
                 </ThemeProvider>
                 <Instructions openInstructions={openInstructions} setOpenInstructions={setOpenInstructions}/>
@@ -504,8 +497,8 @@ const Demo = () => {
                             variant="contained"
                             color="water" >
                             Clear all
-                            </Button>
-                            </ThemeProvider>
+                          </Button>
+                          </ThemeProvider>
                         </Grid>
                         
                       </Grid>
