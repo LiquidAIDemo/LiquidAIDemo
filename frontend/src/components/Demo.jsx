@@ -139,7 +139,7 @@ const Demo = () => {
   const [showHeater, setShowHeater] = useLocalStorageState('showHeater', true);
   const [showHotWaterHeater, setShowHotWaterHeater] = useLocalStorageState('showHotWaterHeater', true);
   const [showJacuzzi, setShowJacuzzi] = useLocalStorageState('showJacuzzi', true);
-  const [showOptimizer, setShowOptimizer] = useLocalStorageState('showOptimizer', true);
+  const [showOptimizer] = useLocalStorageState('showOptimizer', true);
   const [showSolarPanel1, setShowSolarPanel1] = useLocalStorageState('showSolarPanel1', true);
   const [showSolarPanel2, setShowSolarPanel2] = useLocalStorageState('showSolarPanel2', true);
   const [showSolarPanel3, setShowSolarPanel3] = useLocalStorageState('showSolarPanel3', true);
