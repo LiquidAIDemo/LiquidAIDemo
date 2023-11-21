@@ -108,7 +108,7 @@ const Demo = () => {
   const [openInstructions, setOpenInstructions] = useState(false);
   
   const hideOutlines = (eh, where, productive) => {
-    var debug = false;
+
     if (productive === undefined) {
       productive = false;
     }
@@ -204,9 +204,6 @@ const Demo = () => {
     setShowSolarPanel4(true);
     setShowStove(true);
     setShowWashingMachine(true);
-    
-    showOutlines();
-    hideOutlines();
 };
   const handleClear = () => {
     // clearing all components
