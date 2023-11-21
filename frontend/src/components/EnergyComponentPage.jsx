@@ -5,15 +5,25 @@ import energyComponents from "../../../test_data/energyComponents.json";
 import { BarChart } from '@mui/x-charts/BarChart';
 import backgroundImage from "../assets/component_page_background.png";
 import carImage from "../assets/car.png";
+import carEnergy from "../assets/car_energy.png";
 import freezerImage from "../assets/freezer.png";
+import freezerEnergy from "../assets/freezer_energy.png";
 import heaterImage from "../assets/heater.png";
+import heaterEnergy from "../assets/heater_energy.png";
 import airHeatPumpImage from "../assets/air_heat_pump.png";
+import heatPumpEnergy from "../assets/air_heat_pump_energy.png";
 import hotWaterHeaterImage from "../assets/hot_water_heater.png";
+import waterHeaterEnergy from "../assets/hot_water_heater_energy.png";
 import jacuzziImage from "../assets/jacuzzi.png";
+import jacuzziEnergy from "../assets/jacuzzi_energy.png";
 import solarPanelImage from "../assets/solar_panel.png";
+import solarPanelEnergy from "../assets/solar_panel_energy.png";
 import stoveImage from "../assets/stove.png";
+import stoveEnergy from "../assets/stove_energy.png";
 import washingMachineImage from "../assets/washing_machine.png";
+import WashingMachineEnergy from "../assets/washing_machine_energy.png";
 import electricBoardImage from "../assets/electric_board.png";
+import electricBoardEnergy from "../assets/electric_board_energy.png";
 import NotFound from './NotFound';
 import { useState, useEffect } from 'react';
 import { ChartContainer } from '@mui/x-charts/ChartContainer';
@@ -57,6 +67,23 @@ const imageMapping = {
   'stove': stoveImage,
   'washing-machine': washingMachineImage,
 };
+
+const borderMapping = {
+  'electric-board': electricBoardEnergy,
+  'electric-car-1': carEnergy,
+  'electric-car-2': carEnergy,
+  'freezer': freezerEnergy,
+  'heater': heaterEnergy,
+  'heat-pump': heatPumpEnergy,
+  'hot-water-heater': waterHeaterEnergy,
+  'jacuzzi': jacuzziEnergy,
+  'solar-panel-1': solarPanelEnergy,
+  'solar-panel-2': solarPanelEnergy,
+  'solar-panel-3': solarPanelEnergy,
+  'solar-panel-4': solarPanelEnergy,
+  'stove': stoveEnergy,
+  'washing-machine': WashingMachineEnergy,
+}
 
 const EnergyComponentPage = () => { 
 
@@ -287,16 +314,30 @@ const EnergyComponentPage = () => {
                         }}
                       >
                         <img
-                          id={component.id}
-                          src={imageMapping[component.id]}
+                          id={`${component.id}-energy`}
+                          src={borderMapping[component.id]}
                           alt={component.id}
-                          className={`${component.id}-image`}
+                          className={`${component.id}-energy`}
                           style={{
                             display: 'block',
                             marginLeft: 'auto',
                             marginRight: 'auto',
                             marginTop: 'auto',
                             marginBottom: 'auto',
+                            width: 'auto',
+                            height: '56%',
+                          }}
+                        />
+                        <img
+                          id={component.id}
+                          src={imageMapping[component.id]}
+                          alt={component.id}
+                          className={`${component.id}-image`}
+                          style={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
                             width: 'auto',
                             height: '50%',
                           }}

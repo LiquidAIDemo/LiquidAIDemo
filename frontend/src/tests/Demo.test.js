@@ -73,7 +73,6 @@ test('components menu initializes correctly and checkboxes work correctly', asyn
     screen.getByLabelText('Solar panel 3'),
     screen.getByLabelText('Solar panel 4'),
     screen.getByLabelText('Jacuzzi'),
-    screen.getByLabelText('Energy optimizer'),
   ]
   
   // Check if all checkboxes are checked by default
@@ -114,7 +113,6 @@ test('"Clear all" and "Reset to default" buttons work correctly', async () => {
     screen.getByLabelText('Solar panel 3'),
     screen.getByLabelText('Solar panel 4'),
     screen.getByLabelText('Jacuzzi'),
-    screen.getByLabelText('Energy optimizer'),
   ]
   
   const clearAllButton = screen.getByText("Clear all")
