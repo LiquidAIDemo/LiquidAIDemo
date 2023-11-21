@@ -139,14 +139,14 @@ const Demo = () => {
     const componentData = energyComponents.components.filter(c => c.id === where)[0];
     var demoHour = eh;
     
-    if (!productive) {
+    // Check if component produces energy or consumes it
+    if (productive == false) {
       var consumptionData = componentData.consumption_per_hour_kwh;
       consumptionData.forEach(h => {
         h.startHour = new Date(h.startDate).getUTCHours()
       });
 
-      //document.getElementById('debug').innerHTML = consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0];
-      if (consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0] < 0.8) { // Certain values can have a fainter glow, if desired
+      if (consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0] < 10) { // Certain values can have a fainter glow, if desired
         edge.style.opacity = "0.0";
       } else if (consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0] < 1) {
         edge.style.opacity = "0.5";
@@ -154,11 +154,11 @@ const Demo = () => {
         edge.style.opacity = "1.0";
       }
     } else {
-      document.getElementById('debug').innerHTML = productionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0];
-      var productionData = componentData.component.netConsumption.netConsumption;
-      productionData.forEach(h => {
-        h.startHour = new Date(h.startDate).getUTCHours()
-      });
+      var productionData = componentData.production_per_hour_kwh;
+      if (productionData.length > 0) {
+        productionData.forEach(h => {
+          h.startHour = new Date(h.startDate).getUTCHours()
+      })}
       
       if(productionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0] < 0.8) {
         edge.style.opacity = "0.0";
@@ -167,9 +167,6 @@ const Demo = () => {
       } else {
         edge.style.opacity = "1.0";
       }
-      
-      //console.log("KATSO: ", productionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0]);
-      
     }
     
   }
