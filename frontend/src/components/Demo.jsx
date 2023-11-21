@@ -211,18 +211,6 @@ const Demo = () => {
   return (
     //Created container grid
     <div>
-      {/*<Typography
-        variant="h6"
-        sx={{
-          position: "absolute",
-          top: "15px",
-          left: "15px",
-          zIndex: 1,
-          fontWeight: "bold",
-        }}
-      >
-        LiquidAI Demo
-      </Typography>*/}
       <div 
         style={{
           position: 'relative',
@@ -385,7 +373,7 @@ const Demo = () => {
                               type="checkbox"
                               checked={showFreezer}
                               onChange={() => setShowFreezer(!showFreezer)}/>
-                            Fridge&Freezer
+                            Fridge & Freezer
                             </label>
                           </ListItem>
                           <ListItem>
@@ -491,15 +479,15 @@ const Demo = () => {
                             </label>
                           </ListItem>
                           <ThemeProvider theme={theme}>
-                          <Button style={{ marginLeft: '10px ', marginBottom: '5px'}}
+                          <Button style={{ marginLeft: '15px ', marginBottom: '5px'}}
                             onClick={handleReset}
                             variant="contained"
                             color="water" >
-                            Reset to default
+                            Select all
                           </Button>
                           </ThemeProvider>
                           <ThemeProvider theme={theme}>
-                          <Button style={{ marginLeft: '10px ', marginBottom: '5px'}}
+                          <Button style={{ marginLeft: '15px ', marginBottom: '5px'}}
                             onClick={handleClear}
                             variant="contained"
                             color="water" >
