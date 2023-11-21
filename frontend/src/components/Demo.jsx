@@ -90,7 +90,16 @@ const Demo = () => {
     setDemoTime(newDemoTime);
     setDemoPassedHrs(hoursCopy);
     
-    hideOutlines(hours);
+    hideOutlines(hours, "electric-car-1");
+    hideOutlines(hours, "heat-pump");
+    hideOutlines(hours, "solar-panel-1", true);
+    hideOutlines(hours, "freezer");
+    hideOutlines(hours, "hot-water-heater");
+    hideOutlines(hours, "heater");
+    hideOutlines(hours, "stove");
+    hideOutlines(hours, "jacuzzi");
+    hideOutlines(hours, "washing-machine");
+    hideOutlines(hours, "electric-board", true);
   }
 
   window.onpopstate = () => {
@@ -98,29 +107,70 @@ const Demo = () => {
   }
   
   // WIP: Hide outlines for components with no energy effect
-  const hideOutlines = (h) => {
-    var carEdge = document.getElementById("electric-car-energy");
-    var boardEdge = document.getElementById("electric-board-energy");
+  const hideOutlines = (eh, where, productive) => {
+    if (productive === undefined) {
+      productive = false;
+    }
+    
+    var edge;
+    if (where == "electric-car-1") {
+      edge = document.getElementById("electric-car-energy");
+    } else if (where == "heat-pump") {
+      edge = document.getElementById("heat-pump-energy");
+    } else if (where == "solar-panel-1") {
+      edge = document.getElementById("solar-panel-energy");
+    } else if (where == "freezer") {
+      edge = document.getElementById("freezer-energy");
+    } else if (where == "heater") {
+      edge = document.getElementById("heater-energy");
+    } else if (where == "hot-water-heater") {
+      edge = document.getElementById("hot-water-heater-energy");
+    } else if (where == "jacuzzi") {
+      edge = document.getElementById("jacuzzi-energy");
+    } else if (where == "stove") {
+      edge = document.getElementById("stove-energy");
+    } else if (where == "washing-machine") {
+      edge = document.getElementById("washing-machine-energy");
+    } else if (where == "electric-board") {
+      edge = document.getElementById("electric-board-energy");
+    }
     
     // Data from the component is needed
-    const componentData = energyComponents.components.filter(c => c.id === "electric-car-1")[0];
-    var consumptionData = componentData.consumption_per_hour_kwh;
-    consumptionData.forEach(h => {
-      h.startHour = new Date(h.startDate).getUTCHours()
-    });
+    const componentData = energyComponents.components.filter(c => c.id === where)[0];
+    var demoHour = eh;
     
-    document.getElementById('debug').innerHTML = "Testailua";
-    var demoHour = h;
-    document.getElementById('debug').innerHTML = consumptionData.filter(h => h.startHour === demoHour).map(h => h.value)[0];
-    //document.getElementById('debug').innerHTML = "Testailua?";
-    /*if (consumptionData.filter(h => h.startHour === demoHour).map(h => h.value)[0] < 1) {
-      boardEdge.style.opacity = "1.0";
-      carEdge.style.opacity = "0.0";
+    if (!productive) {
+      var consumptionData = componentData.consumption_per_hour_kwh;
+      consumptionData.forEach(h => {
+        h.startHour = new Date(h.startDate).getUTCHours()
+      });
+
+      //document.getElementById('debug').innerHTML = consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0];
+      if (consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0] < 0.8) { // Certain values can have a fainter glow, if desired
+        edge.style.opacity = "0.0";
+      } else if (consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0] < 1) {
+        edge.style.opacity = "0.5";
+      } else {
+        edge.style.opacity = "1.0";
+      }
     } else {
-      boardEdge.style.opacity = "0.0";
-      carEdge.style.opacity = "1.0";
+      document.getElementById('debug').innerHTML = productionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0];
+      var productionData = componentData.component.netConsumption.netConsumption;
+      productionData.forEach(h => {
+        h.startHour = new Date(h.startDate).getUTCHours()
+      });
+      
+      if(productionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0] < 0.8) {
+        edge.style.opacity = "0.0";
+      } else if (productionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0] < 1) {
+        edge.style.opacity = "0.5";
+      } else {
+        edge.style.opacity = "1.0";
+      }
+      
+      //console.log("KATSO: ", productionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0]);
+      
     }
-    */
     
   }
 
