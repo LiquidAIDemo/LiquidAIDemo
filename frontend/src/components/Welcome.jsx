@@ -36,7 +36,7 @@ const Welcome = () => {
           fontWeight: "bold",
         }}
       >
-        LiquidAI Demo
+        Energy Optimizer
       </Typography>
 
       <WaterWave
@@ -78,7 +78,7 @@ const Welcome = () => {
               }}
             >
               <Typography variant="h4" sx={{ margin: 2, fontWeight: "bold" }}>
-                Welcome to LiquidAI demonstrator
+                Welcome to Energy Optimizer demonstrator
               </Typography>
               <Typography
                 variant="text"
