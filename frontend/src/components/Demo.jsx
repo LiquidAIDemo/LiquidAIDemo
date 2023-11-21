@@ -141,12 +141,12 @@ const Demo = () => {
     }
     
     // Data from the component is needed
-    const componentData = energyComponents.components.filter(c => c.id === where)[0];
+    const outlineComponent = energyComponents.components.filter(c => c.id === where)[0];
     var demoHour = eh;
     
     // Check if component produces energy or consumes it
     if (productive == false) {
-      var consumptionData = componentData.consumption_per_hour_kwh;
+      var consumptionData = outlineComponent.consumption_per_hour_kwh;
       consumptionData.forEach(h => {
         h.startHour = new Date(h.startDate).getUTCHours()
       });
@@ -159,7 +159,7 @@ const Demo = () => {
         edge.style.opacity = "1.0";
       }
     } else {
-      var productionData = componentData.production_per_hour_kwh;
+      var productionData = outlineComponent.production_per_hour_kwh;
       if (productionData.length > 0) {
         productionData.forEach(h => {
           h.startHour = new Date(h.startDate).getUTCHours()
@@ -173,6 +173,7 @@ const Demo = () => {
         edge.style.opacity = "1.0";
       }
     }
+  }
 
   const [open, setOpen] = useState(false);
 
@@ -195,23 +196,6 @@ const Demo = () => {
     
     showOutlines();
     hideOutlines();
-};
-  const handleClear = () => {
-    // clearing all components
-    setShowHeatPump(false);
-    setShowElectricBoard(false);
-    setShowElectricCar1(false);
-    setShowElectricCar2(false);
-    setShowFreezer(false);
-    setShowHeater(false);
-    setShowHotWaterHeater(false);
-    setShowJacuzzi(false);
-    setShowSolarPanel1(false);
-    setShowSolarPanel2(false);
-    setShowSolarPanel3(false);
-    setShowSolarPanel4(false);
-    setShowStove(false);
-    setShowWashingMachine(false);
 };
   const handleClear = () => {
     // clearing all components
@@ -655,6 +639,8 @@ const Demo = () => {
     </div>
   );
 }
+
+
 
 
 export default Demo;
