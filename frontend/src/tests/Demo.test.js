@@ -61,7 +61,7 @@ test('components menu initializes correctly and checkboxes work correctly', asyn
   const checkboxes = [
     screen.getByLabelText('Heat Pump'),
     screen.getByLabelText('Electric board'),
-    screen.getByLabelText('Freezer'),
+    screen.getByLabelText('Fridge & Freezer'),
     screen.getByLabelText('Heater'),
     screen.getByLabelText('Hot water heater'),
     screen.getByLabelText('Stove'),
@@ -101,7 +101,7 @@ test('"Clear all" and "Reset to default" buttons work correctly', async () => {
   const checkboxes = [
     screen.getByLabelText('Heat Pump'),
     screen.getByLabelText('Electric board'),
-    screen.getByLabelText('Freezer'),
+    screen.getByLabelText('Fridge & Freezer'),
     screen.getByLabelText('Heater'),
     screen.getByLabelText('Hot water heater'),
     screen.getByLabelText('Stove'),
@@ -122,7 +122,7 @@ test('"Clear all" and "Reset to default" buttons work correctly', async () => {
     expect(cb).not.toBeChecked()
   })
 
-  const resetButton = screen.getByText("Reset to default")
+  const resetButton = screen.getByText("Select all")
   await user.click(resetButton)
 
   checkboxes.forEach(cb => {

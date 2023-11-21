@@ -76,7 +76,7 @@ test("selecting time range works correctly", async () => {
   
   await user.click(options[1])
   const timeRangeElementAfterClick = screen.getByText(/Select time range:/)
-  expect(timeRangeElementAfterClick).toHaveTextContent("Last 24h")
+  expect(timeRangeElementAfterClick).toHaveTextContent("Last 24 h")
 })
 
 test("selecting speed works correctly", async () => {
