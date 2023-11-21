@@ -92,8 +92,14 @@ const Demo = () => {
     setDemoTime(newDemoTime);
     setDemoPassedHrs(hoursCopy);
     hideOutlines(hours, "electric-car-1");
-    hideOutlines(hours, "heat-pump");
+    hideOutlines(hours, "electric-car-2");
+    
     hideOutlines(hours, "solar-panel-1", true);
+    hideOutlines(hours, "solar-panel-2", true);
+    hideOutlines(hours, "solar-panel-3", true);
+    hideOutlines(hours, "solar-panel-4", true);
+    
+    hideOutlines(hours, "heat-pump");
     hideOutlines(hours, "freezer");
     hideOutlines(hours, "hot-water-heater");
     hideOutlines(hours, "heater");
@@ -113,17 +119,26 @@ const Demo = () => {
   const [openInstructions, setOpenInstructions] = useState(false);
   
   const hideOutlines = (eh, where, productive) => {
+    var debug = false;
     if (productive === undefined) {
       productive = false;
     }
     
     var edge;
     if (where == "electric-car-1") {
-      edge = document.getElementById("electric-car-energy");
+      edge = document.getElementById("electric-car-energy-1");
+    } else if (where == "electric-car-2") {
+      edge = document.getElementById("electric-car-energy-2");
     } else if (where == "heat-pump") {
       edge = document.getElementById("heat-pump-energy");
     } else if (where == "solar-panel-1") {
-      edge = document.getElementById("solar-panel-energy");
+      edge = document.getElementById("solar-panel-energy-1");
+    } else if (where == "solar-panel-2") {
+      edge = document.getElementById("solar-panel-energy-2");
+    } else if (where == "solar-panel-3") {
+      edge = document.getElementById("solar-panel-energy-3");
+    } else if (where == "solar-panel-4") {
+      edge = document.getElementById("solar-panel-energy-4");
     } else if (where == "freezer") {
       edge = document.getElementById("freezer-energy");
     } else if (where == "heater") {
@@ -145,6 +160,7 @@ const Demo = () => {
     var demoHour = eh;
     
     // Check if component produces energy or consumes it
+    if (debug) { console.log("Attempting to read", where);};
     try {
       if (productive == false) {
         var consumptionData = outlineComponent.consumption_per_hour_kwh;
@@ -152,15 +168,13 @@ const Demo = () => {
           h.startHour = new Date(h.startDate).getUTCHours()
         });
         
-        // consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0]
-        //console.log("Current value is: ", consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0]);
         if (consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0] < 0.1) { // Certain values can have a fainter glow, if desired
           edge.style.opacity = "0.0";
         } else if (consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0] < 1) {
           edge.style.opacity = "0.8";
         } else {
           edge.style.opacity = "1.0";
-        }//*/
+        }
       } else {
         var productionData = outlineComponent.production_per_hour_kwh;
         if (productionData.length > 0) {
@@ -174,10 +188,13 @@ const Demo = () => {
           edge.style.opacity = "0.8";
         } else {
           edge.style.opacity = "1.0";
-        }//*/
+        }
       }
+      
+      
     } catch (e) {
-      console.log("Attempt to read data lead to error: ", e.message);
+      //console.log("Attempt to read data lead to error: ", e.message);
+      console.log(e.message, "hideOutlines has issues with ", where); 
     }
   }
 
