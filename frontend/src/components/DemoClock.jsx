@@ -146,8 +146,8 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
             data-testid='time_range'
             sx={{width: '140px', height: '30px'}}
           >
-            <MenuItem value={"next"}>Next 24h</MenuItem>
-            <MenuItem value={"last"}>Last 24h</MenuItem>
+            <MenuItem value={"next"}>Next 24 h</MenuItem>
+            <MenuItem value={"last"}>Last 24 h</MenuItem>
           </Select>
         </FormControl>
       </Box>
