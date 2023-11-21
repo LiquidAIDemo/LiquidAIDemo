@@ -30,7 +30,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
   const demoTimeDateObj = new Date(demoTime)
   const [demoPassedMinutes, setDemoPassedMinutes] = useState(0);
 
-  const [isPaused, setIsPaused] = useState(localStorage.getItem('isPaused') === 'true' || false);
+  const [isPaused, setIsPaused] = useState(false);
   
   // Default speed 1 sec
   const [speed, setSpeed] = useState(localStorage.getItem('selectedSpeed') || 1000/6);
@@ -75,7 +75,6 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
   
   const togglePause = () => {
     setIsPaused((isPaused) => !isPaused)
-    localStorage.setItem('isPaused', (!isPaused).toString());
     };
 
   const handleSpeedChange = (event) => {
