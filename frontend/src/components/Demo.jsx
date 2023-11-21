@@ -152,7 +152,7 @@ const Demo = () => {
     {id: "electric-board", visibility: showElectricBoard},
     {id: "electric-car-1", visibility: showElectricCar1},
     {id: "electric-car-2", visibility: showElectricCar2}, 
-    {id: "freezer", visibility: showFreezer},
+    {id: "fridge&freezer", visibility: showFreezer},
     {id: "heater", visibility: showHeater},
     {id: "hot-water-heater", visibility: showHotWaterHeater}, 
     {id: "jacuzzi", visibility: showJacuzzi}, 
@@ -378,7 +378,7 @@ const Demo = () => {
                               type="checkbox"
                               checked={showFreezer}
                               onChange={() => setShowFreezer(!showFreezer)}/>
-                            Freezer
+                            Fridge & Freezer
                             </label>
                           </ListItem>
                           <ListItem>
@@ -484,15 +484,15 @@ const Demo = () => {
                             </label>
                           </ListItem>
                           <ThemeProvider theme={theme}>
-                          <Button style={{ marginLeft: '10px ', marginBottom: '5px'}}
+                          <Button style={{ marginLeft: '15px ', marginBottom: '5px'}}
                             onClick={handleReset}
                             variant="contained"
                             color="water" >
-                            Reset to default
+                            Select all
                           </Button>
                           </ThemeProvider>
                           <ThemeProvider theme={theme}>
-                          <Button style={{ marginLeft: '10px ', marginBottom: '5px'}}
+                          <Button style={{ marginLeft: '15px ', marginBottom: '5px'}}
                             onClick={handleClear}
                             variant="contained"
                             color="water" >

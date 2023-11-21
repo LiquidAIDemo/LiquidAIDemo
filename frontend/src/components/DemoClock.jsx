@@ -34,7 +34,8 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
   
   // Default speed 1 sec
   const [speed, setSpeed] = useState(localStorage.getItem('selectedSpeed') || 1000/6);
-  const [start, setStart] = useState("next");
+  const [start, setStart] = useState(localStorage.getItem('selectedStart') || "next");
+  
   
   // Time runs from demo start from 24 hours
   // speed depends on selected time value
@@ -71,14 +72,14 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
 
   }, [isPaused, speed, onDemoTimeChange, demoTime, demoPassedHours, demoPassedMinutes]);
 
+  
   const togglePause = () => {
     setIsPaused((isPaused) => !isPaused)
-  };
+    };
 
   const handleSpeedChange = (event) => {
     setSpeed(event.target.value);
     localStorage.setItem('selectedSpeed', event.target.value);
-
   };
 
   const handleResetClick = (selectedValue) => {
@@ -94,6 +95,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
   const handleStartingChange = (event) => {
     let selectedValue = event.target.value;
     setStart(selectedValue);
+    localStorage.setItem('selectedStart', selectedValue);
 
     if (selectedValue === "next") {
       const newDemoTime = new Date();
@@ -143,8 +145,8 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
             data-testid='time_range'
             sx={{width: '140px', height: '30px'}}
           >
-            <MenuItem value={"next"}>Next 24h</MenuItem>
-            <MenuItem value={"last"}>Last 24h</MenuItem>
+            <MenuItem value={"next"}>Next 24 h</MenuItem>
+            <MenuItem value={"last"}>Last 24 h</MenuItem>
           </Select>
         </FormControl>
       </Box>
