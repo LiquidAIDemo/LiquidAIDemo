@@ -1,0 +1,1 @@
+export const ChartsXAxis = jest.fn()

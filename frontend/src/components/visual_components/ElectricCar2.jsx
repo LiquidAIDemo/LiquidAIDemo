@@ -1,18 +1,21 @@
 import carImage from "../../assets/car.png";
 import energyBorder from "../../assets/car_energy.png";
+import chargingPoint from "../../assets/charging_point.png";
+import downloadIcon from "../../assets/download.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
 import { Popover } from '@mui/material';
 
-const ElectricCar2 = ({demoTime}) => {
+const ElectricCar2 = ({demoTime, demoStartTime}) => {
 
   const component = {
     id: "electric-car-2", 
     name: "Electric car 2",
     type: "consumer",
     description: "Electric car is charged at the charging station.",
-    demoTime: {demoTime}
+    demoTime: {demoTime},
+    demoStartTime: {demoStartTime}
   }
 
   const navigate = useNavigate();
@@ -40,16 +43,29 @@ const ElectricCar2 = ({demoTime}) => {
   return(
     <div>
       <img
-        id="electric-car-energy"
+        id="electric-car-energy-2"
         src={energyBorder}
         alt="energy"
         className="electric-car-energy-border"
         style={{
           position: 'absolute',
-          top: '59%',
+          top: '58.5%',
           left: '82.4%',
-          width: '13%',
-          height: '32%',
+          width: '11%',
+          height: '29%',
+        }}
+      />
+      <img
+        id="charging-point"
+        src={chargingPoint}
+        alt="charging-point"
+        className="charging-point"
+        style={{
+          position: 'absolute',
+          top: '56.5%',
+          left: '87%',
+          width: '3%',
+          height: '4%',
         }}
       />
       <img
@@ -59,10 +75,10 @@ const ElectricCar2 = ({demoTime}) => {
         className='car-image-2'
         style={{
           position: 'absolute',
-          top: '60%',
+          top: '59.5%',
           left: '83%',
-          width: '12%',
-          height: '30%'
+          width: '10%',
+          height: '27%'
         }}
         onClick={handleClick}
         onMouseEnter={handleHoverOn}
@@ -91,6 +107,19 @@ const ElectricCar2 = ({demoTime}) => {
           demoTime={demoTime}
           />
       </Popover>
+      <img
+        id="download-icon"
+        src={downloadIcon}
+        alt="download-icon"
+        className="download-icon"
+        style={{
+          position: 'absolute',
+          top: '59.5%',
+          left: '83%',
+          width: '3%',
+          height: '3%',
+        }}
+      />
     </div>
   )
 }

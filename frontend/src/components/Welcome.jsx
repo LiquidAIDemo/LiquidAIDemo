@@ -27,11 +27,11 @@ const Welcome = () => {
   return (
     <div className="welcome">
       <Typography
-        variant="h5"
+        variant="h6"
         sx={{
           position: "absolute",
-          top: "30px",
-          left: "30px",
+          top: "3px",
+          left: "15px",
           zIndex: 1,
           fontWeight: "bold",
         }}
@@ -72,7 +72,9 @@ const Welcome = () => {
                 background: "rgba(255, 255, 255, 0.9)",
                 textAlign: "center",
                 zIndex: 2,
-                borderRadius: 2,
+                border: '1px solid #DCDCDC', 
+                borderRadius: '5px', 
+                boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
               }}
             >
               <Typography variant="h4" sx={{ margin: 2, fontWeight: "bold" }}>
@@ -116,7 +118,7 @@ const Welcome = () => {
                   sx={{ borderRadius: 2 }}
                   onClick={() => navigate("/demo")}
                 >
-                  start
+                  Start
                 </Button>
               </ThemeProvider>
 

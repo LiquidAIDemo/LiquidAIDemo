@@ -1,18 +1,20 @@
 import airHeatPumpImage from "../../assets/air_heat_pump.png";
 import energyBorder from "../../assets/air_heat_pump_energy.png";
+import downloadIcon from "../../assets/download.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
 import { Popover } from '@mui/material';
 
-const HeatPump = ({demoTime}) => {
+const HeatPump = ({demoTime, demoStartTime}) => {
 
   const component = {
     id: "heat-pump", 
     name: "Heat pump",
     type: "consumer",
     description: "Heat pump is used to adjust the temperature inside the house.",
-    demoTime: {demoTime}
+    demoTime: {demoTime},
+    demoStartTime: {demoStartTime}
   }
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -90,7 +92,20 @@ const HeatPump = ({demoTime}) => {
           description={component.description}
           demoTime={demoTime}
           />
-      </Popover>  
+      </Popover> 
+      <img
+        id="download-icon"
+        src={downloadIcon}
+        alt="download-icon"
+        className="download-icon"
+        style={{
+          position: 'absolute',
+          top: '33.5%',
+          left: '37%',
+          width: '3%',
+          height: '3%',
+        }}
+      /> 
     </div>    
   )
 

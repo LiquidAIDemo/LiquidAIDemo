@@ -1,18 +1,20 @@
 import hotWaterHeaterImage from "../../assets/hot_water_heater.png";
 import energyBorder from "../../assets/hot_water_heater_energy.png";
+import downloadIcon from "../../assets/download.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
 import { Popover } from '@mui/material';
 
-const HotWaterHeater = ({demoTime}) => {
+const HotWaterHeater = ({demoTime, demoStartTime}) => {
 
   const component = {
     id: "hot-water-heater", 
     name: "Hot water heater",
     type: "consumer",
     description: "Hot water heater stores hot water for the shower.",
-    demoTime: {demoTime}
+    demoTime: {demoTime},
+    demoStartTime: {demoStartTime}
   }
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -91,6 +93,19 @@ const HotWaterHeater = ({demoTime}) => {
             demoTime={demoTime}
             />
         </Popover>  
+      <img
+        id="download-icon"
+        src={downloadIcon}
+        alt="download-icon"
+        className="download-icon"
+        style={{
+          position: 'absolute',
+          top: '22%',
+          left: '21%',
+          width: '3%',
+          height: '3%',
+        }}
+      />
     </div>
   )
 }
