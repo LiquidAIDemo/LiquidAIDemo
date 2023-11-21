@@ -145,33 +145,39 @@ const Demo = () => {
     var demoHour = eh;
     
     // Check if component produces energy or consumes it
-    if (productive == false) {
-      var consumptionData = outlineComponent.consumption_per_hour_kwh;
-      consumptionData.forEach(h => {
-        h.startHour = new Date(h.startDate).getUTCHours()
-      });
-
-      if (consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0] < 10) { // Certain values can have a fainter glow, if desired
-        edge.style.opacity = "0.0";
-      } else if (consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0] < 1) {
-        edge.style.opacity = "0.5";
-      } else {
-        edge.style.opacity = "1.0";
-      }
-    } else {
-      var productionData = outlineComponent.production_per_hour_kwh;
-      if (productionData.length > 0) {
-        productionData.forEach(h => {
+    try {
+      if (productive == false) {
+        var consumptionData = outlineComponent.consumption_per_hour_kwh;
+        consumptionData.forEach(h => {
           h.startHour = new Date(h.startDate).getUTCHours()
-      })}
-      
-      if(productionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0] < 0.8) {
-        edge.style.opacity = "0.0";
-      } else if (productionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0] < 1) {
-        edge.style.opacity = "0.5";
+        });
+        
+        // consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0]
+        //console.log("Current value is: ", consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0]);
+        if (consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0] < 0.1) { // Certain values can have a fainter glow, if desired
+          edge.style.opacity = "0.0";
+        } else if (consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0] < 1) {
+          edge.style.opacity = "0.8";
+        } else {
+          edge.style.opacity = "1.0";
+        }//*/
       } else {
-        edge.style.opacity = "1.0";
+        var productionData = outlineComponent.production_per_hour_kwh;
+        if (productionData.length > 0) {
+          productionData.forEach(h => {
+            h.startHour = new Date(h.startDate).getUTCHours()
+        })}
+        
+        if(productionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0] < 0.1) {
+          edge.style.opacity = "0.0";
+        } else if (productionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0] < 1) {
+          edge.style.opacity = "0.8";
+        } else {
+          edge.style.opacity = "1.0";
+        }//*/
       }
+    } catch (e) {
+      console.log("Attempt to read data lead to error: ", e.message);
     }
   }
 
