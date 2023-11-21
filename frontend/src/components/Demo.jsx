@@ -101,7 +101,6 @@ const Demo = () => {
     setShowHeater(true);
     setShowHotWaterHeater(true);
     setShowJacuzzi(true);
-    setShowOptimizer(true);
     setShowSolarPanel1(true);
     setShowSolarPanel2(true);
     setShowSolarPanel3(true);
@@ -119,7 +118,6 @@ const Demo = () => {
     setShowHeater(false);
     setShowHotWaterHeater(false);
     setShowJacuzzi(false);
-    setShowOptimizer(false);
     setShowSolarPanel1(false);
     setShowSolarPanel2(false);
     setShowSolarPanel3(false);
@@ -216,18 +214,6 @@ const Demo = () => {
   return (
     //Created container grid
     <div>
-      {/*<Typography
-        variant="h6"
-        sx={{
-          position: "absolute",
-          top: "15px",
-          left: "15px",
-          zIndex: 1,
-          fontWeight: "bold",
-        }}
-      >
-        LiquidAI Demo
-      </Typography>*/}
       <div 
         style={{
           position: 'relative',
@@ -311,9 +297,9 @@ const Demo = () => {
                   {showHeater && <Heater demoTime={demoTime} demoStartTime={demoStartTime}/>}
                   {showHotWaterHeater && <HotWaterHeater demoTime={demoTime} demoStartTime={demoStartTime} />}
                   {showJacuzzi && <Jacuzzi demoTime={demoTime} demoStartTime={demoStartTime}/>}
-                  {showOptimizer && <Optimizer demoTime={demoTime} demoStartTime={demoStartTime}/>}
                   {showStove && <Stove demoTime={demoTime} demoStartTime={demoStartTime}/>}
                   {showWashingMachine && <WashingMachine demoTime={demoTime} demoStartTime={demoStartTime}/>}
+                  {showOptimizer && <Optimizer demoTime={demoTime} demoStartTime={demoStartTime}/>}
                 </div>
                 {/*Energy components outside the house*/}
                 {showSolarPanel1 && <SolarPanel1 demoTime={demoTime} />}
@@ -368,15 +354,6 @@ const Demo = () => {
                     <List component="div">
                       <Grid container spacing={2}>
                         <Grid item xs={6}>
-                          <ListItem>
-                            <label>
-                            <input
-                              type="checkbox"
-                              checked={showOptimizer}
-                              onChange={() => setShowOptimizer(!showOptimizer)}/>
-                            Energy optimizer
-                            </label>
-                          </ListItem>
                           <ListItem>
                             <label>
                             <input

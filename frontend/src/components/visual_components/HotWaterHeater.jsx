@@ -93,7 +93,7 @@ const HotWaterHeater = ({demoTime, demoStartTime}) => {
             demoTime={demoTime}
             />
         </Popover>  
-        <img
+      <img
         id="download-icon"
         src={downloadIcon}
         alt="download-icon"
