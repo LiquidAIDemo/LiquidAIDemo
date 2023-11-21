@@ -526,8 +526,7 @@ const Demo = () => {
               height="30vh"
               overflow="hidden" >
             
-            Debug:
-            <b id='debug'>DATA</b>
+
             
             Time
               <Box>
