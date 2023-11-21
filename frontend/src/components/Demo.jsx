@@ -45,17 +45,6 @@ const theme = createTheme({
 import { List, ListItemButton, ListItemText, ListItem, Collapse } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
-// Something needs to monitor energy usage per component and hide zero-usage ones' outlines
-function showOutlines() {
-  var outlines;
-  if (hours < 12) {
-    outlines = document.getElementById("electric-car-energy");
-  } else {
-    outlines = document.getElementById("electric-board-energy");
-  }
-  outlines.style.opacity = "0.0";
-}
-
 function useLocalStorageState(key, defaultValue) {
   // Initialize state with value from localStorage or the provided default value
   const [state, setState] = useState(() => {
@@ -160,7 +149,6 @@ const Demo = () => {
     var demoHour = eh;
     
     // Check if component produces energy or consumes it
-    if (debug) { console.log("Attempting to read", where);};
     try {
       if (productive == false) {
         var consumptionData = outlineComponent.consumption_per_hour_kwh;
