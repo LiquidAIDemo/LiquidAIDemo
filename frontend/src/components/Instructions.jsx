@@ -36,7 +36,7 @@ const Instructions = ({openInstructions, setOpenInstructions}) => {
     {openInstructions} && 
       <Dialog open={openInstructions} maxWidth={'sm'} fullWidth={true}>
         <DialogTitle sx={{display: 'flex', justifyContent: 'left', marginX: 2, marginTop: 2, fontWeight: 'bold'}}
-          >{"Liquid AI Demo"}
+          >{"Energy Optimizer"}
         </DialogTitle>
         <DialogContentText sx={{display: 'flex', justifyContent: 'center', marginX: 5, fontSize: 14}}>
           The purpose of this demo is to show how energy consumption can be optimized in a

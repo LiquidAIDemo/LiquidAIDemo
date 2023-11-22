@@ -36,7 +36,7 @@ const NotFound = () => {
           fontWeight: "bold",
         }}
       >
-        LiquidAI Demo
+        Energy Optimizer
       </Typography>
 
       <WaterWave

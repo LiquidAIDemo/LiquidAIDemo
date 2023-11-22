@@ -236,7 +236,7 @@ const Demo = () => {
                 fontWeight: "bold",
               }}
             >
-              LiquidAI Demo
+              Energy Optimizer
             </Typography>
             <Box height="96vh">
               <div
