@@ -6,6 +6,12 @@ import { resolve } from "node:path";
 import vitePluginSvgr from 'vite-plugin-svgr';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+var backendURL = 'http://localhost:3001/';
+const mode = process.env.APP_ENV;
+//const env = import.meta.env.MODE;
+if (mode === "production") {
+  backendURL = 'http://backend:3001/'
+}
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -22,7 +28,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3001/',
+        target: backendURL,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
