@@ -2,7 +2,7 @@
 
 The purpose of this demo is to show how energy consumption can be optimized in a single-family house.
 
-This is a project for Autumn 2023 implementation of Software Engineering Project 1 & 2 courses in Tampere University.'
+This is a project for Autumn 2023 implementation of Software Engineering Project 1 & 2 courses in Tampere University.
 
 ## Installation
 
