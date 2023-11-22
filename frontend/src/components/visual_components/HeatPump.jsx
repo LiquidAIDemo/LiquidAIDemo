@@ -48,9 +48,9 @@ const HeatPump = ({demoTime, demoStartTime}) => {
         className="heat-pump-energy-border"
         style={{
           position: 'absolute',
-          top: '33.5%',
-          left: '37.5%',
-          width: '3%',
+          top: '33%',
+          left: '37%',
+          width: '2.5%',
           height: '9%',
         }}
       />
@@ -61,8 +61,8 @@ const HeatPump = ({demoTime, demoStartTime}) => {
       className='air-heat-pump'
       style={{
         position: 'absolute',
-        top: '34%',
-        left: '38%',
+        top: '33.5%',
+        left: '37.1%',
         width: '2%',
         height: '8%',
       }}
@@ -100,10 +100,10 @@ const HeatPump = ({demoTime, demoStartTime}) => {
         className="download-icon"
         style={{
           position: 'absolute',
-          top: '33.5%',
-          left: '37%',
-          width: '3%',
-          height: '3%',
+          top: '33.1%',
+          left: '36.5%',
+          width: '2.5%',
+          height: '2.5%',
         }}
       /> 
     </div>    

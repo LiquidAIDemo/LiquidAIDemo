@@ -1,6 +1,5 @@
 import carImage from "../../assets/car.png";
 import energyBorder from "../../assets/car_energy.png";
-import chargingPoint from "../../assets/charging_point.png";
 import downloadIcon from "../../assets/download.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
@@ -49,23 +48,10 @@ const ElectricCar2 = ({demoTime, demoStartTime}) => {
         className="electric-car-energy-border"
         style={{
           position: 'absolute',
-          top: '58.5%',
+          top: '55.8%',
           left: '82.4%',
           width: '11%',
-          height: '29%',
-        }}
-      />
-      <img
-        id="charging-point"
-        src={chargingPoint}
-        alt="charging-point"
-        className="charging-point"
-        style={{
-          position: 'absolute',
-          top: '56.5%',
-          left: '87%',
-          width: '3%',
-          height: '4%',
+          height: '28%',
         }}
       />
       <img
@@ -75,7 +61,7 @@ const ElectricCar2 = ({demoTime, demoStartTime}) => {
         className='car-image-2'
         style={{
           position: 'absolute',
-          top: '59.5%',
+          top: '55.9%',
           left: '83%',
           width: '10%',
           height: '27%'
@@ -114,8 +100,8 @@ const ElectricCar2 = ({demoTime, demoStartTime}) => {
         className="download-icon"
         style={{
           position: 'absolute',
-          top: '59.5%',
-          left: '83%',
+          top: '59.8%',
+          left: '83.3%',
           width: '3%',
           height: '3%',
         }}

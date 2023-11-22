@@ -47,10 +47,10 @@ const Heater = ({demoTime, demoStartTime}) => {
         className="heater-energy-border"
         style={{
           position: 'absolute',
-          top: '7.2%',
-          left: '21.2%',
-          width: '4%',
-          height: '5%',
+          top: '8.3%',
+          left: '21%',
+          width: '3.5%',
+          height: '4%',
         }}
       />
       <img
@@ -60,10 +60,10 @@ const Heater = ({demoTime, demoStartTime}) => {
         className='heater-image'
         style={{
           position: 'absolute',
-          top: '7.5%',
-          left: '21.5%',
-          width: '3.5%',
-          height: '4.5%',
+          top: '8.5%',
+          left: '21.25%',
+          width: '3%',
+          height: '3.5%',
         }}
         onClick={handleClick}
         onMouseEnter={handleHoverOn}
