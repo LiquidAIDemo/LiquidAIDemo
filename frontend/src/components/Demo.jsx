@@ -231,7 +231,7 @@ const Demo = () => {
           columns={5}
           style={{ padding: '2vh' }} 
           >
-          <Grid item xs={12} sm={3} minWidth='350px'>
+          <Grid item xs={12} sm={3} width="50vh">
             <Typography
               variant="h6"
               sx={{

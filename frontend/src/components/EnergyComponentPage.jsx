@@ -1,5 +1,6 @@
 import { Grid, Box, Button, Typography } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import ArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { useNavigate, useLocation } from 'react-router-dom';
 import energyComponents from "../../../test_data/energyComponents.json";
 import { BarChart } from '@mui/x-charts/BarChart';
@@ -249,8 +250,7 @@ const EnergyComponentPage = () => {
     }
 
     return (
-      <div>
-              
+      <div> 
         <div 
           style={{
             position: 'relative',
@@ -259,10 +259,10 @@ const EnergyComponentPage = () => {
           <Grid 
             container
             spacing={4}
-            columns={3}
+            columns={5}
             style={{ padding: '2vh' }}
             > 
-            <Grid item xs={12} sm={1.5} width="50vh">
+            <Grid item xs={12} sm={3} width="50vh">
               <Typography
                 variant="h6"
                 sx={{
@@ -275,10 +275,20 @@ const EnergyComponentPage = () => {
               >
                 Energy Optimizer
               </Typography>
+              <ThemeProvider theme={theme}>
+                <Button variant="contained" color="water" 
+                        startIcon={<ArrowLeftIcon/>}
+                        sx={{ borderRadius: 2, left: '0px', marginTop: '2px'}} 
+                        onClick={() => navigate("/demo")}
+                >
+                  Back
+                </Button>
+              </ThemeProvider>
               <Box height="96vh">
                 <div
                   style={{
                     position: 'relative',
+                    marginTop: '15px',
                     paddingBottom: '83%',
                     width: '100%',
                     height: 0,
@@ -346,7 +356,7 @@ const EnergyComponentPage = () => {
                     </div>
                   </Box>
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={2} style={{position: 'relative', marginTop: '53px'}}>
                   <Grid container spacing={4} columns={1}>
                     <Grid item xs={1} minWidth='500px'>
                       <Box 
@@ -506,13 +516,6 @@ const EnergyComponentPage = () => {
                           </>
                         }
                   </Box>
-                </Grid>
-                <Grid item xs={1} style={{ display:"flex", justifyContent: "center" }}>
-                  <ThemeProvider theme={theme}>
-                    <Button variant="contained" color="water" sx={{ borderRadius: 2}} onClick={() => navigate("/demo")}>
-                      Back
-                    </Button>
-                  </ThemeProvider>
                 </Grid>
               </Grid>
             </Grid>
