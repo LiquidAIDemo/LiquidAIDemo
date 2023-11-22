@@ -1,5 +1,5 @@
 import { Card, CardContent, Typography } from '@mui/material';
-import energyComponents from "../../../test_data/energyComponents.json";
+import energyComponents from "../../test_data/energyComponents.json";
 
 const EnergyComponent = (props) => {
   const { id, name, type, description, demoTime, netConsumption, visibleComponents } = props;

@@ -1,7 +1,7 @@
 import { Grid, Box, Button, Typography } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useNavigate, useLocation } from 'react-router-dom';
-import energyComponents from "../../../test_data/energyComponents.json";
+import energyComponents from "../../test_data/energyComponents.json";
 import { BarChart } from '@mui/x-charts/BarChart';
 import backgroundImage from "../assets/component_page_background.png";
 import carImage from "../assets/car.png";
