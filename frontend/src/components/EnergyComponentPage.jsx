@@ -132,8 +132,8 @@ const EnergyComponentPage = () => {
       const price = prices.find(p => p.startDate === newTimeString);
       if (price !== undefined) {
         price.startHour = newTime.getHours();
+        demoPrices.push(price);
       }
-      demoPrices.push(price);
       demoHours.push(newTime.getHours());
     }
 
@@ -146,9 +146,9 @@ const EnergyComponentPage = () => {
       });
       totalConsumption = consumptionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
 
-      if (prices.length > 0) {
+      let timeOrderedConsumptionData = []; 
 
-        let timeOrderedConsumptionData = []; 
+      if (demoPrices.length === 24) {
 
         consumptionData.forEach(c => {
           const value = c.value;
@@ -228,16 +228,14 @@ const EnergyComponentPage = () => {
           ]
 
           timeData = timeOrderedConsumptionData.map(c => c.hour);
-
-        } else {
-          demoHours.forEach(h => {
-            const data = consumptionData.find(c => c.startHour === h)
-            timeOrderedConsumptionData.push(data);
-          })
-          consumptionData = timeOrderedConsumptionData;
-        }
-
-      }
+        } 
+      } 
+      demoHours.forEach(h => {
+        const data = consumptionData.find(c => c.startHour === h)
+        timeOrderedConsumptionData.push(data);
+      })
+      consumptionData = timeOrderedConsumptionData;
+      
       
     } else if (component.type === "producer") {
       productionData = componentData.production_per_hour_kwh
