@@ -1,4 +1,6 @@
-# LiquidAI Demo
+# Energy Optimizer Demo
+
+The purpose of this demo is to show how energy consumption can be optimized in a single-family house.
 
 This is a project for Autumn 2023 implementation of Software Engineering Project 1 & 2 courses in Tampere University.
 
@@ -57,3 +59,12 @@ npm test
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Developers
+
+- Tuomas Ahvenus, tuomas.ahvenus@tuni.fi
+- Helmi Ikonen, helmi.ikonen@tuni.fi
+- Sara Lehtinen, sara.h.lehtinen@tuni.fi
+- Tuomas Mäkinen, tuomas.2.makinen@tuni.fi
+- Milla Valio, milla.valio@tuni.fi
+- Julia Varjamo, julia.varjamo@tuni.fi

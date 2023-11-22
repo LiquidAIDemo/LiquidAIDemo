@@ -42,7 +42,7 @@ test('"back" button navigates to welcome page', async () => {
   
   const stopButtonElement = screen.getByText('Back')
   await user.click(stopButtonElement)
-  const welcomePageElement = screen.getByText("Welcome to LiquidAI demonstrator")
+  const welcomePageElement = screen.getByText("Welcome to Energy Optimizer demonstrator")
   expect(welcomePageElement).toBeInTheDocument()
 })
 
@@ -61,7 +61,7 @@ test('components menu initializes correctly and checkboxes work correctly', asyn
   const checkboxes = [
     screen.getByLabelText('Heat Pump'),
     screen.getByLabelText('Electric board'),
-    screen.getByLabelText('Freezer'),
+    screen.getByLabelText('Fridge & Freezer'),
     screen.getByLabelText('Heater'),
     screen.getByLabelText('Hot water heater'),
     screen.getByLabelText('Stove'),
@@ -73,7 +73,6 @@ test('components menu initializes correctly and checkboxes work correctly', asyn
     screen.getByLabelText('Solar panel 3'),
     screen.getByLabelText('Solar panel 4'),
     screen.getByLabelText('Jacuzzi'),
-    screen.getByLabelText('Energy optimizer'),
   ]
   
   // Check if all checkboxes are checked by default
@@ -102,7 +101,7 @@ test('"Clear all" and "Reset to default" buttons work correctly', async () => {
   const checkboxes = [
     screen.getByLabelText('Heat Pump'),
     screen.getByLabelText('Electric board'),
-    screen.getByLabelText('Freezer'),
+    screen.getByLabelText('Fridge & Freezer'),
     screen.getByLabelText('Heater'),
     screen.getByLabelText('Hot water heater'),
     screen.getByLabelText('Stove'),
@@ -114,7 +113,6 @@ test('"Clear all" and "Reset to default" buttons work correctly', async () => {
     screen.getByLabelText('Solar panel 3'),
     screen.getByLabelText('Solar panel 4'),
     screen.getByLabelText('Jacuzzi'),
-    screen.getByLabelText('Energy optimizer'),
   ]
   
   const clearAllButton = screen.getByText("Clear all")
@@ -124,7 +122,7 @@ test('"Clear all" and "Reset to default" buttons work correctly', async () => {
     expect(cb).not.toBeChecked()
   })
 
-  const resetButton = screen.getByText("Reset to default")
+  const resetButton = screen.getByText("Select all")
   await user.click(resetButton)
 
   checkboxes.forEach(cb => {

@@ -786,107 +786,107 @@
         {
           "startDate": "2023-10-08T03:00:00Z",
           "endDate": "2023-10-08T04:00:00Z",
-          "value": 0.02
+          "value": 0.03
         },
         {
           "startDate": "2023-10-08T04:00:00Z",
           "endDate": "2023-10-08T05:00:00Z",
-          "value": 0.02
+          "value": 0.03
         },
         {
           "startDate": "2023-10-08T05:00:00Z",
           "endDate": "2023-10-08T06:00:00Z",
-          "value": 0.02
+          "value": 0.03
         },
         {
           "startDate": "2023-10-08T06:00:00Z",
           "endDate": "2023-10-08T07:00:00Z",
-          "value": 0.02
+          "value": 0.03
         },
         {
           "startDate": "2023-10-08T07:00:00Z",
           "endDate": "2023-10-08T08:00:00Z",
-          "value": 0.03
+          "value": 0.04
         },
         {
           "startDate": "2023-10-08T08:00:00Z",
           "endDate": "2023-10-08T09:00:00Z",
-          "value": 0.05
+          "value": 0.06
         },
         {
           "startDate": "2023-10-08T09:00:00Z",
           "endDate": "2023-10-08T10:00:00Z",
-          "value": 0.05
+          "value": 0.06
         },
         {
           "startDate": "2023-10-08T10:00:00Z",
           "endDate": "2023-10-08T11:00:00Z",
-          "value": 0.05
+          "value": 0.06
         },
         {
           "startDate": "2023-10-08T11:00:00Z",
           "endDate": "2023-10-08T12:00:00Z",
-          "value": 0.05
+          "value": 0.06
         },
         {
           "startDate": "2023-10-08T12:00:00Z",
           "endDate": "2023-10-08T13:00:00Z",
-          "value": 0.05
+          "value": 0.06
         },
         {
           "startDate": "2023-10-08T13:00:00Z",
           "endDate": "2023-10-08T14:00:00Z",
-          "value": 0.05
+          "value": 0.06
         },
         {
           "startDate": "2023-10-08T14:00:00Z",
           "endDate": "2023-10-08T15:00:00Z",
-          "value": 0.05
+          "value": 0.06
         },
         {
           "startDate": "2023-10-08T15:00:00Z",
           "endDate": "2023-10-08T16:00:00Z",
-          "value": 0.05
+          "value": 0.06
         },
         {
           "startDate": "2023-10-08T16:00:00Z",
           "endDate": "2023-10-08T17:00:00Z",
-          "value": 0.03
+          "value": 0.05
         },
         {
           "startDate": "2023-10-08T17:00:00Z",
           "endDate": "2023-10-08T18:00:00Z",
-          "value": 0.03
+          "value": 0.06
         },
         {
           "startDate": "2023-10-08T18:00:00Z",
           "endDate": "2023-10-08T19:00:00Z",
-          "value": 0.03
+          "value": 0.04
         },
         {
           "startDate": "2023-10-08T19:00:00Z",
           "endDate": "2023-10-08T20:00:00Z",
-          "value": 0.02
+          "value": 0.03
         },
         {
           "startDate": "2023-10-08T20:00:00Z",
           "endDate": "2023-10-08T21:00:00Z",
-          "value": 0.02
+          "value": 0.03
         },
         {
           "startDate": "2023-10-08T21:00:00Z",
           "endDate": "2023-10-08T22:00:00Z",
-          "value": 0.02
+          "value": 0.03
         },
         {
           "startDate": "2023-10-08T22:00:00Z",
           "endDate": "2023-10-08T23:00:00Z",
-          "value": 0.02
+          "value": 0.03
         },
         {
           "startDate": "2023-10-08T23:00:00Z",
           "endDate": "2023-10-09T00:00:00Z",
-          "value": 0.02
+          "value": 0.03
         }
       ]
     },
