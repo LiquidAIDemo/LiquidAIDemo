@@ -1,6 +1,6 @@
 version: "3.8"
 
-name: "LiquidAIDemo"
+name: "liquidai-demo"
 
 services:
   
@@ -15,3 +15,5 @@ services:
     container_name: frontend
     ports: 
       - "5173:5173"
+    environment:
+      - BACKEND_URL=http://backend:3001/
