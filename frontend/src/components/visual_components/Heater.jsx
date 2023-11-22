@@ -13,7 +13,8 @@ const Heater = ({demoTime, demoStartTime}) => {
     type: "consumer",
     description: "Heater warms up the sauna.",
     demoTime: {demoTime},
-    demoStartTime: {demoStartTime}
+    demoStartTime: {demoStartTime},
+    optimize: false
   }
 
   const [anchorEl, setAnchorEl] = useState(null);

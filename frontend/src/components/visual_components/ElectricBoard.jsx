@@ -5,7 +5,7 @@ import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
 import { Popover } from '@mui/material';
 
-const ElectricBoard = ({demoTime, netConsumption, visibleComponents}) => {
+const ElectricBoard = ({demoTime, netConsumption, visibleComponents, demoStartTime}) => {
 
   const component = {
     id: "electric-board", 
@@ -15,7 +15,8 @@ const ElectricBoard = ({demoTime, netConsumption, visibleComponents}) => {
       to balance energy production and consumption.",
     demoTime: {demoTime},
     netConsumption: {netConsumption},
-    visibleComponents: {visibleComponents}
+    visibleComponents: {visibleComponents},
+    demoStartTime: {demoStartTime}
   }
 
   const navigate = useNavigate();

@@ -13,7 +13,8 @@ const Jacuzzi = ({demoTime, demoStartTime}) => {
     type: "consumer",
     description: "Jacuzzi has an efficient heating system to warm up the water.",
     demoTime: {demoTime},
-    demoStartTime: {demoStartTime}
+    demoStartTime: {demoStartTime},
+    optimize: false
   }
 
   const [anchorEl, setAnchorEl] = useState(null);

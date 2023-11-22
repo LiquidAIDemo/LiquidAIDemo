@@ -14,7 +14,8 @@ const HeatPump = ({demoTime, demoStartTime}) => {
     type: "consumer",
     description: "Heat pump is used to adjust the temperature inside the house.",
     demoTime: {demoTime},
-    demoStartTime: {demoStartTime}
+    demoStartTime: {demoStartTime},
+    optimize: true
   }
 
   const [anchorEl, setAnchorEl] = useState(null);

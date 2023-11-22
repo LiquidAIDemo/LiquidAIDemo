@@ -13,7 +13,8 @@ const Freezer = ({demoTime, demoStartTime}) => {
     type: "consumer",
     description: "Food stays cold in the fridge and freezer.",
     demoTime: {demoTime},
-    demoStartTime: {demoStartTime}
+    demoStartTime: {demoStartTime},
+    optimize: false
   }
 
   const [anchorEl, setAnchorEl] = useState(null);

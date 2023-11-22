@@ -14,7 +14,8 @@ const ElectricCar1 = ({demoTime, demoStartTime}) => {
     type: "consumer",
     description: "Electric car is charged at the charging station.",
     demoTime: {demoTime},
-    demoStartTime: {demoStartTime}
+    demoStartTime: {demoStartTime},
+    optimize: true
   }
 
   const navigate = useNavigate();

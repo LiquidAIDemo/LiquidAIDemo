@@ -331,7 +331,8 @@ const Demo = () => {
                 <div>
                   {/*Energy components inside the house*/}
                   {showHeatPump && <HeatPump demoTime={demoTime} demoStartTime={demoStartTime} />}
-                  {showElectricBoard && <ElectricBoard demoTime={demoTime} netConsumption={netConsumption} visibleComponents={visibleComponents}/>}
+                  {showElectricBoard && <ElectricBoard demoTime={demoTime} netConsumption={netConsumption} 
+                    visibleComponents={visibleComponents} demoStartTime={demoStartTime}/>}
                   {showFreezer && <Freezer demoTime={demoTime} demoStartTime={demoStartTime}/>}
                   {showHeater && <Heater demoTime={demoTime} demoStartTime={demoStartTime}/>}
                   {showHotWaterHeater && <HotWaterHeater demoTime={demoTime} demoStartTime={demoStartTime} />}
@@ -341,10 +342,10 @@ const Demo = () => {
                   {showOptimizer && <Optimizer demoTime={demoTime} demoStartTime={demoStartTime}/>}
                 </div>
                 {/*Energy components outside the house*/}
-                {showSolarPanel1 && <SolarPanel1 demoTime={demoTime} />}
-                {showSolarPanel2 && <SolarPanel2 demoTime={demoTime} />}
-                {showSolarPanel3 && <SolarPanel3 demoTime={demoTime} />}
-                {showSolarPanel4 && <SolarPanel4 demoTime={demoTime} />}
+                {showSolarPanel1 && <SolarPanel1 demoTime={demoTime} demoStartTime={demoStartTime}/>}
+                {showSolarPanel2 && <SolarPanel2 demoTime={demoTime} demoStartTime={demoStartTime}/>}
+                {showSolarPanel3 && <SolarPanel3 demoTime={demoTime} demoStartTime={demoStartTime}/>}
+                {showSolarPanel4 && <SolarPanel4 demoTime={demoTime} demoStartTime={demoStartTime}/>}
                 {showElectricCar1 && <ElectricCar1 demoTime={demoTime} demoStartTime={demoStartTime}/>}
                 {showElectricCar2 && <ElectricCar2 demoTime={demoTime} demoStartTime={demoStartTime}/>}
               </div>
