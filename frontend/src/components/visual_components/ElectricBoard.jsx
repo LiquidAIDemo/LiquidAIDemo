@@ -50,9 +50,9 @@ const ElectricBoard = ({demoTime, netConsumption, visibleComponents}) => {
         style={{
           position: 'absolute',
           top: '37.5%',
-          left: '56.8%',
+          left: '55.4%',
           width: '1.8%',
-          height: '6%',
+          height: '5.8%',
         }}
       />
       <img
@@ -63,7 +63,7 @@ const ElectricBoard = ({demoTime, netConsumption, visibleComponents}) => {
         style={{
           position: 'absolute',
           top: '38%',
-          left: '56.9%',
+          left: '55.5%',
           width: '1.5%',
           height: '5%',
         }}

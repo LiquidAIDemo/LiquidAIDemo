@@ -13,10 +13,10 @@ const Optimizer = () => {
       className="optimizer-border"
       style={{
           position: 'absolute',
-          top: '44.2%',
-          left: '90%',
-          width: '5.5%',
-          height: '5%',
+          top: '43.8%',
+          left: '88.4%',
+          width: '5%',
+          height: '4.5%',
       }}
       />
       <img
@@ -26,10 +26,10 @@ const Optimizer = () => {
           className='optimizer-image'
           style={{
           position: 'absolute',
-          top: '44.6%',
-          left: '90.6%',
-          width: '4.5%',
-          height: '4%',
+          top: '44.25%',
+          left: '89%',
+          width: '4%',
+          height: '3.5%',
           }}
       />
       <img
@@ -39,10 +39,10 @@ const Optimizer = () => {
         className="download-icon"
         style={{
           position: 'absolute',
-          top: '44%',
-          left: '90%',
-          width: '3%',
-          height: '3%',
+          top: '43.8%',
+          left: '88%',
+          width: '2.5%',
+          height: '2.5%',
         }}
       />
       <img
@@ -52,10 +52,10 @@ const Optimizer = () => {
         className="upload-icon"
         style={{
           position: 'absolute',
-          top: '47%',
-          left: '90%',
-          width: '3%',
-          height: '3%',
+          top: '46%',
+          left: '88%',
+          width: '2.5%',
+          height: '2.5%',
         }}
       />
     </div>
