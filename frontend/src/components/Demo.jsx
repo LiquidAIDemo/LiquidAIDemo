@@ -89,7 +89,7 @@ const Demo = () => {
 
     // Outlines are checked hourly
     const tmphour = new Date(demoTime).getHours() // This is pretty bad
-    hideAllOutlines(tmphour);
+    hideAllOutlines(tmphour+1);
     
     if (demoPassedHrs == 0) {
       setDemoStartTime(demoTime);
