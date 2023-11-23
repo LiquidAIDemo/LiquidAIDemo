@@ -86,22 +86,10 @@ const Demo = () => {
     const newDemoTime = new Date(time);
     setDemoTime(newDemoTime);
     setDemoPassedHrs(hoursCopy);
-    hideOutlines(hours, "electric-car-1");
-    hideOutlines(hours, "electric-car-2");
-    
-    hideOutlines(hours, "solar-panel-1", true);
-    hideOutlines(hours, "solar-panel-2", true);
-    hideOutlines(hours, "solar-panel-3", true);
-    hideOutlines(hours, "solar-panel-4", true);
-    
-    hideOutlines(hours, "heat-pump");
-    hideOutlines(hours, "freezer");
-    hideOutlines(hours, "hot-water-heater");
-    hideOutlines(hours, "heater");
-    hideOutlines(hours, "stove");
-    hideOutlines(hours, "jacuzzi");
-    hideOutlines(hours, "washing-machine");
-    hideOutlines(hours, "electric-board", true);
+
+    // Outlines are checked hourly
+    const tmphour = new Date(demoTime).getHours() // This is pretty bad
+    hideAllOutlines(tmphour);
     
     if (demoPassedHrs == 0) {
       setDemoStartTime(demoTime);
@@ -113,6 +101,26 @@ const Demo = () => {
   }
   const [openInstructions, setOpenInstructions] = useState(false);
   
+  const hideAllOutlines = (eh) => {
+    hideOutlines(eh, "electric-car-1");
+    hideOutlines(eh, "electric-car-2");
+    
+    hideOutlines(eh, "solar-panel-1", true);
+    hideOutlines(eh, "solar-panel-2", true);
+    hideOutlines(eh, "solar-panel-3", true);
+    hideOutlines(eh, "solar-panel-4", true);
+    
+    hideOutlines(eh, "heat-pump");
+    hideOutlines(eh, "freezer");
+    hideOutlines(eh, "hot-water-heater");
+    hideOutlines(eh, "heater");
+    hideOutlines(eh, "stove");
+    hideOutlines(eh, "jacuzzi");
+    hideOutlines(eh, "washing-machine");
+    hideOutlines(eh, "electric-board", true);
+
+  }
+
   const hideOutlines = (eh, where, productive) => {
 
     if (productive === undefined) {
@@ -153,6 +161,8 @@ const Demo = () => {
     // Data from the component is needed
     const outlineComponent = energyComponents.components.filter(c => c.id === where)[0];
     var demoHour = eh;
+    var hourlyCons;
+    var hourlyProd;
     
     // Check if component produces energy or consumes it
     try {
@@ -161,10 +171,11 @@ const Demo = () => {
         consumptionData.forEach(h => {
           h.startHour = new Date(h.startDate).getUTCHours()
         });
-        
-        if (consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0] < 0.1) { // Certain values can have a fainter glow, if desired
+        hourlyCons = consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0];
+
+        if (hourlyCons < 0.1) { // Certain values can have a fainter glow, if desired
           edge.style.opacity = "0.0";
-        } else if (consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0] < 1) {
+        } else if (hourlyCons < 1) {
           edge.style.opacity = "0.8";
         } else {
           edge.style.opacity = "1.0";
@@ -175,15 +186,20 @@ const Demo = () => {
           productionData.forEach(h => {
             h.startHour = new Date(h.startDate).getUTCHours()
         })}
-        
-        if(productionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0] < 0.1) {
+        hourlyProd = productionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0];
+        if(hourlyProd < 0.001) {
           edge.style.opacity = "0.0";
-        } else if (productionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0] < 1) {
+        } else if (hourlyProd < 1) {
           edge.style.opacity = "0.8";
         } else {
           edge.style.opacity = "1.0";
         }
       }
+
+      if(where == "jacuzzi") {
+        console.log(where, "has a value of", hourlyCons, "at", eh);
+      }
+
       
       
     } catch (e) {
