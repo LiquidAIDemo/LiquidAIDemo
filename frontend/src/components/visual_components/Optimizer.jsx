@@ -2,8 +2,46 @@ import optimizerImage from "../../assets/optimizer.png";
 import optimizerBorder from "../../assets/optimizer_border.png";
 import downloadIcon from "../../assets/download.png";
 import uploadIcon from "../../assets/upload.png";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react"
+import EnergyComponent from "../EnergyComponent";
+import { Popover } from '@mui/material';
 
-const Optimizer = () => {
+const Optimizer = ({demoTime, demoStartTime}) => {
+
+  const component = {
+    id: "optimizer", 
+    name: "Optimizer",
+    type: "optimizer",
+    description: "Optimizer downloads information from the internet\
+      and gives instructions to other components so that they can\
+      optimize their energy consumption.",
+    demoTime: {demoTime},
+    demoStartTime: {demoStartTime}
+  }
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const navigate = useNavigate();
+
+  const handleClick = () =>
+    navigate(`/component/${component.id}`, 
+      {
+        state: {component: component},
+        replace: true
+      }
+  )
+  
+  const handleHoverOn = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleHoverAway = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+
   return (
     <div>
       <img
@@ -31,7 +69,34 @@ const Optimizer = () => {
           width: '4%',
           height: '3.5%',
           }}
-      />
+          onClick={handleClick}
+          onMouseEnter={handleHoverOn}
+          onMouseLeave={handleHoverAway}
+          />
+          <Popover
+            sx={{pointerEvents: 'none'}}
+            open={open}
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}
+            onClose={handleHoverAway}
+            disableRestoreFocus
+          >     
+            <EnergyComponent 
+              id={component.id}
+              name={component.name}
+              type={component.type}
+              description={component.description}
+              demoTime={demoTime}
+              demoStartTime={demoStartTime}
+              />
+          </Popover> 
       <img
         id="download-icon"
         src={downloadIcon}
