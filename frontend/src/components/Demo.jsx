@@ -181,8 +181,8 @@ const Demo = () => {
       
       
     } catch (e) {
-      //console.log("Attempt to read data lead to error: ", e.message);
-      console.log(e.message, "hideOutlines has issues with ", where); 
+      // Issue encountered
+      console.log(e.message, "hideOutlines has issues with:", where); 
     }
   }
 
