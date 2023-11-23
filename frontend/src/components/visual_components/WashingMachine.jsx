@@ -13,7 +13,8 @@ const WashingMachine = ({demoTime, demoStartTime}) => {
     type: "consumer",
     description: "Washing machine turns dirty laundry clean in just a moment.",
     demoTime: {demoTime},
-    demoStartTime: {demoStartTime}
+    demoStartTime: {demoStartTime},
+    optimize: false
   }
 
   const [anchorEl, setAnchorEl] = useState(null);

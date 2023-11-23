@@ -14,7 +14,8 @@ const HotWaterHeater = ({demoTime, demoStartTime}) => {
     type: "consumer",
     description: "Hot water heater stores hot water for the shower.",
     demoTime: {demoTime},
-    demoStartTime: {demoStartTime}
+    demoStartTime: {demoStartTime},
+    optimize: true
   }
 
   const [anchorEl, setAnchorEl] = useState(null);

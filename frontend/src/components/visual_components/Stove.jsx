@@ -13,7 +13,8 @@ const Stove = ({demoTime, demoStartTime}) => {
     type: "consumer",
     description: "Delicious meals are cooked on the stove.",
     demoTime: {demoTime},
-    demoStartTime: {demoStartTime}
+    demoStartTime: {demoStartTime},
+    optimize: false
   }
 
   const navigate = useNavigate();
