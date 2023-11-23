@@ -196,10 +196,6 @@ const Demo = () => {
         }
       }
 
-      if(where == "jacuzzi") {
-        console.log(where, "has a value of", hourlyCons, "at", eh);
-      }
-
       
       
     } catch (e) {
