@@ -5,7 +5,7 @@ import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
 import { Popover } from '@mui/material';
 
-const ElectricBoard = ({demoTime, netConsumption, visibleComponents}) => {
+const ElectricBoard = ({demoTime, netConsumption, visibleComponents, demoStartTime}) => {
 
   const component = {
     id: "electric-board", 
@@ -15,7 +15,8 @@ const ElectricBoard = ({demoTime, netConsumption, visibleComponents}) => {
       to balance energy production and consumption.",
     demoTime: {demoTime},
     netConsumption: {netConsumption},
-    visibleComponents: {visibleComponents}
+    visibleComponents: {visibleComponents},
+    demoStartTime: {demoStartTime}
   }
 
   const navigate = useNavigate();
@@ -50,9 +51,9 @@ const ElectricBoard = ({demoTime, netConsumption, visibleComponents}) => {
         style={{
           position: 'absolute',
           top: '37.5%',
-          left: '56.8%',
+          left: '55.4%',
           width: '1.8%',
-          height: '6%',
+          height: '5.8%',
         }}
       />
       <img
@@ -63,7 +64,7 @@ const ElectricBoard = ({demoTime, netConsumption, visibleComponents}) => {
         style={{
           position: 'absolute',
           top: '38%',
-          left: '56.9%',
+          left: '55.5%',
           width: '1.5%',
           height: '5%',
         }}

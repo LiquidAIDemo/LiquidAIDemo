@@ -13,7 +13,8 @@ const WashingMachine = ({demoTime, demoStartTime}) => {
     type: "consumer",
     description: "Washing machine turns dirty laundry clean in just a moment.",
     demoTime: {demoTime},
-    demoStartTime: {demoStartTime}
+    demoStartTime: {demoStartTime},
+    optimize: false
   }
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -47,10 +48,10 @@ const WashingMachine = ({demoTime, demoStartTime}) => {
         className="washing-machine-energy-border"
         style={{
           position: 'absolute',
-          top: '22%',
-          left: '28%',
-          width: '6%',
-          height: '5.5%'
+          top: '22.4%',
+          left: '27.3%',
+          width: '5.4%',
+          height: '4.8%'
         }}
       />
       <img
@@ -60,10 +61,10 @@ const WashingMachine = ({demoTime, demoStartTime}) => {
         className='washing-machine-image'
         style={{
           position: 'absolute',
-          top: '22.5%',
-          left: '28.4%',
-          width: '5%',
-          height: '4.5%',
+          top: '22.9%',
+          left: '27.7%',
+          width: '4.5%',
+          height: '4%',
         }}
         onClick={handleClick}
         onMouseEnter={handleHoverOn}

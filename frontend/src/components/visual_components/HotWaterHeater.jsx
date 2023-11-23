@@ -14,7 +14,8 @@ const HotWaterHeater = ({demoTime, demoStartTime}) => {
     type: "consumer",
     description: "Hot water heater stores hot water for the shower.",
     demoTime: {demoTime},
-    demoStartTime: {demoStartTime}
+    demoStartTime: {demoStartTime},
+    optimize: true
   }
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -48,10 +49,10 @@ const HotWaterHeater = ({demoTime, demoStartTime}) => {
         className="hot-water-heater-energy-border"
         style={{
           position: 'absolute',
-          top: '22.1%',
-          left: '21.2%',
-          width: '4.2%',
-          height: '5.2%',
+          top: '22.5%',
+          left: '21%',
+          width: '3.7%',
+          height: '4.7%',
         }}
       />
       <img
@@ -61,10 +62,10 @@ const HotWaterHeater = ({demoTime, demoStartTime}) => {
         className='hot-water-heater-image'
         style={{
           position: 'absolute',
-          top: '22.4%',
-          left: '21.5%',
-          width: '3.5%',
-          height: '4.5%',
+          top: '22.8%',
+          left: '21.3%',
+          width: '3%',
+          height: '4%',
         }}
         onClick={handleClick}
         onMouseEnter={handleHoverOn}
@@ -101,9 +102,9 @@ const HotWaterHeater = ({demoTime, demoStartTime}) => {
         style={{
           position: 'absolute',
           top: '22%',
-          left: '21%',
-          width: '3%',
-          height: '3%',
+          left: '20.5%',
+          width: '2.5%',
+          height: '2.5%',
         }}
       />
     </div>

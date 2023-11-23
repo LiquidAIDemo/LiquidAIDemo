@@ -1,11 +1,14 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import ArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import DemoClock from './DemoClock';
 import RealtimeClock from './RealtimeClock';
 import ElectricityPrice from './ElectricityPrice'
-import backgroundImage from "./../assets/background.png";
+import backgroundImage from "./../assets/yard.png";
+import roadImage from "./../assets/road.png";
+import cabinImage from "./../assets/cabin.png";
 import houseImage from "./../assets/house.png";
 import Instructions from './Instructions';
 import HeatPump from './visual_components/HeatPump';
@@ -33,6 +36,9 @@ const theme = createTheme({
       dark: '#0eafc9',
       contrastText: '#000000',
     },
+    black: {
+      main: '#000000',
+    }
   },
   typography: {
     button: {
@@ -225,7 +231,7 @@ const Demo = () => {
           columns={5}
           style={{ padding: '2vh' }} 
           >
-          <Grid item xs={12} sm={3} minWidth='350px'>
+          <Grid item xs={12} sm={3} width="50vh">
             <Typography
               variant="h6"
               sx={{
@@ -238,11 +244,20 @@ const Demo = () => {
             >
               Energy Optimizer
             </Typography>
+            <ThemeProvider theme={theme}>
+              <Button variant="contained" color="water" 
+                      startIcon={<ArrowLeftIcon/>}
+                      sx={{ borderRadius: 2, left: '0px', marginTop: '2px'}} 
+                      onClick={() => navigate("/")}
+              >
+                Back
+              </Button>
+            </ThemeProvider>
             <Box height="96vh">
               <div
                 style={{
                   position: 'relative',
-                  marginTop: '52px',
+                  marginTop: '15px',
                   paddingBottom: '83%', 
                   width: '100%',
                   height: 0,
@@ -257,7 +272,7 @@ const Demo = () => {
                     top: 0,
                     left: 0,
                     width: '100%',
-                    height: '89%',
+                    height: '94.4%',
                     objectFit: 'cover',
                     border: '1px solid #DCDCDC', 
                     borderRadius: '5px', 
@@ -278,13 +293,37 @@ const Demo = () => {
                   }}
                 >
                   <img
+                    src={roadImage}
+                    alt='Road'
+                    className='road-image'
+                    style={{
+                      position: 'absolute',
+                      top: '54%',
+                      left: '47%',
+                      width: '47.5%',
+                      height: '40.655%',
+                    }}
+                  />
+                  <img
+                    src={cabinImage}
+                    alt='Cabin'
+                    className='cabin-image'
+                    style={{
+                      position: 'absolute',
+                      top: '67%',
+                      left: '5%',
+                      width: '30%',
+                      height: '25%',
+                    }}
+                  />
+                  <img
                     src={houseImage}
                     alt='House'
                     className='house-image'
                     style={{
                       position: 'absolute',
                       top: '2%',
-                      left: '6%',
+                      left: '5%',
                       width: '90%',
                       height: '55%',
                     }}
@@ -292,7 +331,8 @@ const Demo = () => {
                 <div>
                   {/*Energy components inside the house*/}
                   {showHeatPump && <HeatPump demoTime={demoTime} demoStartTime={demoStartTime} />}
-                  {showElectricBoard && <ElectricBoard demoTime={demoTime} netConsumption={netConsumption} visibleComponents={visibleComponents}/>}
+                  {showElectricBoard && <ElectricBoard demoTime={demoTime} netConsumption={netConsumption} 
+                    visibleComponents={visibleComponents} demoStartTime={demoStartTime}/>}
                   {showFreezer && <Freezer demoTime={demoTime} demoStartTime={demoStartTime}/>}
                   {showHeater && <Heater demoTime={demoTime} demoStartTime={demoStartTime}/>}
                   {showHotWaterHeater && <HotWaterHeater demoTime={demoTime} demoStartTime={demoStartTime} />}
@@ -302,10 +342,10 @@ const Demo = () => {
                   {showOptimizer && <Optimizer demoTime={demoTime} demoStartTime={demoStartTime}/>}
                 </div>
                 {/*Energy components outside the house*/}
-                {showSolarPanel1 && <SolarPanel1 demoTime={demoTime} />}
-                {showSolarPanel2 && <SolarPanel2 demoTime={demoTime} />}
-                {showSolarPanel3 && <SolarPanel3 demoTime={demoTime} />}
-                {showSolarPanel4 && <SolarPanel4 demoTime={demoTime} />}
+                {showSolarPanel1 && <SolarPanel1 demoTime={demoTime} demoStartTime={demoStartTime}/>}
+                {showSolarPanel2 && <SolarPanel2 demoTime={demoTime} demoStartTime={demoStartTime}/>}
+                {showSolarPanel3 && <SolarPanel3 demoTime={demoTime} demoStartTime={demoStartTime}/>}
+                {showSolarPanel4 && <SolarPanel4 demoTime={demoTime} demoStartTime={demoStartTime}/>}
                 {showElectricCar1 && <ElectricCar1 demoTime={demoTime} demoStartTime={demoStartTime}/>}
                 {showElectricCar2 && <ElectricCar2 demoTime={demoTime} demoStartTime={demoStartTime}/>}
               </div>
@@ -321,16 +361,10 @@ const Demo = () => {
                 <ThemeProvider theme={theme}>
                   <Button variant="contained" 
                           color="water" 
-                          sx={{ borderRadius: 2, marginLeft: 2, width: '130px', }} 
+                          sx={{ borderRadius: 2, marginLeft: 2, marginBottom: 0, marginTop: 2, width: '130px', }} 
                           onClick={() => setOpenInstructions(true)}
                   >
                     Information
-                  </Button>
-                  <Button variant="contained" color="water" 
-                          sx={{ borderRadius: 2, margin: 1, width: '90px', }} 
-                          onClick={() => navigate("/")}
-                  >
-                    Back
                   </Button>
                 </ThemeProvider>
                 <Instructions openInstructions={openInstructions} setOpenInstructions={setOpenInstructions}/>

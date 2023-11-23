@@ -5,14 +5,15 @@ import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
 import { Popover } from '@mui/material';
 
-const SolarPanel2 = ({demoTime}) => {
+const SolarPanel2 = ({demoTime, demoStartTime}) => {
 
   const component = {
     id: "solar-panel-2", 
     name: "Solar panel 2",
     type: "producer",
     description: "Solar panels turn sunlight into energy.",
-    demoTime: {demoTime}
+    demoTime: {demoTime},
+    demoStartTime: {demoStartTime}
   }
 
   const navigate = useNavigate();
@@ -46,8 +47,8 @@ const SolarPanel2 = ({demoTime}) => {
         className="solar-panel-energy-border"
         style={{
           position: 'absolute',
-          top: '64.5%',
-          left: '18.9%',
+          top: '69%',
+          left: '19%',
           width: '12%',
           height: '10%'
         }}
@@ -59,7 +60,7 @@ const SolarPanel2 = ({demoTime}) => {
         className='solar-panel-image-2'
         style={{
           position: 'absolute',
-          top: '65%',
+          top: '69.5%',
           left: '19.5%',
           width: '11%',
           height: '9%',
