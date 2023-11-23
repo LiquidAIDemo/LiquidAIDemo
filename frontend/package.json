@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "test": "npm install && jest --verbose --coverage --collectCoverageFrom='src/**/*.{jsx,js}'",
     "ci-test": "jest",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "test:e2e": "cypress run"
   },
   "dependencies": {
     "@mui/icons-material": "^5.14.11",
