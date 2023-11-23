@@ -1,5 +1,6 @@
 import { Grid, Box, Button, Typography } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import ArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { useNavigate, useLocation } from 'react-router-dom';
 import energyComponents from "../../../test_data/energyComponents.json";
 import { BarChart } from '@mui/x-charts/BarChart';
@@ -93,6 +94,7 @@ const EnergyComponentPage = () => {
   let optimizedConsumption = [];
   let chartData = [];
   let timeData = [];
+  const start = useState(localStorage.getItem('selectedStart'))[0];
 
   useEffect(() => {
     try {
@@ -118,6 +120,22 @@ const EnergyComponentPage = () => {
     let totalPrice = 0;
     let optimalPrice = 0;
     let savings = 0;
+    let demoHours = [];
+    let demoPrices = [];
+    const demoStartTime = component.demoStartTime.demoStartTime;
+
+    for (let i=0; i<=23; i++) {
+      const dateObjStartTime = new Date(demoStartTime);
+      const hoursCopy = dateObjStartTime.getHours() + i;
+      const newTime = new Date(dateObjStartTime.setHours(hoursCopy));
+      const newTimeString = newTime.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" });
+      const price = prices.find(p => p.startDate === newTimeString);
+      if (price !== undefined) {
+        price.startHour = newTime.getHours();
+      }
+      demoPrices.push(price);
+      demoHours.push(newTime.getHours());
+    }
 
     if (component.type === "consumer") {
       consumptionData = componentData.consumption_per_hour_kwh;
@@ -128,26 +146,9 @@ const EnergyComponentPage = () => {
       });
       totalConsumption = consumptionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
 
-      if (component.demoStartTime !== undefined && prices.length > 0) {
-        const optimal24hConsumption = parseFloat(totalConsumption);
-        const maxHourlyConsumption = parseFloat(consumptionData.reduce((a, b) => Math.max(a, b.value), 0));
-        const demoStartTime = component.demoStartTime.demoStartTime;
-        const wholeConsumptionHours = parseInt(optimal24hConsumption / maxHourlyConsumption);
-        const residualHour = parseFloat((optimal24hConsumption - (maxHourlyConsumption * wholeConsumptionHours)).toFixed(2));
+      if (prices.length > 0) {
 
-        var demoPrices = [];
-
-        for (let i=0; i<=23; i++) {
-          const dateObjStartTime = new Date(demoStartTime);
-          const hoursCopy = dateObjStartTime.getHours() + i;
-          const newTime = new Date(dateObjStartTime.setHours(hoursCopy));
-          const newTimeString = newTime.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" });
-          const price = prices.find(p => p.startDate === newTimeString);
-          if (price !== undefined) {
-            price.startHour = newTime.getHours();
-          }
-          demoPrices.push(price);
-        }
+        let timeOrderedConsumptionData = []; 
 
         consumptionData.forEach(c => {
           const value = c.value;
@@ -160,72 +161,94 @@ const EnergyComponentPage = () => {
           return a.price - b.price;
         })
 
-        for (let i=0; i<=23; i++) {
-          const realConsumption = consumptionData.find(h => h.startHour === i);
-          const price = sortedPrices.find(p => p.startHour === i).price;
-          if (realConsumption !== undefined) {
-            optimizedConsumption.push({startHour: i, optimizedValue: 0, realValue: realConsumption.value, hour: realConsumption.hour, price: price});
-          }
-        }
+        if (component.optimize) {
+          const optimal24hConsumption = parseFloat(totalConsumption);
+          const maxHourlyConsumption = parseFloat(consumptionData.reduce((a, b) => Math.max(a, b.value), 0));
+          
+          const wholeConsumptionHours = parseInt(optimal24hConsumption / maxHourlyConsumption);
+          const residualHour = parseFloat((optimal24hConsumption - (maxHourlyConsumption * wholeConsumptionHours)).toFixed(2));
 
-        if (optimizedConsumption.length > 0) {
-          for (let i=0; i < wholeConsumptionHours; i++) {
-            const priceData = sortedPrices[i];
-            optimizedConsumption.find(h => h.startHour === priceData.startHour).optimizedValue = maxHourlyConsumption;
+          for (let i=0; i<=23; i++) {
+            const realConsumption = consumptionData.find(h => h.startHour === i);
+            const price = sortedPrices.find(p => p.startHour === i).price;
+            if (realConsumption !== undefined) {
+              optimizedConsumption.push({startHour: i, optimizedValue: 0, realValue: realConsumption.value, hour: realConsumption.hour, price: price});
+            }
           }
 
-          optimizedConsumption.forEach(h => {
-            h.hour = h.startHour + ':00-' + (parseInt(h.startHour) + 1) + ':00';
-            const value = h.optimizedValue;
-            const price = demoPrices.find(p => p.startHour === h.startHour).price;
-            const hourPrice = parseFloat(value) * parseFloat(price);
-            optimalPrice = optimalPrice + hourPrice;
+          if (optimizedConsumption.length > 0) {
+            for (let i=0; i < wholeConsumptionHours; i++) {
+              const priceData = sortedPrices[i];
+              optimizedConsumption.find(h => h.startHour === priceData.startHour).optimizedValue = maxHourlyConsumption;
+            }
+
+            optimizedConsumption.forEach(h => {
+              h.hour = h.startHour + ':00-' + (parseInt(h.startHour) + 1) + ':00';
+              const value = h.optimizedValue;
+              const price = demoPrices.find(p => p.startHour === h.startHour).price;
+              const hourPrice = parseFloat(value) * parseFloat(price);
+              optimalPrice = optimalPrice + hourPrice;
+            })
+
+            savings = totalPrice/100 - optimalPrice/100;
+
+            if (residualHour > 0) {
+              const priceData = sortedPrices[wholeConsumptionHours];
+              optimizedConsumption.find(h => h.startHour === priceData.startHour).optimizedValue = residualHour;
+            }
+          }          
+
+          demoHours.forEach(h => {
+            const data = optimizedConsumption.find(c => c.startHour === h)
+            timeOrderedConsumptionData.push(data);
           })
 
-          savings = totalPrice/100 - optimalPrice/100;
+          chartData = [
+            {
+              type: 'line',
+              label: 'price (cents/kWh)',
+              yAxisKey: 'price (cents/kWh)',
+              color: 'red',
+              data: timeOrderedConsumptionData.map(c => c.price)
+            },
+            {
+              type: 'bar',
+              label: 'optimized consumption (kWh)',
+              yAxisKey: 'consumption (kWh)',
+              color: '#4ea646',
+              data: timeOrderedConsumptionData.map(c => c.optimizedValue)
+            },
+            {
+              type: 'bar',
+              label: 'real consumption (kWh)',
+              yAxisKey: 'consumption (kWh)',
+              color: '#59cae3',
+              data: timeOrderedConsumptionData.map(c => c.realValue)
+            }
+          ]
 
-          if (residualHour > 0) {
-            const priceData = sortedPrices[wholeConsumptionHours];
-            optimizedConsumption.find(h => h.startHour === priceData.startHour).optimizedValue = residualHour;
-          }
+          timeData = timeOrderedConsumptionData.map(c => c.hour);
+
+        } else {
+          demoHours.forEach(h => {
+            const data = consumptionData.find(c => c.startHour === h)
+            timeOrderedConsumptionData.push(data);
+          })
+          consumptionData = timeOrderedConsumptionData;
         }
 
-        chartData = [
-          {
-            type: 'line',
-            label: 'price (cents/kWh)',
-            yAxisKey: 'price (cents/kWh)',
-            color: 'red',
-            data: optimizedConsumption.map(c => c.price)
-          },
-          {
-            type: 'bar',
-            label: 'optimized consumption (kWh)',
-            yAxisKey: 'consumption (kWh)',
-            color: 'limegreen',
-            data: optimizedConsumption.map(c => c.optimizedValue)
-          },
-          {
-            type: 'bar',
-            label: 'real consumption (kWh)',
-            yAxisKey: 'consumption (kWh)',
-            color: 'mediumblue',
-            data: optimizedConsumption.map(c => c.realValue)
-          }
-        ]
-
-        timeData = optimizedConsumption.map(c => c.hour);
-
       }
-
+      
     } else if (component.type === "producer") {
       productionData = componentData.production_per_hour_kwh
+
       if (productionData.length > 0) {
         productionData.forEach(h => {
           const startHour = new Date(h.startDate).getUTCHours()
           h.hour = startHour + ':00-' + (parseInt(startHour) + 1) + ':00'
         })
         totalProduction = productionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
+
       } else if (component.id === "electric-board") {
         const visibleComponents = component.visibleComponents.visibleComponents;
         const consumingComponents = energyComponents.components.filter(c => c.consumption_per_hour_kwh.length > 0).filter(c => visibleComponents.findIndex(v => v.id === c.id) !== -1);
@@ -246,11 +269,19 @@ const EnergyComponentPage = () => {
           })
         }
       }
+
+      let timeOrderedProductionData = []; 
+      demoHours.forEach(h => {
+        const data = productionData.find(p => p.startHour === h)
+        timeOrderedProductionData.push(data);
+      })
+
+      productionData = timeOrderedProductionData;
+
     }
 
     return (
-      <div>
-              
+      <div> 
         <div 
           style={{
             position: 'relative',
@@ -259,10 +290,10 @@ const EnergyComponentPage = () => {
           <Grid 
             container
             spacing={4}
-            columns={3}
+            columns={5}
             style={{ padding: '2vh' }}
             > 
-            <Grid item xs={12} sm={1.5} width="50vh">
+            <Grid item xs={12} sm={3} width="50vh">
               <Typography
                 variant="h6"
                 sx={{
@@ -273,12 +304,22 @@ const EnergyComponentPage = () => {
                   fontWeight: "bold",
                 }}
               >
-                LiquidAI Demo
+                Energy Optimizer
               </Typography>
+              <ThemeProvider theme={theme}>
+                <Button variant="contained" color="water" 
+                        startIcon={<ArrowLeftIcon/>}
+                        sx={{ borderRadius: 2, left: '0px', marginTop: '2px'}} 
+                        onClick={() => navigate("/demo")}
+                >
+                  Back
+                </Button>
+              </ThemeProvider>
               <Box height="96vh">
                 <div
                   style={{
                     position: 'relative',
+                    marginTop: '15px',
                     paddingBottom: '83%',
                     width: '100%',
                     height: 0,
@@ -346,7 +387,7 @@ const EnergyComponentPage = () => {
                     </div>
                   </Box>
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={2} style={{position: 'relative', marginTop: '53px'}}>
                   <Grid container spacing={4} columns={1}>
                     <Grid item xs={1} minWidth='500px'>
                       <Box 
@@ -374,11 +415,20 @@ const EnergyComponentPage = () => {
                               sx={{margin: 2}}
                               >Energy producing component
                             </Typography> 
-                            <Typography 
-                              variant="body2"
-                              sx={{margin: 2}}
-                              >Energy produced in the last 24 hours:
-                            </Typography>
+                            {start === "last" && 
+                              <Typography 
+                                variant="body2"
+                                sx={{margin: 2}}
+                                >Energy produced in the last 24 hours:
+                              </Typography>
+                            } 
+                            {start === "next" &&
+                              <Typography 
+                                variant="body2"
+                                sx={{margin: 2}}
+                                >Predicted energy production in the next 24 hours:
+                              </Typography>
+                            }
                             <Typography 
                               variant="body2"
                               sx={{margin: 2}}
@@ -389,7 +439,7 @@ const EnergyComponentPage = () => {
                                 dataset={productionData}
                                 yAxis={[{label: 'kWh'}]}
                                 xAxis={[{scaleType: 'band', dataKey: 'hour', label: 'time (h)'}]}
-                                series={[{dataKey: 'value', label: 'production (kWh)'}]}
+                                series={[{dataKey: 'value', label: 'production (kWh)', color: '#59cae3'}]}
                                 width={450}
                                 height={350}
                               />
@@ -403,11 +453,20 @@ const EnergyComponentPage = () => {
                               sx={{margin: 2}}
                               >Energy producing component
                             </Typography> 
-                            <Typography 
-                              variant="body2"
-                              sx={{margin: 2}}
-                              >Energy received from the electricity network in the last 24 hours:
-                            </Typography>
+                            {start === "last" && 
+                              <Typography 
+                                variant="body2"
+                                sx={{margin: 2}}
+                                >Energy received from the electricity network in the last 24 hours:
+                              </Typography>
+                            }
+                            {start === "next" && 
+                              <Typography 
+                                variant="body2"
+                                sx={{margin: 2}}
+                                >Prediction for energy received from the electricity network in the next 24 hours:
+                              </Typography>
+                            }
                             <Typography 
                               variant="body2"
                               sx={{margin: 2}}
@@ -418,7 +477,7 @@ const EnergyComponentPage = () => {
                                 dataset={productionData}
                                 yAxis={[{label: 'kWh'}]}
                                 xAxis={[{scaleType: 'band', dataKey: 'hour', label: 'time (h)'}]}
-                                series={[{dataKey: 'value', label: 'received energy (kWh)'}]}
+                                series={[{dataKey: 'value', label: 'received energy (kWh)', color: '#59cae3'}]}
                                 width={450}
                                 height={350}
                               />
@@ -432,22 +491,32 @@ const EnergyComponentPage = () => {
                               sx={{margin: 2}}
                               >Energy consuming component
                             </Typography>
-                            <Typography 
+                            {start === "last" && 
+                              <Typography 
+                                variant="body2"
+                                sx={{margin: 2}}
+                                >Energy consumed in the last 24 hours:
+                              </Typography>
+                            } 
+                            {start === "next" && 
+                              <Typography 
                               variant="body2"
                               sx={{margin: 2}}
-                              >Energy consumed in the last 24 hours:
+                              >Predicted energy consumption in the next 24 hours:
                             </Typography>
+                            }
                             <Typography 
                               variant="body2"
                               sx={{margin: 2}}
-                              >Total consumption {totalConsumption} kWh                      
+                              >Total consumption {totalConsumption} kWh <br/>
+                              Total price for consumed energy {(totalPrice/100).toFixed(2)} euros                     
                             </Typography>
                               {optimizedConsumption.length !== 24 && 
                                 <BarChart
                                   dataset={consumptionData}
                                   yAxis={[{label: 'kWh'}]}
                                   xAxis={[{scaleType: 'band', dataKey: 'hour', label: 'time (h)'}]}
-                                  series={[{dataKey: 'value', label: 'consumption (kWh)'}]}
+                                  series={[{dataKey: 'value', label: 'consumption (kWh)', color: '#59cae3'}]}
                                   width={450}
                                   height={350}
                                 />
@@ -457,15 +526,14 @@ const EnergyComponentPage = () => {
                                 <Typography
                                   variant="body2"
                                   sx={{margin: 2}}>
-                                    Total price for consumed energy {(totalPrice/100).toFixed(2)} euros<br/>
                                     Total price with optimized consumption {(optimalPrice/100).toFixed(2)} euros<br/>
                                     Savings made with optimization {(savings).toFixed(2)} euros (-{((savings/(totalPrice/100))*100).toFixed(2)} %)
                                 </Typography>
                                 <div>
                                   <p>
-                                    <span style={{'margin': 2, 'fontSize': '14px', 'color': 'transparent', 'textShadow': '0 0 0 mediumblue'}}>&#9899;</span>
+                                    <span style={{'margin': 2, 'fontSize': '14px', 'color': 'transparent', 'textShadow': '0 0 0 #59cae3'}}>&#9899;</span>
                                     <span style={{'margin': 2, 'fontSize': '14px'}}>real consumption</span>
-                                    <span style={{'margin': 2, 'fontSize': '14px', 'color': 'transparent', 'textShadow': '0 0 0 limegreen'}}>&#9899;</span>
+                                    <span style={{'margin': 2, 'fontSize': '14px', 'color': 'transparent', 'textShadow': '0 0 0 #4ea646'}}>&#9899;</span>
                                     <span style={{'margin': 2, 'fontSize': '14px'}}>optimized consumption</span>
                                     <span style={{'margin': 2, 'fontSize': '14px', 'color': 'transparent', 'textShadow': '0 0 0 red'}}>&#9899;</span>
                                     <span style={{'margin': 2, 'fontSize': '14px'}}>price</span>
@@ -506,13 +574,6 @@ const EnergyComponentPage = () => {
                           </>
                         }
                   </Box>
-                </Grid>
-                <Grid item xs={1} style={{ display:"flex", justifyContent: "center" }}>
-                  <ThemeProvider theme={theme}>
-                    <Button variant="contained" color="water" sx={{ borderRadius: 2}} onClick={() => navigate("/demo")}>
-                      Back
-                    </Button>
-                  </ThemeProvider>
                 </Grid>
               </Grid>
             </Grid>

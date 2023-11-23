@@ -13,7 +13,8 @@ const Stove = ({demoTime, demoStartTime}) => {
     type: "consumer",
     description: "Delicious meals are cooked on the stove.",
     demoTime: {demoTime},
-    demoStartTime: {demoStartTime}
+    demoStartTime: {demoStartTime},
+    optimize: false
   }
 
   const navigate = useNavigate();
@@ -46,8 +47,8 @@ const Stove = ({demoTime, demoStartTime}) => {
         className="stove-energy-border"
         style={{
           position: 'absolute',
-          top: '2.7%',
-          left: '76.7%',
+          top: '3.5%',
+          left: '75%',
           width: '4%',
           height: '3.6%'
         }}
@@ -59,8 +60,8 @@ const Stove = ({demoTime, demoStartTime}) => {
         className='stove-image'
         style={{
           position: 'absolute',
-          top: '2.9%',
-          left: '77%',
+          top: '3.78%',
+          left: '75.3%',
           width: '3.4%',
           height: '3%',
         }}

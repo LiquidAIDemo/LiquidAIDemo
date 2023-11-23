@@ -42,7 +42,7 @@ test('"back" button navigates to welcome page', async () => {
   
   const stopButtonElement = screen.getByText('Back')
   await user.click(stopButtonElement)
-  const welcomePageElement = screen.getByText("Welcome to LiquidAI demonstrator")
+  const welcomePageElement = screen.getByText("Welcome to Energy Optimizer demonstrator")
   expect(welcomePageElement).toBeInTheDocument()
 })
 

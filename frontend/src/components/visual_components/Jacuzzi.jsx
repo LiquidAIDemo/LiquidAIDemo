@@ -13,7 +13,8 @@ const Jacuzzi = ({demoTime, demoStartTime}) => {
     type: "consumer",
     description: "Jacuzzi has an efficient heating system to warm up the water.",
     demoTime: {demoTime},
-    demoStartTime: {demoStartTime}
+    demoStartTime: {demoStartTime},
+    optimize: false
   }
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -48,8 +49,8 @@ const Jacuzzi = ({demoTime, demoStartTime}) => {
         className="jacuzzi-energy-border"
         style={{
           position: 'absolute',
-          top: '2.5%',
-          left: '6.5%',
+          top: '3.5%',
+          left: '6.2%',
           width: '11%',
           height: '13%',
         }}
@@ -61,8 +62,8 @@ const Jacuzzi = ({demoTime, demoStartTime}) => {
         className='jacuzzi-image'
         style={{
           position: 'absolute',
-          top: '3%',
-          left: '7%',
+          top: '4%',
+          left: '6.7%',
           width: '10%',
           height: '12%',
         }}

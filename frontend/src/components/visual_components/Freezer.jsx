@@ -13,7 +13,8 @@ const Freezer = ({demoTime, demoStartTime}) => {
     type: "consumer",
     description: "Food stays cold in the fridge and freezer.",
     demoTime: {demoTime},
-    demoStartTime: {demoStartTime}
+    demoStartTime: {demoStartTime},
+    optimize: false
   }
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -48,7 +49,7 @@ const Freezer = ({demoTime, demoStartTime}) => {
         style={{
           position: 'absolute',
           top: '8.5%',
-          left: '65%',
+          left: '63.6%',
           width: '4.5%',
           height: '11%',
         }}
@@ -60,8 +61,8 @@ const Freezer = ({demoTime, demoStartTime}) => {
         className='freezer-image'
         style={{
           position: 'absolute',
-          top: '9.1%',
-          left: '65.2%',
+          top: '9%',
+          left: '63.8%',
           width: '4%',
           height: '10%',
         }}
