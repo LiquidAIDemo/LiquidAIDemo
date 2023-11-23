@@ -173,7 +173,7 @@ const Demo = () => {
         });
         hourlyCons = consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0];
 
-        if (hourlyCons < 0.1) { // Certain values can have a fainter glow, if desired
+        if (hourlyCons < 0.001) { // Certain values can have a fainter glow, if desired
           edge.style.opacity = "0.0";
         } else if (hourlyCons < 1) {
           edge.style.opacity = "0.8";
