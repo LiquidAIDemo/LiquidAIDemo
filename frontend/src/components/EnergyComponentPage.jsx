@@ -245,6 +245,7 @@ const EnergyComponentPage = () => {
       if (productionData.length > 0) {
         productionData.forEach(h => {
           const startHour = new Date(h.startDate).getUTCHours()
+          h.startHour = startHour;
           h.hour = startHour + ':00-' + (parseInt(startHour) + 1) + ':00'
         })
         totalProduction = productionData.reduce((a, b) => {return a + b.value}, 0).toFixed(2);
