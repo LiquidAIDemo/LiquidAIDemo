@@ -11,6 +11,11 @@ describe('Energy Optimizer app', () => {
     cy.contains('Information')
     cy.contains('Components')
   })
+
+  it('unknown address redirects to not found page', () => {
+    cy.visit('http://localhost:5173/nonexistent')
+    cy.contains('Page not found')
+  })
   
   describe('when demo page is opened', () => {
     beforeEach(() => {
@@ -96,6 +101,50 @@ describe('Energy Optimizer app', () => {
     it('user can view electricity cost graph', () => {
       cy.get('.MuiLineElement-root').should('exist')
       cy.get('.MuiAreaElement-root').should('exist')
+    })
+
+    it('user can modify components from the menu', () => {
+      cy.contains('Components').click()
+
+      const checkboxes = [
+        'heatPumpCheckbox',
+        'electricBoardCheckbox',
+        'freezerCheckbox',
+        'heaterCheckbox',
+        'hotWaterHeaterCheckbox',
+        'stoveCheckbox',
+        'washingMachineCheckbox',
+        'electricCar1Checkbox',
+        'electricCar2Checkbox',
+        'solarPanel1Checkbox',
+        'solarPanel2Checkbox',
+        'solarPanel3Checkbox',
+        'solarPanel4Checkbox',
+        'jacuzziCheckbox'
+      ]
+
+      checkboxes.forEach(id => {
+        cy.get(`#${id}`).should('be.visible')
+      })
+      cy.get('#selectAll').should('be.visible')
+      cy.get('#clearAll').should('be.visible')
+
+      cy.get('#heat-pump').should('be.visible')
+      cy.get('#heat-pump-energy').should('be.visible')
+      cy.get('#heatPumpCheckbox').click()
+      cy.get('#heatPumpCheckbox').should('not.be.checked')
+      cy.get('#heat-pump').should('not.exist')
+      cy.get('#heat-pump-energy').should('not.exist')
+      
+      cy.get('#clearAll').click()
+      checkboxes.forEach(id => {
+        cy.get(`#${id}`).should('not.be.checked')
+      })
+
+      cy.get('#selectAll').click()
+      checkboxes.forEach(id => {
+        cy.get(`#${id}`).should('be.checked')
+      })
     })
   })
 })

@@ -393,7 +393,8 @@ const Demo = () => {
                             <input
                               type="checkbox"
                               checked={showHeatPump}
-                              onChange={() => setShowHeatPump(!showHeatPump)}/>
+                              onChange={() => setShowHeatPump(!showHeatPump)}
+                              id='heatPumpCheckbox'/>
                             Heat Pump
                             </label>
                           </ListItem>
@@ -402,7 +403,8 @@ const Demo = () => {
                             <input
                               type="checkbox"
                               checked={showElectricBoard}
-                              onChange={() => setShowElectricBoard(!showElectricBoard)}/>
+                              onChange={() => setShowElectricBoard(!showElectricBoard)}
+                              id='electricBoardCheckbox'/>
                             Electric board
                             </label>
                           </ListItem>
@@ -411,7 +413,8 @@ const Demo = () => {
                             <input
                               type="checkbox"
                               checked={showFreezer}
-                              onChange={() => setShowFreezer(!showFreezer)}/>
+                              onChange={() => setShowFreezer(!showFreezer)}
+                              id='freezerCheckbox'/>
                             Fridge & Freezer
                             </label>
                           </ListItem>
@@ -420,7 +423,8 @@ const Demo = () => {
                             <input
                               type="checkbox"
                               checked={showHeater}
-                              onChange={() => setShowHeater(!showHeater)}/>
+                              onChange={() => setShowHeater(!showHeater)}
+                              id='heaterCheckbox'/>
                             Heater
                             </label>
                           </ListItem>
@@ -429,7 +433,8 @@ const Demo = () => {
                             <input
                               type="checkbox"
                               checked={showHotWaterHeater}
-                              onChange={() => setShowHotWaterHeater(!showHotWaterHeater)}/>
+                              onChange={() => setShowHotWaterHeater(!showHotWaterHeater)}
+                              id='hotWaterHeaterCheckbox'/>
                             Hot water heater
                             </label>
                           </ListItem>
@@ -438,7 +443,8 @@ const Demo = () => {
                             <input
                               type="checkbox"
                               checked={showStove}
-                              onChange={() => setShowStove(!showStove)}/>
+                              onChange={() => setShowStove(!showStove)}
+                              id='stoveCheckbox'/>
                             Stove
                             </label>
                           </ListItem>
@@ -447,7 +453,8 @@ const Demo = () => {
                             <input
                               type="checkbox"
                               checked={showWashingMachine}
-                              onChange={() => setShowWashingMachine(!showWashingMachine)}/>
+                              onChange={() => setShowWashingMachine(!showWashingMachine)}
+                              id='washingMachineCheckbox'/>
                             Washing machine
                             </label>
                           </ListItem>
@@ -459,7 +466,8 @@ const Demo = () => {
                             <input
                               type="checkbox"
                               checked={showElectricCar1}
-                              onChange={() => setShowElectricCar1(!showElectricCar1)}/>
+                              onChange={() => setShowElectricCar1(!showElectricCar1)}
+                              id='electricCar1Checkbox'/>
                             Electric car 1
                             </label>
                           </ListItem>
@@ -468,7 +476,8 @@ const Demo = () => {
                             <input
                               type="checkbox"
                               checked={showElectricCar2}
-                              onChange={() => setShowElectricCar2(!showElectricCar2)}/>
+                              onChange={() => setShowElectricCar2(!showElectricCar2)}
+                              id='electricCar2Checkbox'/>
                             Electric car 2
                             </label>
                           </ListItem>
@@ -477,7 +486,8 @@ const Demo = () => {
                             <input
                               type="checkbox"
                               checked={showSolarPanel1}
-                              onChange={() => setShowSolarPanel1(!showSolarPanel1)}/>
+                              onChange={() => setShowSolarPanel1(!showSolarPanel1)}
+                              id='solarPanel1Checkbox'/>
                             Solar panel 1
                             </label>
                           </ListItem>
@@ -486,7 +496,8 @@ const Demo = () => {
                             <input
                               type="checkbox"
                               checked={showSolarPanel2}
-                              onChange={() => setShowSolarPanel2(!showSolarPanel2)}/>
+                              onChange={() => setShowSolarPanel2(!showSolarPanel2)}
+                              id='solarPanel2Checkbox'/>
                             Solar panel 2
                             </label>
                           </ListItem>
@@ -495,7 +506,8 @@ const Demo = () => {
                             <input
                               type="checkbox"
                               checked={showSolarPanel3}
-                              onChange={() => setShowSolarPanel3(!showSolarPanel3)}/>
+                              onChange={() => setShowSolarPanel3(!showSolarPanel3)}
+                              id='solarPanel3Checkbox'/>
                             Solar panel 3
                             </label>
                           </ListItem>
@@ -504,7 +516,8 @@ const Demo = () => {
                             <input
                               type="checkbox"
                               checked={showSolarPanel4}
-                              onChange={() => setShowSolarPanel4(!showSolarPanel4)}/>
+                              onChange={() => setShowSolarPanel4(!showSolarPanel4)}
+                              id='solarPanel4Checkbox'/>
                             Solar panel 4
                             </label>
                           </ListItem>
@@ -513,7 +526,8 @@ const Demo = () => {
                             <input
                               type="checkbox"
                               checked={showJacuzzi}
-                              onChange={() => setShowJacuzzi(!showJacuzzi)}/>
+                              onChange={() => setShowJacuzzi(!showJacuzzi)}
+                              id='jacuzziCheckbox'/>
                             Jacuzzi
                             </label>
                           </ListItem>
@@ -521,7 +535,8 @@ const Demo = () => {
                           <Button style={{ marginLeft: '15px ', marginBottom: '5px'}}
                             onClick={handleReset}
                             variant="contained"
-                            color="water" >
+                            color="water"
+                            id='selectAll' >
                             Select all
                           </Button>
                           </ThemeProvider>
@@ -529,7 +544,8 @@ const Demo = () => {
                           <Button style={{ marginLeft: '15px ', marginBottom: '5px'}}
                             onClick={handleClear}
                             variant="contained"
-                            color="water" >
+                            color="water"
+                            id='clearAll' >
                             Clear all
                           </Button>
                           </ThemeProvider>
