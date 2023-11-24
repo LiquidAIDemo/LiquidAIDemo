@@ -59,15 +59,23 @@ describe('Energy Optimizer app', () => {
       })
     })
     
-    it('user can change demo speed', () => {
+    it('user can change demo speed and changes are saved', () => {
       cy.get('[data-testid=speed]').click()
       cy.contains('30 min / sec').click()
       cy.get('[data-testid=speed]').should('contain', '30 min / sec')
+      cy.get('#electric-car-1').click()
+      cy.contains('Electric car 1')
+      cy.contains('Back').click()
+      cy.get('[data-testid=speed]').should('contain', '30 min / sec')
     })
     
-    it('user can change time range', () => {
+    it('user can change time range and changes are saved', () => {
       cy.get('[data-testid=time_range]').click()
       cy.contains('Last 24 h').click()
+      cy.get('[data-testid=time_range]').should('contain', 'Last 24 h')
+      cy.get('#electric-car-2').click()
+      cy.contains('Electric car 2')
+      cy.contains('Back').click()
       cy.get('[data-testid=time_range]').should('contain', 'Last 24 h')
     })
     
