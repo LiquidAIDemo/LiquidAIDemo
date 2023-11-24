@@ -160,14 +160,17 @@ const EnergyComponentPage = () => {
         const sortedPrices = demoPrices.sort((a, b) => {
           return a.price - b.price;
         })
-
+        
+        // Check if component allows optimizing from bool optimize
         if (component.optimize) {
           const optimal24hConsumption = parseFloat(totalConsumption);
-          const maxHourlyConsumption = parseFloat(consumptionData.reduce((a, b) => Math.max(a, b.value), 0));
+          const maxHourlyConsumption = parseFloat(consumptionData.reduce((a, b) => Math.max(a, b.value), 0)); // reduce consumptionData into a single value
           
           const wholeConsumptionHours = parseInt(optimal24hConsumption / maxHourlyConsumption);
           const residualHour = parseFloat((optimal24hConsumption - (maxHourlyConsumption * wholeConsumptionHours)).toFixed(2));
-
+          
+          // Check every hour to populate realConsumption
+          // Also find price and push it to optimizedConsumption for later calculations
           for (let i=0; i<=23; i++) {
             const realConsumption = consumptionData.find(h => h.startHour === i);
             const price = sortedPrices.find(p => p.startHour === i).price;
@@ -177,6 +180,8 @@ const EnergyComponentPage = () => {
           }
 
           if (optimizedConsumption.length > 0) {
+            // find values in optimizedConsumption where the hour matches priceData's
+            // 
             for (let i=0; i < wholeConsumptionHours; i++) {
               const priceData = sortedPrices[i];
               optimizedConsumption.find(h => h.startHour === priceData.startHour).optimizedValue = maxHourlyConsumption;
