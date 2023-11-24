@@ -6,20 +6,20 @@ describe('Energy Optimizer app', () => {
   })
 
   it('demo page can be opened', () => {
-    cy.visit('http://localhost:5173')
+    cy.visit('')
     cy.contains('Start').click()
     cy.contains('Information')
     cy.contains('Components')
   })
 
   it('unknown address redirects to not found page', () => {
-    cy.visit('http://localhost:5173/nonexistent')
+    cy.visit('/nonexistent')
     cy.contains('Page not found')
   })
   
   describe('when demo page is opened', () => {
     beforeEach(() => {
-      cy.visit('http://localhost:5173')
+      cy.visit('')
       cy.contains('Start').click()
     })
     
