@@ -52,12 +52,7 @@ const EnergyComponent = (props) => {
       })
       totalProduction = (totalConsumption - ownProduction).toFixed(2);
     }
-  } else if (component.id === "optimizer" && demoStartTime !== undefined) {
-    <>
-    
-    </>
-
-  }
+  } 
   
   return (
     
@@ -129,10 +124,9 @@ const EnergyComponent = (props) => {
           </>
           }
           {isPaused &&
-          <Typography>
-            Restart the demo to start optimizing  
+          <Typography variant='body2' sx={{marginBottom: 1}}>
+            Restart the demo to view optimization  
           </Typography>}
-          
         </>
         }
         <Typography variant='body2'>

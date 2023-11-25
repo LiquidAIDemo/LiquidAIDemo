@@ -25,6 +25,8 @@ import washingMachineImage from "../assets/washing_machine.png";
 import WashingMachineEnergy from "../assets/washing_machine_energy.png";
 import electricBoardImage from "../assets/electric_board.png";
 import electricBoardEnergy from "../assets/electric_board_energy.png";
+import optimizerImage from "../assets/optimizer.png";
+import optimizerBorder from "../assets/optimizer_border.png";
 import NotFound from './NotFound';
 import { useState, useEffect } from 'react';
 import { ChartContainer } from '@mui/x-charts/ChartContainer';
@@ -67,6 +69,7 @@ const imageMapping = {
   'solar-panel-4': solarPanelImage,
   'stove': stoveImage,
   'washing-machine': washingMachineImage,
+  'optimizer': optimizerImage
 };
 
 const borderMapping = {
@@ -84,6 +87,7 @@ const borderMapping = {
   'solar-panel-4': solarPanelEnergy,
   'stove': stoveEnergy,
   'washing-machine': WashingMachineEnergy,
+  'optimizer': optimizerBorder
 }
 
 const EnergyComponentPage = () => { 
@@ -94,7 +98,7 @@ const EnergyComponentPage = () => {
   let optimizedConsumption = [];
   let chartData = [];
   let timeData = [];
-  const start = useState(localStorage.getItem('selectedStart'))[0];
+  const start = localStorage.getItem('selectedStart');
 
   useEffect(() => {
     try {
@@ -131,7 +135,17 @@ const EnergyComponentPage = () => {
       const newTimeString = newTime.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" });
       const price = prices.find(p => p.startDate === newTimeString);
       if (price !== undefined) {
-        price.startHour = newTime.getHours();
+        const hour = newTime.getHours();
+        price.startHour = hour;
+        if (hour < 9) {
+          price.hour = '0' + hour + ':00-0' + (parseInt(hour) + 1) + ':00';
+        } else if (hour === 9) {
+          price.hour = '09:00-10:00';
+        } else if (hour === 23) {
+          price.hour = '23:00-00:00';
+        } else {
+          price.hour = hour + ':00-' + (parseInt(hour) + 1) + ':00';
+        }
         demoPrices.push(price);
       }
       demoHours.push(newTime.getHours());
@@ -442,9 +456,9 @@ const EnergyComponentPage = () => {
                                 height={350}
                               />
                             }                    
-                            </>
-                          }
-                          {component.type === "producer" && component.id === "electric-board" &&
+                          </>
+                        }
+                        {component.type === "producer" && component.id === "electric-board" &&
                           <>
                             <Typography 
                               variant="body1"
@@ -480,95 +494,110 @@ const EnergyComponentPage = () => {
                                 height={350}
                               />
                             }                    
-                            </>
+                          </>
+                        }
+                        {component.type === "consumer" && 
+                          <>
+                          <Typography 
+                            variant="body1"
+                            sx={{margin: 2}}
+                            >Energy consuming component
+                          </Typography>
+                          {start === "last" && 
+                            <Typography 
+                              variant="body2"
+                              sx={{margin: 2}}
+                              >Energy consumed in the last 24 hours:
+                            </Typography>
+                          } 
+                          {start === "next" && 
+                            <Typography 
+                            variant="body2"
+                            sx={{margin: 2}}
+                            >Predicted energy consumption in the next 24 hours:
+                          </Typography>
                           }
-                          {component.type === "consumer" && 
-                            <>
-                            <Typography 
-                              variant="body1"
-                              sx={{margin: 2}}
-                              >Energy consuming component
-                            </Typography>
-                            {start === "last" && 
-                              <Typography 
-                                variant="body2"
-                                sx={{margin: 2}}
-                                >Energy consumed in the last 24 hours:
-                              </Typography>
+                          <Typography 
+                            variant="body2"
+                            sx={{margin: 2}}
+                            >Total consumption {totalConsumption} kWh <br/>
+                            Total price for consumed energy {(totalPrice/100).toFixed(2)} euros                     
+                          </Typography>
+                            {optimizedConsumption.length !== 24 && 
+                              <BarChart
+                                dataset={consumptionData}
+                                yAxis={[{label: 'kWh'}]}
+                                xAxis={[{scaleType: 'band', dataKey: 'hour', label: 'time (h)'}]}
+                                series={[{dataKey: 'value', label: 'consumption (kWh)', color: '#59cae3'}]}
+                                width={450}
+                                height={350}
+                              />
                             } 
-                            {start === "next" && 
-                              <Typography 
-                              variant="body2"
-                              sx={{margin: 2}}
-                              >Predicted energy consumption in the next 24 hours:
-                            </Typography>
+                            {optimizedConsumption.length === 24 && 
+                            <>
+                              <Typography
+                                variant="body2"
+                                sx={{margin: 2}}>
+                                  Total price with optimized consumption {(optimalPrice/100).toFixed(2)} euros<br/>
+                                  Savings made with optimization {(savings).toFixed(2)} euros (-{((savings/(totalPrice/100))*100).toFixed(2)} %)
+                              </Typography>
+                              <div>
+                                <p>
+                                  <span style={{'margin': 2, 'fontSize': '14px', 'color': 'transparent', 'textShadow': '0 0 0 #59cae3'}}>&#9899;</span>
+                                  <span style={{'margin': 2, 'fontSize': '14px'}}>real consumption</span>
+                                  <span style={{'margin': 2, 'fontSize': '14px', 'color': 'transparent', 'textShadow': '0 0 0 #4ea646'}}>&#9899;</span>
+                                  <span style={{'margin': 2, 'fontSize': '14px'}}>optimized consumption</span>
+                                  <span style={{'margin': 2, 'fontSize': '14px', 'color': 'transparent', 'textShadow': '0 0 0 red'}}>&#9899;</span>
+                                  <span style={{'margin': 2, 'fontSize': '14px'}}>price</span>
+                                </p>
+                              </div>
+                              <ChartContainer
+                                series={chartData}
+                                width={450}
+                                height={350}
+                                xAxis={[
+                                  {
+                                    id: 'time (h)',
+                                    data: timeData,
+                                    scaleType: 'band',
+                                    valueFormatter: (value) => value.toString(),
+                                  },
+                                ]}
+                                yAxis={[
+                                  {
+                                    id: 'consumption (kWh)',
+                                    scaleType: 'linear',
+                                  },
+                                  {
+                                    id: 'price (cents/kWh)',
+                                    scaleType: 'linear',
+                                  }
+                                ]}
+                              >
+                                <BarPlot />
+                                <LinePlot />
+                                <ChartsTooltip trigger='axis'/>
+                                <ChartsXAxis label="time (h)" position="bottom" axisId="time (h)" />
+                                <ChartsYAxis label="consumption (kWh)" position="left" axisId="consumption (kWh)" />
+                                <ChartsYAxis label="price (cents/kWh)" position="right" axisId="price (cents/kWh)" />
+                              </ChartContainer>
+                            </>
                             }
-                            <Typography 
-                              variant="body2"
-                              sx={{margin: 2}}
-                              >Total consumption {totalConsumption} kWh <br/>
-                              Total price for consumed energy {(totalPrice/100).toFixed(2)} euros                     
+                          </>
+                        }
+                        {component.id === 'optimizer' && demoPrices.length === 24 &&
+                          <>
+                            <Typography variant="body2" sx={{margin: 2}}>
+                              Price data for demo time ({demoPrices[0].startDate} - {demoPrices[23].endDate})
                             </Typography>
-                              {optimizedConsumption.length !== 24 && 
-                                <BarChart
-                                  dataset={consumptionData}
-                                  yAxis={[{label: 'kWh'}]}
-                                  xAxis={[{scaleType: 'band', dataKey: 'hour', label: 'time (h)'}]}
-                                  series={[{dataKey: 'value', label: 'consumption (kWh)', color: '#59cae3'}]}
-                                  width={450}
-                                  height={350}
-                                />
-                              } 
-                              {optimizedConsumption.length === 24 && 
-                              <>
-                                <Typography
-                                  variant="body2"
-                                  sx={{margin: 2}}>
-                                    Total price with optimized consumption {(optimalPrice/100).toFixed(2)} euros<br/>
-                                    Savings made with optimization {(savings).toFixed(2)} euros (-{((savings/(totalPrice/100))*100).toFixed(2)} %)
-                                </Typography>
-                                <div>
-                                  <p>
-                                    <span style={{'margin': 2, 'fontSize': '14px', 'color': 'transparent', 'textShadow': '0 0 0 #59cae3'}}>&#9899;</span>
-                                    <span style={{'margin': 2, 'fontSize': '14px'}}>real consumption</span>
-                                    <span style={{'margin': 2, 'fontSize': '14px', 'color': 'transparent', 'textShadow': '0 0 0 #4ea646'}}>&#9899;</span>
-                                    <span style={{'margin': 2, 'fontSize': '14px'}}>optimized consumption</span>
-                                    <span style={{'margin': 2, 'fontSize': '14px', 'color': 'transparent', 'textShadow': '0 0 0 red'}}>&#9899;</span>
-                                    <span style={{'margin': 2, 'fontSize': '14px'}}>price</span>
-                                  </p>
-                                </div>
-                                <ChartContainer
-                                  series={chartData}
-                                  width={450}
-                                  height={350}
-                                  xAxis={[
-                                    {
-                                      id: 'time (h)',
-                                      data: timeData,
-                                      scaleType: 'band',
-                                      valueFormatter: (value) => value.toString(),
-                                    },
-                                  ]}
-                                  yAxis={[
-                                    {
-                                      id: 'consumption (kWh)',
-                                      scaleType: 'linear',
-                                    },
-                                    {
-                                      id: 'price (cents/kWh)',
-                                      scaleType: 'linear',
-                                    }
-                                  ]}
-                                >
-                                  <BarPlot />
-                                  <LinePlot />
-                                  <ChartsTooltip trigger='axis'/>
-                                  <ChartsXAxis label="time (h)" position="bottom" axisId="time (h)" />
-                                  <ChartsYAxis label="consumption (kWh)" position="left" axisId="consumption (kWh)" />
-                                  <ChartsYAxis label="price (cents/kWh)" position="right" axisId="price (cents/kWh)" />
-                                </ChartContainer>
-                              </>
-                              }
+                            <ul style={{fontSize: 12, listStyle: 'none'}}>
+                              {demoPrices.map(p => 
+                                <li key={p.startHour}>
+                                  {p.hour} : {p.price.toFixed(2)} cents/kWh / Source: {p.type}
+                                </li>
+                              )}
+                            </ul>
+                            
                           </>
                         }
                   </Box>

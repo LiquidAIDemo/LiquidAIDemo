@@ -226,8 +226,7 @@ const Demo = () => {
   const isPaused = localStorage.getItem('isDemoPaused') === 'true'; 
   const passedTime = localStorage.getItem('passedTime');
   const [nextDownloadIn, setNextDownloadIn] = useState(localStorage.getItem('nextDownloadIn') || 0);
-  //const [nextUploadIn, setNextUploadIn] = useState(localStorage.getItem('nextUploadIn') || 0);
-  
+
   if (demoHour === startHour) {
     demoPassedHours = 0;
   } else if (demoHour > startHour) {
@@ -241,9 +240,6 @@ const Demo = () => {
   const secondsPerHour = maxSeconds / 24;
   const timeLeft = hoursLeft * secondsPerHour;
 
-  console.log(nextDownloadIn);
-  console.log(localStorage.getItem('nextDownloadIn'))
-  
   useEffect(() => {
     let intervalId;
     if (! isPaused && timeLeft > 0) {
@@ -272,9 +268,14 @@ const Demo = () => {
         }
         localStorage.setItem('passedTime', parseInt(passedTime) + 1);
       }, 1000); 
+    } else {
+      setDownload(false);
+      setUpload(false);
+      localStorage.setItem('download', false);
+      localStorage.setItem('upload', false);
     }
     return () => clearInterval(intervalId);
-  }, [isPaused, download, upload, passedTime, timeLeft])
+  }, [isPaused, download, upload, passedTime, timeLeft, nextDownloadIn])
 
   
   return (
