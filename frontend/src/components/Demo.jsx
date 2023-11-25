@@ -274,6 +274,8 @@ const Demo = () => {
       setUpload(false);
       localStorage.setItem('download', false);
       localStorage.setItem('upload', false);
+      localStorage.setItem('nextDownloadIn', 0);
+      localStorage.setItem('passedTime', 0);
     }
     return () => clearInterval(intervalId);
   }, [isPaused, download, upload, passedTime, timeLeft, nextDownloadIn])
