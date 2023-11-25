@@ -24,6 +24,9 @@ const Optimizer = ({demoTime, demoStartTime}) => {
 
   const navigate = useNavigate();
 
+  const download = localStorage.getItem('download') === 'true';
+  const upload = localStorage.getItem('upload') === 'true';
+
   const handleClick = () =>
     navigate(`/component/${component.id}`, 
       {
@@ -97,32 +100,37 @@ const Optimizer = ({demoTime, demoStartTime}) => {
               demoStartTime={demoStartTime}
               />
           </Popover> 
-      <img
-        id="download-icon"
-        src={downloadIcon}
-        alt="download-icon"
-        className="download-icon"
-        style={{
-          position: 'absolute',
-          top: '43.8%',
-          left: '88%',
-          width: '2.5%',
-          height: '2.5%',
-        }}
-      />
-      <img
-        id="upload-icon"
-        src={uploadIcon}
-        alt="upload-icon"
-        className="upload-icon"
-        style={{
-          position: 'absolute',
-          top: '46%',
-          left: '88%',
-          width: '2.5%',
-          height: '2.5%',
-        }}
-      />
+      {download && 
+        <img
+          id="download-icon"
+          src={downloadIcon}
+          alt="download-icon"
+          className="download-icon"
+          style={{
+            position: 'absolute',
+            top: '43.8%',
+            left: '88%',
+            width: '2.5%',
+            height: '2.5%',
+          }}
+        />
+      }
+      {upload && 
+        <img
+          id="upload-icon"
+          src={uploadIcon}
+          alt="upload-icon"
+          className="upload-icon"
+          style={{
+            position: 'absolute',
+            top: '46%',
+            left: '88%',
+            width: '2.5%',
+            height: '2.5%',
+          }}
+        />
+      }
+      
     </div>
   )
 }

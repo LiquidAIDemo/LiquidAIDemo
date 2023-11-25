@@ -19,6 +19,8 @@ const ElectricCar2 = ({demoTime, demoStartTime}) => {
   }
 
   const navigate = useNavigate();
+
+  const upload = localStorage.getItem('upload') === 'true';
   
   const handleClick = () =>
     navigate(`/component/${component.id}`, 
@@ -95,19 +97,22 @@ const ElectricCar2 = ({demoTime, demoStartTime}) => {
           demoStartTime={demoStartTime}
           />
       </Popover>
-      <img
-        id="download-icon"
-        src={downloadIcon}
-        alt="download-icon"
-        className="download-icon"
-        style={{
-          position: 'absolute',
-          top: '59.8%',
-          left: '83.3%',
-          width: '3%',
-          height: '3%',
-        }}
-      />
+      {upload &&
+        <img
+          id="download-icon"
+          src={downloadIcon}
+          alt="download-icon"
+          className="download-icon"
+          style={{
+            position: 'absolute',
+            top: '59.8%',
+            left: '83.3%',
+            width: '3%',
+            height: '3%',
+          }}
+        />
+      }
+      
     </div>
   )
 }

@@ -1,6 +1,5 @@
 import { Card, CardContent, Typography } from '@mui/material';
 import energyComponents from "../../../test_data/energyComponents.json";
-import { useState, useEffect } from 'react';
 
 const EnergyComponent = (props) => {
   const { id, name, type, description, demoTime, netConsumption, visibleComponents, demoStartTime } = props;
@@ -20,50 +19,12 @@ const EnergyComponent = (props) => {
   let totalProduction = 0;
   let totalConsumption = 0;
   let ownProduction = 0;
-  const demoHour = new Date(demoTime).getHours();
-  const [download, setDownload] = useState(localStorage.getItem('download') || false);
-  const [upload, setUpload] = useState(localStorage.getItem('upload') || false);
-  let demoPassedHours = 0;
-  const startHour = new Date(demoStartTime).getHours();
-  const speed = useState(localStorage.getItem('selectedSpeed'))[0];
-  const isPaused = useState(localStorage.getItem('isDemoPaused'))[0] === 'true';
-  const [passedTime, setPassedTime] = useState(localStorage.getItem('passedTime') || 0);
-
-  if (demoHour === startHour) {
-    demoPassedHours = 0;
-  } else if (demoHour > startHour) {
-    demoPassedHours = demoHour - startHour;
-  } else {
-    demoPassedHours = (demoHour + 24) - startHour;
-  }
-
-  const hoursLeft = 23 - demoPassedHours;
-  const maxSeconds = (144*speed)/1000;
-  const secondsPerHour = maxSeconds / 24;
-  const timeLeft = hoursLeft * secondsPerHour;
   
-  useEffect(() => {
-    let intervalId;
-    if (! isPaused && timeLeft > 0) {
-      intervalId = setInterval(() => {
-        if (passedTime === 0 || passedTime % 3 === 0) {
-          setDownload(true);
-          setUpload(false);
-          localStorage.setItem('download', true);
-          localStorage.setItem('upload', false);
-        } else {
-          setDownload(false);
-          setUpload(true);
-          localStorage.setItem('download', false);
-          localStorage.setItem('upload', true);
-        }
-        setPassedTime(parseInt(passedTime) + 1);
-        localStorage.setItem('passedTime', parseInt(passedTime));
-      }, 1000);
-      
-    }
-    return () => clearInterval(intervalId);
-  }, [isPaused, download, upload, passedTime])
+  const demoHour = new Date(demoTime).getHours();
+  const download = localStorage.getItem('download') === 'true';
+  const upload = localStorage.getItem('upload') === 'true';
+  const nextDownloadIn = localStorage.getItem('nextDownloadIn');
+  const isPaused = localStorage.getItem('isDemoPaused') === 'true';
 
   if (component.type === "consumer") {
     consumptionData = componentData.consumption_per_hour_kwh
@@ -148,16 +109,30 @@ const EnergyComponent = (props) => {
           <Typography variant='body2' sx={{marginBottom: 1}}>
             {description}
           </Typography>
-          {download && 
-          <Typography>
-            <strong>data is being downloaded</strong>
-          </Typography>
+          {! isPaused && 
+          <>
+            {download && 
+            <Typography>
+              <strong>Data is being downloaded from the internet</strong><br/>
+            </Typography>
+            }
+            {upload && 
+            <Typography>
+              <strong>Data is being uploaded to the components</strong><br/>
+            </Typography>
+            }
+            {! download && ! upload &&
+            <Typography>
+              <strong>Next download in {nextDownloadIn} seconds</strong>
+            </Typography>
+            }
+          </>
           }
-          {upload && 
+          {isPaused &&
           <Typography>
-            <strong>data is being uploaded</strong>
-          </Typography>
-          }
+            Restart the demo to start optimizing  
+          </Typography>}
+          
         </>
         }
         <Typography variant='body2'>

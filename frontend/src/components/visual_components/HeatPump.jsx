@@ -22,6 +22,8 @@ const HeatPump = ({demoTime, demoStartTime}) => {
 
   const navigate = useNavigate();
 
+  const upload = localStorage.getItem('upload') === 'true';
+
   const handleClick = () =>
     navigate(`/component/${component.id}`, 
       {
@@ -95,19 +97,22 @@ const HeatPump = ({demoTime, demoStartTime}) => {
           demoStartTime={demoStartTime}
           />
       </Popover> 
-      <img
-        id="download-icon"
-        src={downloadIcon}
-        alt="download-icon"
-        className="download-icon"
-        style={{
-          position: 'absolute',
-          top: '33.1%',
-          left: '36.5%',
-          width: '2.5%',
-          height: '2.5%',
-        }}
-      /> 
+      {upload && 
+        <img
+          id="download-icon"
+          src={downloadIcon}
+          alt="download-icon"
+          className="download-icon"
+          style={{
+            position: 'absolute',
+            top: '33.1%',
+            left: '36.5%',
+            width: '2.5%',
+            height: '2.5%',
+          }}
+        /> 
+      }
+      
     </div>    
   )
 

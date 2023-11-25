@@ -35,7 +35,9 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
   // Default speed 1 sec
   const [speed, setSpeed] = useState(localStorage.getItem('selectedSpeed') || 1000/6);
   const [start, setStart] = useState(localStorage.getItem('selectedStart') || "next");
-  
+
+  const [passedTime, setPassedTime] = useState(localStorage.getItem('passedTime') || 0);
+
   
   // Time runs from demo start from 24 hours
   // speed depends on selected time value
@@ -47,6 +49,10 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
       intervalId = setInterval(() => {
         
         // Increase hours while passed hours are low enough
+        if (demoPassedHours === 0 && demoPassedMinutes === 0) {
+          setPassedTime(0);
+          localStorage.setItem('passedTime', passedTime);
+        }
         if (demoPassedHours < 24) {
           const newDemoTime = new Date(demoTime);
           if (demoPassedMinutes >= 50) {
@@ -64,6 +70,11 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
         else {
           // stop the interval when demoPassedHours reaches 24
           togglePause();
+          setPassedTime(0);
+          localStorage.setItem('passedTime', passedTime);
+          localStorage.setItem('download', false);
+          localStorage.setItem('upload', false);
+
         }
       }, speed);
     }
@@ -72,9 +83,8 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
 
   }, [isPaused, speed, onDemoTimeChange, demoTime, demoPassedHours, demoPassedMinutes]);
 
-  
   const togglePause = () => {
-    setIsPaused((isPaused) => !isPaused)
+    setIsPaused(!isPaused)
     localStorage.setItem('isDemoPaused', !isPaused);
   };
 
@@ -91,7 +101,10 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
   
     // Call handleStartingChange with the new event object
     handleStartingChange(event);
-    localStorage.setItem('passedTime', 0);
+    setPassedTime(0);
+    localStorage.setItem('passedTime', passedTime);
+    localStorage.setItem('download', false);
+    localStorage.setItem('upload', false);
   };
   
   const handleStartingChange = (event) => {
