@@ -250,7 +250,6 @@ const EnergyComponentPage = () => {
       })
       consumptionData = timeOrderedConsumptionData;
       
-      
     } else if (component.type === "producer") {
       productionData = componentData.production_per_hour_kwh
 
@@ -507,7 +506,7 @@ const EnergyComponentPage = () => {
                             <Typography 
                               variant="body2"
                               sx={{margin: 2}}
-                              >Energy consumed in the last 24 hours:
+                              >Predicted energy consumption in the next 24 hours:
                             </Typography>
                           } 
                           {start === "next" && 
