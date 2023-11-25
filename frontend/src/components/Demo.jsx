@@ -88,8 +88,8 @@ const Demo = () => {
     setDemoPassedHrs(hoursCopy);
 
     // Outlines are checked hourly
-    const tmphour = new Date(demoTime).getHours() // This is pretty bad
-    hideAllOutlines(tmphour+1);
+    const tmphour = newDemoTime.getHours();
+    hideAllOutlines(tmphour);
     
     if (demoPassedHrs == 0) {
       setDemoStartTime(demoTime);
@@ -176,9 +176,20 @@ const Demo = () => {
         if (hourlyCons < 0.001) { // Certain values can have a fainter glow, if desired
           edge.style.opacity = "0.0";
         } else if (hourlyCons < 1) {
-          edge.style.opacity = "0.8";
+          edge.style.opacity = "0.5";
         } else {
           edge.style.opacity = "1.0";
+        }
+      } else if (where === "electric-board") {
+        if (netConsumption.length === 24) {
+          hourlyProd = netConsumption.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0];
+          if(hourlyProd < 0.001) {
+            edge.style.opacity = "0.0";
+          } else if (hourlyProd < 5) {
+            edge.style.opacity = "0.5";
+          } else {
+            edge.style.opacity = "1.0";
+          }
         }
       } else {
         var productionData = outlineComponent.production_per_hour_kwh;
@@ -189,15 +200,13 @@ const Demo = () => {
         hourlyProd = productionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0];
         if(hourlyProd < 0.001) {
           edge.style.opacity = "0.0";
-        } else if (hourlyProd < 1) {
-          edge.style.opacity = "0.8";
+        } else if (hourlyProd < 0.1) {
+          edge.style.opacity = "0.5";
         } else {
           edge.style.opacity = "1.0";
         }
       }
-
-      
-      
+ 
     } catch (e) {
       // Issue encountered
       console.log(e.message, "hideOutlines has issues with:", where); 
