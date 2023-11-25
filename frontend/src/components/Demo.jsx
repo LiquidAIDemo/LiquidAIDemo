@@ -240,6 +240,7 @@ const Demo = () => {
   const secondsPerHour = maxSeconds / 24;
   const timeLeft = hoursLeft * secondsPerHour;
 
+  //console.log(isPaused);
   useEffect(() => {
     let intervalId;
     if (! isPaused && timeLeft > 0) {
