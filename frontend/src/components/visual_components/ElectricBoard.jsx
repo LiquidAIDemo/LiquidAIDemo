@@ -98,6 +98,7 @@ const ElectricBoard = ({demoTime, netConsumption, visibleComponents, demoStartTi
             demoTime={demoTime}
             netConsumption={netConsumption}
             visibleComponents={visibleComponents}
+            demoStartTime={demoStartTime}
             />
         </Popover>  
     </div>
