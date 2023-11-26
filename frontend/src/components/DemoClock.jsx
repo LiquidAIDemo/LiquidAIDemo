@@ -56,6 +56,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
         if (demoPassedHours === 24) {
           setPassedTime(0);
           localStorage.setItem('passedTime', 0);
+          setIsPaused(true);
           localStorage.setItem('isDemoPaused', true);
         }
         if (demoPassedHours < 24) {
@@ -124,6 +125,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
       newDemoTime.setMinutes(0, 0);
       setDemoPassedMinutes(0);
       onDemoTimeChange(newDemoTime, 0);
+      setIsPaused(false);
       localStorage.setItem('isDemoPaused', false);
     } 
     
@@ -133,6 +135,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
       newDemoTime.setMinutes(0, 0);
       setDemoPassedMinutes(0);
       onDemoTimeChange(newDemoTime, 0);
+      setIsPaused(false);
       localStorage.setItem('isDemoPaused', false);
     }
   }
