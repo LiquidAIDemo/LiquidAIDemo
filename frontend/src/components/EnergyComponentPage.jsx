@@ -407,7 +407,7 @@ const EnergyComponentPage = () => {
                           borderRadius: '5px', 
                           boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                         }} 
-                        height="85vh" >
+                        height="90vh" >
                         <Typography 
                           variant="body1"
                           fontWeight="bold"
@@ -586,7 +586,7 @@ const EnergyComponentPage = () => {
                         }
                         {component.id === 'optimizer' && demoPrices.length === 24 &&
                           <>
-                            <Typography variant="body2" sx={{margin: 2}}>
+                            <Typography variant="body2" sx={{margin: 2, fontSize: 13, fontWeight: 'bold'}}>
                               Price data for demo time ({demoPrices[0].startDate} - {demoPrices[23].endDate})
                             </Typography>
                             <ul style={{fontSize: 12, listStyle: 'none'}}>
@@ -596,6 +596,13 @@ const EnergyComponentPage = () => {
                                 </li>
                               )}
                             </ul>
+                            <Typography variant="body2" sx={{margin: 2, fontSize: 12}}>
+                              Price types:<br/>
+                              <strong>api</strong> - real price from price api<br/>
+                              <strong>forecasted</strong> - when prices for next day are not available yet,
+                                price for each hour is estimated to match the price at the same time on previous day<br/>
+                              <strong>fixed</strong> - in error situations, fixed value of 5 cents/kWh is set
+                            </Typography>
                             
                           </>
                         }
