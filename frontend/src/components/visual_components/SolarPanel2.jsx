@@ -41,7 +41,7 @@ const SolarPanel2 = ({demoTime, demoStartTime}) => {
   return (
     <div>
       <img
-        id="solar-panel-energy"
+        id="solar-panel-energy-2"
         src={energyBorder}
         alt="energy"
         className="solar-panel-energy-border"

@@ -86,14 +86,132 @@ const Demo = () => {
     const newDemoTime = new Date(time);
     setDemoTime(newDemoTime);
     setDemoPassedHrs(hoursCopy);
+
+    // Outlines are checked hourly
+    const tmphour = newDemoTime.getHours();
+    hideAllOutlines(tmphour);
+    
     if (demoPassedHrs == 0) {
       setDemoStartTime(demoTime);
     }
   }
 
-  window.onpopstate = () => navigate("/");
-
+  window.onpopstate = () => {
+    navigate("/");
+  }
   const [openInstructions, setOpenInstructions] = useState(false);
+  
+  const hideAllOutlines = (eh) => {
+    hideOutlines(eh, "electric-car-1");
+    hideOutlines(eh, "electric-car-2");
+    
+    hideOutlines(eh, "solar-panel-1", true);
+    hideOutlines(eh, "solar-panel-2", true);
+    hideOutlines(eh, "solar-panel-3", true);
+    hideOutlines(eh, "solar-panel-4", true);
+    
+    hideOutlines(eh, "heat-pump");
+    hideOutlines(eh, "freezer");
+    hideOutlines(eh, "hot-water-heater");
+    hideOutlines(eh, "heater");
+    hideOutlines(eh, "stove");
+    hideOutlines(eh, "jacuzzi");
+    hideOutlines(eh, "washing-machine");
+    hideOutlines(eh, "electric-board", true);
+
+  }
+
+  const hideOutlines = (eh, where, productive) => {
+
+    if (productive === undefined) {
+      productive = false;
+    }
+    
+    var edge;
+    if (where == "electric-car-1") {
+      edge = document.getElementById("electric-car-energy-1");
+    } else if (where == "electric-car-2") {
+      edge = document.getElementById("electric-car-energy-2");
+    } else if (where == "heat-pump") {
+      edge = document.getElementById("heat-pump-energy");
+    } else if (where == "solar-panel-1") {
+      edge = document.getElementById("solar-panel-energy-1");
+    } else if (where == "solar-panel-2") {
+      edge = document.getElementById("solar-panel-energy-2");
+    } else if (where == "solar-panel-3") {
+      edge = document.getElementById("solar-panel-energy-3");
+    } else if (where == "solar-panel-4") {
+      edge = document.getElementById("solar-panel-energy-4");
+    } else if (where == "freezer") {
+      edge = document.getElementById("freezer-energy");
+    } else if (where == "heater") {
+      edge = document.getElementById("heater-energy");
+    } else if (where == "hot-water-heater") {
+      edge = document.getElementById("hot-water-heater-energy");
+    } else if (where == "jacuzzi") {
+      edge = document.getElementById("jacuzzi-energy");
+    } else if (where == "stove") {
+      edge = document.getElementById("stove-energy");
+    } else if (where == "washing-machine") {
+      edge = document.getElementById("washing-machine-energy");
+    } else if (where == "electric-board") {
+      edge = document.getElementById("electric-board-energy");
+    }
+    
+    // Data from the component is needed
+    const outlineComponent = energyComponents.components.filter(c => c.id === where)[0];
+    var demoHour = eh;
+    var hourlyCons;
+    var hourlyProd;
+    
+    // Check if component produces energy or consumes it
+    try {
+      if (productive == false) {
+        var consumptionData = outlineComponent.consumption_per_hour_kwh;
+        consumptionData.forEach(h => {
+          h.startHour = new Date(h.startDate).getUTCHours()
+        });
+        hourlyCons = consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0];
+
+        if (hourlyCons < 0.001) { // Certain values can have a fainter glow, if desired
+          edge.style.opacity = "0.0";
+        } else if (hourlyCons < 1) {
+          edge.style.opacity = "0.5";
+        } else {
+          edge.style.opacity = "1.0";
+        }
+      } else if (where === "electric-board") {
+        if (netConsumption.length === 24) {
+          hourlyProd = netConsumption.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0];
+          if(hourlyProd < 0.001) {
+            edge.style.opacity = "0.0";
+          } else if (hourlyProd < 5) {
+            edge.style.opacity = "0.5";
+          } else {
+            edge.style.opacity = "1.0";
+          }
+        }
+      } else {
+        var productionData = outlineComponent.production_per_hour_kwh;
+        if (productionData.length > 0) {
+          productionData.forEach(h => {
+            h.startHour = new Date(h.startDate).getUTCHours()
+        })}
+        hourlyProd = productionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0];
+        if(hourlyProd < 0.001) {
+          edge.style.opacity = "0.0";
+        } else if (hourlyProd < 0.1) {
+          edge.style.opacity = "0.5";
+        } else {
+          edge.style.opacity = "1.0";
+        }
+      }
+ 
+    } catch (e) {
+      // Issue encountered
+      console.log(e.message, "hideOutlines has issues with:", where); 
+    }
+  }
 
   const [open, setOpen] = useState(false);
 
@@ -648,6 +766,8 @@ const Demo = () => {
     </div>
   );
 }
+
+
 
 
 export default Demo;
