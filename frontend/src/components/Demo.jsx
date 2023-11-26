@@ -86,14 +86,132 @@ const Demo = () => {
     const newDemoTime = new Date(time);
     setDemoTime(newDemoTime);
     setDemoPassedHrs(hoursCopy);
+
+    // Outlines are checked hourly
+    const tmphour = newDemoTime.getHours();
+    hideAllOutlines(tmphour);
+    
     if (demoPassedHrs == 0) {
       setDemoStartTime(demoTime);
     }
   }
 
-  window.onpopstate = () => navigate("/");
-
+  window.onpopstate = () => {
+    navigate("/");
+  }
   const [openInstructions, setOpenInstructions] = useState(false);
+  
+  const hideAllOutlines = (eh) => {
+    hideOutlines(eh, "electric-car-1");
+    hideOutlines(eh, "electric-car-2");
+    
+    hideOutlines(eh, "solar-panel-1", true);
+    hideOutlines(eh, "solar-panel-2", true);
+    hideOutlines(eh, "solar-panel-3", true);
+    hideOutlines(eh, "solar-panel-4", true);
+    
+    hideOutlines(eh, "heat-pump");
+    hideOutlines(eh, "freezer");
+    hideOutlines(eh, "hot-water-heater");
+    hideOutlines(eh, "heater");
+    hideOutlines(eh, "stove");
+    hideOutlines(eh, "jacuzzi");
+    hideOutlines(eh, "washing-machine");
+    hideOutlines(eh, "electric-board", true);
+
+  }
+
+  const hideOutlines = (eh, where, productive) => {
+
+    if (productive === undefined) {
+      productive = false;
+    }
+    
+    var edge;
+    if (where == "electric-car-1") {
+      edge = document.getElementById("electric-car-energy-1");
+    } else if (where == "electric-car-2") {
+      edge = document.getElementById("electric-car-energy-2");
+    } else if (where == "heat-pump") {
+      edge = document.getElementById("heat-pump-energy");
+    } else if (where == "solar-panel-1") {
+      edge = document.getElementById("solar-panel-energy-1");
+    } else if (where == "solar-panel-2") {
+      edge = document.getElementById("solar-panel-energy-2");
+    } else if (where == "solar-panel-3") {
+      edge = document.getElementById("solar-panel-energy-3");
+    } else if (where == "solar-panel-4") {
+      edge = document.getElementById("solar-panel-energy-4");
+    } else if (where == "freezer") {
+      edge = document.getElementById("freezer-energy");
+    } else if (where == "heater") {
+      edge = document.getElementById("heater-energy");
+    } else if (where == "hot-water-heater") {
+      edge = document.getElementById("hot-water-heater-energy");
+    } else if (where == "jacuzzi") {
+      edge = document.getElementById("jacuzzi-energy");
+    } else if (where == "stove") {
+      edge = document.getElementById("stove-energy");
+    } else if (where == "washing-machine") {
+      edge = document.getElementById("washing-machine-energy");
+    } else if (where == "electric-board") {
+      edge = document.getElementById("electric-board-energy");
+    }
+    
+    // Data from the component is needed
+    const outlineComponent = energyComponents.components.filter(c => c.id === where)[0];
+    var demoHour = eh;
+    var hourlyCons;
+    var hourlyProd;
+    
+    // Check if component produces energy or consumes it
+    try {
+      if (productive == false) {
+        var consumptionData = outlineComponent.consumption_per_hour_kwh;
+        consumptionData.forEach(h => {
+          h.startHour = new Date(h.startDate).getUTCHours()
+        });
+        hourlyCons = consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0];
+
+        if (hourlyCons < 0.001) { // Certain values can have a fainter glow, if desired
+          edge.style.opacity = "0.0";
+        } else if (hourlyCons < 1) {
+          edge.style.opacity = "0.5";
+        } else {
+          edge.style.opacity = "1.0";
+        }
+      } else if (where === "electric-board") {
+        if (netConsumption.length === 24) {
+          hourlyProd = netConsumption.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0];
+          if(hourlyProd < 0.001) {
+            edge.style.opacity = "0.0";
+          } else if (hourlyProd < 5) {
+            edge.style.opacity = "0.5";
+          } else {
+            edge.style.opacity = "1.0";
+          }
+        }
+      } else {
+        var productionData = outlineComponent.production_per_hour_kwh;
+        if (productionData.length > 0) {
+          productionData.forEach(h => {
+            h.startHour = new Date(h.startDate).getUTCHours()
+        })}
+        hourlyProd = productionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0];
+        if(hourlyProd < 0.001) {
+          edge.style.opacity = "0.0";
+        } else if (hourlyProd < 0.1) {
+          edge.style.opacity = "0.5";
+        } else {
+          edge.style.opacity = "1.0";
+        }
+      }
+ 
+    } catch (e) {
+      // Issue encountered
+      console.log(e.message, "hideOutlines has issues with:", where); 
+    }
+  }
 
   const [open, setOpen] = useState(false);
 
@@ -217,6 +335,69 @@ const Demo = () => {
     h.value = (hourConsumption.value - hourProduction.value).toFixed(2);
   })
 
+  const demoHour = new Date(demoTime).getHours();
+  const [download, setDownload] = useState(localStorage.getItem('download') || false);
+  const [upload, setUpload] = useState(localStorage.getItem('upload') || false);
+  let demoPassedHours = 0;
+  const startHour = new Date(demoStartTime).getHours();
+  const speed = useState(localStorage.getItem('selectedSpeed'))[0];
+  const isPaused = localStorage.getItem('isDemoPaused') === 'true'; 
+  const passedTime = localStorage.getItem('passedTime');
+  const [nextDownloadIn, setNextDownloadIn] = useState(localStorage.getItem('nextDownloadIn') || 0);
+
+  if (demoHour === startHour) {
+    demoPassedHours = 0;
+  } else if (demoHour > startHour) {
+    demoPassedHours = demoHour - startHour;
+  } else {
+    demoPassedHours = (demoHour + 24) - startHour;
+  }
+
+  const hoursLeft = 23 - demoPassedHours;
+  const maxSeconds = (144*speed)/1000;
+  const secondsPerHour = maxSeconds / 24;
+  const timeLeft = hoursLeft * secondsPerHour;
+  
+  useEffect(() => {
+    let intervalId;
+    if (! isPaused && timeLeft > 0) {
+      intervalId = setInterval(() => {
+        if (passedTime === 0 || passedTime % 5 === 0) {
+          setDownload(true);
+          setUpload(false);
+          localStorage.setItem('download', true);
+          localStorage.setItem('upload', false);
+          setNextDownloadIn(5);
+          localStorage.setItem('nextDownloadIn', 5);
+        } else if (passedTime === 1 || passedTime % 5 === 1) {
+          setDownload(false);
+          setUpload(true);
+          localStorage.setItem('download', false);
+          localStorage.setItem('upload', true);
+          setNextDownloadIn(4);
+          localStorage.setItem('nextDownloadIn', 4);   
+        } else {
+          setDownload(false);
+          setUpload(false);
+          localStorage.setItem('download', false);
+          localStorage.setItem('upload', false);
+          setNextDownloadIn(parseInt(nextDownloadIn) - 1);
+          localStorage.setItem('nextDownloadIn', parseInt(nextDownloadIn) - 1);              
+        }
+        localStorage.setItem('passedTime', parseInt(passedTime) + 1);
+      }, 1000); 
+    } else if (timeLeft === 0) {
+      setDownload(false);
+      setUpload(false);
+      localStorage.setItem('download', false);
+      localStorage.setItem('upload', false);
+      localStorage.setItem('nextDownloadIn', 0);
+      localStorage.setItem('passedTime', 0);
+    }
+    return () => clearInterval(intervalId);
+  }, [isPaused, download, upload, passedTime, timeLeft, nextDownloadIn])
+
+  
   return (
     //Created container grid
     <div>
@@ -600,6 +781,8 @@ const Demo = () => {
     </div>
   );
 }
+
+
 
 
 export default Demo;

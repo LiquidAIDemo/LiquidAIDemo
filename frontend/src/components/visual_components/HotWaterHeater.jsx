@@ -22,6 +22,8 @@ const HotWaterHeater = ({demoTime, demoStartTime}) => {
 
   const navigate = useNavigate();
 
+  const upload = localStorage.getItem('upload') === 'true';
+
   const handleClick = () =>
     navigate(`/component/${component.id}`, 
       {
@@ -92,21 +94,25 @@ const HotWaterHeater = ({demoTime, demoStartTime}) => {
             type={component.type}
             description={component.description}
             demoTime={demoTime}
+            demoStartTime={demoStartTime}
             />
         </Popover>  
-      <img
-        id="download-icon"
-        src={downloadIcon}
-        alt="download-icon"
-        className="download-icon"
-        style={{
-          position: 'absolute',
-          top: '22%',
-          left: '20.5%',
-          width: '2.5%',
-          height: '2.5%',
-        }}
-      />
+      {upload &&
+        <img
+          id="download-icon"
+          src={downloadIcon}
+          alt="download-icon"
+          className="download-icon"
+          style={{
+            position: 'absolute',
+            top: '22%',
+            left: '20.5%',
+            width: '2.5%',
+            height: '2.5%',
+          }}
+        />
+      }
+      
     </div>
   )
 }

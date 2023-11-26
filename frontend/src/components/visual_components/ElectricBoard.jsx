@@ -33,13 +33,16 @@ const ElectricBoard = ({demoTime, netConsumption, visibleComponents, demoStartTi
   
   const handleHoverOn = (event) => {
     setAnchorEl(event.currentTarget);
+    //hideOutline(true);
   };
 
   const handleHoverAway = () => {
     setAnchorEl(null);
+    //hideOutline(false);
   };
 
   const open = Boolean(anchorEl);
+
 
   return (
     <div>
@@ -95,6 +98,7 @@ const ElectricBoard = ({demoTime, netConsumption, visibleComponents, demoStartTi
             demoTime={demoTime}
             netConsumption={netConsumption}
             visibleComponents={visibleComponents}
+            demoStartTime={demoStartTime}
             />
         </Popover>  
     </div>

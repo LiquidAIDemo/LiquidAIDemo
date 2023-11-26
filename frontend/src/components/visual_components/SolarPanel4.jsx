@@ -41,7 +41,7 @@ const SolarPanel4 = ({demoTime, demoStartTime}) => {
   return (
     <div>
       <img
-        id="solar-panel-energy"
+        id="solar-panel-energy-4"
         src={energyBorder}
         alt="energy"
         className="solar-panel-energy-border"
@@ -90,6 +90,7 @@ const SolarPanel4 = ({demoTime, demoStartTime}) => {
             type={component.type}
             description={component.description}
             demoTime={demoTime}
+            demoStartTime={demoStartTime}
             />
         </Popover>  
     </div>
