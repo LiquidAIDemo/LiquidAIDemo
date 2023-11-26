@@ -357,8 +357,7 @@ const Demo = () => {
   const maxSeconds = (144*speed)/1000;
   const secondsPerHour = maxSeconds / 24;
   const timeLeft = hoursLeft * secondsPerHour;
-
-  //console.log(isPaused);
+  
   useEffect(() => {
     let intervalId;
     if (! isPaused && timeLeft > 0) {
@@ -387,7 +386,7 @@ const Demo = () => {
         }
         localStorage.setItem('passedTime', parseInt(passedTime) + 1);
       }, 1000); 
-    } else {
+    } else if (timeLeft === 0) {
       setDownload(false);
       setUpload(false);
       localStorage.setItem('download', false);
