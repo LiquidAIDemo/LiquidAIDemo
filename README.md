@@ -56,6 +56,22 @@ In the root directory of the project, run the following command to execute unit 
 npm test
 ```
 
+## Run E2E Tests
+
+Before executing E2E tests, make sure the demo is running for Cypress to be able to interact with it.
+
+In the frontend folder, run the following command to execute E2E tests with Cypress Test Runner:
+
+```
+npm run cypress:open
+```
+
+Tests can also be ran from command line with command:
+
+```
+npm run test:e2e
+```
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
