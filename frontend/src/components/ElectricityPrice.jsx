@@ -92,8 +92,10 @@ function ElectricityPrice({ demoTime, demoPassedHrs, totalConsumption }) {
 
   useEffect(() => {
     try {
-      axios("/api")
+      axios(import.meta.env.PROD ? '/backend' : 'http://localhost:3001/')
       .then(res => {
+        console.log("Prices fetched:", res.data)
+        console.log
         setPrices(res.data)
       })
     } catch (e) {
