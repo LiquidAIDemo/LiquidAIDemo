@@ -176,12 +176,12 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
         </FormControl>
       </Box>
 
-      <Box style={{padding: '1vh'}}>
+      <Box style={{padding: '1vh'}} id="demotimebox">
         <b>Demo: </b> {String(demoTimeDateObj.getHours()).padStart(2, '0')}:{String(demoPassedMinutes).padStart(2, '0')}, {getDayName(demoTimeDateObj)} {demoTimeDateObj.getDate()}.{demoTimeDateObj.getMonth()+1}. &#x1F4C5;
         <br/>
 
         <ThemeProvider theme={theme}>
-          <Button variant="contained" color="water" sx={{ borderRadius: 2}} onClick={() => handleResetClick(start)}>
+          <Button variant="contained" color="water" sx={{ borderRadius: 2}} onClick={() => handleResetClick(start)} id='restart'>
             Restart
           </Button>
         </ThemeProvider>
@@ -189,7 +189,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
           demoPassedHours < 24 ? (
             <ThemeProvider theme={theme}>
               <Button variant="contained" color="water" sx={{ borderRadius: 2}} 
-                      style={{ marginLeft: '10px '}} onClick={togglePause}>
+                      style={{ marginLeft: '10px '}} onClick={togglePause} id='pause'>
                 {isPaused ? 'Continue' : 'Pause'}
               </Button>
             </ThemeProvider>

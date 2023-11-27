@@ -15,7 +15,8 @@ const consumerComponent = {
   name: 'Heat pump',
   type: 'consumer',
   description: 'Heat pump is used to adjust the temperature inside the house.',
-  demoTime: now
+  demoTime: {demoTime: now},
+  demoStartTime: {demoStartTime: now.getTime()}
 }
 
 const producerComponent = {
@@ -23,7 +24,8 @@ const producerComponent = {
   name: 'Solar panel 1',
   type: 'producer',
   description: 'Solar panels turn sunlight into energy.',
-  demoTime: now
+  demoTime: {demoTime: now},
+  demoStartTime: {demoStartTime: now.getTime()}
 }
 
 const electricBoard = {
@@ -31,9 +33,10 @@ const electricBoard = {
   name: 'Electric board',
   type: 'producer',
   description: 'Electric board represents electricity coming from outside the house to balance energy production and consumption.',
-  demoTime: now,
+  demoTime: {demoTime: now},
   netConsumption: {netConsumption: [{hour: now.getHours(), value: 3}]},
-  visibleComponents: {visibleComponents: [{id: "heat-pump", visibility: true}, {id: "solar-panel-1", visibility: true}]}
+  visibleComponents: {visibleComponents: [{id: "heat-pump", visibility: true}, {id: "solar-panel-1", visibility: true}]},
+  demoStartTime: {demoStartTime: now.getTime()}
 }
 
 let mockComponent = consumerComponent
@@ -47,7 +50,7 @@ jest.mock('react-router-dom', () => ({
 }))
 
 test("renders consumer component correctly", async () => {
-  axiosMock.onGet('/api').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
+  axiosMock.onGet('/api').reply(200, [])
   await act(async () => {
     render(
       <MemoryRouter initialEntries={[componentPagePath]}>
