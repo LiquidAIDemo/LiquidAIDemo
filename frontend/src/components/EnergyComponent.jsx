@@ -2,7 +2,7 @@ import { Card, CardContent, Typography } from '@mui/material';
 import energyComponents from "../../test_data/energyComponents.json";
 
 const EnergyComponent = (props) => {
-  const { id, name, type, description, demoTime, netConsumption, visibleComponents } = props;
+  const { id, name, type, description, demoTime, netConsumption, visibleComponents, demoStartTime } = props;
   const component = {
     id: id,
     name: name,
@@ -10,7 +10,8 @@ const EnergyComponent = (props) => {
     description: description,
     demoTime: new Date(demoTime),
     netConsumption: netConsumption,
-    visibleComponents: visibleComponents
+    visibleComponents: visibleComponents,
+    demoStartTime: demoStartTime
   }
   const componentData = energyComponents.components.filter(c => c.id === component.id)[0];
   let productionData = []
@@ -18,8 +19,12 @@ const EnergyComponent = (props) => {
   let totalProduction = 0;
   let totalConsumption = 0;
   let ownProduction = 0;
-
-  const demoHour = new Date(demoTime).getHours()
+  
+  const demoHour = new Date(demoTime).getHours();
+  const download = localStorage.getItem('download') === 'true';
+  const upload = localStorage.getItem('upload') === 'true';
+  const nextDownloadIn = localStorage.getItem('nextDownloadIn');
+  const isPaused = localStorage.getItem('isDemoPaused') === 'true';
 
   if (component.type === "consumer") {
     consumptionData = componentData.consumption_per_hour_kwh
@@ -47,9 +52,7 @@ const EnergyComponent = (props) => {
       })
       totalProduction = (totalConsumption - ownProduction).toFixed(2);
     }
-  }  
-
-
+  } 
   
   return (
     
@@ -93,6 +96,39 @@ const EnergyComponent = (props) => {
             Total use of outside energy during the demo {totalProduction} kWh
           </Typography>
         </> }
+        {component.id === "optimizer" &&
+          <>
+          <Typography variant='body2' sx={{marginBottom: 1}}>
+            <strong>{name}</strong><br/>
+          </Typography>  
+          <Typography variant='body2' sx={{marginBottom: 1}}>
+            {description}
+          </Typography>
+          {! isPaused && 
+          <>
+            {download && 
+            <Typography>
+              <strong>Data is being downloaded from the internet</strong><br/>
+            </Typography>
+            }
+            {upload && 
+            <Typography>
+              <strong>Data is being uploaded to the components</strong><br/>
+            </Typography>
+            }
+            {! download && ! upload &&
+            <Typography>
+              <strong>Next download in {nextDownloadIn} seconds</strong>
+            </Typography>
+            }
+          </>
+          }
+          {isPaused &&
+          <Typography variant='body2' sx={{marginBottom: 1}}>
+            Restart the demo to view optimization  
+          </Typography>}
+        </>
+        }
         <Typography variant='body2'>
           Click the component for more info
         </Typography>

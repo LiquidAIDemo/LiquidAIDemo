@@ -91,6 +91,7 @@ const Freezer = ({demoTime, demoStartTime}) => {
             type={component.type}
             description={component.description}
             demoTime={demoTime}
+            demoStartTime={demoStartTime}
             />
         </Popover>  
     </div>
