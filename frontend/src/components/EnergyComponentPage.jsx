@@ -4,29 +4,21 @@ import ArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { useNavigate, useLocation } from 'react-router-dom';
 import energyComponents from "../../../test_data/energyComponents.json";
 import { BarChart } from '@mui/x-charts/BarChart';
-import backgroundImage from "../assets/component_page_background.png";
-import carImage from "../assets/car.png";
-import carEnergy from "../assets/car_energy.png";
-import freezerImage from "../assets/freezer.png";
-import freezerEnergy from "../assets/freezer_energy.png";
-import heaterImage from "../assets/heater.png";
-import heaterEnergy from "../assets/heater_energy.png";
-import airHeatPumpImage from "../assets/air_heat_pump.png";
-import heatPumpEnergy from "../assets/air_heat_pump_energy.png";
-import hotWaterHeaterImage from "../assets/hot_water_heater.png";
-import waterHeaterEnergy from "../assets/hot_water_heater_energy.png";
-import jacuzziImage from "../assets/jacuzzi.png";
-import jacuzziEnergy from "../assets/jacuzzi_energy.png";
-import solarPanelImage from "../assets/solar_panel.png";
-import solarPanelEnergy from "../assets/solar_panel_energy.png";
-import stoveImage from "../assets/stove.png";
-import stoveEnergy from "../assets/stove_energy.png";
-import washingMachineImage from "../assets/washing_machine.png";
-import WashingMachineEnergy from "../assets/washing_machine_energy.png";
-import electricBoardImage from "../assets/electric_board.png";
-import electricBoardEnergy from "../assets/electric_board_energy.png";
-import optimizerImage from "../assets/optimizer.png";
-import optimizerBorder from "../assets/optimizer_border.png";
+import car1View from "../assets/car_1_component_page.png";
+import car2View from "../assets/car_2_component_page.png";
+import electricBoardView from "../assets/electric_board_component_page.png";
+import fridgeView from "../assets/fridge_component_page.png";
+import heatPumpView from "../assets/heat_pump_component_page.png";
+import heaterView from "../assets/heater_component_page.png";
+import waterHeaterView from "../assets/hot_water_heater_component_page.png";
+import jacuzziView from "../assets/jacuzzi_component_page.png";
+import optimizerView from "../assets/optimizer_component_page.png";
+import WashingMachineView from "../assets/washing_machine_component_page.png";
+import solarPanel1View from "../assets/solar_panel_1_component_page.png";
+import solarPanel2View from "../assets/solar_panel_2_component_page.png";
+import solarPanel3View from "../assets/solar_panel_3_component_page.png";
+import solarPanel4View from "../assets/solar_panel_4_component_page.png";
+import stoveView from "../assets/stove_component_page.png";
 import NotFound from './NotFound';
 import { useState, useEffect } from 'react';
 import { ChartContainer } from '@mui/x-charts/ChartContainer';
@@ -55,40 +47,22 @@ const theme = createTheme({
 });
 
 const imageMapping = {
-  'electric-board': electricBoardImage,
-  'electric-car-1': carImage,
-  'electric-car-2': carImage,
-  'freezer': freezerImage,
-  'heater': heaterImage,
-  'heat-pump': airHeatPumpImage,
-  'hot-water-heater': hotWaterHeaterImage,
-  'jacuzzi': jacuzziImage,
-  'solar-panel-1': solarPanelImage,
-  'solar-panel-2': solarPanelImage,
-  'solar-panel-3': solarPanelImage,
-  'solar-panel-4': solarPanelImage,
-  'stove': stoveImage,
-  'washing-machine': washingMachineImage,
-  'optimizer': optimizerImage
+  'electric-board': electricBoardView,
+  'electric-car-1': car1View,
+  'electric-car-2': car2View,
+  'freezer': fridgeView,
+  'heater': heaterView,
+  'heat-pump': heatPumpView,
+  'hot-water-heater': waterHeaterView,
+  'jacuzzi': jacuzziView,
+  'solar-panel-1': solarPanel1View,
+  'solar-panel-2': solarPanel2View,
+  'solar-panel-3': solarPanel3View,
+  'solar-panel-4': solarPanel4View,
+  'stove': stoveView,
+  'washing-machine': WashingMachineView,
+  'optimizer': optimizerView
 };
-
-const borderMapping = {
-  'electric-board': electricBoardEnergy,
-  'electric-car-1': carEnergy,
-  'electric-car-2': carEnergy,
-  'freezer': freezerEnergy,
-  'heater': heaterEnergy,
-  'heat-pump': heatPumpEnergy,
-  'hot-water-heater': waterHeaterEnergy,
-  'jacuzzi': jacuzziEnergy,
-  'solar-panel-1': solarPanelEnergy,
-  'solar-panel-2': solarPanelEnergy,
-  'solar-panel-3': solarPanelEnergy,
-  'solar-panel-4': solarPanelEnergy,
-  'stove': stoveEnergy,
-  'washing-machine': WashingMachineEnergy,
-  'optimizer': optimizerBorder
-}
 
 const EnergyComponentPage = () => { 
 
@@ -337,68 +311,25 @@ const EnergyComponentPage = () => {
                     height: 0,
                   }}
                 >
-                  <img
-                        src={backgroundImage}
-                        alt='Home yard'
-                        className='background-image'
-                        style={{
-                          position:'absolute',
-                          top: 0,
-                          left: 0,
-                          width: '100%',
-                          height: '92%',
-                          objectFit: 'cover',
-                          border: '1px solid #DCDCDC', 
-                          borderRadius: '5px', 
-                          boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                        }}
-                      />
-                      <div
-                        className='overlay-content'
-                        style={{
-                          position: 'absolute',
-                          top: 0,
-                          left: 0,
-                          width: '100%',
-                          height: '100%',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'space-between',
-                        }}
-                      >
-                        <img
-                          id={`${component.id}-energy`}
-                          src={borderMapping[component.id]}
-                          alt={component.id}
-                          className={`${component.id}-energy`}
-                          style={{
-                            display: 'block',
-                            marginLeft: 'auto',
-                            marginRight: 'auto',
-                            marginTop: 'auto',
-                            marginBottom: 'auto',
-                            width: 'auto',
-                            height: '56%',
-                          }}
-                        />
-                        <img
-                          id={component.id}
-                          src={imageMapping[component.id]}
-                          alt={component.id}
-                          className={`${component.id}-image`}
-                          style={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
-                            width: 'auto',
-                            height: '50%',
-                          }}
-                        />
-                      </div>
-                    </div>
-                  </Box>
-                </Grid>
+                    <img
+                      src={imageMapping[component.id]}
+                      alt='Component view'
+                      className='component-view-image'
+                      style={{
+                        position:'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '92%',
+                        objectFit: 'cover',
+                        border: '1px solid #DCDCDC', 
+                        borderRadius: '5px', 
+                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      }}
+                    />
+                  </div>
+                </Box>
+              </Grid>
                 <Grid item xs={2} style={{position: 'relative', marginTop: '53px'}}>
                   <Grid container spacing={4} columns={1}>
                     <Grid item xs={1} minWidth='500px'>
