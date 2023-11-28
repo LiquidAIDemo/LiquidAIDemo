@@ -1,10 +1,13 @@
 import express from "express";
 import fs from "fs/promises";
+import cors from "cors";
 import checkAndFetchData from "./src/fetchElectricityPrice.js";
 import convertJsonToFinnishTime from "./src/convertToFinnishTime.js";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+app.use(cors());
 
 const PRICES_FILE = "./data/prices.json";
 
@@ -36,7 +39,7 @@ app.get("/", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
 
 // Update data every 59 minutes

@@ -26,7 +26,7 @@ import SolarPanel3 from './visual_components/SolarPanel3';
 import SolarPanel4 from './visual_components/SolarPanel4';
 import WashingMachine from './visual_components/WashingMachine';
 import ElectricBoard from './visual_components/ElectricBoard';
-import energyComponents from "../../../test_data/energyComponents.json";
+import energyComponents from "../../test_data/energyComponents.json";
 
 const theme = createTheme({
   palette: {

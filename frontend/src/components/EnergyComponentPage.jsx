@@ -2,7 +2,7 @@ import { Grid, Box, Button, Typography } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import ArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { useNavigate, useLocation } from 'react-router-dom';
-import energyComponents from "../../../test_data/energyComponents.json";
+import energyComponents from "../../test_data/energyComponents.json";
 import { BarChart } from '@mui/x-charts/BarChart';
 import car1View from "../assets/car_1_component_page.png";
 import car2View from "../assets/car_2_component_page.png";
@@ -76,7 +76,7 @@ const EnergyComponentPage = () => {
 
   useEffect(() => {
     try {
-      axios("/api")
+      axios(import.meta.env.PROD ? '/backend' : 'http://localhost:3001/')
       .then(res => {
         setPrices(res.data)
       })
