@@ -55,6 +55,7 @@ const ElectricCar2 = ({demoTime, demoStartTime}) => {
           left: '82.4%',
           width: '11%',
           height: '28%',
+          opacity: window.sessionStorage.getItem(component.id)
         }}
       />
       <img

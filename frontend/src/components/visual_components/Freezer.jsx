@@ -52,6 +52,7 @@ const Freezer = ({demoTime, demoStartTime}) => {
           left: '63.6%',
           width: '4.5%',
           height: '11%',
+          opacity: window.sessionStorage.getItem(component.id)
         }}
       />
       <img

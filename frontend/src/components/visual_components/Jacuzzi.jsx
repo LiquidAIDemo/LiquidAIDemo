@@ -53,6 +53,7 @@ const Jacuzzi = ({demoTime, demoStartTime}) => {
           left: '6.2%',
           width: '11%',
           height: '13%',
+          opacity: window.sessionStorage.getItem(component.id)
         }}
       />
       <img

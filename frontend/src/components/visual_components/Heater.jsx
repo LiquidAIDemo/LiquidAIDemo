@@ -52,6 +52,7 @@ const Heater = ({demoTime, demoStartTime}) => {
           left: '21%',
           width: '3.5%',
           height: '4%',
+          opacity: window.sessionStorage.getItem(component.id)
         }}
       />
       <img

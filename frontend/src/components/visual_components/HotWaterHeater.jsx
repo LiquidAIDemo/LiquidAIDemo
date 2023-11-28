@@ -55,6 +55,7 @@ const HotWaterHeater = ({demoTime, demoStartTime}) => {
           left: '21%',
           width: '3.7%',
           height: '4.7%',
+          opacity: window.sessionStorage.getItem(component.id)
         }}
       />
       <img

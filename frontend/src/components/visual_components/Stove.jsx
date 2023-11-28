@@ -50,7 +50,8 @@ const Stove = ({demoTime, demoStartTime}) => {
           top: '3.5%',
           left: '75%',
           width: '4%',
-          height: '3.6%'
+          height: '3.6%',
+          opacity: window.sessionStorage.getItem(component.id)
         }}
       />
       <img

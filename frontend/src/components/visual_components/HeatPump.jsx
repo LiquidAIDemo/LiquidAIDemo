@@ -55,6 +55,7 @@ const HeatPump = ({demoTime, demoStartTime}) => {
           left: '37%',
           width: '2.5%',
           height: '9%',
+          opacity: window.sessionStorage.getItem(component.id)
         }}
       />
       <img

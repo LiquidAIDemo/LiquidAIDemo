@@ -57,6 +57,7 @@ const ElectricBoard = ({demoTime, netConsumption, visibleComponents, demoStartTi
           left: '55.4%',
           width: '1.8%',
           height: '5.8%',
+          opacity: window.sessionStorage.getItem(component.id)
         }}
       />
       <img

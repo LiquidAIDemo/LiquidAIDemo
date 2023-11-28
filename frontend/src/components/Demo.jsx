@@ -80,6 +80,8 @@ const Demo = () => {
   const [demoTime, setDemoTime] = useLocalStorageState('demoTime', new Date().setMinutes(0, 0));
   const [demoPassedHrs, setDemoPassedHrs] = useLocalStorageState('demoPassedHours', 0);
   const [demoStartTime, setDemoStartTime] = useLocalStorageState('demoStartTime', new Date().setMinutes(0, 0));
+  const [openInstructions, setOpenInstructions] = useState(false);
+  window.onpopstate = () => navigate("/");
   
   const handleDemoTimeChange = (time, hours) => {
     const hoursCopy = hours;
@@ -95,11 +97,6 @@ const Demo = () => {
       setDemoStartTime(demoTime);
     }
   }
-
-  window.onpopstate = () => {
-    navigate("/");
-  }
-  const [openInstructions, setOpenInstructions] = useState(false);
   
   const hideAllOutlines = (eh) => {
     hideOutlines(eh, "electric-car-1");
@@ -174,21 +171,27 @@ const Demo = () => {
         hourlyCons = consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0];
 
         if (hourlyCons < 0.001) { // Certain values can have a fainter glow, if desired
-          edge.style.opacity = "0.0";
+          //edge.style.opacity = "0.0";
+          window.sessionStorage.setItem(where, "0.0");
         } else if (hourlyCons < 1) {
-          edge.style.opacity = "0.5";
+          //edge.style.opacity = "0.5";
+          window.sessionStorage.setItem(where, "0.5");
         } else {
-          edge.style.opacity = "1.0";
+          //edge.style.opacity = "1.0";
+          window.sessionStorage.setItem(where, "1.0");
         }
       } else if (where === "electric-board") {
         if (netConsumption.length === 24) {
           hourlyProd = netConsumption.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0];
           if(hourlyProd < 0.001) {
-            edge.style.opacity = "0.0";
+            //edge.style.opacity = "0.0";
+            window.sessionStorage.setItem(where, "0.0");
           } else if (hourlyProd < 5) {
-            edge.style.opacity = "0.5";
+            //edge.style.opacity = "0.5";
+            window.sessionStorage.setItem(where, "0.5");
           } else {
-            edge.style.opacity = "1.0";
+            //edge.style.opacity = "1.0";
+            window.sessionStorage.setItem(where, "1.0");
           }
         }
       } else {

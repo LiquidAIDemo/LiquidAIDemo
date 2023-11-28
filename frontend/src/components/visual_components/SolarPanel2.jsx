@@ -50,7 +50,8 @@ const SolarPanel2 = ({demoTime, demoStartTime}) => {
           top: '69%',
           left: '19%',
           width: '12%',
-          height: '10%'
+          height: '10%',
+          opacity: window.sessionStorage.getItem(component.id)
         }}
       />
       <img
