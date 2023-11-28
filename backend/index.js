@@ -1,10 +1,13 @@
 import express from "express";
 import fs from "fs/promises";
+import cors from "cors";
 import checkAndFetchData from "./src/fetchElectricityPrice.js";
 import convertJsonToFinnishTime from "./src/convertToFinnishTime.js";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+app.use(cors());
 
 const PRICES_FILE = "./data/prices.json";
 
