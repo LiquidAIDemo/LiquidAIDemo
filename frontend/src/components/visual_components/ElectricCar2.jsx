@@ -20,7 +20,7 @@ const ElectricCar2 = ({demoTime, demoStartTime}) => {
 
   const navigate = useNavigate();
 
-  const upload = localStorage.getItem('upload') === 'true';
+  const upload = window.sessionStorage.getItem('upload') === 'true';
   
   const handleClick = () =>
     navigate(`/component/${component.id}`, 
