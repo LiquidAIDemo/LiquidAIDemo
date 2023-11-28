@@ -47,7 +47,8 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
     if (!isPaused) {
     
       intervalId = setInterval(() => {
-        
+        setSpeed(speed);
+        window.sessionStorage.setItem('selectedSpeed', speed);        
         // Increase hours while passed hours are low enough
         if (demoPassedHours === 0 && demoPassedMinutes === 0) {
           setPassedTime(0);
