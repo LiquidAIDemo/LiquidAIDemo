@@ -763,8 +763,7 @@ const Demo = () => {
                   border: '1px solid #DCDCDC', 
                   borderRadius: '5px',
                   boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',}} 
-                  height="45vh">  
-                Savings
+                  height="45vh">
                   <ElectricityPrice demoTime={demoTime} demoPassedHrs={parseInt(demoPassedHrs)} totalConsumption={totalConsumption} />
                 </Box>
               </Grid>

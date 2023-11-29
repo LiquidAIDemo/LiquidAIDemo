@@ -32,7 +32,6 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
 
   const [isPaused, setIsPaused] = useState(window.sessionStorage.getItem('isDemoPaused') === 'true' || false);
   
-  
   // Default speed 1 sec
   const [speed, setSpeed] = useState(window.sessionStorage.getItem('selectedSpeed') || 1000/6);
   const [start, setStart] = useState(window.sessionStorage.getItem('selectedStart') || "next");
