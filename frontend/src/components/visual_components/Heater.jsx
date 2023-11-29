@@ -11,6 +11,7 @@ const Heater = ({demoTime, demoStartTime}) => {
     id: "heater", 
     name: "Heater",
     type: "consumer",
+    nature: "constant",
     description: "Heater warms up the sauna.",
     demoTime: {demoTime},
     demoStartTime: {demoStartTime},

@@ -11,6 +11,7 @@ const ElectricBoard = ({demoTime, netConsumption, visibleComponents, demoStartTi
     id: "electric-board", 
     name: "Electric board",
     type: "producer",
+    nature: "constant_producer",
     description: "Electric board represents electricity coming from outside the house \
       to balance energy production and consumption.",
     demoTime: {demoTime},

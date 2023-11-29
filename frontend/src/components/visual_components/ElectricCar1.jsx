@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import EnergyComponent from "../EnergyComponent";
 import { Popover } from '@mui/material';
+import { ChartsLegend } from "@mui/x-charts/ChartsLegend";
 
 const ElectricCar1 = ({demoTime, demoStartTime}) => {
 
@@ -12,6 +13,7 @@ const ElectricCar1 = ({demoTime, demoStartTime}) => {
     id: "electric-car-1", 
     name: "Electric car 1",
     type: "consumer",
+    nature: "chargeable",
     description: "Electric car is charged at the charging station.",
     demoTime: {demoTime},
     demoStartTime: {demoStartTime},

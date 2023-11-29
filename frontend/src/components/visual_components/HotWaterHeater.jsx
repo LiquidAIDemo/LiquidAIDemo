@@ -12,6 +12,7 @@ const HotWaterHeater = ({demoTime, demoStartTime}) => {
     id: "hot-water-heater", 
     name: "Hot water heater",
     type: "consumer",
+    nature: "constant",
     description: "Hot water heater stores hot water for the shower.",
     demoTime: {demoTime},
     demoStartTime: {demoStartTime},

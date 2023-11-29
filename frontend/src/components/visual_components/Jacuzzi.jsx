@@ -11,6 +11,7 @@ const Jacuzzi = ({demoTime, demoStartTime}) => {
     id: "jacuzzi", 
     name: "Jacuzzi",
     type: "consumer",
+    nature: "manual",
     description: "Jacuzzi has an efficient heating system to warm up the water.",
     demoTime: {demoTime},
     demoStartTime: {demoStartTime},

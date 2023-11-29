@@ -11,6 +11,7 @@ const Freezer = ({demoTime, demoStartTime}) => {
     id: "freezer", 
     name: "Fridge & Freezer",
     type: "consumer",
+    nature: "manual",
     description: "Food stays cold in the fridge and freezer.",
     demoTime: {demoTime},
     demoStartTime: {demoStartTime},

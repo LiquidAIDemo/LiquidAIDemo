@@ -86,6 +86,17 @@ const borderMapping = {
   'washing-machine': WashingMachineEnergy,
 }
 
+// Optimizer for components that use energy all the time
+function optimizeConstant() {
+  
+}
+
+// Optimizer for components that may not be available all the time
+// Receives the list of hours where charging is not possible
+function optimizeRechargeable(inactive) {
+  
+}
+
 const EnergyComponentPage = () => { 
 
   const navigate = useNavigate();
@@ -162,7 +173,8 @@ const EnergyComponentPage = () => {
         })
         
         // Check if component allows optimizing from bool optimize
-        if (component.optimize) {
+        if (component.optimize) { // Values needed: totalConsumption, consumptionData, optimizedConsumption, savings
+          //optimizeConstant();
           const optimal24hConsumption = parseFloat(totalConsumption);
           const maxHourlyConsumption = parseFloat(consumptionData.reduce((a, b) => Math.max(a, b.value), 0)); // reduce consumptionData into a single value
           

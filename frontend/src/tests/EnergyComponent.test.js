@@ -13,6 +13,7 @@ const consumerComponent = {
   id: 'heat-pump',
   name: 'Heat pump',
   type: 'consumer',
+  nature: 'constant',
   description: 'Heat pump is used to adjust the temperature inside the house.',
   demoTime: now
 }
@@ -21,6 +22,7 @@ const producerComponent = {
   id: 'solar-panel-1', 
   name: 'Solar panel 1',
   type: 'producer',
+  nature: 'constant_producer',
   description: 'Solar panels turn sunlight into energy.',
   demoTime: now
 }
@@ -29,6 +31,7 @@ const electricBoard = {
   id: 'electric-board', 
   name: 'Electric board',
   type: 'producer',
+  nature: 'constant_producer',
   description: 'Electric board represents electricity coming from outside the house to balance energy production and consumption.',
   demoTime: now,
   netConsumption: [{hour: now.getHours(), value: 3}],

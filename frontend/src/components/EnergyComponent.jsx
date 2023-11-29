@@ -2,11 +2,12 @@ import { Card, CardContent, Typography } from '@mui/material';
 import energyComponents from "../../../test_data/energyComponents.json";
 
 const EnergyComponent = (props) => {
-  const { id, name, type, description, demoTime, netConsumption, visibleComponents } = props;
+  const { id, name, type, nature, description, demoTime, netConsumption, visibleComponents } = props;
   const component = {
     id: id,
     name: name,
     type: type,
+    nature: nature,
     description: description,
     demoTime: new Date(demoTime),
     netConsumption: netConsumption,

@@ -11,6 +11,7 @@ const SolarPanel4 = ({demoTime, demoStartTime}) => {
     id: "solar-panel-4", 
     name: "Solar panel 4",
     type: "producer",
+    nature: "constant_producer",
     description: "Solar panels turn sunlight into energy.",
     demoTime: {demoTime},
     demoStartTime: {demoStartTime}
