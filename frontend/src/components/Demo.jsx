@@ -80,6 +80,8 @@ const Demo = () => {
   const [demoTime, setDemoTime] = useLocalStorageState('demoTime', new Date().setMinutes(0, 0));
   const [demoPassedHrs, setDemoPassedHrs] = useLocalStorageState('demoPassedHours', 0);
   const [demoStartTime, setDemoStartTime] = useLocalStorageState('demoStartTime', new Date().setMinutes(0, 0));
+  const [openInstructions, setOpenInstructions] = useState(false);
+  window.onpopstate = () => navigate("/");
   
   const handleDemoTimeChange = (time, hours) => {
     const hoursCopy = hours;
@@ -95,11 +97,6 @@ const Demo = () => {
       setDemoStartTime(demoTime);
     }
   }
-
-  window.onpopstate = () => {
-    navigate("/");
-  }
-  const [openInstructions, setOpenInstructions] = useState(false);
   
   const hideAllOutlines = (eh) => {
     hideOutlines(eh, "electric-car-1");
@@ -174,21 +171,21 @@ const Demo = () => {
         hourlyCons = consumptionData.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0];
 
         if (hourlyCons < 0.001) { // Certain values can have a fainter glow, if desired
-          edge.style.opacity = "0.0";
+          window.sessionStorage.setItem(where, "0.0");
         } else if (hourlyCons < 1) {
-          edge.style.opacity = "0.5";
+          window.sessionStorage.setItem(where, "0.5");
         } else {
-          edge.style.opacity = "1.0";
+          window.sessionStorage.setItem(where, "1.0");
         }
       } else if (where === "electric-board") {
         if (netConsumption.length === 24) {
           hourlyProd = netConsumption.filter(eh => eh.startHour === demoHour).map(eh => eh.value)[0];
           if(hourlyProd < 0.001) {
-            edge.style.opacity = "0.0";
+            window.sessionStorage.setItem(where, "0.0");
           } else if (hourlyProd < 5) {
-            edge.style.opacity = "0.5";
+            window.sessionStorage.setItem(where, "0.5");
           } else {
-            edge.style.opacity = "1.0";
+            window.sessionStorage.setItem(where, "1.0");
           }
         }
       } else {
@@ -336,15 +333,15 @@ const Demo = () => {
   })
 
   const demoHour = new Date(demoTime).getHours();
-  const [download, setDownload] = useState(localStorage.getItem('download') || false);
-  const [upload, setUpload] = useState(localStorage.getItem('upload') || false);
-  let demoPassedHours = 0;
+  const [download, setDownload] = useState(window.sessionStorage.getItem('download') || false);
+  const [upload, setUpload] = useState(window.sessionStorage.getItem('upload') || false);
   const startHour = new Date(demoStartTime).getHours();
-  const speed = useState(localStorage.getItem('selectedSpeed'))[0];
-  const isPaused = localStorage.getItem('isDemoPaused') === 'true'; 
-  const passedTime = localStorage.getItem('passedTime');
-  const [nextDownloadIn, setNextDownloadIn] = useState(localStorage.getItem('nextDownloadIn') || 0);
+  const speed = window.sessionStorage.getItem('selectedSpeed');
+  const isPaused = window.sessionStorage.getItem('isDemoPaused') === 'true'; 
+  const passedTime = window.sessionStorage.getItem('passedTime');
+  const [nextDownloadIn, setNextDownloadIn] = useState(window.sessionStorage.getItem('nextDownloadIn') || 0);
 
+  let demoPassedHours = 0;
   if (demoHour === startHour) {
     demoPassedHours = 0;
   } else if (demoHour > startHour) {
@@ -365,34 +362,34 @@ const Demo = () => {
         if (passedTime === 0 || passedTime % 5 === 0) {
           setDownload(true);
           setUpload(false);
-          localStorage.setItem('download', true);
-          localStorage.setItem('upload', false);
+          window.sessionStorage.setItem('download', true);
+          window.sessionStorage.setItem('upload', false);
           setNextDownloadIn(5);
-          localStorage.setItem('nextDownloadIn', 5);
+          window.sessionStorage.setItem('nextDownloadIn', 5);
         } else if (passedTime === 1 || passedTime % 5 === 1) {
           setDownload(false);
           setUpload(true);
-          localStorage.setItem('download', false);
-          localStorage.setItem('upload', true);
+          window.sessionStorage.setItem('download', false);
+          window.sessionStorage.setItem('upload', true);
           setNextDownloadIn(4);
-          localStorage.setItem('nextDownloadIn', 4);   
+          window.sessionStorage.setItem('nextDownloadIn', 4);   
         } else {
           setDownload(false);
           setUpload(false);
-          localStorage.setItem('download', false);
-          localStorage.setItem('upload', false);
+          window.sessionStorage.setItem('download', false);
+          window.sessionStorage.setItem('upload', false);
           setNextDownloadIn(parseInt(nextDownloadIn) - 1);
-          localStorage.setItem('nextDownloadIn', parseInt(nextDownloadIn) - 1);              
+          window.sessionStorage.setItem('nextDownloadIn', parseInt(nextDownloadIn) - 1);              
         }
-        localStorage.setItem('passedTime', parseInt(passedTime) + 1);
+        window.sessionStorage.setItem('passedTime', parseInt(passedTime) + 1);
       }, 1000); 
     } else if (timeLeft === 0) {
       setDownload(false);
       setUpload(false);
-      localStorage.setItem('download', false);
-      localStorage.setItem('upload', false);
-      localStorage.setItem('nextDownloadIn', 0);
-      localStorage.setItem('passedTime', 0);
+      window.sessionStorage.setItem('download', false);
+      window.sessionStorage.setItem('upload', false);
+      window.sessionStorage.setItem('nextDownloadIn', 0);
+      window.sessionStorage.setItem('passedTime', 0);
     }
     return () => clearInterval(intervalId);
   }, [isPaused, download, upload, passedTime, timeLeft, nextDownloadIn])
@@ -766,8 +763,7 @@ const Demo = () => {
                   border: '1px solid #DCDCDC', 
                   borderRadius: '5px',
                   boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',}} 
-                  height="45vh">  
-                Savings
+                  height="45vh">
                   <ElectricityPrice demoTime={demoTime} demoPassedHrs={parseInt(demoPassedHrs)} totalConsumption={totalConsumption} />
                 </Box>
               </Grid>

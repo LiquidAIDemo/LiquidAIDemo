@@ -51,7 +51,8 @@ const WashingMachine = ({demoTime, demoStartTime}) => {
           top: '22.4%',
           left: '27.3%',
           width: '5.4%',
-          height: '4.8%'
+          height: '4.8%',
+          opacity: window.sessionStorage.getItem(component.id)
         }}
       />
       <img

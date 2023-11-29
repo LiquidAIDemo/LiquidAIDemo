@@ -22,7 +22,7 @@ const HotWaterHeater = ({demoTime, demoStartTime}) => {
 
   const navigate = useNavigate();
 
-  const upload = localStorage.getItem('upload') === 'true';
+  const upload = window.sessionStorage.getItem('upload') === 'true';
 
   const handleClick = () =>
     navigate(`/component/${component.id}`, 
@@ -55,6 +55,7 @@ const HotWaterHeater = ({demoTime, demoStartTime}) => {
           left: '21%',
           width: '3.7%',
           height: '4.7%',
+          opacity: window.sessionStorage.getItem(component.id)
         }}
       />
       <img

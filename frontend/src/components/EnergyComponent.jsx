@@ -21,10 +21,10 @@ const EnergyComponent = (props) => {
   let ownProduction = 0;
   
   const demoHour = new Date(demoTime).getHours();
-  const download = localStorage.getItem('download') === 'true';
-  const upload = localStorage.getItem('upload') === 'true';
-  const nextDownloadIn = localStorage.getItem('nextDownloadIn');
-  const isPaused = localStorage.getItem('isDemoPaused') === 'true';
+  const download = window.sessionStorage.getItem('download') === 'true';
+  const upload = window.sessionStorage.getItem('upload') === 'true';
+  const nextDownloadIn = window.sessionStorage.getItem('nextDownloadIn');
+  const isPaused = window.sessionStorage.getItem('isDemoPaused') === 'true';
 
   if (component.type === "consumer") {
     consumptionData = componentData.consumption_per_hour_kwh

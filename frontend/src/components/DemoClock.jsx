@@ -30,14 +30,13 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
   const demoTimeDateObj = new Date(demoTime)
   const [demoPassedMinutes, setDemoPassedMinutes] = useState(0);
 
-  const [isPaused, setIsPaused] = useState(localStorage.getItem('isDemoPaused') === 'true') || false;
-  
+  const [isPaused, setIsPaused] = useState(window.sessionStorage.getItem('isDemoPaused') === 'true' || false);
   
   // Default speed 1 sec
-  const [speed, setSpeed] = useState(localStorage.getItem('selectedSpeed') || 1000/6);
-  const [start, setStart] = useState(localStorage.getItem('selectedStart') || "next");
+  const [speed, setSpeed] = useState(window.sessionStorage.getItem('selectedSpeed') || 1000/6);
+  const [start, setStart] = useState(window.sessionStorage.getItem('selectedStart') || "next");
 
-  const [passedTime, setPassedTime] = useState(localStorage.getItem('passedTime') || 0);
+  const [passedTime, setPassedTime] = useState(window.sessionStorage.getItem('passedTime') || 0);
 
   // Time runs from demo start from 24 hours
   // speed depends on selected time value
@@ -47,17 +46,18 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
     if (!isPaused) {
     
       intervalId = setInterval(() => {
-        
+        setSpeed(speed);
+        window.sessionStorage.setItem('selectedSpeed', speed);        
         // Increase hours while passed hours are low enough
         if (demoPassedHours === 0 && demoPassedMinutes === 0) {
           setPassedTime(0);
-          localStorage.setItem('passedTime', 0);
+          window.sessionStorage.setItem('passedTime', 0);
         }
         if (demoPassedHours === 24) {
           setPassedTime(0);
-          localStorage.setItem('passedTime', 0);
+          window.sessionStorage.setItem('passedTime', 0);
           setIsPaused(true);
-          localStorage.setItem('isDemoPaused', true);
+          window.sessionStorage.setItem('isDemoPaused', true);
         }
         if (demoPassedHours < 24) {
           const newDemoTime = new Date(demoTime);
@@ -77,9 +77,9 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
           // stop the interval when demoPassedHours reaches 24
           togglePause();
           setPassedTime(0);
-          localStorage.setItem('passedTime', 0);
-          localStorage.setItem('download', false);
-          localStorage.setItem('upload', false);
+          window.sessionStorage.setItem('passedTime', 0);
+          window.sessionStorage.setItem('download', false);
+          window.sessionStorage.setItem('upload', false);
 
         }
       }, speed);
@@ -91,12 +91,12 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
 
   const togglePause = () => {
     setIsPaused(!isPaused);
-    localStorage.setItem('isDemoPaused', !isPaused);
+    window.sessionStorage.setItem('isDemoPaused', !isPaused);
   };
 
   const handleSpeedChange = (event) => {
     setSpeed(event.target.value);
-    localStorage.setItem('selectedSpeed', event.target.value);
+    window.sessionStorage.setItem('selectedSpeed', event.target.value);
   };
 
   const handleResetClick = (selectedValue) => {
@@ -108,17 +108,17 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
     // Call handleStartingChange with the new event object
     handleStartingChange(event);
     setPassedTime(0);
-    localStorage.setItem('passedTime', passedTime);
-    localStorage.setItem('download', false);
-    localStorage.setItem('upload', false);
+    window.sessionStorage.setItem('passedTime', passedTime);
+    window.sessionStorage.setItem('download', false);
+    window.sessionStorage.setItem('upload', false);
     setIsPaused(false);
-    localStorage.setItem('isDemoPaused', false);
+    window.sessionStorage.setItem('isDemoPaused', false);
   };
   
   const handleStartingChange = (event) => {
     let selectedValue = event.target.value;
     setStart(selectedValue);
-    localStorage.setItem('selectedStart', selectedValue);
+    window.sessionStorage.setItem('selectedStart', selectedValue);
 
     if (selectedValue === "next") {
       const newDemoTime = new Date();
@@ -126,7 +126,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
       setDemoPassedMinutes(0);
       onDemoTimeChange(newDemoTime, 0);
       setIsPaused(false);
-      localStorage.setItem('isDemoPaused', false);
+      window.sessionStorage.setItem('isDemoPaused', false);
     } 
     
     else if (selectedValue === "last") {
@@ -136,7 +136,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
       setDemoPassedMinutes(0);
       onDemoTimeChange(newDemoTime, 0);
       setIsPaused(false);
-      localStorage.setItem('isDemoPaused', false);
+      window.sessionStorage.setItem('isDemoPaused', false);
     }
   }
 

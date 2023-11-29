@@ -33,12 +33,10 @@ const ElectricBoard = ({demoTime, netConsumption, visibleComponents, demoStartTi
   
   const handleHoverOn = (event) => {
     setAnchorEl(event.currentTarget);
-    //hideOutline(true);
   };
 
   const handleHoverAway = () => {
     setAnchorEl(null);
-    //hideOutline(false);
   };
 
   const open = Boolean(anchorEl);
@@ -57,6 +55,7 @@ const ElectricBoard = ({demoTime, netConsumption, visibleComponents, demoStartTi
           left: '55.4%',
           width: '1.8%',
           height: '5.8%',
+          opacity: window.sessionStorage.getItem(component.id)
         }}
       />
       <img

@@ -24,8 +24,8 @@ const Optimizer = ({demoTime, demoStartTime}) => {
 
   const navigate = useNavigate();
 
-  const download = localStorage.getItem('download') === 'true';
-  const upload = localStorage.getItem('upload') === 'true';
+  const download = window.sessionStorage.getItem('download') === 'true';
+  const upload = window.sessionStorage.getItem('upload') === 'true';
 
   const handleClick = () =>
     navigate(`/component/${component.id}`, 

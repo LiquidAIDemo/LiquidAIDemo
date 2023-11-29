@@ -72,7 +72,7 @@ const EnergyComponentPage = () => {
   let optimizedConsumption = [];
   let chartData = [];
   let timeData = [];
-  const start = localStorage.getItem('selectedStart');
+  const start = window.sessionStorage.getItem('selectedStart');
 
   useEffect(() => {
     try {

@@ -22,7 +22,7 @@ const HeatPump = ({demoTime, demoStartTime}) => {
 
   const navigate = useNavigate();
 
-  const upload = localStorage.getItem('upload') === 'true';
+  const upload = window.sessionStorage.getItem('upload') === 'true';
 
   const handleClick = () =>
     navigate(`/component/${component.id}`, 
@@ -55,6 +55,7 @@ const HeatPump = ({demoTime, demoStartTime}) => {
           left: '37%',
           width: '2.5%',
           height: '9%',
+          opacity: window.sessionStorage.getItem(component.id)
         }}
       />
       <img
