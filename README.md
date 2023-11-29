@@ -56,19 +56,6 @@ In the root directory of the project, run the following command to execute unit 
 npm test
 ```
 
-## Current functionality
-
-In the current version of the program, the following functionality is available. The user can see:
-- General information about the application, namely its instructions, source of data and license.
-- Current time, current energy price and energy consumption.
-- Total consumption during the demo.
-- The household and its appliances in use, and access them to see their hourly energy usage (both optimized and standard) and production.
-- Appliances, which are called components in-application, currently include a heat pump, two electric cars, four solar panels, one electric board, one fridge-freezer combination, one heater, one water heater, one stove, one washing machine and one Jacuzzi device.
-- Enable and disable invidivual appliances to have them showing/hidden and affecting/not affecting the energy usage of the household.
-- Demo time and changes of energy usage that occur due to its changes in the household.
-- Demo time's speed can be adjusted (1 h/s, 30 min/s, 20 min/s and 10 min/s) and its window chosen from the last 24 h to following 24 h. The demo clock can also be paused and restarted.
-- Whether or not an optimizer component is downloading or uploading data, and whether or not other components are receiving data from it.
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
