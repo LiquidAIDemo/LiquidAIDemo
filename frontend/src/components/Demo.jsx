@@ -332,25 +332,14 @@ const Demo = () => {
     h.value = (hourConsumption.value - hourProduction.value).toFixed(2);
   })
 
-  const demoHour = new Date(demoTime).getHours();
   const [download, setDownload] = useState(window.sessionStorage.getItem('download') || false);
   const [upload, setUpload] = useState(window.sessionStorage.getItem('upload') || false);
-  const startHour = new Date(demoStartTime).getHours();
   const speed = window.sessionStorage.getItem('selectedSpeed');
   const isPaused = window.sessionStorage.getItem('isDemoPaused') === 'true'; 
   const passedTime = window.sessionStorage.getItem('passedTime');
   const [nextDownloadIn, setNextDownloadIn] = useState(window.sessionStorage.getItem('nextDownloadIn') || 0);
 
-  let demoPassedHours = 0;
-  if (demoHour === startHour) {
-    demoPassedHours = 0;
-  } else if (demoHour > startHour) {
-    demoPassedHours = demoHour - startHour;
-  } else {
-    demoPassedHours = (demoHour + 24) - startHour;
-  }
-
-  const hoursLeft = 23 - demoPassedHours;
+  const hoursLeft = 23 - demoPassedHrs;
   const maxSeconds = (144*speed)/1000;
   const secondsPerHour = maxSeconds / 24;
   const timeLeft = hoursLeft * secondsPerHour;

@@ -39,6 +39,15 @@ const electricBoard = {
   demoStartTime: {demoStartTime: now.getTime()}
 }
 
+const optimizerComponent = {
+  id: "optimizer", 
+  name: "Optimizer",
+  type: "optimizer",
+  description: "Optimizer desc",
+  demoTime: {demoTime: now},
+  demoStartTime: {demoStartTime: now.getTime()}
+}
+
 let mockComponent = consumerComponent
 let componentPagePath = `/component/${mockComponent.id}`
 
@@ -99,6 +108,24 @@ test("renders electric board correctly", async () => {
   
   expect(screen.getByText(`${electricBoard.name}`)).toBeInTheDocument()
   expect(screen.getByText(`${electricBoard.description}`)).toBeInTheDocument()
+  expect(screen.getByText('Back')).toBeInTheDocument()
+})
+
+test("renders optimizer component correctly", async () => {
+  mockComponent = optimizerComponent
+  axiosMock.onGet(import.meta.env.PROD ? '/backend' : 'http://localhost:3001/').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
+  await act(async () => {
+    render(
+      <MemoryRouter initialEntries={[componentPagePath]}>
+        <Routes>
+          <Route path={componentPagePath} element={<EnergyComponentPage />} />
+        </Routes>
+      </MemoryRouter>
+    )
+  })
+  
+  expect(screen.getByText(`${optimizerComponent.name}`)).toBeInTheDocument()
+  expect(screen.getByText(`${optimizerComponent.description}`)).toBeInTheDocument()
   expect(screen.getByText('Back')).toBeInTheDocument()
 })
 
