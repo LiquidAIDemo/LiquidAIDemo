@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { Box, Button, Grid, Typography, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import ArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { useNavigate } from "react-router-dom";
@@ -565,170 +565,242 @@ const Demo = () => {
                   <Collapse in={open} timeout="auto" unmountOnExit>
                     <List component="div">
                       <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                          <ListItem>
-                            <label>
-                            <input
-                              type="checkbox"
-                              checked={showHeatPump}
-                              onChange={() => setShowHeatPump(!showHeatPump)}
-                              id='heatPumpCheckbox'/>
-                            Heat Pump
-                            </label>
-                          </ListItem>
-                          <ListItem>
-                            <label>
-                            <input
-                              type="checkbox"
-                              checked={showElectricBoard}
-                              onChange={() => setShowElectricBoard(!showElectricBoard)}
-                              id='electricBoardCheckbox'/>
-                            Electric board
-                            </label>
-                          </ListItem>
-                          <ListItem>
-                            <label>
-                            <input
-                              type="checkbox"
-                              checked={showFreezer}
-                              onChange={() => setShowFreezer(!showFreezer)}
-                              id='freezerCheckbox'/>
-                            Fridge & Freezer
-                            </label>
-                          </ListItem>
-                          <ListItem>
-                            <label>
-                            <input
-                              type="checkbox"
-                              checked={showHeater}
-                              onChange={() => setShowHeater(!showHeater)}
-                              id='heaterCheckbox'/>
-                            Heater
-                            </label>
-                          </ListItem>
-                          <ListItem>
-                            <label>
-                            <input
-                              type="checkbox"
-                              checked={showHotWaterHeater}
-                              onChange={() => setShowHotWaterHeater(!showHotWaterHeater)}
-                              id='hotWaterHeaterCheckbox'/>
-                            Hot water heater
-                            </label>
-                          </ListItem>
-                          <ListItem>
-                            <label>
-                            <input
-                              type="checkbox"
-                              checked={showStove}
-                              onChange={() => setShowStove(!showStove)}
-                              id='stoveCheckbox'/>
-                            Stove
-                            </label>
-                          </ListItem>
-                          <ListItem>
-                            <label>
-                            <input
-                              type="checkbox"
-                              checked={showWashingMachine}
-                              onChange={() => setShowWashingMachine(!showWashingMachine)}
-                              id='washingMachineCheckbox'/>
-                            Washing machine
-                            </label>
-                          </ListItem>
-                          
+                        <Grid sx={{marginLeft: '32px', marginRight: '35px'}}>
+                          <FormGroup>
+                            <FormControlLabel
+                              control={
+                              <Checkbox
+                                checked={showHeatPump}
+                                onChange={() => setShowHeatPump(!showHeatPump)}
+                                id='heatPumpCheckbox'
+                                sx={{
+                                    '&.Mui-checked' : {
+                                      color: theme.palette.water.main,
+                                    },
+                                }}
+                                />
+                              }
+                              label="Heat pump"
+                            />
+                            <FormControlLabel
+                              control={
+                              <Checkbox
+                                checked={showElectricBoard}
+                                onChange={() => setShowElectricBoard(!showElectricBoard)}
+                                id='electricBoardCheckbox'
+                                sx={{
+                                    '&.Mui-checked' : {
+                                      color: theme.palette.water.main,
+                                    },
+                                }}
+                                />
+                              }
+                              label="Electric board"
+                            />
+                            <FormControlLabel
+                              control={
+                              <Checkbox
+                                checked={showFreezer}
+                                onChange={() => setShowFreezer(!showFreezer)}
+                                id='freezerCheckbox'
+                                sx={{
+                                    '&.Mui-checked' : {
+                                      color: theme.palette.water.main,
+                                    },
+                                }}
+                                />
+                              }
+                              label="Fridge & freezer"
+                            />
+                            <FormControlLabel
+                              control={
+                              <Checkbox
+                                checked={showHeater}
+                                onChange={() => setShowHeater(!showHeater)}
+                                id='heaterCheckbox'
+                                sx={{
+                                    '&.Mui-checked' : {
+                                      color: theme.palette.water.main,
+                                    },
+                                }}
+                                />
+                              }
+                              label="Heater"
+                            />
+                            <FormControlLabel
+                              control={
+                              <Checkbox
+                                checked={showHotWaterHeater}
+                                onChange={() => setShowHotWaterHeater(!showHotWaterHeater)}
+                                id='hotWaterHeaterCheckbox'
+                                sx={{
+                                    '&.Mui-checked' : {
+                                      color: theme.palette.water.main,
+                                    },
+                                }}
+                                />
+                              }
+                              label="Hot water heater"
+                            />
+                            <FormControlLabel
+                              control={
+                              <Checkbox
+                                checked={showStove}
+                                onChange={() => setShowStove(!showStove)}
+                                id='stoveCheckbox'
+                                sx={{
+                                    '&.Mui-checked' : {
+                                      color: theme.palette.water.main,
+                                    },
+                                }}
+                                />
+                              }
+                              label="Stove"
+                            />
+                            <FormControlLabel
+                              control={
+                              <Checkbox
+                                checked={showWashingMachine}
+                                onChange={() => setShowWashingMachine(!showWashingMachine)}
+                                id='washingMachineCheckbox'
+                                sx={{
+                                    '&.Mui-checked' : {
+                                      color: theme.palette.water.main,
+                                    },
+                                }}
+                                />
+                              }
+                              label="Washing machine"
+                            />
+                          </FormGroup>
                         </Grid>
-                        <Grid item xs={6}>
-                        <ListItem>
-                            <label>
-                            <input
-                              type="checkbox"
-                              checked={showElectricCar1}
-                              onChange={() => setShowElectricCar1(!showElectricCar1)}
-                              id='electricCar1Checkbox'/>
-                            Electric car 1
-                            </label>
-                          </ListItem>
-                          <ListItem>
-                            <label>
-                            <input
-                              type="checkbox"
-                              checked={showElectricCar2}
-                              onChange={() => setShowElectricCar2(!showElectricCar2)}
-                              id='electricCar2Checkbox'/>
-                            Electric car 2
-                            </label>
-                          </ListItem>
-                          <ListItem>
-                            <label>
-                            <input
-                              type="checkbox"
-                              checked={showSolarPanel1}
-                              onChange={() => setShowSolarPanel1(!showSolarPanel1)}
-                              id='solarPanel1Checkbox'/>
-                            Solar panel 1
-                            </label>
-                          </ListItem>
-                          <ListItem>
-                            <label>
-                            <input
-                              type="checkbox"
-                              checked={showSolarPanel2}
-                              onChange={() => setShowSolarPanel2(!showSolarPanel2)}
-                              id='solarPanel2Checkbox'/>
-                            Solar panel 2
-                            </label>
-                          </ListItem>
-                          <ListItem>
-                            <label>
-                            <input
-                              type="checkbox"
-                              checked={showSolarPanel3}
-                              onChange={() => setShowSolarPanel3(!showSolarPanel3)}
-                              id='solarPanel3Checkbox'/>
-                            Solar panel 3
-                            </label>
-                          </ListItem>
-                          <ListItem>
-                            <label>
-                            <input
-                              type="checkbox"
-                              checked={showSolarPanel4}
-                              onChange={() => setShowSolarPanel4(!showSolarPanel4)}
-                              id='solarPanel4Checkbox'/>
-                            Solar panel 4
-                            </label>
-                          </ListItem>
-                          <ListItem>
-                            <label>
-                            <input
-                              type="checkbox"
-                              checked={showJacuzzi}
-                              onChange={() => setShowJacuzzi(!showJacuzzi)}
-                              id='jacuzziCheckbox'/>
-                            Jacuzzi
-                            </label>
-                          </ListItem>
+                        <Grid sx={{marginLeft: '32px', marginRight: '35px'}}>
+                          <FormGroup>
+                            <FormControlLabel
+                              control={
+                              <Checkbox
+                                checked={showElectricCar1}
+                                onChange={() => setShowElectricCar1(!showElectricCar1)}
+                                id='electricCar1Checkbox'
+                                sx={{
+                                    '&.Mui-checked' : {
+                                      color: theme.palette.water.main,
+                                    },
+                                }}
+                                />
+                              }
+                              label="Electric car 1"
+                            />
+                            <FormControlLabel
+                              control={
+                              <Checkbox
+                                checked={showElectricCar2}
+                                onChange={() => setShowElectricCar2(!showElectricCar2)}
+                                id='electricCar2Checkbox'
+                                sx={{
+                                    '&.Mui-checked' : {
+                                      color: theme.palette.water.main,
+                                    },
+                                }}
+                                />
+                              }
+                              label="Electric car 2"
+                            />
+                            <FormControlLabel
+                              control={
+                              <Checkbox
+                                checked={showSolarPanel1}
+                                onChange={() => setShowSolarPanel1(!showSolarPanel1)}
+                                id='solarPanel1Checkbox'
+                                sx={{
+                                    '&.Mui-checked' : {
+                                      color: theme.palette.water.main,
+                                    },
+                                }}
+                                />
+                              }
+                              label="Solar panel 1"
+                            />
+                            <FormControlLabel
+                              control={
+                              <Checkbox
+                                checked={showSolarPanel2}
+                                onChange={() => setShowSolarPanel2(!showSolarPanel2)}
+                                id='solarPanel2Checkbox'
+                                sx={{
+                                    '&.Mui-checked' : {
+                                      color: theme.palette.water.main,
+                                    },
+                                }}
+                                />
+                              }
+                              label="Solar panel 2"
+                            />
+                            <FormControlLabel
+                              control={
+                              <Checkbox
+                                checked={showSolarPanel3}
+                                onChange={() => setShowSolarPanel3(!showSolarPanel3)}
+                                id='solarPanel3Checkbox'
+                                sx={{
+                                    '&.Mui-checked' : {
+                                      color: theme.palette.water.main,
+                                    },
+                                }}
+                                />
+                              }
+                              label="Solar panel 3"
+                            />
+                            <FormControlLabel
+                              control={
+                              <Checkbox
+                                checked={showSolarPanel4}
+                                onChange={() => setShowSolarPanel4(!showSolarPanel4)}
+                                id='solarPanel4Checkbox'
+                                sx={{
+                                    '&.Mui-checked' : {
+                                      color: theme.palette.water.main,
+                                    },
+                                }}
+                                />
+                              }
+                              label="Solar panel 4"
+                            />
+                            <FormControlLabel
+                              control={
+                              <Checkbox
+                                checked={showJacuzzi}
+                                onChange={() => setShowJacuzzi(!showJacuzzi)}
+                                id='jacuzziCheckbox'
+                                sx={{
+                                    '&.Mui-checked' : {
+                                      color: theme.palette.water.main,
+                                    },
+                                }}
+                                />
+                              }
+                              label="Jacuzzi"
+                            />
+                          </FormGroup>
                           <ThemeProvider theme={theme}>
-                          <Button style={{ marginLeft: '15px ', marginBottom: '5px'}}
-                            onClick={handleReset}
-                            variant="contained"
-                            color="water"
-                            id='selectAll' >
-                            Select all
-                          </Button>
+                            <Button style={{ marginLeft: '15px ', marginBottom: '5px'}}
+                              onClick={handleReset}
+                              variant="contained"
+                              color="water"
+                              id='selectAll' >
+                              Select all
+                            </Button>
                           </ThemeProvider>
                           <ThemeProvider theme={theme}>
-                          <Button style={{ marginLeft: '15px ', marginBottom: '5px'}}
-                            onClick={handleClear}
-                            variant="contained"
-                            color="water"
-                            id='clearAll' >
-                            Clear all
-                          </Button>
+                            <Button style={{ marginLeft: '15px ', marginBottom: '5px'}}
+                              onClick={handleClear}
+                              variant="contained"
+                              color="water"
+                              id='clearAll' >
+                              Clear all
+                            </Button>
                           </ThemeProvider>
                         </Grid>
-                        
                       </Grid>
                     </List>
                   </Collapse>
