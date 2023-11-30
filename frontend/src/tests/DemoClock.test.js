@@ -24,7 +24,7 @@ test("demo time runs correctly", () => {
     jest.advanceTimersByTime(1000)
   })
   const demoTimeElement = screen.getByText(/Demo:/).parentElement
-  const currentHrs = now.getHours()
+  const currentHrs = String(now.getHours()).padStart(2, '0')
   expect(demoTimeElement).toHaveTextContent(`Demo: ${currentHrs}:10`)
   jest.useRealTimers()
 })
@@ -40,7 +40,7 @@ test("pause button pauses demo time", async () => {
   })
   
   const pausedDemoTime = screen.getByText(/Demo:/).parentElement
-  const currentHrs = now.getHours()
+  const currentHrs = String(now.getHours()).padStart(2, '0')
   expect(pausedDemoTime).toHaveTextContent(`Demo: ${currentHrs}:00`)
   jest.useRealTimers()
 })
@@ -56,7 +56,7 @@ test("restart button restarts demo time", async () => {
   await user.click(restartButtonElement)
   
   const restartedDemoTime = screen.getByText(/Demo:/).parentElement
-  const currentHrs = now.getHours()
+  const currentHrs = String(now.getHours()).padStart(2, '0')
   expect(restartedDemoTime).toHaveTextContent(`Demo: ${currentHrs}:00`)
   jest.useRealTimers()
 })
