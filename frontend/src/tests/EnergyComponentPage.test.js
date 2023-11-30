@@ -50,7 +50,7 @@ jest.mock('react-router-dom', () => ({
 }))
 
 test("renders consumer component correctly", async () => {
-  axiosMock.onGet('/api').reply(200, [])
+  axiosMock.onGet(import.meta.env.PROD ? '/backend' : 'http://localhost:3001/').reply(200, [])
   await act(async () => {
     render(
       <MemoryRouter initialEntries={[componentPagePath]}>
@@ -68,7 +68,7 @@ test("renders consumer component correctly", async () => {
 
 test("renders producer component correctly", async () => {
   mockComponent = producerComponent
-  axiosMock.onGet('/api').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
+  axiosMock.onGet(import.meta.env.PROD ? '/backend' : 'http://localhost:3001/').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
   await act(async () => {
     render(
       <MemoryRouter initialEntries={[componentPagePath]}>
@@ -86,7 +86,7 @@ test("renders producer component correctly", async () => {
 
 test("renders electric board correctly", async () => {
   mockComponent = electricBoard
-  axiosMock.onGet('/api').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
+  axiosMock.onGet(import.meta.env.PROD ? '/backend' : 'http://localhost:3001/').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
   await act(async () => {
     render(
       <MemoryRouter initialEntries={[componentPagePath]}>
@@ -103,7 +103,7 @@ test("renders electric board correctly", async () => {
 })
 
 test("'back' button returns to demo", async () => {
-  axiosMock.onGet('/api').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
+  axiosMock.onGet(import.meta.env.PROD ? '/backend' : 'http://localhost:3001/').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
   await act(async () => {
     render(
       <MemoryRouter initialEntries={[componentPagePath]}>

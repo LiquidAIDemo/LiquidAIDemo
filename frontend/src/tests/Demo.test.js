@@ -12,7 +12,7 @@ const user = userEvent.setup({delay: null})
 const now = new Date()
 
 test("renders content", async () => {
-  axiosMock.onGet('/api').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
+  axiosMock.onGet(import.meta.env.PROD ? '/backend' : 'http://localhost:3001/').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
   await act( async () => {
     render(
       <MemoryRouter>
@@ -22,13 +22,12 @@ test("renders content", async () => {
   })
   
   expect(screen.getByText('Components')).toBeInTheDocument()
-  expect(screen.getByText('Savings')).toBeInTheDocument()
   expect(screen.getByText('Back')).toBeInTheDocument()
   expect(screen.getByText('Information')).toBeInTheDocument()
 })
 
 test('"back" button navigates to welcome page', async () => {
-  axiosMock.onGet('/api').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
+  axiosMock.onGet(import.meta.env.PROD ? '/backend' : 'http://localhost:3001/').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
   await act( async () => {
     render(
       <MemoryRouter initialEntries={['/demo']}>
@@ -47,7 +46,7 @@ test('"back" button navigates to welcome page', async () => {
 })
 
 test('components menu initializes correctly and checkboxes work correctly', async () => {
-  axiosMock.onGet('/api').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
+  axiosMock.onGet(import.meta.env.PROD ? '/backend' : 'http://localhost:3001/').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
   await act( async () => {
     render(
       <MemoryRouter>
@@ -87,7 +86,7 @@ test('components menu initializes correctly and checkboxes work correctly', asyn
 })
 
 test('"Clear all" and "Reset to default" buttons work correctly', async () => {
-  axiosMock.onGet('/api').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
+  axiosMock.onGet(import.meta.env.PROD ? '/backend' : 'http://localhost:3001/').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
   await act( async () => {
     render(
       <MemoryRouter>
@@ -131,7 +130,7 @@ test('"Clear all" and "Reset to default" buttons work correctly', async () => {
 })
 
 test('"Information" button works correctly', async () => {
-  axiosMock.onGet('/api').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
+  axiosMock.onGet(import.meta.env.PROD ? '/backend' : 'http://localhost:3001/').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
   await act( async () => {
     render(
       <MemoryRouter>

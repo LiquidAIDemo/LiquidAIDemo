@@ -10,8 +10,8 @@ const user = userEvent.setup({delay: null})
 test("renders content", () => {
   render(<DemoClock demoTime={now.toISOString()} demoPassedHours={0} onDemoTimeChange={jest.fn()}/>)
 
-  expect(screen.getByText(/Select speed:/)).toBeInTheDocument()
-  expect(screen.getByText(/Select time range:/)).toBeInTheDocument()
+  expect(screen.getByText(/Speed:/)).toBeInTheDocument()
+  expect(screen.getByText(/Time range:/)).toBeInTheDocument()
   expect(screen.getByText(/Demo:/)).toBeInTheDocument()
   expect(screen.getByText('Pause')).toBeInTheDocument()
   expect(screen.getByText('Restart')).toBeInTheDocument()
@@ -75,7 +75,7 @@ test("selecting time range works correctly", async () => {
   expect(optionValues).toEqual(['next', 'last'])
   
   await user.click(options[1])
-  const timeRangeElementAfterClick = screen.getByText(/Select time range:/)
+  const timeRangeElementAfterClick = screen.getByText(/Time range:/)
   expect(timeRangeElementAfterClick).toHaveTextContent("Last 24 h")
 })
 
@@ -94,6 +94,6 @@ test("selecting speed works correctly", async () => {
   expect(optionValues).toEqual([1000, 1000/2, 1000/3, 1000/6])
   await user.click(options[2])
   
-  const speedElementAfterClick = screen.getByText(/Select speed:/)
+  const speedElementAfterClick = screen.getByText(/Speed:/)
   expect(speedElementAfterClick).toHaveTextContent("30 min / sec")
 })
