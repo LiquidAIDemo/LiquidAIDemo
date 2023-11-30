@@ -7,7 +7,7 @@ const Price = ({ price }) => {
   if (price !== null && price !== undefined) {
     return (
       <Typography>
-        Current price is {price.toFixed(2)} cents / kWh
+        Current price: {price.toFixed(2)} cents / kWh
       </Typography>
     )
   } else {
@@ -23,7 +23,7 @@ const Consumption = ({ consumption }) => {
   if (consumption !== null && consumption !== undefined) {
     return (
       <Typography>
-        Consumption for current hour is {consumption.toFixed(2)} kWh
+        Current consumption: {consumption.toFixed(2)} kWh
       </Typography>
     )
   } else {
@@ -39,7 +39,7 @@ const TotalConsumption = ({ total }) => {
   if (total !== null && total !== undefined) {
     return (
       <Typography>
-        Total consumption during the demo is {total.toFixed(2)} kWh
+        Total consumption: {total.toFixed(2)} kWh
       </Typography>
     )
   } else {
