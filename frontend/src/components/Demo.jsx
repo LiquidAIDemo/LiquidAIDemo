@@ -559,7 +559,7 @@ const Demo = () => {
                   boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',}}
                 >
                   <ListItemButton onClick={handleClick} sx={{ width: '100%' }}>
-                    <ListItemText primary="Components" />
+                    <ListItemText primary={<Typography style={{ fontWeight: 'bolder' }}>Manage components</Typography>}/>
                     {open ? <ExpandLess /> : <ExpandMore />}
                   </ListItemButton>
                   <Collapse in={open} timeout="auto" unmountOnExit>
