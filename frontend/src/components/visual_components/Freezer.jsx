@@ -48,7 +48,7 @@ const Freezer = ({demoTime, demoStartTime}) => {
         className="freezer-energy-border"
         style={{
           position: 'absolute',
-          top: '8.5%',
+          top: '9%',
           left: '63.6%',
           width: '4.5%',
           height: '11%',
@@ -62,7 +62,7 @@ const Freezer = ({demoTime, demoStartTime}) => {
         className='freezer-image'
         style={{
           position: 'absolute',
-          top: '9%',
+          top: '9.5%',
           left: '63.8%',
           width: '4%',
           height: '10%',

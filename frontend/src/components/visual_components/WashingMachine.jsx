@@ -48,9 +48,9 @@ const WashingMachine = ({demoTime, demoStartTime}) => {
         className="washing-machine-energy-border"
         style={{
           position: 'absolute',
-          top: '22.4%',
-          left: '27.3%',
-          width: '5.4%',
+          top: '22.8%',
+          left: '28.2%',
+          width: '4.8%',
           height: '4.8%',
           opacity: window.sessionStorage.getItem(component.id)
         }}
@@ -62,9 +62,9 @@ const WashingMachine = ({demoTime, demoStartTime}) => {
         className='washing-machine-image'
         style={{
           position: 'absolute',
-          top: '22.9%',
-          left: '27.7%',
-          width: '4.5%',
+          top: '23.1%',
+          left: '28.6%',
+          width: '4%',
           height: '4%',
         }}
         onClick={handleClick}
