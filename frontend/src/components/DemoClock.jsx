@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Button, FormControl, MenuItem, Select, Box } from '@mui/material';
+import { Button, FormControl, MenuItem, Select, Box, Typography } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import RealtimeClock from './RealtimeClock';
 
 const theme = createTheme({
   palette: {
@@ -143,45 +144,48 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
   // Select speed menu, demo time, pause button and real time
   return (
     <Box>
-      <Box style={{padding: '1vh'}}>
-        Speed:
-        <FormControl style={{ marginLeft: '10px '}}>
-          <Select
-            // defaultValue={1000/6}
-            value={speed}
-            onChange={handleSpeedChange}
-            data-testid='speed'
-            sx={{width: '140px', height: '30px'}}
-          >
-            <MenuItem value={1000}>10 min / sec</MenuItem>
-            <MenuItem value={1000/2}>20 min / sec</MenuItem>
-            <MenuItem value={1000/3}>30 min / sec</MenuItem>
-            <MenuItem value={1000/6}>1 hour / sec</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
+      <Typography style={{ fontWeight: 'bolder', marginLeft: '8px', marginTop: '8px', marginBottom: '8px' }}>Manage time</Typography>
+      <div style={{ display: 'flex' }}>
+        <Box style={{padding: '1vh'}}>
+          Speed:
+          <FormControl style={{ marginLeft: '10px '}}>
+            <Select
+              // defaultValue={1000/6}
+              value={speed}
+              onChange={handleSpeedChange}
+              data-testid='speed'
+              sx={{width: '140px', height: '30px'}}
+            >
+              <MenuItem value={1000}>10 min / sec</MenuItem>
+              <MenuItem value={1000/2}>20 min / sec</MenuItem>
+              <MenuItem value={1000/3}>30 min / sec</MenuItem>
+              <MenuItem value={1000/6}>1 hour / sec</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
 
-      <Box style={{padding: '1vh'}}>
-        Time range:
-        <FormControl style={{ marginLeft: '10px '}}>
-          <Select
-            value={start}
-            onChange={handleStartingChange}
-            data-testid='time_range'
-            sx={{width: '140px', height: '30px'}}
-          >
-            <MenuItem value={"next"}>Next 24 h</MenuItem>
-            <MenuItem value={"last"}>Last 24 h</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
+        <Box style={{padding: '1vh'}}>
+          Time range:
+          <FormControl style={{ marginLeft: '10px '}}>
+            <Select
+              value={start}
+              onChange={handleStartingChange}
+              data-testid='time_range'
+              sx={{width: '140px', height: '30px'}}
+            >
+              <MenuItem value={"next"}>Next 24 h</MenuItem>
+              <MenuItem value={"last"}>Last 24 h</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+      </div>
 
-      <Box style={{padding: '1vh'}} id="demotimebox">
-        <b>Demo: </b> {String(demoTimeDateObj.getHours()).padStart(2, '0')}:{String(demoPassedMinutes).padStart(2, '0')}, {getDayName(demoTimeDateObj)} {demoTimeDateObj.getDate()}.{demoTimeDateObj.getMonth()+1}. &#x1F4C5;
+      <Box style={{ padding: '1vh' }} id="demotimebox">
+        <RealtimeClock />
+        <b style={{fontWeight: 'normal'}}>Demo time:</b> {String(demoTimeDateObj.getHours()).padStart(2, '0')}:{String(demoPassedMinutes).padStart(2, '0')}, {getDayName(demoTimeDateObj)} {demoTimeDateObj.getDate()}.{demoTimeDateObj.getMonth()+1}. &#x1F4C5;
         <br/>
-
         <ThemeProvider theme={theme}>
-          <Button variant="contained" color="water" sx={{ borderRadius: 2}} onClick={() => handleResetClick(start)} id='restart'>
+          <Button variant="contained" color="water" sx={{ marginTop: '12px', borderRadius: 2}} onClick={() => handleResetClick(start)} id='restart'>
             Restart
           </Button>
         </ThemeProvider>
@@ -189,13 +193,14 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
           demoPassedHours < 24 ? (
             <ThemeProvider theme={theme}>
               <Button variant="contained" color="water" sx={{ borderRadius: 2}} 
-                      style={{ marginLeft: '10px '}} onClick={togglePause} id='pause'>
+                      style={{ marginLeft: '10px ', marginTop: '12px'}} onClick={togglePause} id='pause'>
                 {isPaused ? 'Continue' : 'Pause'}
               </Button>
             </ThemeProvider>
           ) : null
         }
       </Box>
+      
     </Box>
   );
 }

@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useState, useEffect } from 'react';
 
 function getDayName(date) {
@@ -32,8 +32,8 @@ function RealtimeClock() {
   }, []);
 
   return (
-    <Box style={{padding: '1vh'}}>
-      <b>Current: </b> {realtime}, {getDayName(time)} {time.getDate()}.{time.getMonth() + 1}. &#x1F4C5;
+    <Box style={{paddingBottom: '7px'}}>
+      <b style={{fontWeight: 'normal'}}>Real time: </b>{realtime}, {getDayName(time)} {time.getDate()}.{time.getMonth() + 1}. &#x1F4C5;
     </Box>
   )
 }

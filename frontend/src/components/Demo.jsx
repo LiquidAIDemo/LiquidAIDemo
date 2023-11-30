@@ -4,7 +4,6 @@ import ArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import DemoClock from './DemoClock';
-import RealtimeClock from './RealtimeClock';
 import ElectricityPrice from './ElectricityPrice'
 import backgroundImage from "./../assets/yard.png";
 import roadImage from "./../assets/road.png";
@@ -565,7 +564,7 @@ const Demo = () => {
                   <Collapse in={open} timeout="auto" unmountOnExit>
                     <List component="div">
                       <Grid container spacing={2}>
-                        <Grid sx={{marginLeft: '32px', marginRight: '35px'}}>
+                        <Grid sx={{marginLeft: '40px', marginRight: '35px'}}>
                           <FormGroup>
                             <FormControlLabel
                               control={
@@ -674,7 +673,7 @@ const Demo = () => {
                             />
                           </FormGroup>
                         </Grid>
-                        <Grid sx={{marginLeft: '32px', marginRight: '35px'}}>
+                        <Grid sx={{marginLeft: '40px', marginRight: '35px'}}>
                           <FormGroup>
                             <FormControlLabel
                               control={
@@ -822,7 +821,7 @@ const Demo = () => {
                 
                   <Box>
                     <DemoClock demoTime={demoTime} demoPassedHours={demoPassedHrs} onDemoTimeChange={handleDemoTimeChange} />
-                    <RealtimeClock />
+                
                   </Box>
                 </Box>
               </Grid>
@@ -839,9 +838,6 @@ const Demo = () => {
                   <ElectricityPrice demoTime={demoTime} demoPassedHrs={parseInt(demoPassedHrs)} totalConsumption={totalConsumption} />
                 </Box>
               </Grid>
-
-              {/*Created container 4 for buttons and justify its content to the center*/}
-              
             </Grid>         
           </Grid> 
         </Grid>
