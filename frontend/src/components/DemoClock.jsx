@@ -38,18 +38,6 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
 
   const [passedTime, setPassedTime] = useState(window.sessionStorage.getItem('passedTime') || 0);
 
-  useEffect(() => {
-    window.sessionStorage.setItem('isDemoPaused', isPaused);
-  }, [isPaused]);
-
-  useEffect(() => {
-    window.sessionStorage.setItem('selectedSpeed', speed);
-  }, [speed]);
-
-  useEffect(() => {
-    window.sessionStorage.setItem('passedTime', passedTime);
-  }, [passedTime]);
-  
   // Time runs from demo start from 24 hours
   // speed depends on selected time value
   useEffect(() => {
@@ -58,7 +46,19 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
     if (!isPaused) {
     
       intervalId = setInterval(() => {
-        
+        setSpeed(speed);
+        window.sessionStorage.setItem('selectedSpeed', speed);        
+        // Increase hours while passed hours are low enough
+        if (demoPassedHours === 0 && demoPassedMinutes === 0) {
+          setPassedTime(0);
+          window.sessionStorage.setItem('passedTime', 0);
+        }
+        if (demoPassedHours === 24) {
+          setPassedTime(0);
+          window.sessionStorage.setItem('passedTime', 0);
+          setIsPaused(true);
+          window.sessionStorage.setItem('isDemoPaused', true);
+        }
         if (demoPassedHours < 24) {
           const newDemoTime = new Date(demoTime);
           if (demoPassedMinutes >= 50) {
@@ -77,6 +77,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
           // stop the interval when demoPassedHours reaches 24
           togglePause();
           setPassedTime(0);
+          window.sessionStorage.setItem('passedTime', 0);
           window.sessionStorage.setItem('download', false);
           window.sessionStorage.setItem('upload', false);
 
@@ -89,11 +90,13 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
   }, [isPaused, speed, onDemoTimeChange, demoTime, demoPassedHours, demoPassedMinutes, passedTime]);
 
   const togglePause = () => {
-    setIsPaused((isPaused) => !isPaused);
+    setIsPaused(!isPaused);
+    window.sessionStorage.setItem('isDemoPaused', !isPaused);
   };
 
   const handleSpeedChange = (event) => {
     setSpeed(event.target.value);
+    window.sessionStorage.setItem('selectedSpeed', event.target.value);
   };
 
   const handleResetClick = (selectedValue) => {
@@ -105,9 +108,11 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
     // Call handleStartingChange with the new event object
     handleStartingChange(event);
     setPassedTime(0);
+    window.sessionStorage.setItem('passedTime', 0);
     window.sessionStorage.setItem('download', false);
     window.sessionStorage.setItem('upload', false);
     setIsPaused(false);
+    window.sessionStorage.setItem('isDemoPaused', false);
   };
   
   const handleStartingChange = (event) => {
@@ -121,6 +126,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
       setDemoPassedMinutes(0);
       onDemoTimeChange(newDemoTime, 0);
       setIsPaused(false);
+      window.sessionStorage.setItem('isDemoPaused', false);
     } 
     
     else if (selectedValue === "last") {
@@ -130,6 +136,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
       setDemoPassedMinutes(0);
       onDemoTimeChange(newDemoTime, 0);
       setIsPaused(false);
+      window.sessionStorage.setItem('isDemoPaused', false);
     }
   }
 

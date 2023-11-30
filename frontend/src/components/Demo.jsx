@@ -348,6 +348,7 @@ const Demo = () => {
     let intervalId;
     if (! isPaused && timeLeft > 0) {
       intervalId = setInterval(() => {
+        console.log(passedTime)
         if (passedTime === 0 || passedTime % 5 === 0) {
           setDownload(true);
           setUpload(false);
