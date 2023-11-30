@@ -51,10 +51,10 @@ const HotWaterHeater = ({demoTime, demoStartTime}) => {
         className="hot-water-heater-energy-border"
         style={{
           position: 'absolute',
-          top: '22.5%',
-          left: '21%',
-          width: '3.7%',
-          height: '4.7%',
+          top: '22.6%',
+          left: '20.45%',
+          width: '4.1%',
+          height: '4.8%',
           opacity: window.sessionStorage.getItem(component.id)
         }}
       />
@@ -65,9 +65,9 @@ const HotWaterHeater = ({demoTime, demoStartTime}) => {
         className='hot-water-heater-image'
         style={{
           position: 'absolute',
-          top: '22.8%',
-          left: '21.3%',
-          width: '3%',
+          top: '23%',
+          left: '20.8%',
+          width: '3.4%',
           height: '4%',
         }}
         onClick={handleClick}

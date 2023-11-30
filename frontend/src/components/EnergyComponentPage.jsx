@@ -375,7 +375,7 @@ const EnergyComponentPage = () => {
                             <Typography 
                               variant="body2"
                               sx={{margin: 2}}
-                              >Total production {totalProduction} kWh
+                              >Total production: {totalProduction} kWh
                             </Typography>
                             {productionData.length > 0 &&
                               <BarChart
@@ -451,7 +451,7 @@ const EnergyComponentPage = () => {
                           <Typography 
                             variant="body2"
                             sx={{margin: 2}}
-                            >Total consumption {totalConsumption} kWh <br/>
+                            >Total consumption: {totalConsumption} kWh <br/>
                             Total price for consumed energy {(totalPrice/100).toFixed(2)} euros                     
                           </Typography>
                             {optimizedConsumption.length !== 24 && 

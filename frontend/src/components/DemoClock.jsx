@@ -144,7 +144,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
   return (
     <Box>
       <Box style={{padding: '1vh'}}>
-        Select speed:
+        Speed:
         <FormControl style={{ marginLeft: '10px '}}>
           <Select
             // defaultValue={1000/6}
@@ -162,7 +162,7 @@ function DemoClock({demoTime, demoPassedHours, onDemoTimeChange}) {
       </Box>
 
       <Box style={{padding: '1vh'}}>
-        Select time range:
+        Time range:
         <FormControl style={{ marginLeft: '10px '}}>
           <Select
             value={start}
