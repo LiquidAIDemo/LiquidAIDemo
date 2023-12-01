@@ -161,7 +161,6 @@ function DemoClock({ demoTime, demoPassedHours, onDemoTimeChange }) {
         Speed:
         <FormControl style={{ marginLeft: "10px " }}>
           <Select
-            // defaultValue={1000/6}
             value={speed}
             onChange={handleSpeedChange}
             data-testid="speed"
