@@ -1,14 +1,21 @@
-import { Box } from '@mui/material';
-import { useState, useEffect } from 'react';
+import { Box } from "@mui/material";
+import { useState, useEffect } from "react";
 
 function getDayName(date) {
-  var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  var days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
   var dayName = days[date.getDay()];
   return dayName;
 }
 
 function RealtimeClock() {
-
   let [time, setTime] = useState(new Date());
 
   let hh = time.getHours();
@@ -32,10 +39,11 @@ function RealtimeClock() {
   }, []);
 
   return (
-    <Box style={{padding: '1vh'}}>
-      <b>Current: </b> {realtime}, {getDayName(time)} {time.getDate()}.{time.getMonth() + 1}. &#x1F4C5;
+    <Box style={{ padding: "1vh" }}>
+      <b>Current: </b> {realtime}, {getDayName(time)} {time.getDate()}.
+      {time.getMonth() + 1}. &#x1F4C5;
     </Box>
-  )
+  );
 }
 
 export default RealtimeClock;

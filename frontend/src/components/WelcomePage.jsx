@@ -21,7 +21,7 @@ const theme = createTheme({
   },
 });
 
-const Welcome = () => {
+const WelcomePage = () => {
   const navigate = useNavigate();
 
   return (
@@ -72,9 +72,9 @@ const Welcome = () => {
                 background: "rgba(255, 255, 255, 0.9)",
                 textAlign: "center",
                 zIndex: 2,
-                border: '1px solid #DCDCDC', 
-                borderRadius: '5px', 
-                boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                border: "1px solid #DCDCDC",
+                borderRadius: "5px",
+                boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
               }}
             >
               <Typography variant="h4" sx={{ margin: 2, fontWeight: "bold" }}>
@@ -140,4 +140,4 @@ const Welcome = () => {
   );
 };
 
-export default Welcome;
+export default WelcomePage;
