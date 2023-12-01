@@ -2,7 +2,7 @@ import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
-import Welcome from '../components/Welcome'
+import WelcomePage from '../components/WelcomePage'
 import Demo from '../components/Demo'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
@@ -15,7 +15,7 @@ test("'Start demo' button works correctly", async () => {
   render(
     <MemoryRouter initialEntries={['/']}>
       <Routes>
-        <Route path="/" element={<Welcome />} />
+        <Route path="/" element={<WelcomePage />} />
         <Route path="/demo" element={<Demo />} />
       </Routes>
     </MemoryRouter>
@@ -23,5 +23,5 @@ test("'Start demo' button works correctly", async () => {
   
   const startButtonElement = screen.getByText('Start')
   await userEvent.click(startButtonElement)
-  expect(screen.getByText("Components")).toBeInTheDocument()
+  expect(screen.getByText("Manage components")).toBeInTheDocument()
 })

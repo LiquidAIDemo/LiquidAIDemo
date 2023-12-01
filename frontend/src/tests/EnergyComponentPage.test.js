@@ -146,5 +146,5 @@ test("'back' button returns to demo", async () => {
   await act(async () => {
     await userEvent.click(backToDemoButtonElement)
   })
-  expect(screen.getByText("Components")).toBeInTheDocument()
+  expect(screen.getByText("Manage components")).toBeInTheDocument()
 })

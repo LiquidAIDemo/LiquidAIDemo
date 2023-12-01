@@ -2,7 +2,7 @@ import '@testing-library/jest-dom'
 import { render, screen, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Demo from '../components/Demo'
-import Welcome from '../components/Welcome'
+import WelcomePage from '../components/WelcomePage'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
@@ -21,7 +21,7 @@ test("renders content", async () => {
     )
   })
   
-  expect(screen.getByText('Components')).toBeInTheDocument()
+  expect(screen.getByText('Manage components')).toBeInTheDocument()
   expect(screen.getByText('Back')).toBeInTheDocument()
   expect(screen.getByText('Information')).toBeInTheDocument()
 })
@@ -33,7 +33,7 @@ test('"back" button navigates to welcome page', async () => {
       <MemoryRouter initialEntries={['/demo']}>
         <Routes>
           <Route path="/demo" element={<Demo />} />
-          <Route path="/" element={<Welcome />} />
+          <Route path="/" element={<WelcomePage />} />
         </Routes>
       </MemoryRouter>
     )
@@ -58,9 +58,9 @@ test('components menu initializes correctly and checkboxes work correctly', asyn
   const componentsMenuElement = screen.getByTestId("ExpandMoreIcon")
   await user.click(componentsMenuElement)
   const checkboxes = [
-    screen.getByLabelText('Heat Pump'),
+    screen.getByLabelText('Heat pump'),
     screen.getByLabelText('Electric board'),
-    screen.getByLabelText('Fridge & Freezer'),
+    screen.getByLabelText('Fridge & freezer'),
     screen.getByLabelText('Heater'),
     screen.getByLabelText('Hot water heater'),
     screen.getByLabelText('Stove'),
@@ -79,7 +79,7 @@ test('components menu initializes correctly and checkboxes work correctly', asyn
     expect(cb).toBeChecked()
   })
   // Test checkbox functionality with Heat Pump
-  const heatPumpCheckbox = screen.getByLabelText("Heat Pump")
+  const heatPumpCheckbox = screen.getByLabelText("Heat pump")
   expect(heatPumpCheckbox.checked).toBe(true)
   await user.click(heatPumpCheckbox)
   expect(heatPumpCheckbox.checked).toBe(false)
@@ -98,9 +98,9 @@ test('"Clear all" and "Reset to default" buttons work correctly', async () => {
   const componentsMenuElement = screen.getByTestId("ExpandMoreIcon")
   await user.click(componentsMenuElement)
   const checkboxes = [
-    screen.getByLabelText('Heat Pump'),
+    screen.getByLabelText('Heat pump'),
     screen.getByLabelText('Electric board'),
-    screen.getByLabelText('Fridge & Freezer'),
+    screen.getByLabelText('Fridge & freezer'),
     screen.getByLabelText('Heater'),
     screen.getByLabelText('Hot water heater'),
     screen.getByLabelText('Stove'),
