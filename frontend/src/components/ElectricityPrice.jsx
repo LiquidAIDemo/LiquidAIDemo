@@ -38,8 +38,10 @@ const Chart = memo(function Chart({ consumptionData }) {
   ) {
     const xAxisData = consumptionData.map(
       (entry) =>
-        entry.time.getHours() + ":00-" +
-        (parseInt(entry.time.getHours()) + 1) + ":00"
+        entry.time.getHours() +
+        ":00-" +
+        (parseInt(entry.time.getHours()) + 1) +
+        ":00"
     );
     return (
       <LineChart
@@ -178,20 +180,17 @@ function ElectricityPrice({ demoTime, demoPassedHrs, totalConsumption }) {
         height: "34vh",
       }}
     >
+      <Typography sx={{ marginBottom: "7px", fontWeight: "bold" }}>
+        Hourly cost of consumed electricity
+      </Typography>
       <Price price={currentPrice} />
       <Consumption consumption={currentConsumption} />
       <TotalConsumption total={total} />
-      <Typography marginTop="15px">
-        Cost of consumed electricity by hour
-      </Typography>
       <Box
         sx={{
-          borderRadius: "30px",
           background: "white",
-          width: "40vh",
-          height: "23vh",
-          border: "1px solid #DCDCDC",
-          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+          width: "45vh",
+          height: "28vh",
         }}
       >
         <Chart consumptionData={consumptionData} />
