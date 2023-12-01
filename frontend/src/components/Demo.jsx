@@ -47,7 +47,7 @@ const theme = createTheme({
   }
 });
 
-import { List, ListItemButton, ListItemText, ListItem, Collapse } from '@mui/material';
+import { List, ListItemButton, ListItemText, Collapse } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 function useLocalStorageState(key, defaultValue) {
