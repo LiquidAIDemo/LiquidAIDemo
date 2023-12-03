@@ -358,6 +358,7 @@ const EnergyComponentPage = () => {
                   }}
                 >
                   <img
+                    id={`${component.id}-view`}
                     src={imageMapping[component.id]}
                     alt="Component view"
                     className="component-view-image"
