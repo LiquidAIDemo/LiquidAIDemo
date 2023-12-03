@@ -176,7 +176,6 @@ const EnergyComponentPage = () => {
           
           // Check every hour to populate realConsumption
           // Also find price and push it to optimizedConsumption for later calculations
-          // This is where we can do the magic I think
           for (let i = 0; i <= 23; i++) {
             const realConsumption = consumptionData.find(
               (h) => h.startHour === i
@@ -189,7 +188,8 @@ const EnergyComponentPage = () => {
                   optimizedValue: 0,
                   realValue: realConsumption.value,
                   hour: realConsumption.hour,
-                  price: 9999.0,
+                  price: price,
+                  available: false,
                 });
               } else {
                 optimizedConsumption.push({
@@ -198,6 +198,7 @@ const EnergyComponentPage = () => {
                   realValue: realConsumption.value,
                   hour: realConsumption.hour,
                   price: price,
+                  available: true,
                 });
               }
             }
@@ -214,14 +215,25 @@ const EnergyComponentPage = () => {
             }
 
             optimizedConsumption.forEach((h) => {
-              h.hour =
-                h.startHour + ":00-" + (parseInt(h.startHour) + 1) + ":00";
-              const value = h.optimizedValue;
-              const price = demoPrices.find(
-                (p) => p.startHour === h.startHour
-              ).price;
-              const hourPrice = parseFloat(value) * parseFloat(price);
-              optimalPrice = optimalPrice + hourPrice;
+              if (h.available) {
+                h.hour =
+                  h.startHour + ":00-" + (parseInt(h.startHour) + 1) + ":00";
+                const value = h.optimizedValue;
+                const price = demoPrices.find(
+                  (p) => p.startHour === h.startHour
+                ).price;
+                const hourPrice = parseFloat(value) * parseFloat(price);
+                optimalPrice = optimalPrice + hourPrice;
+              } else {
+                h.hour =
+                  h.startHour + ":00-" + (parseInt(h.startHour) + 1) + ":00";
+                const value = h.optimizedValue;
+                const price = demoPrices.find(
+                  (p) => p.startHour === h.startHour
+                ).price;
+                const hourPrice = parseFloat(value) * parseFloat(price);
+                optimalPrice = optimalPrice + hourPrice;
+              }
             });
 
             savings = (totalPrice - optimalPrice) / 100;
@@ -232,6 +244,7 @@ const EnergyComponentPage = () => {
                 (h) => h.startHour === priceData.startHour
               ).optimizedValue = residualHour;
             }
+              
           }
 
           demoHours.forEach((h) => {
