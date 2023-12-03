@@ -197,13 +197,13 @@ const EnergyComponentPage = () => {
             );
             const price = sortedPrices.find((p) => p.startHour === i).price;
             if (realConsumption !== undefined) {
-              if(component.awayHours != [] && component.awayHours.includes(i)) {
+              if(component.awayHours != [] && component.awayHours.includes(i)) { // Found an unavailable hour
                 optimizedConsumption.push({
                   startHour: i,
                   optimizedValue: 0,
                   realValue: realConsumption.value,
                   hour: realConsumption.hour,
-                  price: price,
+                  price: 9999.0,
                 });
               } else {
                 optimizedConsumption.push({
