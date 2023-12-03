@@ -1,17 +1,17 @@
-import Welcome from "./components/Welcome";
+import WelcomePage from "./components/WelcomePage";
 import Demo from "./components/Demo";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import EnergyComponentPage from "./components/EnergyComponentPage";
-import NotFound from "./components/NotFound";
+import NotFoundPage from "./components/NotFoundPage";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route exact path="/" element={<Welcome />} />
+        <Route exact path="/" element={<WelcomePage />} />
         <Route path="/demo" element={<Demo />} />
-        <Route path="/component/:id" element={<EnergyComponentPage/>} />
-        <Route path="/*" element={<NotFound />} />
+        <Route path="/component/:id" element={<EnergyComponentPage />} />
+        <Route path="/*" element={<NotFoundPage />} />
       </Routes>
     </Router>
   );

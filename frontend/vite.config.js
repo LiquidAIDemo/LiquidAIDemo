@@ -19,12 +19,12 @@ export default defineConfig({
     alias: [{ find: '@', replacement: resolve(__dirname, './src') }],
   },
   server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3001/',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      },
+    host: true,
+    strictPort: true,
+    historyApiFallback: true,
+    port: 5173,
+    watch: {
+      usePolling: true,
     },
   },
 })

@@ -21,17 +21,17 @@ const theme = createTheme({
   },
 });
 
-const Welcome = () => {
+const NotFoundPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="welcome">
+    <div className="not-found">
       <Typography
-        variant="h6"
+        variant="h5"
         sx={{
           position: "absolute",
-          top: "3px",
-          left: "15px",
+          top: "30px",
+          left: "30px",
           zIndex: 1,
           fontWeight: "bold",
         }}
@@ -72,45 +72,16 @@ const Welcome = () => {
                 background: "rgba(255, 255, 255, 0.9)",
                 textAlign: "center",
                 zIndex: 2,
-                border: '1px solid #DCDCDC', 
-                borderRadius: '5px', 
-                boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                borderRadius: 2,
               }}
             >
               <Typography variant="h4" sx={{ margin: 2, fontWeight: "bold" }}>
-                Welcome to Energy Optimizer demonstrator
-              </Typography>
-              <Typography
-                variant="text"
-                sx={{ margin: 2, fontWeight: "bold", fontSize: 18 }}
-              >
-                Experience the power of liquid software with intelligent energy
-                optimization
+                Page not found
               </Typography>
               <Typography variant="text" sx={{ margin: 2, fontSize: 18 }}>
-                This demo shows you how energy consumption can be optimized in a
-                single-family house
-                <br />
-                <br />
-                You can read more about liquid software{" "}
-                <a
-                  href="https://webpages.tuni.fi/liquid/"
-                  style={{ color: "black" }}
-                >
-                  here
-                </a>
-                <br />
-                <br />
-                This project is licensed under MIT. For more info and
-                documentation, take a look in{" "}
-                <a
-                  href="https://github.com/LiquidAIDemo/LiquidAIDemo"
-                  style={{ color: "black" }}
-                >
-                  Git
-                </a>
+                Demo component pages can be accessed by <br />
+                clicking on the visual demo components.
               </Typography>
-
               <ThemeProvider theme={theme}>
                 <Button
                   variant="contained"
@@ -118,14 +89,13 @@ const Welcome = () => {
                   sx={{ borderRadius: 2 }}
                   onClick={() => navigate("/demo")}
                 >
-                  Start
+                  Back to demo
                 </Button>
               </ThemeProvider>
 
               <Typography variant="body2" sx={{ margin: 2, color: "black" }}>
                 <a
-                  href="https://www.freepik.com/free-photo/blue-swimming-pool-rippled-water-detail_1238770.htm"
-                  rel="noreferrer"
+                  href="https://www.freepik.com/free-photo/blue-swimming-pool-rippled-water-detail_1238770.htm#query=blue-swimming-pool-rippled-water-detail&position=0&from_view=search&track=sph"
                   style={{ color: "black" }}
                 >
                   Image by benzoix
@@ -140,4 +110,4 @@ const Welcome = () => {
   );
 };
 
-export default Welcome;
+export default NotFoundPage;
