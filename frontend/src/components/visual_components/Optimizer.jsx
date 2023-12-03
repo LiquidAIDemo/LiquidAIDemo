@@ -12,6 +12,7 @@ const Optimizer = ({ demoTime, demoStartTime }) => {
     id: "optimizer",
     name: "Optimizer",
     type: "optimizer",
+    awayHours: [],
     description:
       "Optimizer downloads information from the internet\
       and gives instructions to other components so that they can\

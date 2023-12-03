@@ -10,7 +10,7 @@ const Stove = ({ demoTime, demoStartTime }) => {
     id: "stove",
     name: "Stove",
     type: "consumer",
-    nature: "manual",
+    awayHours: [],
     description: "Delicious meals are cooked on the stove.",
     demoTime: { demoTime },
     demoStartTime: { demoStartTime },

@@ -15,7 +15,7 @@ const ElectricBoard = ({
     id: "electric-board",
     name: "Electric board",
     type: "producer",
-    nature: "constant_producer",
+    awayHours: [],
     description:
       "Electric board represents electricity coming from outside the house \
       to balance energy production and consumption.",

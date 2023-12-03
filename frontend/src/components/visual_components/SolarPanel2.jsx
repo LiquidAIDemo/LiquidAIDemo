@@ -10,7 +10,7 @@ const SolarPanel2 = ({ demoTime, demoStartTime }) => {
     id: "solar-panel-2",
     name: "Solar panel 2",
     type: "producer",
-    nature: "constant_producer",
+    awayHours: [],
     description: "Solar panels turn sunlight into energy.",
     demoTime: { demoTime },
     demoStartTime: { demoStartTime },

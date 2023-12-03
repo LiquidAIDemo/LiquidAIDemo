@@ -65,14 +65,15 @@ const imageMapping = {
 };
 
 // Optimizer for components that use energy all the time
-function optimizeConstant() {
-  
+function optimizeConstant(totalConsumption, consumptionData, optimizedConsumption, savings) {
+  // This is just the standard optimization ocde
 }
 
 // Optimizer for components that may not be available all the time
 // Receives the list of hours where charging is not possible
 function optimizeRechargeable(inactive) {
-  
+  // I think the easiest way to go would be to have the hours in inactive
+  // be considered hours that have the highest price
 }
 
 const EnergyComponentPage = () => {
@@ -171,7 +172,7 @@ const EnergyComponentPage = () => {
         
         // Check if component allows optimizing from bool optimize
         if (component.optimize) { // Values needed: totalConsumption, consumptionData, optimizedConsumption, savings
-          //optimizeConstant();
+          //optimizeConstant(totalConsumption, consumptionData, optimizedConsumption, savings);
           const optimal24hConsumption = parseFloat(totalConsumption);
           const maxHourlyConsumption = parseFloat(
             consumptionData.reduce((a, b) => Math.max(a, b.value), 0)
@@ -189,19 +190,30 @@ const EnergyComponentPage = () => {
           
           // Check every hour to populate realConsumption
           // Also find price and push it to optimizedConsumption for later calculations
+          // This is where we can do the magic I think
           for (let i = 0; i <= 23; i++) {
             const realConsumption = consumptionData.find(
               (h) => h.startHour === i
             );
             const price = sortedPrices.find((p) => p.startHour === i).price;
             if (realConsumption !== undefined) {
-              optimizedConsumption.push({
-                startHour: i,
-                optimizedValue: 0,
-                realValue: realConsumption.value,
-                hour: realConsumption.hour,
-                price: price,
-              });
+              if(component.awayHours != [] && component.awayHours.includes(i)) {
+                optimizedConsumption.push({
+                  startHour: i,
+                  optimizedValue: 0,
+                  realValue: realConsumption.value,
+                  hour: realConsumption.hour,
+                  price: price,
+                });
+              } else {
+                optimizedConsumption.push({
+                  startHour: i,
+                  optimizedValue: 0,
+                  realValue: realConsumption.value,
+                  hour: realConsumption.hour,
+                  price: price,
+                });
+              }
             }
           }
 

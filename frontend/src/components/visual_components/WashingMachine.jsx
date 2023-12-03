@@ -10,7 +10,7 @@ const WashingMachine = ({ demoTime, demoStartTime }) => {
     id: "washing-machine",
     name: "Washing machine",
     type: "consumer",
-    nature: "manual",
+    awayHours: [],
     description: "Washing machine turns dirty laundry clean in just a moment.",
     demoTime: { demoTime },
     demoStartTime: { demoStartTime },
