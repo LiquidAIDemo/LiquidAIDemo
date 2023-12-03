@@ -322,32 +322,32 @@ const EnergyComponentPage = () => {
             top: 20,
           }}
         >
-          <Grid container spacing={4} columns={5} style={{ padding: "2vh" }}>
-            <Grid item xs={12} sm={3} width="50vh">
-              <Typography
-                variant="h6"
-                sx={{
-                  position: "absolute",
-                  top: "15px",
-                  left: "15px",
-                  zIndex: 1,
-                  fontWeight: "bold",
-                }}
-              >
-                Energy Optimizer
-              </Typography>
-              <ThemeProvider theme={theme}>
-                <Button
-                  variant="contained"
-                  color="water"
-                  startIcon={<ArrowLeftIcon />}
-                  sx={{ borderRadius: 2, left: "0px", marginTop: "2px" }}
-                  onClick={() => navigate("/demo")}
-                >
-                  Back
-                </Button>
-              </ThemeProvider>
-              <Box height="96vh">
+          <Typography
+            variant="h6"
+            sx={{
+              position: "absolute",
+              top: "-10px",
+              left: "22px",
+              zIndex: 1,
+              fontWeight: "bold",
+            }}
+          >
+            Energy Optimizer
+          </Typography>
+          <ThemeProvider theme={theme}>
+            <Button
+              variant="contained"
+              color="water"
+              startIcon={<ArrowLeftIcon />}
+              sx={{ borderRadius: 2, left: "22px", marginTop: "25px" }}
+              onClick={() => navigate("/demo")}
+            >
+              Back
+            </Button>
+          </ThemeProvider>
+          <Grid container spacing={4} columns={5} style={{ paddingRight: "3vh", paddingLeft: "3vh" }}>
+            <Grid item xs={12} sm={3} minWidth={"96vh"}>
+              <Box>
                 <div
                   style={{
                     position: "relative",
@@ -379,10 +379,10 @@ const EnergyComponentPage = () => {
             <Grid
               item
               xs={2}
-              style={{ position: "relative", marginTop: "53px" }}
+              style={{ position: "relative", marginTop: "15px" }}
             >
-              <Grid container spacing={4} columns={1}>
-                <Grid item xs={1} minWidth="500px">
+              <Grid container columns={1}>
+                <Grid item xs={1} minWidth="50vh" paddingBottom="2vh">
                   <Box
                     style={{
                       padding: "2vh",
@@ -390,7 +390,8 @@ const EnergyComponentPage = () => {
                       borderRadius: "5px",
                       boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                     }}
-                    height="90vh"
+                    height="auto"
+                    overflow="hidden"
                   >
                     <Typography
                       variant="body1"
@@ -405,7 +406,7 @@ const EnergyComponentPage = () => {
                     {component.type === "producer" &&
                       component.id !== "electric-board" && (
                         <>
-                          <Typography variant="body1" sx={{ margin: 2 }}>
+                          <Typography variant="body2" sx={{ margin: 2 }}>
                             Energy producing component
                           </Typography>
                           {start === "last" && (
@@ -448,7 +449,7 @@ const EnergyComponentPage = () => {
                     {component.type === "producer" &&
                       component.id === "electric-board" && (
                         <>
-                          <Typography variant="body1" sx={{ margin: 2 }}>
+                          <Typography variant="body2" sx={{ margin: 2 }}>
                             Energy producing component
                           </Typography>
                           {start === "last" && (
@@ -464,7 +465,7 @@ const EnergyComponentPage = () => {
                             </Typography>
                           )}
                           <Typography variant="body2" sx={{ margin: 2 }}>
-                            Total use of outside energy {totalProduction} kWh
+                            Total use of outside energy: {totalProduction} kWh
                           </Typography>
                           {productionData.length > 0 && (
                             <BarChart
@@ -492,7 +493,7 @@ const EnergyComponentPage = () => {
                       )}
                     {component.type === "consumer" && (
                       <>
-                        <Typography variant="body1" sx={{ margin: 2 }}>
+                        <Typography variant="body2" sx={{ margin: 2 }}>
                           Energy consuming component
                         </Typography>
                         {start === "last" && (
@@ -507,7 +508,7 @@ const EnergyComponentPage = () => {
                         )}
                         <Typography variant="body2" sx={{ margin: 2 }}>
                           Total consumption: {totalConsumption} kWh <br />
-                          Total price for consumed energy{" "}
+                          Total price for consumed energy:{" "}
                           {(totalPrice / 100).toFixed(2)} euros
                         </Typography>
                         {optimizedConsumption.length !== 24 && (
@@ -535,10 +536,10 @@ const EnergyComponentPage = () => {
                         {optimizedConsumption.length === 24 && (
                           <>
                             <Typography variant="body2" sx={{ margin: 2 }}>
-                              Total price with optimized consumption{" "}
+                              Total price with optimized consumption:{" "}
                               {(optimalPrice / 100).toFixed(2)} euros
                               <br />
-                              Savings made with optimization{" "}
+                              Savings made with optimization:{" "}
                               {savings.toFixed(2)} euros (-
                               {((savings / (totalPrice / 100)) * 100)
                                 .toFixed(2)}{" "}%)
@@ -639,7 +640,7 @@ const EnergyComponentPage = () => {
                             variant="body2"
                             sx={{ margin: 2, fontSize: 13, fontWeight: "bold" }}
                           >
-                            Price data for demo time ({demoPrices[0].startDate}{" "}
+                            Price data for demo time: ({demoPrices[0].startDate}{" "}
                             - {demoPrices[23].endDate})
                           </Typography>
                           <ul style={{ fontSize: 12, listStyle: "none" }}>
