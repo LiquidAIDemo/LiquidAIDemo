@@ -322,32 +322,32 @@ const EnergyComponentPage = () => {
             top: 20,
           }}
         >
-          <Grid container spacing={4} columns={5} style={{ padding: "2vh" }}>
-            <Grid item xs={12} sm={3} width="50vh">
-              <Typography
-                variant="h6"
-                sx={{
-                  position: "absolute",
-                  top: "15px",
-                  left: "15px",
-                  zIndex: 1,
-                  fontWeight: "bold",
-                }}
-              >
-                Energy Optimizer
-              </Typography>
-              <ThemeProvider theme={theme}>
-                <Button
-                  variant="contained"
-                  color="water"
-                  startIcon={<ArrowLeftIcon />}
-                  sx={{ borderRadius: 2, left: "0px", marginTop: "2px" }}
-                  onClick={() => navigate("/demo")}
-                >
-                  Back
-                </Button>
-              </ThemeProvider>
-              <Box height="96vh">
+          <Typography
+            variant="h6"
+            sx={{
+              position: "absolute",
+              top: "-10px",
+              left: "22px",
+              zIndex: 1,
+              fontWeight: "bold",
+            }}
+          >
+            Energy Optimizer
+          </Typography>
+          <ThemeProvider theme={theme}>
+            <Button
+              variant="contained"
+              color="water"
+              startIcon={<ArrowLeftIcon />}
+              sx={{ borderRadius: 2, left: "22px", marginTop: "25px" }}
+              onClick={() => navigate("/demo")}
+            >
+              Back
+            </Button>
+          </ThemeProvider>
+          <Grid container spacing={4} columns={5} style={{ paddingRight: "3vh", paddingLeft: "3vh" }}>
+            <Grid item xs={12} sm={3} minWidth={"90vh"}>
+              <Box>
                 <div
                   style={{
                     position: "relative",
@@ -379,10 +379,10 @@ const EnergyComponentPage = () => {
             <Grid
               item
               xs={2}
-              style={{ position: "relative", marginTop: "53px" }}
+              style={{ position: "relative", marginTop: "15px" }}
             >
-              <Grid container spacing={4} columns={1}>
-                <Grid item xs={1} minWidth="500px">
+              <Grid container columns={1}>
+                <Grid item xs={1} minWidth="50vh">
                   <Box
                     style={{
                       padding: "2vh",
@@ -390,7 +390,8 @@ const EnergyComponentPage = () => {
                       borderRadius: "5px",
                       boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                     }}
-                    height="90vh"
+                    height="84vh"
+                    overflow="hidden"
                   >
                     <Typography
                       variant="body1"

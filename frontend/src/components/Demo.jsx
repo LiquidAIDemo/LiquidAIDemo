@@ -547,7 +547,7 @@ const Demo = () => {
                 style={{
                   position: "relative",
                   marginTop: "15px",
-                  paddingBottom: "82%",
+                  paddingBottom: "83%",
                   width: "100%",
                   height: 0,
                 }}
