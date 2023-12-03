@@ -486,32 +486,52 @@ const Demo = () => {
           top: 20,
         }}
       >
-        <Grid container spacing={4} columns={5} style={{ padding: "2vh" }}>
-          <Grid item xs={12} sm={3} width="50vh">
-            <Typography
-              variant="h6"
-              sx={{
-                position: "absolute",
-                top: "15px",
-                left: "15px",
-                zIndex: 1,
-                fontWeight: "bold",
-              }}
-            >
-              Energy Optimizer
-            </Typography>
-            <ThemeProvider theme={theme}>
-              <Button
-                variant="contained"
-                color="water"
-                startIcon={<ArrowLeftIcon />}
-                sx={{ borderRadius: 2, left: "0px", marginTop: "2px" }}
-                onClick={() => navigate("/")}
-              >
-                Back
-              </Button>
-            </ThemeProvider>
-            <Box height="96vh">
+        <Typography
+          variant="h6"
+          sx={{
+            position: "absolute",
+            top: "-10px",
+            left: "22px",
+            zIndex: 1,
+            fontWeight: "bold",
+          }}
+          >
+          Energy Optimizer
+        </Typography>
+        <ThemeProvider theme={theme}>
+          <Button
+            variant="contained"
+            color="water"
+            startIcon={<ArrowLeftIcon />}
+            sx={{ borderRadius: 2, left: "22px", marginTop: "25px" }}
+            onClick={() => navigate("/")}
+          >
+            Back
+          </Button>
+        </ThemeProvider>
+        <ThemeProvider theme={theme}>
+          <Button
+            variant="contained"
+            color="water"
+            sx={{
+              borderRadius: 2,
+              position: "absolute",
+              marginTop: "25px",
+              right: "23px",
+              width: "130px",
+            }}
+            onClick={() => setOpenInformation(true)}
+          >
+            Information
+          </Button>
+        </ThemeProvider>
+        <InformationPage
+          openInformation={openInformation}
+          setOpenInformation={setOpenInformation}
+        />
+        <Grid container spacing={4} columns={5} style={{ paddingRight: "3vh", paddingLeft: "3vh" }}>
+          <Grid item xs={12} sm={3} minWidth={"77vh"}>
+            <Box>
               <div
                 style={{
                   position: "relative",
@@ -686,47 +706,20 @@ const Demo = () => {
               </div>
             </Box>
           </Grid>
-          <Grid item xs={2} style={{ position: "relative" }}>
-            <Grid container spacing={2} columns={1}>
-              <Grid
-                container
-                style={{
-                  display: "flex",
-                  justifyContent: "right",
-                  alignItems: "center",
-                }}
-              >
-                <ThemeProvider theme={theme}>
-                  <Button
-                    variant="contained"
-                    color="water"
-                    sx={{
-                      borderRadius: 2,
-                      marginLeft: 2,
-                      marginBottom: 0,
-                      marginTop: 2,
-                      width: "130px",
-                    }}
-                    onClick={() => setOpenInformation(true)}
-                  >
-                    Information
-                  </Button>
-                </ThemeProvider>
-                <InformationPage
-                  openInformation={openInformation}
-                  setOpenInformation={setOpenInformation}
-                />
-              </Grid>
-              <Grid item xs={1} height="10vh">
+          <Grid item xs={2} style={{ position: "relative", marginTop: "15px", }}>
+            <Grid container spacing={1.5} columns={1}>
+              <Grid item xs={1} paddingBottom="50px">
                 <Box>
                   <List
-                    sx={{ width: "96%", bgcolor: "background.paper" }}
+                    sx={{ width: "94.5%", bgcolor: "background.paper" }}
                     style={{
                       position: "absolute",
                       zIndex: 1000,
                       border: "1px solid #DCDCDC",
                       borderRadius: "5px",
                       boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
+                      paddingBottom: "0px",
+                      paddingTop: "0px",
                     }}
                   >
                     <ListItemButton
@@ -1033,7 +1026,7 @@ const Demo = () => {
                     borderRadius: "5px",
                     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
                   }}
-                  height="30vh"
+                  height="auto"
                   overflow="hidden"
                 >
                   <Box>
@@ -1054,11 +1047,12 @@ const Demo = () => {
                     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
                   }}
                   height="45vh"
+                  overflow="hidden"
                 >
                   <ElectricityPrice
-                    demoTime={demoTime}
-                    demoPassedHrs={parseInt(demoPassedHrs)}
-                    totalConsumption={totalConsumption}
+                  demoTime={demoTime}
+                  demoPassedHrs={parseInt(demoPassedHrs)}
+                  totalConsumption={totalConsumption}
                   />
                 </Box>
               </Grid>

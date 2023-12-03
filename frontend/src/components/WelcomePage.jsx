@@ -30,8 +30,8 @@ const WelcomePage = () => {
         variant="h6"
         sx={{
           position: "absolute",
-          top: "3px",
-          left: "15px",
+          top: "10px",
+          left: "22px",
           zIndex: 1,
           fontWeight: "bold",
         }}
