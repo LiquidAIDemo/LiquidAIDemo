@@ -64,18 +64,6 @@ const imageMapping = {
   "optimizer": optimizerView,
 };
 
-// Optimizer for components that use energy all the time
-function optimizeConstant(totalConsumption, consumptionData, optimizedConsumption, savings) {
-  // This is just the standard optimization ocde
-}
-
-// Optimizer for components that may not be available all the time
-// Receives the list of hours where charging is not possible
-function optimizeRechargeable(inactive) {
-  // I think the easiest way to go would be to have the hours in inactive
-  // be considered hours that have the highest price
-}
-
 const EnergyComponentPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -170,9 +158,7 @@ const EnergyComponentPage = () => {
           return a.price - b.price;
         });
         
-        // Check if component allows optimizing from bool optimize
-        if (component.optimize) { // Values needed: totalConsumption, consumptionData, optimizedConsumption, savings
-          //optimizeConstant(totalConsumption, consumptionData, optimizedConsumption, savings);
+        if (component.optimize) {
           const optimal24hConsumption = parseFloat(totalConsumption);
           const maxHourlyConsumption = parseFloat(
             consumptionData.reduce((a, b) => Math.max(a, b.value), 0)
