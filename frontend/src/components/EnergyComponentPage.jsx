@@ -548,9 +548,9 @@ const EnergyComponentPage = () => {
                             <div>
                               <p
                                 style={{
-                                  display: 'flex',
-                                  flexDirection: 'row',
-                                  alignItems: 'center',
+                                  display: "flex",
+                                  flexDirection: "row",
+                                  alignItems: "center",
                                 }}
                               >
                                 <span
