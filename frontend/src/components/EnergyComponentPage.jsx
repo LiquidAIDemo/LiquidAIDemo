@@ -546,47 +546,51 @@ const EnergyComponentPage = () => {
                                 .toFixed(2)}{" "}%)
                             </Typography>
                             <div>
-                              <p>
+                              <p
+                                style={{
+                                  display: 'flex',
+                                  flexDirection: 'row',
+                                  alignItems: 'center',
+                                  //justifyContent: 'space-between',
+                                }}
+                              >
                                 <span
                                   style={{
                                     margin: 2,
                                     fontSize: "14px",
-                                    verticalAlign: "middle",
+                                    display: "flex",
+                                    alignItems: "center",
                                   }}
                                 >
-                                  <svg height="20" width="18">
-                                    <circle cx="9" cy="12" r="8" fill="#59cae3" />
+                                  <svg height="18" width="18" style={{ marginRight: 6 }}>
+                                    <circle cx="9" cy="9" r="8" fill="#59cae3" />
                                   </svg>
-                                </span>
-                                <span style={{ margin: 2, fontSize: "14px" }}>
                                   real consumption
                                 </span>
                                 <span
                                   style={{
                                     margin: 2,
                                     fontSize: "14px",
-                                    verticalAlign: "middle",
+                                    display: "flex",
+                                    alignItems: "center",
                                   }}
                                 >
-                                  <svg height="20" width="18">
-                                    <circle cx="9" cy="12" r="8" fill="#4ea646" />
+                                  <svg height="18" width="18" style={{ marginRight: 6 }}>
+                                    <circle cx="9" cy="9" r="8" fill="#4ea646" />
                                   </svg>
-                                </span>
-                                <span style={{ margin: 2, fontSize: "14px" }}>
                                   optimized consumption
                                 </span>
                                 <span
                                   style={{
                                     margin: 2,
                                     fontSize: "14px",
-                                    verticalAlign: "middle",
+                                    display: "flex",
+                                    alignItems: "center",
                                   }}
                                 >
-                                  <svg height="20" width="18">
-                                    <circle cx="9" cy="12" r="8" fill="red" />
+                                  <svg height="18" width="18" style={{ marginRight: 6 }}>
+                                    <circle cx="9" cy="9" r="8" fill="red" />
                                   </svg>
-                                </span>
-                                <span style={{ margin: 2, fontSize: "14px" }}>
                                   price
                                 </span>
                               </p>
