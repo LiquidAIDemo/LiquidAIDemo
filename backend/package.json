@@ -1,11 +1,11 @@
 {
   "name": "backend",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "npm install && npm run dev", 
+    "start": "npm install && npm run dev",
     "dev": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .  --ext .js"
@@ -13,7 +13,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "axios": "^1.5.1",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "fs": "^0.0.1-security",
@@ -21,7 +20,6 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "eslint": "^8.52.0",
-    "nodemon": "^3.0.1"
+    "eslint": "^8.52.0"
   }
 }
