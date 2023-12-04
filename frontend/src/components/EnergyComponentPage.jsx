@@ -551,7 +551,6 @@ const EnergyComponentPage = () => {
                                   display: 'flex',
                                   flexDirection: 'row',
                                   alignItems: 'center',
-                                  //justifyContent: 'space-between',
                                 }}
                               >
                                 <span
