@@ -551,11 +551,12 @@ const EnergyComponentPage = () => {
                                   style={{
                                     margin: 2,
                                     fontSize: "14px",
-                                    color: "transparent",
-                                    textShadow: "0 0 0 #59cae3",
+                                    verticalAlign: "middle",
                                   }}
                                 >
-                                  &#9899;
+                                  <svg height="20" width="18">
+                                    <circle cx="9" cy="12" r="8" fill="#59cae3" />
+                                  </svg>
                                 </span>
                                 <span style={{ margin: 2, fontSize: "14px" }}>
                                   real consumption
@@ -564,11 +565,12 @@ const EnergyComponentPage = () => {
                                   style={{
                                     margin: 2,
                                     fontSize: "14px",
-                                    color: "transparent",
-                                    textShadow: "0 0 0 #4ea646",
+                                    verticalAlign: "middle",
                                   }}
                                 >
-                                  &#9899;
+                                  <svg height="20" width="18">
+                                    <circle cx="9" cy="12" r="8" fill="#4ea646" />
+                                  </svg>
                                 </span>
                                 <span style={{ margin: 2, fontSize: "14px" }}>
                                   optimized consumption
@@ -577,11 +579,12 @@ const EnergyComponentPage = () => {
                                   style={{
                                     margin: 2,
                                     fontSize: "14px",
-                                    color: "transparent",
-                                    textShadow: "0 0 0 red",
+                                    verticalAlign: "middle",
                                   }}
                                 >
-                                  &#9899;
+                                  <svg height="20" width="18">
+                                    <circle cx="9" cy="12" r="8" fill="red" />
+                                  </svg>
                                 </span>
                                 <span style={{ margin: 2, fontSize: "14px" }}>
                                   price
