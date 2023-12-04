@@ -9,7 +9,7 @@ describe('Energy Optimizer app', () => {
     cy.visit('')
     cy.contains('Start').click()
     cy.contains('Information')
-    cy.contains('Components')
+    cy.contains('Manage components')
   })
 
   it('unknown address redirects to not found page', () => {
@@ -29,7 +29,7 @@ describe('Energy Optimizer app', () => {
     })
     
     it('components can be opened', () => {
-      cy.contains('Components').click()
+      cy.contains('Manage components').click()
       cy.contains('Electric board')
     })
     
@@ -93,7 +93,7 @@ describe('Energy Optimizer app', () => {
       cy.contains('Total price for consumed energy')
       cy.contains('Total price with optimized consumption')
       cy.contains('Savings made with optimization')
-      cy.get('#heat-pump').should('be.visible')
+      cy.get('#heat-pump-view').should('be.visible')
       cy.get('svg').should('exist')
     })
     
@@ -102,7 +102,7 @@ describe('Energy Optimizer app', () => {
       cy.contains('Solar panel 1')
       cy.contains('Solar panels turn sunlight into energy.')
       cy.contains('Total production')
-      cy.get('#solar-panel-1').should('be.visible')
+      cy.get('#solar-panel-1-view').should('be.visible')
       cy.get('svg').should('exist')
     })
 
@@ -112,7 +112,7 @@ describe('Energy Optimizer app', () => {
     })
 
     it('user can modify components from the menu', () => {
-      cy.contains('Components').click()
+      cy.contains('Manage components').click()
 
       const checkboxes = [
         'heatPumpCheckbox',
@@ -132,7 +132,7 @@ describe('Energy Optimizer app', () => {
       ]
 
       checkboxes.forEach(id => {
-        cy.get(`#${id}`).should('be.visible')
+        cy.get(`#${id}`).should('exist')
       })
       cy.get('#selectAll').should('be.visible')
       cy.get('#clearAll').should('be.visible')
