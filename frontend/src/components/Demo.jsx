@@ -208,7 +208,7 @@ const Demo = () => {
       if (productive == false) {
         var consumptionData = outlineComponent.consumption_per_hour_kwh;
         consumptionData.forEach((h) => {
-          h.startHour = new Date(h.startDate).getUTCHours();
+          h.startHour = new Date(h.startDate).getHours();
         });
         hourlyCons = consumptionData
           .filter((eh) => eh.startHour === demoHour)
@@ -238,7 +238,7 @@ const Demo = () => {
         var productionData = outlineComponent.production_per_hour_kwh;
         if (productionData.length > 0) {
           productionData.forEach((h) => {
-            h.startHour = new Date(h.startDate).getUTCHours();
+            h.startHour = new Date(h.startDate).getHours();
           });
         }
         hourlyProd = productionData
@@ -393,7 +393,7 @@ const Demo = () => {
   consumingComponents.forEach((c) => {
     const data = c.consumption_per_hour_kwh;
     data.forEach((d) => {
-      const hour = new Date(d.startDate).getUTCHours();
+      const hour = new Date(d.startDate).getHours();
       const consumptionHour = totalConsumption.find((obj) => obj.hour === hour);
       consumptionHour.value += d.value;
     });
@@ -402,7 +402,7 @@ const Demo = () => {
   producingComponents.forEach((c) => {
     const data = c.production_per_hour_kwh;
     data.forEach((d) => {
-      const hour = new Date(d.startDate).getUTCHours();
+      const hour = new Date(d.startDate).getHours();
       const productionHour = totalProduction.find((obj) => obj.hour === hour);
       productionHour.value += d.value;
     });
