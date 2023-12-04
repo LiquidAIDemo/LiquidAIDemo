@@ -12,4 +12,4 @@ On the command line, use the command `scp <filepath> <user>@tlt-cityiot.rd.tuni.
 
 ## Start and stop the server
 
-Open the ssh connection on the command line and run the command `docker-compose down` to stop the application and remove active docker containers. To build new containers and restart the updated application, run the command `docker-compose up --build` (it can take a few minutes).
+Open the ssh connection on the command line, type `cd /mnt/liquidai/LiquidAIDemo` to navigate to the project directory and run the command `docker-compose down` to stop the application and remove active docker containers. To build new containers and restart the updated application, run the command `docker-compose up --build` (it can take a few minutes).
