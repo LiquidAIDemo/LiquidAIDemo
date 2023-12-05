@@ -132,7 +132,7 @@ function DemoClock({ demoTime, demoPassedHours, onDemoTimeChange }) {
     // Call handleStartingChange with the new event object
     handleStartingChange(event);
     setPassedTime(0);
-    window.sessionStorage.setItem("passedTime", passedTime);
+    window.sessionStorage.setItem("passedTime", 0);
     window.sessionStorage.setItem("download", false);
     window.sessionStorage.setItem("upload", false);
     setIsPaused(false);
@@ -209,14 +209,15 @@ function DemoClock({ demoTime, demoPassedHours, onDemoTimeChange }) {
         </Box>
       </div>
 
-      <Box style={{ padding: "1vh" }} id="demotimebox">
+      <Box style={{ padding: "1vh" }}>
         <RealtimeClock />
-        <b style={{ fontWeight: "normal" }}>Demo time:</b>{" "}
-        {String(demoTimeDateObj.getHours()).padStart(2, "0")}:
-        {String(demoPassedMinutes).padStart(2, "0")},{" "}
-        {getDayName(demoTimeDateObj)} {demoTimeDateObj.getDate()}.
-        {demoTimeDateObj.getMonth() + 1}. &#x1F4C5;
-        <br />
+        <Box id="demotimebox">
+          <b style={{ fontWeight: "normal" }}>Demo time:</b>{" "}
+          {String(demoTimeDateObj.getHours()).padStart(2, "0")}:
+          {String(demoPassedMinutes).padStart(2, "0")},{" "}
+          {getDayName(demoTimeDateObj)} {demoTimeDateObj.getDate()}.
+          {demoTimeDateObj.getMonth() + 1}. &#x1F4C5;
+        </Box>
         <ThemeProvider theme={theme}>
           <Button
             variant="contained"

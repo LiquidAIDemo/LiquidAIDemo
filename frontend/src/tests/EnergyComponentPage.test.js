@@ -39,6 +39,15 @@ const electricBoard = {
   demoStartTime: {demoStartTime: now.getTime()}
 }
 
+const optimizerComponent = {
+  id: "optimizer", 
+  name: "Optimizer",
+  type: "optimizer",
+  description: "Optimizer desc",
+  demoTime: {demoTime: now},
+  demoStartTime: {demoStartTime: now.getTime()}
+}
+
 let mockComponent = consumerComponent
 let componentPagePath = `/component/${mockComponent.id}`
 
@@ -50,7 +59,7 @@ jest.mock('react-router-dom', () => ({
 }))
 
 test("renders consumer component correctly", async () => {
-  axiosMock.onGet('/api').reply(200, [])
+  axiosMock.onGet(import.meta.env.PROD ? '/backend' : 'http://localhost:3001/').reply(200, [])
   await act(async () => {
     render(
       <MemoryRouter initialEntries={[componentPagePath]}>
@@ -68,7 +77,7 @@ test("renders consumer component correctly", async () => {
 
 test("renders producer component correctly", async () => {
   mockComponent = producerComponent
-  axiosMock.onGet('/api').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
+  axiosMock.onGet(import.meta.env.PROD ? '/backend' : 'http://localhost:3001/').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
   await act(async () => {
     render(
       <MemoryRouter initialEntries={[componentPagePath]}>
@@ -86,7 +95,7 @@ test("renders producer component correctly", async () => {
 
 test("renders electric board correctly", async () => {
   mockComponent = electricBoard
-  axiosMock.onGet('/api').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
+  axiosMock.onGet(import.meta.env.PROD ? '/backend' : 'http://localhost:3001/').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
   await act(async () => {
     render(
       <MemoryRouter initialEntries={[componentPagePath]}>
@@ -102,8 +111,26 @@ test("renders electric board correctly", async () => {
   expect(screen.getByText('Back')).toBeInTheDocument()
 })
 
+test("renders optimizer component correctly", async () => {
+  mockComponent = optimizerComponent
+  axiosMock.onGet(import.meta.env.PROD ? '/backend' : 'http://localhost:3001/').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
+  await act(async () => {
+    render(
+      <MemoryRouter initialEntries={[componentPagePath]}>
+        <Routes>
+          <Route path={componentPagePath} element={<EnergyComponentPage />} />
+        </Routes>
+      </MemoryRouter>
+    )
+  })
+  
+  expect(screen.getByText(`${optimizerComponent.name}`)).toBeInTheDocument()
+  expect(screen.getByText(`${optimizerComponent.description}`)).toBeInTheDocument()
+  expect(screen.getByText('Back')).toBeInTheDocument()
+})
+
 test("'back' button returns to demo", async () => {
-  axiosMock.onGet('/api').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
+  axiosMock.onGet(import.meta.env.PROD ? '/backend' : 'http://localhost:3001/').reply(200, [{ "price": 5, "startDate": now.toLocaleString("fi-FI", { timeZone: "Europe/Helsinki" }) }])
   await act(async () => {
     render(
       <MemoryRouter initialEntries={[componentPagePath]}>
@@ -119,5 +146,5 @@ test("'back' button returns to demo", async () => {
   await act(async () => {
     await userEvent.click(backToDemoButtonElement)
   })
-  expect(screen.getByText("Components")).toBeInTheDocument()
+  expect(screen.getByText("Manage components")).toBeInTheDocument()
 })

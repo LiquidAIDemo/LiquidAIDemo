@@ -38,6 +38,14 @@ const electricBoard = {
   visibleComponents: [{id: "heat-pump", visibility: true}, {id: "solar-panel-1", visibility: true}]
 }
 
+const optimizer = {
+  id: "optimizer", 
+  name: "Optimizer",
+  type: "optimizer",
+  description: "Optimizer downloads information from the internet and gives instructions to other components so that they can optimize their energy consumption.",
+  demoTime: now
+}
+
 test("renders consumer component correctly", () => { 
   render(
     <EnergyComponent {...consumerComponent} />
@@ -69,6 +77,17 @@ test("renders electric board correctly", () => {
   expect(screen.getByText(`(Energy ${electricBoard.type})`)).toBeInTheDocument()
   expect(screen.getByText('Click the component for more info')).toBeInTheDocument()
   expect(screen.queryByText(`${electricBoard.description}`)).not.toBeInTheDocument()
+})
+
+test("renders optimizer correctly", () => {
+  render(
+    <EnergyComponent {...optimizer} />
+  )
+
+  expect(screen.getByText(`${optimizer.name}`)).toBeInTheDocument()
+  expect(screen.getByText(/Next download in/)).toBeInTheDocument()
+  expect(screen.getByText('Click the component for more info')).toBeInTheDocument()
+  expect(screen.queryByText(`${optimizer.description}`)).toBeInTheDocument()
 })
 
 test('Clicking component navigates to component page', async () => {
