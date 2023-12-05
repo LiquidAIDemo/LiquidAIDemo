@@ -1,6 +1,6 @@
 # Program structure
 
-The program consists of a frontend and a backend. Backend uses api calls to fetch electricity prices from outside interface.
+The program consists of a frontend and a backend. User interacts with the frontend side of the program. Frontend calls the backend to get electricity prices. In backend prices are fetched from outside interface.
 
 ![Alt text](./src/structure.png)
 
@@ -10,7 +10,7 @@ The backend of the program is located in 'backend'-folder.
 
 ### index.js
 
-The simple server running backend
+The simple server running backend.
 
 ### fetchElectricityPrice.js
 
