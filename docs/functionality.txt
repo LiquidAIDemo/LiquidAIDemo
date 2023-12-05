@@ -10,3 +10,5 @@ In the current version of the program, the following functionality is available.
 - The user can see demo time and changes of energy usage that occur due to its changes in the household.
 - Demo time's speed can be adjusted (1 h/s, 30 min/s, 20 min/s and 10 min/s) and its window chosen from the last 24 h to following 24 h. The demo clock can also be paused and restarted.
 - The user can see whether or not an optimizer component is downloading or uploading data, and whether or not other components are receiving data from it.
+
+markdown: GFM
