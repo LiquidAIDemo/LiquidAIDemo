@@ -13,13 +13,14 @@ test("renders content", () => {
   expect(screen.getByText(/Speed:/)).toBeInTheDocument()
   expect(screen.getByText(/Time range:/)).toBeInTheDocument()
   expect(screen.getByText(/Demo time:/)).toBeInTheDocument()
-  expect(screen.getByText('Pause')).toBeInTheDocument()
-  expect(screen.getByText('Restart')).toBeInTheDocument()
+  expect(screen.getByText('Start')).toBeInTheDocument()
 })
 
-test("demo time runs correctly", () => {
+test("demo time runs correctly", async () => {
   jest.useFakeTimers()
   render(<DemoClock demoTime={now.toISOString()} demoPassedHours={0} onDemoTimeChange={jest.fn()}/>)
+  const startButtonElement = screen.getByText('Start')
+  await user.click(startButtonElement)
   act(() => {
     jest.advanceTimersByTime(1000)
   })
@@ -32,8 +33,13 @@ test("demo time runs correctly", () => {
 test("pause button pauses demo time", async () => {
   jest.useFakeTimers()
   render(<DemoClock demoTime={now.toISOString()} demoPassedHours={0} onDemoTimeChange={jest.fn()}/>)
-  const pauseButtonElement = screen.getByText('Pause')
+  const startButtonElement = screen.getByText('Start')
+  await user.click(startButtonElement)
+  act(() => {
+    jest.advanceTimersByTime(1000)
+  })
   
+  const pauseButtonElement = screen.getByText('Pause')
   await user.click(pauseButtonElement)
   act(() => {
     jest.advanceTimersByTime(2000)
@@ -41,13 +47,15 @@ test("pause button pauses demo time", async () => {
   
   const pausedDemoTime = screen.getByText(/Demo time:/).parentElement
   const currentHrs = String(now.getHours()).padStart(2, '0')
-  expect(pausedDemoTime).toHaveTextContent(`Demo time: ${currentHrs}:00`)
+  expect(pausedDemoTime).toHaveTextContent(`Demo time: ${currentHrs}:10`)
   jest.useRealTimers()
 })
 
 test("restart button restarts demo time", async () => {
   jest.useFakeTimers()
   render(<DemoClock demoTime={now.toISOString()} demoPassedHours={0} onDemoTimeChange={jest.fn()}/>)
+  const startButtonElement = screen.getByText('Start')
+  await user.click(startButtonElement)
   const restartButtonElement = screen.getByText('Restart')
   
   act(() => {

@@ -227,7 +227,7 @@ function DemoClock({ demoTime, demoPassedHours, onDemoTimeChange }) {
             onClick={() => handleResetClick(start)}
             id="restart"
           >
-            {demoPassedHours === 0 && isPaused ? "Start" : "Restart"}
+            {demoPassedHours === 0 && demoPassedMinutes === 0 && isPaused ? "Start" : "Restart"}
           </Button>
         </ThemeProvider>
         {demoPassedHours < 24 && demoPassedHours > 0 || (demoPassedHours === 0 && demoPassedMinutes > 0) ? (
