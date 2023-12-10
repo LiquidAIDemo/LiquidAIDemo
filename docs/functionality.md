@@ -19,9 +19,3 @@ In the current version of the program, the following functionality is available.
 - Demo time's speed can be adjusted (1 h/s, 30 min/s, 20 min/s and 10 min/s) and its range chosen from the last 24 h to following 24 h. The demo clock can also be paused and restarted. 
 
 - Optimizer component downloading or uploading data is displayed as well as other components receiving data from it. 
-
- 
-
- 
-
-- Total amount of energy being consumed during the demo. 
