@@ -11,7 +11,7 @@ const ElectricCar1 = ({ demoTime, demoStartTime }) => {
     id: "electric-car-1",
     name: "Electric car 1",
     type: "consumer",
-    awayHours: [4,5,6],
+    awayHours: [0,1,2,3,4,5,6],
     description: "Electric car is charged at the charging station.",
     demoTime: { demoTime },
     demoStartTime: { demoStartTime },
