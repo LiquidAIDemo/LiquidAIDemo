@@ -39,6 +39,8 @@ describe('Energy Optimizer app', () => {
     })
     
     it('user can pause and continue demo', () => {
+      cy.contains('Start').click()
+      cy.wait(1000)
       cy.contains('Pause').click()
       cy.get('#pause').should('have.text', 'Continue')
       cy.get('#demotimebox').invoke('text').then((time) => {
@@ -51,6 +53,7 @@ describe('Energy Optimizer app', () => {
     })
     
     it('user can restart demo', () => {
+      cy.contains('Start').click()
       cy.wait(1000)
       cy.contains('Pause').click()
       cy.get('#demotimebox').invoke('text').then((time) => {

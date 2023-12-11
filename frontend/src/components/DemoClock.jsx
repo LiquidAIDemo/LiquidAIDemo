@@ -47,7 +47,7 @@ function DemoClock({ demoTime, demoPassedHours, onDemoTimeChange }) {
   const [demoPassedMinutes, setDemoPassedMinutes] = useState(0);
 
   const [isPaused, setIsPaused] = useState(
-    window.sessionStorage.getItem("isDemoPaused") === "true" || false
+    window.sessionStorage.getItem("isDemoPaused") === "true" || true
   );
 
   // Default speed 1 hour/sec
@@ -149,18 +149,19 @@ function DemoClock({ demoTime, demoPassedHours, onDemoTimeChange }) {
       newDemoTime.setMinutes(0, 0);
       setDemoPassedMinutes(0);
       onDemoTimeChange(newDemoTime, 0);
-      setIsPaused(false);
-      window.sessionStorage.setItem("isDemoPaused", false);
+      setIsPaused(true);
+      window.sessionStorage.setItem("isDemoPaused", true);
     } else if (selectedValue === "last") {
       const newDemoTime = new Date();
       newDemoTime.setDate(now.getDate() - 1);
       newDemoTime.setMinutes(0, 0);
       setDemoPassedMinutes(0);
       onDemoTimeChange(newDemoTime, 0);
-      setIsPaused(false);
-      window.sessionStorage.setItem("isDemoPaused", false);
+      setIsPaused(true);
+      window.sessionStorage.setItem("isDemoPaused", true);
     }
   };
+
 
   // Select speed menu, demo time, pause button and real time
   return (
@@ -226,10 +227,10 @@ function DemoClock({ demoTime, demoPassedHours, onDemoTimeChange }) {
             onClick={() => handleResetClick(start)}
             id="restart"
           >
-            Restart
+            {demoPassedHours === 0 && demoPassedMinutes === 0 && isPaused ? "Start" : "Restart"}
           </Button>
         </ThemeProvider>
-        {demoPassedHours < 24 ? (
+        {demoPassedHours < 24 && demoPassedHours > 0 || (demoPassedHours === 0 && demoPassedMinutes > 0) ? (
           <ThemeProvider theme={theme}>
             <Button
               variant="contained"
