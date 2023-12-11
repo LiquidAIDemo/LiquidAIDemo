@@ -103,7 +103,6 @@ const EnergyComponentPage = () => {
     let demoHours = [];
     let demoPrices = [];
     let offlineHours = component.awayHours;
-    offlineHours = [0,1,2,3,4,5,6]
     
     const demoStartTime = component.demoStartTime.demoStartTime;
 
@@ -170,15 +169,17 @@ const EnergyComponentPage = () => {
 
         const sortedPrices = demoPrices.sort((a, b) => {
           if (a.price == "offline" && b.price == "offline") {
-            return true;
+            return 0;
           } else if (a.price == "offline") {
-            return false;
+            return 1;
           } else if (b.price == "offline") {
-            return true;
+            return -1;
           } else {
             return a.price - b.price;
           }
         });
+        
+        console.log("Sorted prices:",sortedPrices);
         
         if (component.optimize) {
           const optimal24hConsumption = parseFloat(totalConsumption);
