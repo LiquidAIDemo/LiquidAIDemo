@@ -8,7 +8,13 @@ First you need personal credentials set up with your public SSH key (contact Vil
 
 ## Updating new code to the server
 
-On the command line, use the command `scp <filepath> <user>@tlt-cityiot.rd.tuni.fi:/mnt/liquidai/LiquidAIDemo[/<path>]` to move files from your local directory to the corresponding directory on the server. Or in WinSCP, make sure you're in the correct directory and drag the updated files from the left file manager window (local directory) to the right (server). The old files with the same name get replaced with the new ones.
+On the command line, use the command `scp [-r] <filepath> <user>@tlt-cityiot.rd.tuni.fi:/mnt/liquidai/LiquidAIDemo[/<path>]` to move files from your local directory to the corresponding directory on the server. (Command `scp` is for individual files, `scp -r` for directories). 
+
+If you need to remove files you first need to connect to the server with command `ssh user@tlt-cityiot.rd.tuni.fi` and then type `rm [-rf] /mnt/liquidai/LiquidAIDemo[/<path>]` (however you might not have rights to remove files/directories someone else has added. If you need to do that you might have to contact Ville).
+
+Alternatively, in WinSCP, make sure you're in the correct directory and drag the updated files from the left file manager window (local directory) to the right (server). The old files with the same name get replaced with the new ones.
+
+The only files that need to be on the server, are docker-compose.yml, and frontend and backend directories. Hidden files, test related folders (frontend/coverage, frontend/cypress, frontend/src/tests) and README files can be left out. Node_modules don't need to be transferred to the server either, as they are installed according to package.json file's contents.
 
 ## Start and stop the server
 
