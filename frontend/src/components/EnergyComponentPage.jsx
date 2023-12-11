@@ -202,25 +202,13 @@ const EnergyComponentPage = () => {
             );
             const price = sortedPrices.find((p) => p.startHour === i).price;
             if (realConsumption !== undefined) {
-              if(offlineHours.includes(i)) { // Found an unavailable hour
-                optimizedConsumption.push({
-                  startHour: i,
-                  optimizedValue: 0,
-                  realValue: realConsumption.value,
-                  hour: realConsumption.hour,
-                  price: price,
-                  available: false,
-                });
-              } else {
-                optimizedConsumption.push({
-                  startHour: i,
-                  optimizedValue: 0,
-                  realValue: realConsumption.value,
-                  hour: realConsumption.hour,
-                  price: price,
-                  available: true,
-                });
-              }
+              optimizedConsumption.push({
+                startHour: i,
+                optimizedValue: 0,
+                realValue: realConsumption.value,
+                hour: realConsumption.hour,
+                price: price,
+              });
             }
           } 
 
@@ -234,23 +222,19 @@ const EnergyComponentPage = () => {
               ).optimizedValue = maxHourlyConsumption;
             }
 
-            optimizedConsumption.forEach((h) => { // I think this entire block is practically only used for savings
-              if (h.available || !h.available) {
-                h.hour =
-                  h.startHour + ":00-" + (parseInt(h.startHour) + 1) + ":00"; // Format the hour
-                const value = h.optimizedValue;
-                const price = demoPrices.find(
-                  (p) => p.startHour === h.startHour
-                ).price;
-                if (price != "offline") {
-                  const hourPrice = parseFloat(value) * parseFloat(price);
-                  optimalPrice = optimalPrice + hourPrice; // optimalPrice seems to be only used for savings
-                } else {
-                  const hourPrice = parseFloat(value);
-                  optimalPrice = optimalPrice + hourPrice;
-                }
+            optimizedConsumption.forEach((h) => {
+              h.hour =
+                h.startHour + ":00-" + (parseInt(h.startHour) + 1) + ":00";
+              const value = h.optimizedValue;
+              const price = demoPrices.find(
+                (p) => p.startHour === h.startHour
+              ).price;
+              if (price != "offline") { // Avoid offline hours when calculating savings
+                const hourPrice = parseFloat(value) * parseFloat(price);
+                optimalPrice = optimalPrice + hourPrice; 
               } else {
-                console.log("ERROR!"); // This should be unreachable
+                const hourPrice = parseFloat(value); 
+                optimalPrice = optimalPrice + hourPrice;
               }
             });
 
